@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         return player1name;
     }
 
-    public String getetPlayer2Name(){
+    public String getPlayer2Name(){
         return player2name ;
     }
 }
