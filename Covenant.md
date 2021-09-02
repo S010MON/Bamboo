@@ -45,9 +45,8 @@ d.	**GUI**: JavaFX
 
 e.	**Testing**: JUnit 5 (Jupiter)
     
-
-
-    
+######Agreed to by the undersigned:###### 
+// Add your name here
 
 
 
