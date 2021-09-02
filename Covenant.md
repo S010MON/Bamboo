@@ -17,9 +17,7 @@ e.	**IDE**.  We all agree to use Intellij IDE to avoid having multiple Class/XML
     
 ### 2 - Where we work
 
-a.	**Discord**: server https://discord.gg/TRHw9awS for files and video calls
-
-b.	**Whatsapp**: Chat
+a.	**Discord**: server https://discord.gg/TRHw9awS
    
 b.	**Google Drive**. To keep a single point of truth, group documents should be saved and editied _exclusively_ on the group google drive.  This avoids someone missing a meeting and not having any minutes or the computer with the presentation dying last minute.  Always upload everything to the drive.
 
@@ -49,6 +47,7 @@ e.	**Testing**: JUnit 5 (Jupiter)
     
 ###### Agreed to by the undersigned: ###### 
 // Add your name here
+Giacomo Terragni
 
 
 
