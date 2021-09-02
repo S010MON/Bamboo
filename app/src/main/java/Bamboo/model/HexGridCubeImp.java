@@ -36,13 +36,14 @@ public class HexGridCubeImp implements HexGrid
     @Override
     public Tile getTile(Vector v)
     {
+        // TODO (Leon) implement once vector is complete
         return null;
     }
 
     @Override
     public void setTile(Vector v, Colour c)
     {
-
+        // TODO (Leon) implement once vector is complete
     }
 
     @Override
