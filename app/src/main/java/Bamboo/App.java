@@ -3,13 +3,13 @@
  */
 package Bamboo;
 
-import Bamboo.model.HexGridCubeImp;
+import Bamboo.model.HexGridArrayImp;
 
 public class App
 {
     public static void main(String[] args)
     {
-        HexGridCubeImp h = new HexGridCubeImp(5);
+        HexGridArrayImp h = new HexGridArrayImp(5);
         h.prettyPrint();
     }
 }
