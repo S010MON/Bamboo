@@ -1,31 +1,24 @@
 package Bamboo.controller;
 
-public class Vector3d
+public class Vector
 {
-    private int x;
-    private int y;
-    private int z;
+    private int x, y, z;
 
-    public Vector3d(int x, int y, int z)
-    {
-        assert (x + y + z) == 0;
+    public Vector(int x, int y, int z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public int getX()
-    {
+    public int getX() {
         return x;
     }
 
-    public int getY()
-    {
+    public int getY() {
         return y;
     }
 
-    public int getZ()
-    {
+    public int getZ() {
         return z;
     }
 
@@ -34,7 +27,7 @@ public class Vector3d
     {
         if(this.getClass() == other.getClass())
         {
-            Vector3d v3d = (Vector3d) other;
+            Vector v3d = (Vector) other;
             return this.x == v3d.getX() &&
                     this.y == v3d.getY() &&
                     this.z == v3d.getZ();

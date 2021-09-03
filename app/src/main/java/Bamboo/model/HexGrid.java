@@ -1,14 +1,14 @@
 package Bamboo.model;
 
-import Bamboo.controller.Vector3d;
+import Bamboo.controller.Vector;
 
 import java.util.List;
 
 public interface HexGrid
 {
-    Tile getTile(Vector3d v);
+    Tile getTile(Vector v);
 
-    void setTile(Vector3d v, Colour c);
+    void setTile(Vector v, Colour c);
 
-    List<Tile> getAllNeighbours(Vector3d v);
+    List<Tile> getAllNeighbours(Vector v);
 }

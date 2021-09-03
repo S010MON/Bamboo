@@ -1,110 +1,90 @@
 package Bamboo.model;
 
-import Bamboo.controller.Vector2d;
-import Bamboo.controller.Vector3d;
+import Bamboo.controller.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HexGridArrayImp implements HexGrid
 {
-    private Tile[][] tiles;
-    private int height;
+    private Tile[][][] tiles;
     private int width;
     private int offset;
 
     public HexGridArrayImp(int radius)
     {
-        height = width = (radius ^ 2) + 1;
+        width = (radius * 2) + 1;
         offset = radius;
         tiles = buildGrid(radius);
     }
 
     @Override
-    public Tile getTile(Vector3d v3d)
+    public Tile getTile(Vector v)
     {
-        Vector2d v2d = convertToVector2d(v3d);
-        return tiles[v2d.getQ()][v2d.getR()];
+        if(v.getX() + v.getY() + v.getZ() != 0)
+            return null;
+        v = addOffset(v);
+        return tiles[v.getX()][v.getY()][v.getZ()];
     }
 
     @Override
-    public void setTile(Vector3d v3d, Colour c)
+    public void setTile(Vector v, Colour c)
     {
-        Vector2d v2d = convertToVector2d(v3d);
-        tiles[v2d.getQ()][v2d.getR()].setColour(c);
+        v = addOffset(v);
+        tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
     }
 
     @Override
-    public List<Tile> getAllNeighbours(Vector3d v3d)
+    public List<Tile> getAllNeighbours(Vector v)
     {
-        Vector2d v2d = convertToVector2d(v3d);
-        int q = v2d.getQ();
-        int r = v2d.getR();
+        v = addOffset(v);
+        int x = v.getX();
+        int y = v.getY();
+        int z = v.getZ();
+
         List<Tile> list = new ArrayList<>();
-        list.add(tiles[q-1][r]);
-        list.add(tiles[q-1][r+1]);
-        list.add(tiles[q][r-1]);
-        list.add(tiles[q][r+1]);
-        list.add(tiles[q][r-1]);
-        list.add(tiles[q+1][r]);
-        list.add(tiles[q+1][r]);
+        list.add(tiles[x+1][y][z]);
+        list.add(tiles[x-1][y][z]);
+        list.add(tiles[x][y+1][z]);
+        list.add(tiles[x][y-1][z]);
+        list.add(tiles[x][y][z+1]);
+        list.add(tiles[x][y][z-1]);
+
         return list;
     }
 
-    public Vector2d convertToVector2d(Vector3d v3d)
+    public Vector addOffset(Vector v)
     {
-        int q = v3d.getX() + offset;
-        int r = v3d.getY() + offset;
-        return new Vector2d(q, r);
+        int x = v.getX() + offset;
+        int y = v.getY() + offset;
+        int z = v.getZ() + offset;
+        return new Vector(x, y, z);
     }
 
-    public Vector3d convertToVector3d(Vector2d v2d)
+    public Vector removeOffset(Vector v)
     {
-        int x = v2d.getQ() - offset;
-        int y = v2d.getR() - offset;
-        int z = -x -y;
-        return new Vector3d(x, y, z);
+        int x = v.getX() - offset;
+        int y = v.getY() - offset;
+        int z = v.getZ() - offset;
+        return new Vector(x, y, z);
     }
 
-    private Tile[][] buildGrid(int radius)
+    private Tile[][][] buildGrid(int radius)
     {
-        Tile[][] grid = new Tile[width][height];
+        Tile[][][] grid = new Tile[width][width][width];
 
-        for (int i = 0; i < height; i++)
+        for (int x = 0; x < width; x++)
         {
-            for (int j = 0; j < width; j++)
+            for (int y = 0; y < width; y++)
             {
-                grid[i][j] = new Tile(Colour.EMPTY);
-            }
-        }
+                for (int z = 0; z < width; z++)
+                {
 
-        for (int i = 0; i < radius; i++)
-        {
-            for (int j = 0; j < (radius-i); j++)
-            {
-                grid[i][j] = null;
-                grid[height-1-i][height-1-j] = null;
+                    if(((x-offset) + (y-offset) + (z-offset)) == 0)
+                        grid[x][y][z] = new Tile(Colour.EMPTY);
+                }
             }
         }
         return grid;
-    }
-
-    public void prettyPrint()
-    {
-        for (int i = 0; i < tiles.length; i++)
-        {
-            for (int j = 0; j < tiles[i].length; j++)
-            {
-                if(tiles[i][j] == null)
-                    System.out.print(" ");
-                else if (tiles[i][j].getColour() == Colour.BLUE)
-                    System.out.print("O");
-                else if (tiles[i][j].getColour() == Colour.BLUE)
-                    System.out.print("X");
-                else
-                    System.out.print("_");
-            }
-            System.out.println("");
-        }
     }
 }
