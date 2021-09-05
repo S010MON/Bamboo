@@ -1,6 +1,6 @@
 package Bamboo;
 
-import javax.swing.*;
+import Bamboo.view.MainFrame;
 
 public class App {
 
