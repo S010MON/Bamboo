@@ -81,7 +81,7 @@ public class HexGridArrayImp implements HexGrid
                 {
 
                     if(((x-offset) + (y-offset) + (z-offset)) == 0)
-                        grid[x][y][z] = new Tile(Colour.EMPTY);
+                        grid[x][y][z] = new Tile(Colour.NONE);
                 }
             }
         }

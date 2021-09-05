@@ -22,7 +22,7 @@ class HexGridArrayImpTest
                 for (int z = 0; z < diameter; z++)
                 {
                     if(x + y + z == 0)
-                        assertEquals(Colour.EMPTY, hex.getTile(new Vector(x,y,z)).getColour());
+                        assertEquals(Colour.NONE, hex.getTile(new Vector(x,y,z)).getColour());
                     else
                         assertNull(hex.getTile(new Vector(x,y,z)));
                 }
