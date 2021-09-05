@@ -2,11 +2,11 @@ package Bamboo.model;
 
 public class Tile
 {
-    public Colour colour;
+    private Colour colour;
 
     public Tile(Colour colour)
     {
-        this.colour = Colour.EMPTY;
+        this.colour = Colour.NONE;
     }
 
     public void setColour(Colour colour)

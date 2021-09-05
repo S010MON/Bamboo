@@ -2,7 +2,7 @@ package Bamboo.model;
 
 public enum Colour
 {
-    EMPTY,
+    NONE,
     RED,
     BLUE;
 }
