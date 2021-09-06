@@ -8,6 +8,7 @@ import java.util.List;
 public class HexGridArrayImp implements HexGrid
 {
     private Tile[][][] tiles;
+    private List<Tile> tileList;
     private int width;
     private int offset;
 
@@ -15,6 +16,7 @@ public class HexGridArrayImp implements HexGrid
     {
         width = (radius * 2) + 1;
         offset = radius;
+        tileList = new ArrayList<>();
         tiles = buildGrid(radius);
     }
 
@@ -53,6 +55,12 @@ public class HexGridArrayImp implements HexGrid
         return list;
     }
 
+    @Override
+    public List<Tile> getAllTiles()
+    {
+        return tileList;
+    }
+
     public Vector addOffset(Vector v)
     {
         int x = v.getX() + offset;
@@ -81,7 +89,10 @@ public class HexGridArrayImp implements HexGrid
                 {
                     // Add a new tile without the offset
                     if(((x-offset) + (y-offset) + (z-offset)) == 0)
+                    {
                         grid[x][y][z] = new Tile(Colour.NONE, removeOffset(new Vector(x, y, z)));
+                        tileList.add(grid[x][y][z]);
+                    }
                 }
             }
         }

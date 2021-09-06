@@ -11,4 +11,6 @@ public interface HexGrid
     void setTile(Vector v, Colour c);
 
     List<Tile> getAllNeighbours(Vector v);
+
+    List<Tile> getAllTiles();
 }
