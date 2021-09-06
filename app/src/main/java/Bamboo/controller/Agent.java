@@ -1,4 +1,10 @@
 package Bamboo.controller;
 
-public interface Agent {
+import Bamboo.model.Game;
+
+public interface Agent
+{
+    public String getName();
+    public boolean isHuman();
+    public Vector getNextMove(Game game);
 }
