@@ -2,9 +2,7 @@ package Bamboo.controller;
 
 public class Settings
 {
-    public String player1Name;
-    public String player1Type;
-    public String player2Name;
-    public String player2Type;
+    public Agent player1;
+    public Agent player2;
     public int boardSize;
 }
