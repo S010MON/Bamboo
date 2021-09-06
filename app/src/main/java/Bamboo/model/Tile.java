@@ -1,15 +1,16 @@
 package Bamboo.model;
 
-import Bamboo.controller.Vector;
+import Bamboo.controller.CubeVector;
 
 public class Tile
 {
     private Colour colour;
-    private Vector vector;
+    private CubeVector vector;
 
-    public Tile(Colour colour, Vector vector)
+    public Tile(CubeVector vector)
     {
         this.colour = Colour.NONE;
+        this.vector = vector;
     }
 
     public void setColour(Colour colour)
@@ -24,7 +25,7 @@ public class Tile
         return colour;
     }
 
-    public Vector getVector() {
+    public CubeVector getVector() {
         return vector;
     }
 }

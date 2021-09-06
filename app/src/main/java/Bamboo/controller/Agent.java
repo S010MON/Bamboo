@@ -6,5 +6,5 @@ public interface Agent
 {
     public String getName();
     public boolean isHuman();
-    public Vector getNextMove(Game game);
+    public CubeVector getNextMove(Game game);
 }

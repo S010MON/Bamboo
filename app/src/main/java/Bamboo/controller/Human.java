@@ -22,7 +22,7 @@ public class Human implements Agent
     }
 
     @Override
-    public Vector getNextMove(Game game) {
+    public CubeVector getNextMove(Game game) {
         return null;
     }
 }

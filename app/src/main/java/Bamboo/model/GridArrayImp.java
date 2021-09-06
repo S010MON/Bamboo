@@ -1,18 +1,18 @@
 package Bamboo.model;
 
-import Bamboo.controller.Vector;
+import Bamboo.controller.CubeVector;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HexGridArrayImp implements HexGrid
+public class GridArrayImp implements Grid
 {
     private Tile[][][] tiles;
     private List<Tile> tileList;
     private int width;
     private int offset;
 
-    public HexGridArrayImp(int radius)
+    public GridArrayImp(int radius)
     {
         width = (radius * 2) + 1;
         offset = radius;
@@ -21,7 +21,7 @@ public class HexGridArrayImp implements HexGrid
     }
 
     @Override
-    public Tile getTile(Vector v)
+    public Tile getTile(CubeVector v)
     {
         if(v.getX() + v.getY() + v.getZ() != 0)
             return null;
@@ -30,14 +30,14 @@ public class HexGridArrayImp implements HexGrid
     }
 
     @Override
-    public void setTile(Vector v, Colour c)
+    public void setTile(CubeVector v, Colour c)
     {
         v = addOffset(v);
         tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
     }
 
     @Override
-    public List<Tile> getAllNeighbours(Vector v)
+    public List<Tile> getAllNeighbours(CubeVector v)
     {
         v = addOffset(v);
         int x = v.getX();
@@ -61,20 +61,20 @@ public class HexGridArrayImp implements HexGrid
         return tileList;
     }
 
-    public Vector addOffset(Vector v)
+    public CubeVector addOffset(CubeVector v)
     {
         int x = v.getX() + offset;
         int y = v.getY() + offset;
         int z = v.getZ() + offset;
-        return new Vector(x, y, z);
+        return new CubeVector(x, y, z);
     }
 
-    public Vector removeOffset(Vector v)
+    public CubeVector removeOffset(CubeVector v)
     {
         int x = v.getX() - offset;
         int y = v.getY() - offset;
         int z = v.getZ() - offset;
-        return new Vector(x, y, z);
+        return new CubeVector(x, y, z);
     }
 
     private Tile[][][] buildGrid(int radius)
@@ -90,7 +90,7 @@ public class HexGridArrayImp implements HexGrid
                     // Add a new tile without the offset
                     if(((x-offset) + (y-offset) + (z-offset)) == 0)
                     {
-                        grid[x][y][z] = new Tile(Colour.NONE, removeOffset(new Vector(x, y, z)));
+                        grid[x][y][z] = new Tile(removeOffset(new CubeVector(x, y, z)));
                         tileList.add(grid[x][y][z]);
                     }
                 }
