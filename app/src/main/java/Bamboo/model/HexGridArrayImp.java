@@ -79,9 +79,9 @@ public class HexGridArrayImp implements HexGrid
             {
                 for (int z = 0; z < width; z++)
                 {
-
+                    // Add a new tile without the offset
                     if(((x-offset) + (y-offset) + (z-offset)) == 0)
-                        grid[x][y][z] = new Tile(Colour.NONE);
+                        grid[x][y][z] = new Tile(Colour.NONE, removeOffset(new Vector(x, y, z)));
                 }
             }
         }

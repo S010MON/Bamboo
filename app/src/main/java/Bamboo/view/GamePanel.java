@@ -1,8 +1,8 @@
 package Bamboo.view;
 
-import java.awt.*;
+import javax.swing.*;
 
-public class GamePanel extends Panel
+public class GamePanel extends JPanel
 {
 
 }

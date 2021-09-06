@@ -1,10 +1,13 @@
 package Bamboo.model;
 
+import Bamboo.controller.Vector;
+
 public class Tile
 {
     private Colour colour;
+    private Vector vector;
 
-    public Tile(Colour colour)
+    public Tile(Colour colour, Vector vector)
     {
         this.colour = Colour.NONE;
     }
@@ -19,5 +22,9 @@ public class Tile
     public Colour getColour()
     {
         return colour;
+    }
+
+    public Vector getVector() {
+        return vector;
     }
 }
