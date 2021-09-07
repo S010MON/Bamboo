@@ -152,28 +152,22 @@ public class TestVectorConverter
         assertEquals(exp.getZ(), act.getZ());
     }
 
-    /* Testing Schema - OffsetOddRows
+    /* Testing Schema - doubleAndOffsetOddRows
      * Variables: q, r
      *                  q
      *         -10  | -1  |  0  |  1  |  10
      *      10   a  |  b  |  c  |  d  |  e
      *      ----------------------------------
-     *      1    f  |  g  |  h  |  i  |  j
+     *  r   1    f  |  g  |  h  |  i  |  j
      *      ----------------------------------
-     *   r  0    k  |  l  |  m  |  n  |  o
-     *      ----------------------------------
-     *      -1   p  |  q  |  r  |  s  |  t
-     *      ----------------------------------
-     *      -10  u  |  v  |  w  |  x  |  y
+     *      0    k  |  l  |  m  |  n  |  o
      */
     @Test void testDoubleAndOffsetOddRows_a()
     {
         AxialVector v = new AxialVector(-10,10);
         AxialVector exp = new AxialVector(-20,20);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_b()
@@ -181,9 +175,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(10,-1);
         AxialVector exp = new AxialVector(21,-2);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_c()
@@ -191,9 +183,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(0,10);
         AxialVector exp = new AxialVector(0,20);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_d()
@@ -201,9 +191,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(1,10);
         AxialVector exp = new AxialVector(2,20);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_e()
@@ -211,9 +199,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(10,10);
         AxialVector exp = new AxialVector(20,20);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_f()
@@ -221,9 +207,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(-10,1);
         AxialVector exp = new AxialVector(-19,2);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_g()
@@ -231,9 +215,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(-1,1);
         AxialVector exp = new AxialVector(-1,2);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_h()
@@ -241,9 +223,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(0,1);
         AxialVector exp = new AxialVector(1,2);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_i()
@@ -251,9 +231,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(1,1);
         AxialVector exp = new AxialVector(3,2);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_j()
@@ -261,9 +239,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(10,1);
         AxialVector exp = new AxialVector(21,2);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_k()
@@ -271,9 +247,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(-10,0);
         AxialVector exp = new AxialVector(-20,0);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_l()
@@ -281,9 +255,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(-1,0);
         AxialVector exp = new AxialVector(-2,0);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_m()
@@ -291,9 +263,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(0,0);
         AxialVector exp = new AxialVector(0,0);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_n()
@@ -301,9 +271,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(1,0);
         AxialVector exp = new AxialVector(2,0);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_o()
@@ -311,9 +279,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(10,0);
         AxialVector exp = new AxialVector(20,0);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_p()
@@ -321,9 +287,7 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(-10,-1);
         AxialVector exp = new AxialVector(-19,-2);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
-
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+        assertEquals(exp, act);
     }
 
     @Test void testDoubleAndOffsetOddRows_q()
@@ -331,8 +295,48 @@ public class TestVectorConverter
         AxialVector v = new AxialVector(-1,-1);
         AxialVector exp = new AxialVector(-1,-2);
         AxialVector act = VectorConverter.doubleAndOffsetOddRows(v);
+        assertEquals(exp, act);
+    }
 
-        assertEquals(exp.getQ(), act.getQ());
-        assertEquals(exp.getR(), act.getR());
+    /* Testing Schema - halveAndAlignRows
+     * Variables: q, r
+     *                  q
+     *         -10  | -1  |  0  |  1  |  10
+     *      10   a  |  b  |  c  |  d  |  e
+     *      ----------------------------------
+     *  r   1    f  |  g  |  h  |  i  |  j
+     *      ----------------------------------
+     *      0    k  |  l  |  m  |  n  |  o
+     */
+    @Test void testHalveAndAlignRows_a()
+    {
+        AxialVector v = new AxialVector(-10,10);
+        AxialVector exp = new AxialVector(-5,5);
+        AxialVector act = VectorConverter.halveAndAlignOddRows(v);
+        assertEquals(exp, act);
+    }
+
+    @Test void testHalveAndAlignRows_b()
+    {
+        AxialVector v = new AxialVector(-1,10);
+        AxialVector exp = new AxialVector(0,5);
+        AxialVector act = VectorConverter.halveAndAlignOddRows(v);
+        assertEquals(exp, act);
+    }
+
+    @Test void testHalveAndAlignRows_c()
+    {
+        AxialVector v = new AxialVector(0,10);
+        AxialVector exp = new AxialVector(0,5);
+        AxialVector act = VectorConverter.halveAndAlignOddRows(v);
+        assertEquals(exp, act);
+    }
+
+    @Test void testHalveAndAlignRows_d()
+    {
+        AxialVector v = new AxialVector(1,10);
+        AxialVector exp = new AxialVector(-5,5);
+        AxialVector act = VectorConverter.halveAndAlignOddRows(v);
+        assertEquals(exp, act);
     }
 }
