@@ -17,6 +17,21 @@ public class AxialVector
         return r;
     }
 
+    public AxialVector multiply(int scalar)
+    {
+        return new AxialVector(this.getQ() * scalar, this.getR() * scalar);
+    }
+
+    public AxialVector divide(int scalar)
+    {
+        return new AxialVector(this.getQ() / scalar, this.getR() / scalar);
+    }
+
+    public AxialVector add(AxialVector other)
+    {
+        return new AxialVector(this.getQ() + other.getQ(), this.getR() + other.getR());
+    }
+
     @Override
     public boolean equals(Object other)
     {
