@@ -2,6 +2,7 @@ package Bamboo.view;
 
 import Bamboo.controller.AxialVector;
 import Bamboo.controller.CubeVector;
+import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import Bamboo.model.Tile;
@@ -44,10 +45,12 @@ public class Canvas extends JPanel
         g2d.setStroke(circle_thickness);
         for(Tile tile: grid.getAllTiles())
         {
-            CubeVector v = tile.getVector();
-            int x = centreX + (v.getX() * circle_radius);
-            int y = centreY + (v.getY() * circle_radius);
+            AxialVector v = VectorConverter.convertToAxial(tile.getVector());
+            int x = centreX + (v.getQ() * circle_radius);
+            int y = centreY + (v.getR() * circle_radius);
             g2d.drawOval(x, y, circle_radius, circle_radius);
         }
     }
+
+
 }
