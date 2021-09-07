@@ -1,33 +1,48 @@
 package Bamboo.view;
 
+import Bamboo.controller.Human;
+import Bamboo.controller.Settings;
+import Bamboo.model.Game;
+
 import javax.swing.*;
+import java.awt.*;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame
+{
+    private Game currentGame;
+    private JPanel currentPanel;
+    private Dimension screenSize;
 
-    private JPanel currentPanel ;
 
-    private String player1name ;
-    private String player2name ;
+    public MainFrame()
+    {
+        buildFrame();
 
-    public MainFrame(){
+        // TODO add setupPanel ** here ** to get the settings for the new game
+        currentGame = new Game(defaultSettings());
+        currentPanel = new GamePanel(screenSize, currentGame);
 
+        setLayout(new BorderLayout());
+        add(currentPanel);
+        setVisible(true);
+    }
+
+    /** Temporary Measure for testing - REMOVE! */
+    private Settings defaultSettings()
+    {
+        return new Settings(
+                new Human("Player 1"),
+                new Human("Player 2"),
+                5);
+    }
+
+    /** All frame settings detailed here */
+    private void buildFrame()
+    {
+        screenSize  = Toolkit.getDefaultToolkit().getScreenSize();
         setTitle("Bamboo");
-        setSize(1000,900);
+        setSize(screenSize);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-        String player1 = JOptionPane.showInputDialog("Player 1 : ") ;
-        String player2 = JOptionPane.showInputDialog("Player 2 : ") ;
-
-        player1name = player1 ;
-        player2name = player2 ;
-    }
-
-    public String getPlayer1Name(){
-        return player1name;
-    }
-
-    public String getPlayer2Name(){
-        return player2name ;
+        setResizable(false);
     }
 }
