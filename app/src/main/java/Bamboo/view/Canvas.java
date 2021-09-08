@@ -89,15 +89,16 @@ class TileClickListener extends MouseAdapter{
             int y = centreY + (v.getR() * circle_radius/2) + circle_radius/2;
 
 
-              if(e.getX()>(x-circle_radius/2) && e.getX()<(x+circle_radius/2) && e.getY()>(y-circle_radius/2) && e.getY()<(y+circle_radius/2)){
-             // if(e.getX()<=(x+circle_radius) && e.getX()>=x && e.getY()<=(y+circle_radius) && e.getY()>=y) {
+              if(e.getX()>(x-circle_radius/2)
+                      && e.getX()<(x+circle_radius/2)
+                      && e.getY()>(y-circle_radius/2)
+                      && e.getY()<(y+circle_radius/2)){
+
                 System.out.print("coloured ");
                 System.out.println(x + " " + y);
-               AxialVector vector2D = VectorConverter.convertToAxial(tile.getVector()) ;
+                AxialVector vector2D = VectorConverter.convertToAxial(tile.getVector()) ;
                 System.out.println("Tile vector : "+vector2D.toString());
                 changeColorTile(tile);
-
-
             }
         }
 
