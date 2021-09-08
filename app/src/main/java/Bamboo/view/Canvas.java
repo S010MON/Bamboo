@@ -76,7 +76,6 @@ public class Canvas extends JPanel
     class TileClickListener extends MouseAdapter{
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("clicked "+e.getX()+", "+e.getY()) ;
 
             List<Tile> tileList = grid.getAllTiles() ;
 
