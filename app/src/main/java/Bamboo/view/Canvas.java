@@ -33,7 +33,7 @@ public class Canvas extends JPanel
         centreY = screenSize.height/2;
         setSize(screenSize.width, screenSize.height);
 
-        addMouseListener(new TileClickListener());
+        addMouseListener(new TileClickListener(game, this));
     }
 
     @Override
@@ -65,29 +65,16 @@ public class Canvas extends JPanel
         }
     }
 
-    class TileClickListener extends MouseAdapter{
-        @Override
-        public void mouseClicked(MouseEvent e) {
+    public int getCircle_radius() {
+        return circle_radius;
+    }
 
-            List<Tile> tileList = game.getAllTiles() ;
+    public int getCentreX() {
+        return centreX;
+    }
 
-            for(Tile tile: game.getAllTiles())
-            {
-                AxialVector v = VectorConverter.convertToAxial(tile.getVector());
-                v = VectorConverter.doubleAndOffsetOddRows(v);
-                int x = centreX + (v.getQ() * circle_radius/2) + circle_radius/2;
-                int y = centreY + (v.getR() * circle_radius/2) + circle_radius/2;
-
-                if(e.getX()>(x-circle_radius/2)
-                      && e.getX()<(x+circle_radius/2)
-                      && e.getY()>(y-circle_radius/2)
-                      && e.getY()<(y+circle_radius/2))
-                {
-                    game.placeNextAt(tile.getVector());
-                    repaint();
-                }
-            }
-        }
+    public int getCentreY() {
+        return centreY;
     }
 }
 

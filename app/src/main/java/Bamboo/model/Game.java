@@ -1,9 +1,6 @@
 package Bamboo.model;
 
-import Bamboo.controller.Agent;
-import Bamboo.controller.CubeVector;
-import Bamboo.controller.Settings;
-import Bamboo.controller.VectorConverter;
+import Bamboo.controller.*;
 
 import java.awt.*;
 import java.util.List;
@@ -20,6 +17,17 @@ public class Game
         this.grid = new GridArrayImp(settings.boardSize);
     }
 
+    public Agent getCurrentPlayer()
+    {
+        return currentPlayer;
+    }
+
+    public boolean currentPlayerHuman()
+    {
+       //TODO (add this in once implemented) -> return currentPlayer instanceof Human;
+        return true;
+    }
+
     public List<Tile> getAllTiles()
     {
         return grid.getAllTiles();
@@ -27,6 +35,7 @@ public class Game
 
     public void placeNextAt(CubeVector v)
     {
+        System.out.println("Placing tile at: " + v.toString());
         grid.setTile(v, Color.RED);
     }
 }
