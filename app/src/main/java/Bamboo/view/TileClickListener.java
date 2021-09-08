@@ -5,7 +5,6 @@ import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
 
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -26,19 +25,18 @@ public class TileClickListener implements MouseListener
     {
         if(game.currentPlayerHuman())
         {
-            List<Tile> tileList = game.getAllTiles();
-
             for(Tile tile: game.getAllTiles())
             {
                 AxialVector v = VectorConverter.convertToAxial(tile.getVector());
                 v = VectorConverter.doubleAndOffsetOddRows(v);
-                int x = canvas.getCentreX() + (v.getQ() * canvas.getCircle_radius()/2) + canvas.getCircle_radius()/2;
-                int y = canvas.getCentreY() + (v.getR() * canvas.getCircle_radius()/2) + canvas.getCircle_radius()/2;
+                int r = canvas.getCircle_radius();
+                int x = canvas.getCentreX() + (v.getQ() * r/2) + r/2;
+                int y = canvas.getCentreY() + (v.getR() * r/2) + r/2;
 
-                if(e.getX()>(x-canvas.getCircle_radius()/2)
-                        && e.getX()<(x+canvas.getCircle_radius()/2)
-                        && e.getY()>(y-canvas.getCircle_radius()/2)
-                        && e.getY()<(y+canvas.getCircle_radius()/2))
+                if(e.getX()>(x-r/2)
+                        && e.getX()<(x+r/2)
+                        && e.getY()>(y-r/2)
+                        && e.getY()<(y+r/2))
                 {
                     game.placeNextAt(tile.getVector());
                     canvas.repaint();

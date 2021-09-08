@@ -1,18 +1,12 @@
 package Bamboo.view;
 
 import Bamboo.controller.AxialVector;
-import Bamboo.controller.CubeVector;
 import Bamboo.controller.VectorConverter;
-import Bamboo.model.Colour;
 import Bamboo.model.Game;
-import Bamboo.model.Grid;
 import Bamboo.model.Tile;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.List;
 
 public class Canvas extends JPanel
 {
