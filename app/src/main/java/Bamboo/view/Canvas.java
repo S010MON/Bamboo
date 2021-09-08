@@ -23,6 +23,7 @@ public class Canvas extends JPanel
     private int centreX;
     private int centreY;
 
+
     private Color foreground = Color.BLACK;
     private Color background = Color.WHITE;
 
@@ -34,6 +35,7 @@ public class Canvas extends JPanel
         setSize(screenSize.width, screenSize.height);
 
         addMouseListener(new TileClickListener());
+
     }
 
     @Override
@@ -53,8 +55,8 @@ public class Canvas extends JPanel
         {
             AxialVector v = VectorConverter.convertToAxial(tile.getVector());
             v = VectorConverter.doubleAndOffsetOddRows(v);
-            int x = centreX + (v.getQ() * circle_radius/2);
-            int y = centreY + (v.getR() * circle_radius/2);
+            int x = centreX + (v.getQ() * circle_radius/2) ;
+            int y = centreY + (v.getR() * circle_radius/2) ;
 
 
             g2d.setColor(tile.getColour());
@@ -67,9 +69,9 @@ public class Canvas extends JPanel
     }
 
     public void changeColorTile(Tile tile){
-        tile.setColour(Color.RED);
-        repaint();
 
+            tile.setColour(Color.red);
+            repaint();
     }
 
 class TileClickListener extends MouseAdapter{
@@ -83,11 +85,12 @@ class TileClickListener extends MouseAdapter{
         {
             AxialVector v = VectorConverter.convertToAxial(tile.getVector());
             v = VectorConverter.doubleAndOffsetOddRows(v);
-            int x = centreX + (v.getQ() * circle_radius/2);
-            int y = centreY + (v.getR() * circle_radius/2);
+            int x = centreX + (v.getQ() * circle_radius/2) + circle_radius/2;
+            int y = centreY + (v.getR() * circle_radius/2) + circle_radius/2;
 
-           // if (e.getX()> (x-circle_radius/2) || e.getX()< (x+circle_radius/2) || e.getY()>(y-circle_radius/2) || e.getY()<(y+circle_radius/2)) {
+
               if(e.getX()>(x-circle_radius/2) && e.getX()<(x+circle_radius/2) && e.getY()>(y-circle_radius/2) && e.getY()<(y+circle_radius/2)){
+             // if(e.getX()<=(x+circle_radius) && e.getX()>=x && e.getY()<=(y+circle_radius) && e.getY()>=y) {
                 System.out.print("coloured ");
                 System.out.println(x + " " + y);
                AxialVector vector2D = VectorConverter.convertToAxial(tile.getVector()) ;
