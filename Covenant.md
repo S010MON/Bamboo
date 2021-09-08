@@ -1,5 +1,5 @@
 
-# Group 16 Covenant [DRAFT - TO BE CONSIDERED]
+# Group 16 Covenant 
 
 This covenant dictates how, where, and what we work on for Project 2.1.  It is agreed to by the team with a majority vote and any changes can be made with a team majority in favour of proposals.  In the case of less than full attendance, a quorum of 5 people should be present to make changes.
 
