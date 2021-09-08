@@ -23,7 +23,6 @@ public class Canvas extends JPanel
     private int centreX;
     private int centreY;
 
-
     private Color foreground = Color.BLACK;
     private Color background = Color.WHITE;
 
@@ -93,10 +92,6 @@ public class Canvas extends JPanel
                       && e.getY()>(y-circle_radius/2)
                       && e.getY()<(y+circle_radius/2))
                 {
-                    System.out.print("coloured ");
-                    System.out.println(x + " " + y);
-                    AxialVector vector2D = VectorConverter.convertToAxial(tile.getVector()) ;
-                    System.out.println("Tile vector : "+vector2D.toString());
                     changeColorTile(tile);
                 }
             }
