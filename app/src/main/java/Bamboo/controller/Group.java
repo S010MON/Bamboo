@@ -11,6 +11,7 @@ import java.util.List;
 public class Group {
     ArrayList<Tile> tiles = new ArrayList<>();
     public static Grid grid;
+    List<Tile> grid_tiles = new ArrayList<>();
 
     public static void setGrid(Grid grid_){
         grid = grid_;
@@ -36,19 +37,21 @@ public class Group {
         tiles.addAll(addition);
     }
 
+    //VERY INEFFICIENT
     public Group(List<Tile> list){
         tiles = new ArrayList<Tile>(list);
+        grid_tiles = grid.getAllTiles();
     }
 
     public Group(){
         tiles = new ArrayList<Tile>();
+        grid_tiles = grid.getAllTiles();
     }
 
 
 
     public static boolean checkFinish(Grid grid,int current_player){
         Group.setGrid(grid);
-        boolean is_finished = false;
         Colour player_colour;
         List<Tile> all_tiles = grid.getAllTiles();
         //get player colour
@@ -76,7 +79,7 @@ public class Group {
         //- list all groups and find max allowed size
         //- check if there is a group below that size
         //- for all groups that are extendable, check if there are free neighbours
-        List<Group> groups = collect_groups(player_colour, all_tiles);
+        List<Group> groups = collect_groups(player_colour);
         boolean can_place = placeable_with_groups(groups);
         return !can_place;
         //list all groups
@@ -109,7 +112,7 @@ public class Group {
 
     }
     //collect group a tile belongs to
-    static Group collect_group(Tile tile, Colour colour, List<Tile> tiles)
+    static Group collect_group(Tile tile, Colour colour)
     {
         Group group = new Group();
         group.add(tile);
@@ -134,14 +137,15 @@ public class Group {
         return group;
     }
 
-    static List<Group> collect_groups(Colour colour, List<Tile> tiles){
+    static List<Group> collect_groups(Colour colour){
+        List<Tile> tiles = grid.getAllTiles();
         List<Group> groups = new ArrayList<Group>();
         Group collected_tiles = new Group();
         int max_group_size = 0;
         for(Tile tile : tiles){
             if(!isin(tile, collected_tiles)){
                 if(tile.getColour() == colour){
-                    Group current_group = collect_group(tile, colour, tiles);
+                    Group current_group = collect_group(tile, colour);
                     collected_tiles.addAll(current_group.getTiles());
                     groups.add(current_group);
                 }
@@ -150,26 +154,35 @@ public class Group {
         return groups;
     }
 
-
+    public static int countGroups(Colour player_colour, Grid grid_){
+        setGrid(grid_);
+        return collect_groups(player_colour).size();
+    }
 
     static boolean placeable_with_groups(List<Group> groups){
         int max_group_size = groups.size();
-        for(Group current_group : groups){//for each group:
-            if(current_group.size() < max_group_size){//check if current group can be extended
-                //there exists a group that is less than max size
-                //check whether it has adjacent free tiles
-                for(Tile tile : current_group.getTiles()){
-                    Group nb = new Group(grid.getAllNeighbours(tile.getVector()));
-                    for(Tile current_nb : nb.getTiles()){
-                        if(current_nb.getColour() == Colour.NONE){
-                            //if there exists an empty tile adjacent to a group member, game cannot be over
-                            return true;
-                        }
+        if(!groups.isEmpty()){
+            for(Group current_group : groups){//for each group:
+                if(current_group.size() < max_group_size){//check if current group can be extended
+                    //there exists a group that is less than max size
+                    //check whether it has adjacent free tiles
+                    for(Tile tile : current_group.getTiles()){
+                        Group nb = new Group(grid.getAllNeighbours(tile.getVector()));
+                        for(Tile current_nb : nb.getTiles()){
+                            if(current_nb.getColour() == Colour.NONE){
+                                //if there exists an empty tile adjacent to a group member, game cannot be over
+                                return true;
+                            }
 
+                        }
                     }
                 }
+
             }
 
+        }
+        else{
+            return true;
         }
         return false;
     }
