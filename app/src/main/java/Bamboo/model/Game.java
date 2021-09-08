@@ -1,7 +1,12 @@
 package Bamboo.model;
 
 import Bamboo.controller.Agent;
+import Bamboo.controller.CubeVector;
 import Bamboo.controller.Settings;
+import Bamboo.controller.VectorConverter;
+
+import java.awt.*;
+import java.util.List;
 
 public class Game
 {
@@ -15,8 +20,13 @@ public class Game
         this.grid = new GridArrayImp(settings.boardSize);
     }
 
-    public Grid getGrid()
+    public List<Tile> getAllTiles()
     {
-        return grid;
+        return grid.getAllTiles();
+    }
+
+    public void placeNextAt(CubeVector v)
+    {
+        grid.setTile(v, Color.RED);
     }
 }

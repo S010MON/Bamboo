@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Canvas extends JPanel
 {
-    private Grid grid;
+    private Game game;
 
     private int circle_radius = 50;
     private BasicStroke circle_thickness = new BasicStroke(2);
@@ -28,13 +28,12 @@ public class Canvas extends JPanel
 
     public Canvas(Dimension screenSize, Game game)
     {
-        this.grid = game.getGrid();
+        this.game = game;
         centreX = screenSize.width/2;
         centreY = screenSize.height/2;
         setSize(screenSize.width, screenSize.height);
 
         addMouseListener(new TileClickListener());
-
     }
 
     @Override
@@ -50,13 +49,12 @@ public class Canvas extends JPanel
     {
         g2d.setColor(foreground);
         g2d.setStroke(circle_thickness);
-        for(Tile tile: grid.getAllTiles())
+        for(Tile tile: game.getAllTiles())
         {
             AxialVector v = VectorConverter.convertToAxial(tile.getVector());
             v = VectorConverter.doubleAndOffsetOddRows(v);
             int x = centreX + (v.getQ() * circle_radius/2) ;
             int y = centreY + (v.getR() * circle_radius/2) ;
-
 
             g2d.setColor(tile.getColour());
             g2d.fillOval(x,y,circle_radius,circle_radius);
@@ -67,19 +65,13 @@ public class Canvas extends JPanel
         }
     }
 
-    public void changeColorTile(Tile tile){
-
-            tile.setColour(Color.red);
-            repaint();
-    }
-
     class TileClickListener extends MouseAdapter{
         @Override
         public void mouseClicked(MouseEvent e) {
 
-            List<Tile> tileList = grid.getAllTiles() ;
+            List<Tile> tileList = game.getAllTiles() ;
 
-            for(Tile tile: grid.getAllTiles())
+            for(Tile tile: game.getAllTiles())
             {
                 AxialVector v = VectorConverter.convertToAxial(tile.getVector());
                 v = VectorConverter.doubleAndOffsetOddRows(v);
@@ -91,7 +83,8 @@ public class Canvas extends JPanel
                       && e.getY()>(y-circle_radius/2)
                       && e.getY()<(y+circle_radius/2))
                 {
-                    changeColorTile(tile);
+                    game.placeNextAt(tile.getVector());
+                    repaint();
                 }
             }
         }
