@@ -19,6 +19,7 @@ public class Canvas extends JPanel
 
     private Color foreground = Color.BLACK;
     private Color background = Color.WHITE;
+    private Color outline = Color.BLACK;
 
     public Canvas(Dimension screenSize, Game game)
     {
@@ -26,7 +27,6 @@ public class Canvas extends JPanel
         centreX = screenSize.width/2;
         centreY = screenSize.height/2;
         setSize(screenSize.width, screenSize.height);
-
         addMouseListener(new TileClickListener(game, this));
     }
 
@@ -52,10 +52,8 @@ public class Canvas extends JPanel
 
             g2d.setColor(tile.getColour());
             g2d.fillOval(x,y,circle_radius,circle_radius);
-            g2d.setColor(Color.BLACK);
-
+            g2d.setColor(outline);
             g2d.drawOval(x, y, circle_radius, circle_radius);
-
         }
     }
 
