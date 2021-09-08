@@ -1,28 +1,29 @@
 package Bamboo.model;
 
 import Bamboo.controller.CubeVector;
+import java.awt.Color;
 
 public class Tile
 {
-    private Colour colour;
+    private Color color;
     private CubeVector vector;
 
     public Tile(CubeVector vector)
     {
-        this.colour = Colour.NONE;
+        this.color = Color.white;
         this.vector = vector;
     }
 
-    public void setColour(Colour colour)
+    public void setColour(Color color)
     {
         // Test that this is the first (and only) colour change
-        assert colour != Colour.BLUE && colour != Colour.RED;
-        this.colour = colour;
+        assert color != Color.BLUE && color != Color.RED;
+        this.color = color;
     }
 
-    public Colour getColour()
+    public Color getColour()
     {
-        return colour;
+        return color;
     }
 
     public CubeVector getVector() {
