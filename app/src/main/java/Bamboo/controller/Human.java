@@ -2,13 +2,17 @@ package Bamboo.controller;
 
 import Bamboo.model.Game;
 
+import java.awt.*;
+
 public class Human implements Agent
 {
-    public String name;
+    private String name;
+    private Color color;
 
-    public Human(String name)
+    public Human(String name, Color color)
     {
         this.name = name;
+        this.color = color;
     }
 
     @Override
@@ -24,5 +28,11 @@ public class Human implements Agent
     @Override
     public CubeVector getNextMove(Game game) {
         return null;
+    }
+
+    @Override
+    public Color getColor()
+    {
+        return color;
     }
 }

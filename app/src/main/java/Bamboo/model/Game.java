@@ -15,6 +15,9 @@ public class Game
     public Game(Settings settings)
     {
         this.grid = new GridArrayImp(settings.boardSize);
+        this.player1 = settings.player1;
+        this.player2 = settings.player2;
+        currentPlayer = player1;
     }
 
     public Agent getCurrentPlayer()
@@ -24,8 +27,7 @@ public class Game
 
     public boolean currentPlayerHuman()
     {
-       //TODO (add this in once implemented) -> return currentPlayer instanceof Human;
-        return true;
+       return currentPlayer instanceof Human;
     }
 
     public List<Tile> getAllTiles()
@@ -35,7 +37,15 @@ public class Game
 
     public void placeNextAt(CubeVector v)
     {
-        System.out.println("Placing tile at: " + v.toString());
-        grid.setTile(v, Color.RED);
+        grid.setTile(v, currentPlayer.getColor());
+        toggleTurn();
+    }
+
+    private void toggleTurn()
+    {
+        if(currentPlayer == player1)
+            currentPlayer = player2;
+        else
+            currentPlayer = player1;
     }
 }
