@@ -31,8 +31,8 @@ public class MainFrame extends JFrame
     private Settings defaultSettings()
     {
         return new Settings(
-                new Human("Player 1"),
-                new Human("Player 2"),
+                new Human("Player 1", Color.BLUE),
+                new Human("Player 2", Color.RED),
                 5);
     }
 
