@@ -1,7 +1,9 @@
 package Bamboo.model;
 
-import Bamboo.controller.Agent;
-import Bamboo.controller.Settings;
+import Bamboo.controller.*;
+
+import java.awt.*;
+import java.util.List;
 
 public class Game
 {
@@ -13,10 +15,37 @@ public class Game
     public Game(Settings settings)
     {
         this.grid = new GridArrayImp(settings.boardSize);
+        this.player1 = settings.player1;
+        this.player2 = settings.player2;
+        currentPlayer = player1;
     }
 
-    public Grid getGrid()
+    public Agent getCurrentPlayer()
     {
-        return grid;
+        return currentPlayer;
+    }
+
+    public boolean currentPlayerHuman()
+    {
+       return currentPlayer instanceof Human;
+    }
+
+    public List<Tile> getAllTiles()
+    {
+        return grid.getAllTiles();
+    }
+
+    public void placeNextAt(CubeVector v)
+    {
+        grid.setTile(v, currentPlayer.getColor());
+        toggleTurn();
+    }
+
+    private void toggleTurn()
+    {
+        if(currentPlayer == player1)
+            currentPlayer = player2;
+        else
+            currentPlayer = player1;
     }
 }

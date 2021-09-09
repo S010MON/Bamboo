@@ -3,7 +3,6 @@ package Bamboo.view;
 import Bamboo.controller.AxialVector;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
-import Bamboo.model.Grid;
 import Bamboo.model.Tile;
 
 import javax.swing.*;
@@ -11,7 +10,7 @@ import java.awt.*;
 
 public class Canvas extends JPanel
 {
-    private Grid grid;
+    private Game game;
 
     private int circle_radius = 50;
     private BasicStroke circle_thickness = new BasicStroke(2);
@@ -20,13 +19,15 @@ public class Canvas extends JPanel
 
     private Color foreground = Color.BLACK;
     private Color background = Color.WHITE;
+    private Color outline = Color.BLACK;
 
     public Canvas(Dimension screenSize, Game game)
     {
-        this.grid = game.getGrid();
+        this.game = game;
         centreX = screenSize.width/2;
         centreY = screenSize.height/2;
         setSize(screenSize.width, screenSize.height);
+        addMouseListener(new TileClickListener(game, this));
     }
 
     @Override
@@ -42,15 +43,30 @@ public class Canvas extends JPanel
     {
         g2d.setColor(foreground);
         g2d.setStroke(circle_thickness);
-        for(Tile tile: grid.getAllTiles())
+        for(Tile tile: game.getAllTiles())
         {
             AxialVector v = VectorConverter.convertToAxial(tile.getVector());
             v = VectorConverter.doubleAndOffsetOddRows(v);
-            int x = centreX + (v.getQ() * circle_radius/2);
-            int y = centreY + (v.getR() * circle_radius/2);
+            int x = centreX + (v.getQ() * circle_radius/2) ;
+            int y = centreY + (v.getR() * circle_radius/2) ;
+
+            g2d.setColor(tile.getColour());
+            g2d.fillOval(x,y,circle_radius,circle_radius);
+            g2d.setColor(outline);
             g2d.drawOval(x, y, circle_radius, circle_radius);
         }
     }
 
+    public int getCircle_radius() {
+        return circle_radius;
+    }
 
+    public int getCentreX() {
+        return centreX;
+    }
+
+    public int getCentreY() {
+        return centreY;
+    }
 }
+
