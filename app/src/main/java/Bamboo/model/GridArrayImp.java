@@ -46,12 +46,23 @@ public class GridArrayImp implements Grid
         int z = v.getZ();
 
         List<Tile> list = new ArrayList<>();
-        list.add(tiles[x+1][y][z]);
-        list.add(tiles[x-1][y][z]);
-        list.add(tiles[x][y+1][z]);
-        list.add(tiles[x][y-1][z]);
-        list.add(tiles[x][y][z+1]);
-        list.add(tiles[x][y][z-1]);
+        if(isInBounds(x, y-1, z+1))
+            list.add(tiles[x][y-1][z+1]);
+
+        if(isInBounds(x, y+1, z-1))
+            list.add(tiles[x][y+1][z-1]);
+
+        if(isInBounds(x+1, y, z-1))
+            list.add(tiles[x+1][y][z-1]);
+
+        if(isInBounds(x-1, y, z+1))
+            list.add(tiles[x-1][y][z+1]);
+
+        if(isInBounds(x+1, y-1, z))
+            list.add(tiles[x+1][y-1][z]);
+
+        if(isInBounds(x-1, y+1, z))
+            list.add(tiles[x-1][y+1][z]);
 
         return list;
     }
@@ -98,5 +109,17 @@ public class GridArrayImp implements Grid
             }
         }
         return grid;
+    }
+
+    private boolean isInBounds(int x, int y, int z)
+    {
+        boolean inBounds = true;
+        if(x < 0 || x >= width)
+            inBounds = false;
+        if(y < 0 || y >= width)
+            inBounds = false;
+        if(z < 0 || z >= width)
+            inBounds = false;
+        return inBounds;
     }
 }
