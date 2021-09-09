@@ -46,12 +46,24 @@ public class GridArrayImp implements Grid
         int z = v.getZ();
 
         List<Tile> list = new ArrayList<>();
-        list.add(tiles[x+1][y][z]);
-        list.add(tiles[x-1][y][z]);
-        list.add(tiles[x][y+1][z]);
-        list.add(tiles[x][y-1][z]);
-        list.add(tiles[x][y][z+1]);
-        list.add(tiles[x][y][z-1]);
+        if(x-offset != 0){
+            list.add(tiles[x-1][y][z]);
+        }
+        if(x + offset != width){
+            list.add(tiles[x+1][y][z]);
+        }
+        if(y -offset != 0){
+            list.add(tiles[x][y-1][z]);
+        }
+        if(y + offset != width){
+            list.add(tiles[x][y+1][z]);
+        }
+        if(z-offset != 0){
+            list.add(tiles[x][y][z-1]);
+        }
+        if(z + offset != width){
+            list.add(tiles[x][y][z+1]);
+        }
 
         return list;
     }
