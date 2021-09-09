@@ -9,6 +9,7 @@ import Bamboo.model.GridArrayImp;
 import Bamboo.model.Tile;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class GroupTest {
         for(Tile tile : grid.getAllTiles()){
             CubeVector vector = tile.getVector();
             if(red_counter < red){
-                grid.setTile(vector, Colour.RED);
+                grid.setTile(vector, Color.RED);
                 red_counter++;
             }
 

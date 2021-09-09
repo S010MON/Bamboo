@@ -4,6 +4,7 @@ import Bamboo.model.Colour;
 import Bamboo.model.Grid;
 import Bamboo.model.Tile;
 
+import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,14 +53,14 @@ public class Group {
 
     public static boolean checkFinish(Grid grid,int current_player){
         Group.setGrid(grid);
-        Colour player_colour;
+        Color player_color;
         List<Tile> all_tiles = grid.getAllTiles();
-        //get player colour
+        //get player color
         if(current_player == 0){
-            player_colour = Colour.RED;
+            player_color = Color.RED;
         }
         else{
-            player_colour = Colour.BLUE;
+            player_color = Color.BLUE;
         }
 
         //2 ending conditions:
@@ -79,7 +80,7 @@ public class Group {
         //- list all groups and find max allowed size
         //- check if there is a group below that size
         //- for all groups that are extendable, check if there are free neighbours
-        List<Group> groups = collect_groups(player_colour);
+        List<Group> groups = collect_groups(player_color);
         boolean can_place = placeable_with_groups(groups);
         return !can_place;
         //list all groups
@@ -104,7 +105,7 @@ public class Group {
     //----Search empty tile function---
     static boolean contains_empty(Group tiles){
         for(Tile tile : tiles.getTiles()){
-            if(tile.getColour() == Colour.NONE){
+            if(tile.getColor() == Color.WHITE){
                 return true;
             }
         }
@@ -112,7 +113,7 @@ public class Group {
 
     }
     //collect group a tile belongs to
-    static Group collect_group(Tile tile, Colour colour)
+    static Group collect_group(Tile tile, Color color)
     {
         Group group = new Group();
         group.add(tile);
@@ -123,7 +124,7 @@ public class Group {
         while(visited_tiles.size() < group.size()){//continue as long as not all group members have been visited
             neighbours = grid.getAllNeighbours(current_tile.getVector());
             for(Tile nb : neighbours){
-                if(nb.getColour() == colour){
+                if(nb.getColor() == color){
                     if(!isin(nb, group)){
                         group.add(nb);
                     }
@@ -137,15 +138,15 @@ public class Group {
         return group;
     }
 
-    static List<Group> collect_groups(Colour colour){
+    static List<Group> collect_groups(Color color){
         List<Tile> tiles = grid.getAllTiles();
         List<Group> groups = new ArrayList<Group>();
         Group collected_tiles = new Group();
         int max_group_size = 0;
         for(Tile tile : tiles){
             if(!isin(tile, collected_tiles)){
-                if(tile.getColour() == colour){
-                    Group current_group = collect_group(tile, colour);
+                if(tile.getColor() == color){
+                    Group current_group = collect_group(tile, color);
                     collected_tiles.addAll(current_group.getTiles());
                     groups.add(current_group);
                 }
@@ -154,9 +155,9 @@ public class Group {
         return groups;
     }
 
-    public static int countGroups(Colour player_colour, Grid grid_){
+    public static int countGroups(Color player_color, Grid grid_){
         setGrid(grid_);
-        return collect_groups(player_colour).size();
+        return collect_groups(player_color).size();
     }
 
     static boolean placeable_with_groups(List<Group> groups){
@@ -169,7 +170,7 @@ public class Group {
                     for(Tile tile : current_group.getTiles()){
                         Group nb = new Group(grid.getAllNeighbours(tile.getVector()));
                         for(Tile current_nb : nb.getTiles()){
-                            if(current_nb.getColour() == Colour.NONE){
+                            if(current_nb.getColor() == Color.WHITE){
                                 //if there exists an empty tile adjacent to a group member, game cannot be over
                                 return true;
                             }

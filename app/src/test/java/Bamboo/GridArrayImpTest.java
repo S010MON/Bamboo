@@ -5,6 +5,9 @@ import Bamboo.model.Colour;
 import Bamboo.model.GridArrayImp;
 
 import org.junit.jupiter.api.Test;
+
+import java.awt.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GridArrayImpTest
@@ -22,7 +25,7 @@ class GridArrayImpTest
                 for (int z = 0; z < diameter; z++)
                 {
                     if(x + y + z == 0)
-                        assertEquals(Colour.NONE, hex.getTile(new CubeVector(x,y,z)).getColour());
+                        assertEquals(Color.WHITE, hex.getTile(new CubeVector(x,y,z)).getColor());
                     else
                         assertNull(hex.getTile(new CubeVector(x,y,z)));
                 }

@@ -2,6 +2,7 @@ package Bamboo.model;
 
 import Bamboo.controller.CubeVector;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +31,10 @@ public class GridArrayImp implements Grid
     }
 
     @Override
-    public void setTile(CubeVector v, Colour c)
+    public void setTile(CubeVector v, Color c)
     {
         v = addOffset(v);
-        tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
+        tiles[v.getX()][v.getY()][v.getZ()].setColor(c);
     }
 
     @Override
