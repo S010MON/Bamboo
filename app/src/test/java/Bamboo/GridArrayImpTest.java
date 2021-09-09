@@ -19,7 +19,7 @@ class GridArrayImpTest
     {
         int radius = 2;
         int diameter = (2 * radius) + 1;
-        GridArrayImp hex = new GridArrayImp(radius);
+        GridArrayImp grid = new GridArrayImp(radius);
 
         for (int x = 0; x < diameter; x++)
         {
@@ -28,9 +28,9 @@ class GridArrayImpTest
                 for (int z = 0; z < diameter; z++)
                 {
                     if(x + y + z == 0)
-                        assertEquals(Colour.NONE, hex.getTile(new CubeVector(x,y,z)).getColour());
+                        assertEquals(Colour.NONE, grid.getTile(new CubeVector(x,y,z)).getColour());
                     else
-                        assertNull(hex.getTile(new CubeVector(x,y,z)));
+                        assertNull(grid.getTile(new CubeVector(x,y,z)));
                 }
             }
         }
@@ -88,10 +88,10 @@ class GridArrayImpTest
         ArrayList<Tile> exp = new ArrayList<>();
         exp.add(new Tile(new CubeVector(-1, 2,-1)));
         exp.add(new Tile(new CubeVector(-1, 1, 0)));
-        exp.add(new Tile(new CubeVector(-1, 1, 1)));
+        exp.add(new Tile(new CubeVector(-2, 1, 1)));
 
-        Grid grid = new GridArrayImp(3);
-        ArrayList<Tile> act = (ArrayList<Tile>) grid.getAllNeighbours(new CubeVector(-1,1,0));
+        Grid grid = new GridArrayImp(2);
+        ArrayList<Tile> act = (ArrayList<Tile>) grid.getAllNeighbours(new CubeVector(-2,2,0));
 
         for(Tile tile: exp)
         {
@@ -109,7 +109,4 @@ class GridArrayImpTest
         }
         return false;
     }
-
-
-
 }
