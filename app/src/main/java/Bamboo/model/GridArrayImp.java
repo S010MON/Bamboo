@@ -5,6 +5,7 @@ import Bamboo.controller.CubeVector;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class GridArrayImp implements Grid
 {
@@ -46,24 +47,23 @@ public class GridArrayImp implements Grid
         int z = v.getZ();
 
         List<Tile> list = new ArrayList<>();
-        if(x-offset != 0){
-            list.add(tiles[x-1][y][z]);
-        }
-        if(x + offset != width){
-            list.add(tiles[x+1][y][z]);
-        }
-        if(y -offset != 0){
-            list.add(tiles[x][y-1][z]);
-        }
-        if(y + offset != width){
-            list.add(tiles[x][y+1][z]);
-        }
-        if(z-offset != 0){
-            list.add(tiles[x][y][z-1]);
-        }
-        if(z + offset != width){
-            list.add(tiles[x][y][z+1]);
-        }
+        if(isOutOfBounds(x, y-1, z+1))
+            list.add(tiles[x][y-1][z+1]);
+
+        if(isOutOfBounds(x, y+1, z-1))
+            list.add(tiles[x][y+1][z-1]);
+
+        if(isOutOfBounds(x+1, y, z-1))
+            list.add(tiles[x+1][y][z-1]);
+
+        if(isOutOfBounds(x-1, y, z+1))
+            list.add(tiles[x-1][y][z+1]);
+
+        if(isOutOfBounds(x+1, y-1, z))
+            list.add(tiles[x+1][y-1][z]);
+
+        if(isOutOfBounds(x-1, y+1, z))
+            list.add(tiles[x-1][y+1][z]);
 
         return list;
     }
@@ -110,5 +110,15 @@ public class GridArrayImp implements Grid
             }
         }
         return grid;
+    }
+
+    private boolean isOutOfBounds(CubeVector v)
+    {
+        return v.getX() < width && v.getY() < width && v.getZ() < width;
+    }
+
+    private boolean isOutOfBounds(int x, int y, int z)
+    {
+        return x < width && y < width && z < width;
     }
 }
