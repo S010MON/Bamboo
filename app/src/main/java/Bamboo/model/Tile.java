@@ -3,6 +3,8 @@ package Bamboo.model;
 import Bamboo.controller.CubeVector;
 import java.awt.Color;
 
+import java.awt.*;
+
 public class Tile
 {
     private Color color;
@@ -22,6 +24,7 @@ public class Tile
     }
 
     public Color getColour()
+
     {
         return color;
     }
