@@ -48,4 +48,11 @@ public class Game
         else
             currentPlayer = player1;
     }
-}
+
+    public void checkAlreadyCoulouredTiles (Tile tile) throws Exception {
+
+        if(tile.isCouloured())
+            throw new Exception("Tile already coloured") ;
+        }
+    }
+

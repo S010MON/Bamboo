@@ -7,11 +7,13 @@ public class Tile
 {
     private Color color;
     private CubeVector vector;
+    private boolean coloured ;
 
     public Tile(CubeVector vector)
     {
         this.color = Color.white;
         this.vector = vector;
+        this.coloured = false ;
     }
 
     public void setColour(Color color)
@@ -28,5 +30,14 @@ public class Tile
 
     public CubeVector getVector() {
         return vector;
+    }
+
+    public boolean isCouloured() {
+        return coloured ;
+    }
+
+    public void colouring(){
+        coloured = true ;
+
     }
 }
