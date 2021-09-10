@@ -1,11 +1,9 @@
 package Bamboo.controller;
 
-import Bamboo.model.Colour;
 import Bamboo.model.Grid;
 import Bamboo.model.Tile;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +73,9 @@ public class Group {
             return true;
         }
 
-
+        if(empty_tile_empty_neighbours(new Group(all_tiles), player_color)){
+            return false;
+        }
         //(2) do:
         //- list all groups and find max allowed size
         //- check if there is a group below that size
@@ -105,12 +105,35 @@ public class Group {
     //----Search empty tile function---
     static boolean contains_empty(Group tiles){
         for(Tile tile : tiles.getTiles()){
-            if(tile.getColor() == Color.WHITE){
+            if(tile.getColour() == Color.WHITE){
                 return true;
             }
         }
         return false;
 
+    }
+
+    static boolean empty_tile_empty_neighbours(Group tiles, Color color){
+        for(Tile tile: tiles.getTiles()){
+            if(tile.getColour() == Color.WHITE){
+                CubeVector vector = tile.getVector();
+                List<Tile> nb = grid.getAllNeighbours(vector);
+                if(!contains_color(new Group(nb), color)){
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
+    static boolean contains_color(Group tiles, Color color){
+        for(Tile tile : tiles.getTiles()){
+            if(tile.getColour() == color){
+                return true;
+            }
+        }
+        return false;
     }
     //collect group a tile belongs to
     static Group collect_group(Tile tile, Color color)
@@ -124,28 +147,29 @@ public class Group {
         while(visited_tiles.size() < group.size()){//continue as long as not all group members have been visited
             neighbours = grid.getAllNeighbours(current_tile.getVector());
             for(Tile nb : neighbours){
-                if(nb.getColor() == color){
+                if(nb.getColour() == color){
                     if(!isin(nb, group)){
                         group.add(nb);
                     }
                 }
             }
             visited_tiles.add(current_tile);
-            current_member_id ++;
+
             //choose next tile to pivot off of
             current_tile = group.get(current_member_id);
+            current_member_id ++;
         }
         return group;
     }
 
-    static List<Group> collect_groups(Color color){
+    public static List<Group> collect_groups(Color color){
         List<Tile> tiles = grid.getAllTiles();
         List<Group> groups = new ArrayList<Group>();
         Group collected_tiles = new Group();
         int max_group_size = 0;
         for(Tile tile : tiles){
             if(!isin(tile, collected_tiles)){
-                if(tile.getColor() == color){
+                if(tile.getColour() == color){
                     Group current_group = collect_group(tile, color);
                     collected_tiles.addAll(current_group.getTiles());
                     groups.add(current_group);
@@ -160,7 +184,7 @@ public class Group {
         return collect_groups(player_color).size();
     }
 
-    static boolean placeable_with_groups(List<Group> groups){
+    public static boolean placeable_with_groups(List<Group> groups){
         int max_group_size = groups.size();
         if(!groups.isEmpty()){
             for(Group current_group : groups){//for each group:
@@ -170,7 +194,7 @@ public class Group {
                     for(Tile tile : current_group.getTiles()){
                         Group nb = new Group(grid.getAllNeighbours(tile.getVector()));
                         for(Tile current_nb : nb.getTiles()){
-                            if(current_nb.getColor() == Color.WHITE){
+                            if(current_nb.getColour() == Color.WHITE){
                                 //if there exists an empty tile adjacent to a group member, game cannot be over
                                 return true;
                             }

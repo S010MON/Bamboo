@@ -1,7 +1,6 @@
 package Bamboo;
 
 import Bamboo.controller.CubeVector;
-import Bamboo.model.Colour;
 import Bamboo.model.Grid;
 import Bamboo.model.GridArrayImp;
 import Bamboo.model.Tile;
@@ -29,7 +28,7 @@ class GridArrayImpTest
                 for (int z = 0; z < diameter; z++)
                 {
                     if(x + y + z == 0)
-                        assertEquals(Color.WHITE, hex.getTile(new CubeVector(x,y,z)).getColor());
+                        assertEquals(Color.WHITE, grid.getTile(new CubeVector(x,y,z)).getColour());
                     else
                         assertNull(grid.getTile(new CubeVector(x,y,z)));
                 }

@@ -34,7 +34,7 @@ public class GridArrayImp implements Grid
     public void setTile(CubeVector v, Color c)
     {
         v = addOffset(v);
-        tiles[v.getX()][v.getY()][v.getZ()].setColor(c);
+        tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
     }
 
     @Override

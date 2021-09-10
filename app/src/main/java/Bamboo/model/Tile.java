@@ -19,7 +19,7 @@ public class Tile
     public void setColour(Color color)
     {
         // Test that this is the first (and only) colour change
-        assert color != Color.BLUE && color != Color.RED;
+        assert this.color != Color.BLUE && this.color != Color.RED;
         this.color = color;
     }
 
