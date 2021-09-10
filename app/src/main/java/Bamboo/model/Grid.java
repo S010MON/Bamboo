@@ -2,7 +2,7 @@ package Bamboo.model;
 
 import Bamboo.controller.CubeVector;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 public interface Grid

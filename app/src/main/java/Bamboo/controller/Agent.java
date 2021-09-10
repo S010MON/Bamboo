@@ -2,7 +2,7 @@ package Bamboo.controller;
 
 import Bamboo.model.Game;
 
-import java.awt.*;
+import java.awt.Color;
 
 public interface Agent
 {
