@@ -1,8 +1,10 @@
 package Bamboo.model;
 
-import Bamboo.controller.*;
+import Bamboo.controller.Agent;
+import Bamboo.controller.Human;
+import Bamboo.controller.Settings;
+import Bamboo.controller.CubeVector;
 
-import java.awt.*;
 import java.util.List;
 
 public class Game

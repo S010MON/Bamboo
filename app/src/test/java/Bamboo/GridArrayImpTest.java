@@ -5,11 +5,12 @@ import Bamboo.model.Grid;
 import Bamboo.model.GridArrayImp;
 import Bamboo.model.Tile;
 
+import Bamboo.model.Tile;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,7 +43,6 @@ class GridArrayImpTest
      * Off-Centre   [-1,1,0] -> [0,0,0],[0,1,-1],[-1,2,-1],[-1,0,1],[-2,1,1],[-2,2,0]
      * Edge         [-2,2,0] -> [-1,2,-1],[-1,1,0],[-2,1,1]
      */
-
     @Test void testGetAllNeighbours_centre()
     {
         ArrayList<Tile> exp = new ArrayList<>();
