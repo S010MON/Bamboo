@@ -3,6 +3,7 @@ package Bamboo;
 import Bamboo.controller.CubeVector;
 import Bamboo.model.Grid;
 import Bamboo.model.GridArrayImp;
+import Bamboo.model.Tile;
 
 import Bamboo.model.Tile;
 import org.junit.jupiter.api.Test;
@@ -15,11 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GridArrayImpTest
 {
-    @Test void test_grid_with_radius_2()
+    @Test void testGridWithRadius2()
     {
         int radius = 2;
         int diameter = (2 * radius) + 1;
-        GridArrayImp hex = new GridArrayImp(radius);
+        GridArrayImp grid = new GridArrayImp(radius);
 
         for (int x = 0; x < diameter; x++)
         {
@@ -28,9 +29,9 @@ class GridArrayImpTest
                 for (int z = 0; z < diameter; z++)
                 {
                     if(x + y + z == 0)
-                        assertEquals(Color.WHITE, hex.getTile(new CubeVector(x,y,z)).getColour());
+                        assertEquals(Color.WHITE, grid.getTile(new CubeVector(x,y,z)).getColour());
                     else
-                        assertNull(hex.getTile(new CubeVector(x,y,z)));
+                        assertNull(grid.getTile(new CubeVector(x,y,z)));
                 }
             }
         }
@@ -42,7 +43,6 @@ class GridArrayImpTest
      * Off-Centre   [-1,1,0] -> [0,0,0],[0,1,-1],[-1,2,-1],[-1,0,1],[-2,1,1],[-2,2,0]
      * Edge         [-2,2,0] -> [-1,2,-1],[-1,1,0],[-2,1,1]
      */
-
     @Test void testGetAllNeighbours_centre()
     {
         ArrayList<Tile> exp = new ArrayList<>();
@@ -109,5 +109,4 @@ class GridArrayImpTest
         }
         return false;
     }
-
 }
