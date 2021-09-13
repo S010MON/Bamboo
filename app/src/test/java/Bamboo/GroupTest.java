@@ -16,50 +16,46 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GroupTest {
     @Test void testNoGroups(){
         Grid grid = makeMockup(3,0,0,1,1);
-        assertEquals(Group.checkFinish(grid,0), false);
+        assertEquals(Group.countGroups(Color.RED,grid), 0);
     }
 
-    @Test void testNoEmptyTiles(){
+    @Test void testOneGroup(){
+        Grid grid = makeMockup(3,1,0,1,1);
+        assertEquals(Group.countGroups(Color.RED,grid), 1);
+    }
+
+    @Test void testRedGrid_red(){
         Grid grid = makeMockup(3,100,0,1,1);
-        assertEquals(Group.checkFinish(grid, 0), true);
+        assertEquals(Group.countGroups(Color.RED,grid), 1);
     }
 
-    @Test void testTwoRedGroups_extendable(){
-        int[] indices = {0,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
-        Grid grid = specificMockup(3,indices);
-        assertEquals(Group.checkFinish(grid, 0), false);
+    @Test void testRedGrid_blue(){
+        Grid grid = makeMockup(3,100,0,1,1);
+        assertEquals(Group.countGroups(Color.BLUE,grid), 0);
     }
 
-    @Test void testTwoMaxedRedGroups(){
-        int[] indices = {0,0,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
-        Grid grid = specificMockup(3,indices);
-        assertEquals(Group.checkFinish(grid, 0), false);
+    @Test void testTwoGroups(){
+        int[] indices = {0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
+        Grid grid = specificMockup(2, indices);
+        assertEquals(Group.countGroups(Color.RED, grid), 2);
     }
 
-    @Test void testTwoMaxedRedGroups_NoLegalMove(){
-        int[] indices = {0,0,2,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-        Grid grid = specificMockup(3,indices);
-        assertEquals(Group.checkFinish(grid, 0), true);
+    @Test void testOpponentTwoGroups(){
+        int[] indices = {0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
+        Grid grid = specificMockup(2, indices);
+        assertEquals(Group.countGroups(Color.BLUE, grid), 0);
     }
 
-    @Test void testTwoMaxedRedGroups_adjacentLegalMove(){//1st Row: RED,RED,BLUE,EMPTY
-        int[] indices = {0,0,1,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-        Grid grid = specificMockup(3,indices);
-        assertEquals(Group.checkFinish(grid, 0), false);
+    @Test void testRealGrid_red(){
+        int[] indices = {0,0,2,2,1,1,2,2,2,2,0,0,1,2,2,2,2,0,0};
+        Grid grid = specificMockup(2, indices);
+        assertEquals(Group.countGroups(Color.RED, grid), 3);
     }
 
-    @Test void testRealWorldScenario_bothPlayers_extendable(){
-        int[] indices = {0,1,0,0,0,1,0,2,2,1,2,2,2,1,2,0,1,2,2};
-        Grid grid = specificMockup(2,indices);
-        assertEquals((Group.checkFinish(grid, 0) || Group.checkFinish(grid, 1)), false);
-    }
-
-    @Test void testOnlyExtensionViolatesMaxMembers(){
-        //RED has 3 groups, sizes 3,1,1. Only free tile is adjacent to group 1 -->
-        // cannot place because group size (4) would be larger than group count(3)
-        int[] indices = {0,0,2,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1};
-        Grid grid = specificMockup(2,indices);
-        assertEquals(Group.checkFinish(grid, 0), true);
+    @Test void testRealGrid_blue(){
+        int[] indices = {0,0,2,2,1,1,2,2,2,2,0,0,1,1,2,2,2,0,0};
+        Grid grid = specificMockup(2, indices);
+        assertEquals(Group.countGroups(Color.BLUE, grid), 2);
     }
 
     public Grid makeMockup(int size, int red, int blue, int red_groups, int blue_groups){

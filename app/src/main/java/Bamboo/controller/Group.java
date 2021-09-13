@@ -49,87 +49,12 @@ public class Group {
 
 
 
-    public static boolean checkFinish(Grid grid,int current_player){
-        Group.setGrid(grid);
-        Color player_color;
-        List<Tile> all_tiles = grid.getAllTiles();
-        //get player color
-        if(current_player == 0){
-            player_color = Color.RED;
-        }
-        else{
-            player_color = Color.BLUE;
-        }
 
-        //2 ending conditions:
-        //(1) no empty tile left
-        //(2) no possibility to extend any group -> cannot be if there is an empty tile with only empty neighbours
-
-        //(1) iterate through tiles and check colour
-        //if there is no colour there, break loop and set is_finished to false
-        //-> grid cannot be full
-        if(!contains_empty(new Group(all_tiles))){
-            //if grid does not contain empty tile, return true
-            return true;
-        }
-
-        if(empty_tile_empty_neighbours(new Group(all_tiles), player_color)){
-            return false;
-        }
-        //(2) do:
-        //- list all groups and find max allowed size
-        //- check if there is a group below that size
-        //- for all groups that are extendable, check if there are free neighbours
-        List<Group> groups = collect_groups(player_color);
-        boolean can_place = placeable_with_groups(groups);
-        return !can_place;
-        //list all groups
-        //run through tiles and save all adjacent same-colour tiles
-        //save them and check whether it has been the center before
-        //start at top left tile (0,0,0)
-
-
-        //iterate through tiles, collect individual groups
-
-    }
 
     //----lookup function------
     static boolean isin(Tile query, Group list){
         for (Tile tile : list.getTiles()) {
             if (query == tile) {
-                return true;
-            }
-        }
-        return false;
-    }
-    //----Search empty tile function---
-    static boolean contains_empty(Group tiles){
-        for(Tile tile : tiles.getTiles()){
-            if(tile.getColour() == Color.WHITE){
-                return true;
-            }
-        }
-        return false;
-
-    }
-
-    static boolean empty_tile_empty_neighbours(Group tiles, Color color){
-        for(Tile tile: tiles.getTiles()){
-            if(tile.getColour() == Color.WHITE){
-                CubeVector vector = tile.getVector();
-                List<Tile> nb = grid.getAllNeighbours(vector);
-                if(!contains_color(new Group(nb), color)){
-                    return true;
-                }
-
-            }
-        }
-        return false;
-    }
-
-    static boolean contains_color(Group tiles, Color color){
-        for(Tile tile : tiles.getTiles()){
-            if(tile.getColour() == color){
                 return true;
             }
         }
@@ -166,7 +91,6 @@ public class Group {
         List<Tile> tiles = grid.getAllTiles();
         List<Group> groups = new ArrayList<Group>();
         Group collected_tiles = new Group();
-        int max_group_size = 0;
         for(Tile tile : tiles){
             if(!isin(tile, collected_tiles)){
                 if(tile.getColour() == color){
@@ -184,31 +108,4 @@ public class Group {
         return collect_groups(player_color).size();
     }
 
-    public static boolean placeable_with_groups(List<Group> groups){
-        int max_group_size = groups.size();
-        if(!groups.isEmpty()){
-            for(Group current_group : groups){//for each group:
-                if(current_group.size() < max_group_size){//check if current group can be extended
-                    //there exists a group that is less than max size
-                    //check whether it has adjacent free tiles
-                    for(Tile tile : current_group.getTiles()){
-                        Group nb = new Group(grid.getAllNeighbours(tile.getVector()));
-                        for(Tile current_nb : nb.getTiles()){
-                            if(current_nb.getColour() == Color.WHITE){
-                                //if there exists an empty tile adjacent to a group member, game cannot be over
-                                return true;
-                            }
-
-                        }
-                    }
-                }
-
-            }
-
-        }
-        else{
-            return true;
-        }
-        return false;
-    }
 }
