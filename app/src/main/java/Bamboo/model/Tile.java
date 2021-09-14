@@ -9,11 +9,13 @@ public class Tile
 {
     private Color color;
     private CubeVector vector;
+    private Color outline ;
 
     public Tile(CubeVector vector)
     {
         this.color = Color.white;
         this.vector = vector;
+        this.outline = Color.black ;
     }
 
     public void setColour(Color color)
@@ -31,5 +33,16 @@ public class Tile
 
     public CubeVector getVector() {
         return vector;
+    }
+
+    public void changeOutline(){
+
+        outline = Color.green ;
+    }
+
+    public Color getOutline(){
+
+        return outline ;
+
     }
 }

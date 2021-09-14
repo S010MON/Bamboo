@@ -47,6 +47,7 @@ public class Canvas extends JPanel
     {
         g2d.setColor(foreground);
         g2d.setStroke(circle_thickness);
+        int i = 1 ;
         for(Tile tile: game.getAllTiles())
         {
             AxialVector v = VectorConverter.convertToAxial(tile.getVector());
@@ -54,9 +55,11 @@ public class Canvas extends JPanel
             int x = centreX + (v.getQ() * circle_radius/2) ;
             int y = centreY + (v.getR() * circle_radius/2) ;
 
+            System.out.println(i++ +" " +x+" "+y) ;
+
             g2d.setColor(tile.getColour());
             g2d.fillOval(x,y,circle_radius,circle_radius);
-            g2d.setColor(outline);
+            g2d.setColor(tile.getOutline());
             g2d.drawOval(x, y, circle_radius, circle_radius);
         }
     }

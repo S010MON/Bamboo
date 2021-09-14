@@ -51,8 +51,19 @@ public class TileClickListener implements MouseListener
     public void mouseReleased(MouseEvent e) {}
 
     @Override
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+        Tile tile1 =  game.getAllTiles().get(1) ;
+       if (e.getX()>545&&e.getX()<645&&e.getY()>650&&e.getY()<750){
+           tile1.changeOutline();
+           canvas.repaint();
 
-    @Override
-    public void mouseExited(MouseEvent e) {}
-}
+
+       }
+       canvas.repaint();
+
+    }
+
+                @Override
+                public void mouseExited (MouseEvent e){
+                }
+            }
