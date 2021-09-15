@@ -16,9 +16,13 @@ public class StartupPanel extends JPanel {
 
     public StartupPanel() {
         setBackground(Color.BLACK);
-        helpPanel = new HelpPanel();
+        setLayout(new BorderLayout());
 
+        ButtonPanel buttonPanel = new ButtonPanel(this);
+        add(buttonPanel, BorderLayout.WEST);
 
+        HelpPanel helpPanel = new HelpPanel();
+        add(helpPanel, BorderLayout.CENTER);
 
         setVisible(true);
 

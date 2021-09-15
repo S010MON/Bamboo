@@ -14,11 +14,8 @@ public class ButtonPanel extends JPanel
     public ButtonPanel(StartupPanel startupPanel)
     {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-        /* Help Button */
-        JButton helpBtn = new JButton("Help");
-        helpBtn.addActionListener(e -> startupPanel.displayHelpPanel());
-        add(helpBtn);
+        setBackground(Color.GREEN);
+        setSize(500,500);
 
         /* Settings Button */
         JButton settingsBtn = new JButton("Game");
@@ -29,6 +26,11 @@ public class ButtonPanel extends JPanel
         JButton startBtn = new JButton("Start");
         startBtn.addActionListener(e -> startupPanel.toggleSettingReady());
         add(startBtn);
+
+        /* Help Button */
+        JButton helpBtn = new JButton("Help");
+        helpBtn.addActionListener(e -> startupPanel.displayHelpPanel());
+        add(helpBtn);
 
         setVisible(true);
     }
