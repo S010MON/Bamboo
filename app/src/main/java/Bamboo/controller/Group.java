@@ -36,6 +36,29 @@ public class Group {
         tiles.addAll(addition);
     }
 
+    void addNew(List<Tile> addition){
+        for(Tile tile : addition){
+            if(notin(tile, new Group(tiles))){
+                tiles.add(tile);
+            }
+        }
+    }
+
+    Group getAllNeighbours(){
+        Group neighbours = new Group();
+        Group final_neighbours = new Group();
+        for(Tile tile : tiles){
+            List<Tile> nbs = grid.getAllNeighbours(tile.getVector());
+            neighbours.addNew(nbs);
+        }
+        for(Tile tile : neighbours.getTiles()){
+            if(notin(tile, new Group(tiles))){
+                final_neighbours.add(tile);
+            }
+        }
+        return final_neighbours;
+    }
+
     public Group(List<Tile> list){
         tiles = new ArrayList<Tile>(list);
         grid_tiles = grid.getAllTiles();

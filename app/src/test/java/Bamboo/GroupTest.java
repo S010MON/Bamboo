@@ -6,6 +6,7 @@ import Bamboo.controller.Group;
 import Bamboo.model.Grid;
 import Bamboo.model.GridArrayImp;
 import Bamboo.model.Tile;
+import Bamboo.model.TileAlreadyColouredException;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
@@ -70,7 +71,9 @@ public class GroupTest {
             CubeVector vector = tiles.get(i).getVector();
 
             if(red_counter < red){
-                grid.setTile(vector, Color.RED);
+                try {
+                    grid.setTile(vector, Color.RED);
+                } catch (TileAlreadyColouredException e) {e.printStackTrace();}
                 red_counter++;
             }
             red_group_counter ++;
@@ -85,7 +88,9 @@ public class GroupTest {
         List<Tile> tiles = grid.getAllTiles();
         for(int i = 0; i < tiles.size(); i++){
             CubeVector vector = tiles.get(i).getVector();
-            grid.setTile(vector, colors[indices[i]]);
+            try {
+                grid.setTile(vector, colors[indices[i]]);
+            } catch (TileAlreadyColouredException e) {e.printStackTrace();}
         }
         return grid;
     }

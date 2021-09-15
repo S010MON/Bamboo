@@ -13,52 +13,32 @@ import java.util.List;
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-public class checkFinishTest {
-    @Test void testNoGroups(){
-        Grid grid = makeMockup(3,0,0,1,1);
-        assertEquals(GameLogic.checkFinish(grid,0), false);
+public class legalMovesTest {
+    @Test void testAll_legal_moves(){
+        Grid grid = makeMockup(2,0,0,1,0);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(),grid.getAllTiles().size());
     }
 
-    @Test void testNoEmptyTiles(){
-        Grid grid = makeMockup(3,100,0,1,1);
-        assertEquals(GameLogic.checkFinish(grid, 0), true);
+    @Test void test_one_nonextendable_group(){
+        Grid grid = makeMockup(2,3,0,1,0);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), grid.getAllTiles().size() - 7);
     }
 
-    @Test void testTwoRedGroups_extendable(){
-        int[] indices = {0,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
-        Grid grid = specificMockup(3,indices);
-        assertEquals(GameLogic.checkFinish(grid, 0), false);
+    @Test void testOneTile(){
+        Grid grid = makeMockup(2,1,0,1,0);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(),15);
     }
 
-    @Test void testTwoMaxedRedGroups(){
-        int[] indices = {0,0,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
-        Grid grid = specificMockup(3,indices);
-        assertEquals(GameLogic.checkFinish(grid, 0), false);
-    }
-
-    @Test void testTwoMaxedRedGroups_NoLegalMove(){
-        int[] indices = {0,0,2,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-        Grid grid = specificMockup(3,indices);
-        assertEquals(GameLogic.checkFinish(grid, 0), true);
-    }
-
-    @Test void testTwoMaxedRedGroups_closeLegalMove(){//1st Row: RED,RED,BLUE,EMPTY
-        int[] indices = {0,0,1,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-        Grid grid = specificMockup(3,indices);
-        assertEquals(GameLogic.checkFinish(grid, 0), false);
-    }
-
-    @Test void testRealWorldScenario_bothPlayers_extendable(){
+    @Test void testRealWorldScenario_red_twoOptions(){
         int[] indices = {0,1,0,0,0,1,0,2,2,1,2,2,2,1,2,0,1,2,2};
         Grid grid = specificMockup(2,indices);
-        assertEquals((GameLogic.checkFinish(grid, 0) || GameLogic.checkFinish(grid, 1)), false);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), 2);
     }
 
     @Test void testOnlyExtensionViolatesMaxMembers(){
         int[] indices = {0,0,2,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1};
         Grid grid = specificMockup(2,indices);
-        assertEquals(GameLogic.checkFinish(grid, 0), true);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), 0);
     }
 
     public Grid makeMockup(int size, int red, int blue, int red_groups, int blue_groups){
@@ -91,9 +71,10 @@ public class checkFinishTest {
         for(int i = 0; i < tiles.size(); i++){
             CubeVector vector = tiles.get(i).getVector();
             try {
-                grid.setTile(vector, colors[indices[i]]);;
+                grid.setTile(vector, colors[indices[i]]);
             } catch (TileAlreadyColouredException e) {e.printStackTrace();}
         }
         return grid;
     }
 }
+
