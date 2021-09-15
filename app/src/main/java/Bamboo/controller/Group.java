@@ -46,6 +46,7 @@ public class Group {
         grid_tiles = grid.getAllTiles();
     }
 
+
     public static boolean checkFinish(Grid grid,int current_player){
         Group.setGrid(grid);
         Color player_color;
@@ -139,7 +140,6 @@ public class Group {
         List<Tile> tiles = grid.getAllTiles();
         List<Group> groups = new ArrayList<Group>();
         Group collected_tiles = new Group();
-        int max_group_size = 0;
         for(Tile tile : tiles){
             if(!isin(tile, collected_tiles)){
                 if(tile.getColour() == color){
@@ -181,4 +181,5 @@ public class Group {
         }
         return false;
     }
+
 }

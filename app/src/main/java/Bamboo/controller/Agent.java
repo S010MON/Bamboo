@@ -2,12 +2,12 @@ package Bamboo.controller;
 
 import Bamboo.model.Game;
 
-import java.awt.*;
+import java.awt.Color;
 
 public interface Agent
 {
-    public String getName();
-    public boolean isHuman();
-    public CubeVector getNextMove(Game game);
-    public Color getColor();
+    String getName();
+    boolean isHuman();
+    CubeVector getNextMove(Game game);
+    Color getColor();
 }
