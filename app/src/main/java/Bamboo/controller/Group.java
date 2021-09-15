@@ -36,7 +36,6 @@ public class Group {
         tiles.addAll(addition);
     }
 
-    //VERY INEFFICIENT
     public Group(List<Tile> list){
         tiles = new ArrayList<Tile>(list);
         grid_tiles = grid.getAllTiles();
@@ -47,11 +46,6 @@ public class Group {
         grid_tiles = grid.getAllTiles();
     }
 
-
-
-
-
-    //----lookup function------
     static boolean isin(Tile query, Group list){
         for (Tile tile : list.getTiles()) {
             if (query == tile) {
@@ -60,7 +54,46 @@ public class Group {
         }
         return false;
     }
-    //collect group a tile belongs to
+
+    static boolean notin(Tile query, Group list){
+        return !isin(query, list);
+    }
+
+    static boolean contains_empty(Group tiles){
+        for(Tile tile : tiles.getTiles()){
+            if(tile.getColour() == Color.WHITE){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static boolean does_not_contain_empty(Group tiles){
+        return !contains_empty(tiles);
+    }
+
+    static boolean empty_tile_with_empty_neighbours(Group tiles, Color color){
+        for(Tile tile: tiles.getTiles()){
+            if(tile.getColour() == Color.WHITE){
+                CubeVector vector = tile.getVector();
+                List<Tile> nb = grid.getAllNeighbours(vector);
+                if(!contains_color(new Group(nb), color)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    static boolean contains_color(Group tiles, Color color){
+        for(Tile tile : tiles.getTiles()){
+            if(tile.getColour() == color){
+                return true;
+            }
+        }
+        return false;
+    }
+
     static Group collect_group(Tile tile, Color color)
     {
         Group group = new Group();
@@ -69,18 +102,16 @@ public class Group {
         ArrayList<Tile> visited_tiles = new ArrayList<>();
         List<Tile> neighbours;
         Tile current_tile = tile;
-        while(visited_tiles.size() < group.size()){//continue as long as not all group members have been visited
+        while(visited_tiles.size() < group.size()){
             neighbours = grid.getAllNeighbours(current_tile.getVector());
             for(Tile nb : neighbours){
                 if(nb.getColour() == color){
-                    if(!isin(nb, group)){
+                    if(notin(nb, group)){
                         group.add(nb);
                     }
                 }
             }
             visited_tiles.add(current_tile);
-
-            //choose next tile to pivot off of
             current_tile = group.get(current_member_id);
             current_member_id ++;
         }
@@ -92,7 +123,7 @@ public class Group {
         List<Group> groups = new ArrayList<Group>();
         Group collected_tiles = new Group();
         for(Tile tile : tiles){
-            if(!isin(tile, collected_tiles)){
+            if(notin(tile, collected_tiles)){
                 if(tile.getColour() == color){
                     Group current_group = collect_group(tile, color);
                     collected_tiles.addAll(current_group.getTiles());
@@ -106,6 +137,43 @@ public class Group {
     public static int countGroups(Color player_color, Grid grid_){
         setGrid(grid_);
         return collect_groups(player_color).size();
+    }
+
+    public static boolean extendable(List<Group> groups){
+        int max_group_size = groups.size();
+        if(!groups.isEmpty()){
+            for(Group current_group : groups){
+                if(current_group.size() < max_group_size){
+                    return has_placeable_neighbours(current_group);
+                }
+            }
+        }
+        else{
+            return true;
+        }
+        return false;
+    }
+
+    static boolean has_placeable_neighbours(Group current_group){
+        for(Tile tile : current_group.getTiles()){
+            Group nb = new Group(grid.getAllNeighbours(tile.getVector()));
+            for(Tile current_nb : nb.getTiles()){
+                if(current_nb.getColour() == Color.WHITE){
+                    return !has_nonGroup_sameColor_neighbours(current_nb, current_group, tile.getColour());
+                }
+            }
+        }
+        return false;
+    }
+
+    static boolean has_nonGroup_sameColor_neighbours(Tile tile, Group group, Color color){
+        Group neighbours = new Group(grid.getAllNeighbours(tile.getVector()));
+        for(Tile nb : neighbours.getTiles()){
+            if(notin(nb, group) && nb.getColour() == color){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
