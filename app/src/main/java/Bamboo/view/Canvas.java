@@ -21,9 +21,9 @@ public class Canvas extends JPanel
     private int centreX;
     private int centreY;
 
-    private Color foreground = Color.BLACK;
-    private Color background = Color.WHITE;
-    private Color outline = Color.BLACK;
+    private Color foreground = Color.white;
+    private Color background = new Color(158, 208, 239) ;
+
 
     public Canvas(Dimension screenSize, Game game)
     {
@@ -32,6 +32,7 @@ public class Canvas extends JPanel
         centreY = screenSize.height/2;
         setSize(screenSize.width, screenSize.height);
         addMouseListener(new TileClickListener(game, this));
+        addMouseMotionListener(new RollOverListener(game,this));
     }
 
     @Override
@@ -45,7 +46,7 @@ public class Canvas extends JPanel
 
     private void paintGrid(Graphics2D g2d)
     {
-        g2d.setColor(foreground);
+        //g2d.setColor(foreground);
         g2d.setStroke(circle_thickness);
         int i = 1 ;
         for(Tile tile: game.getAllTiles())
@@ -55,8 +56,9 @@ public class Canvas extends JPanel
             int x = centreX + (v.getQ() * circle_radius/2) ;
             int y = centreY + (v.getR() * circle_radius/2) ;
 
-            System.out.println(i++ +" " +x+" "+y) ;
+            //System.out.println(i++ +" " +x+" "+y) ;
 
+            g2d.setStroke(tile.getCircle_thickness());
             g2d.setColor(tile.getColour());
             g2d.fillOval(x,y,circle_radius,circle_radius);
             g2d.setColor(tile.getOutline());
