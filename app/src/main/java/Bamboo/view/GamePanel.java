@@ -2,8 +2,9 @@ package Bamboo.view;
 
 import Bamboo.model.Game;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
 
 public class GamePanel extends JPanel
 {
