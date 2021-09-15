@@ -14,7 +14,7 @@ public class ButtonPanel extends JPanel
     public ButtonPanel(StartupPanel startupPanel)
     {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        setBackground(Color.GREEN);
+        setBackground(Color.LIGHT_GRAY);
         setSize(500,500);
 
         /* Settings Button */

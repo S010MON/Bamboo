@@ -1,20 +1,49 @@
 package Bamboo.view.startup;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 
-public class HelpPanel extends JPanel {
-    private JLabel label;
-    public HelpPanel() {
-        setSize(500,500);
-        label = new JLabel("Bamboo is a two player game played on an initially empty hexagonal grid. The" +
-                "two players, Red and Blue, place their own stones onto unoccupied cells on the" +
-                "board, one stone per turn. Players are not allowed to pass." +
-                "A player’s group can’t contain more stones than the number of groups he has.The last player to place a stone wins");
-
-        label.setFont(new Font("Serif", Font.PLAIN, 10));
-        setBackground(Color.RED);
-        add(label);
+public class HelpPanel extends JPanel
+{
+    public HelpPanel()
+    {
+        setBackground(Color.WHITE);
         setVisible(true);
+    }
+
+    @Override
+    public void paint(Graphics g)
+    {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+        int x = 0;
+        int y = 0;
+        int imgWidth = 1004;
+        int imgHeight = 822;
+        g2d.drawImage(loadImage(), x, y, imgWidth, imgHeight,null);
+    }
+
+    public BufferedImage loadImage()
+    {
+        FileSystem fileSystem = FileSystems.getDefault();
+        String systemPath = fileSystem.getPath("").toAbsolutePath().toString();
+        String appPath = "/app/src/main/java/Bamboo/view/resources/";
+        String fileName = "rules.png";
+        String path = systemPath + appPath + fileName;
+
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return img;
     }
 }
