@@ -1,5 +1,7 @@
 package Bamboo.view.startup;
 
+import Bamboo.view.resources.ResourceLoader;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -27,23 +29,7 @@ public class HelpPanel extends JPanel
         int y = 0;
         int imgWidth = 1004;
         int imgHeight = 822;
-        g2d.drawImage(loadImage(), x, y, imgWidth, imgHeight,null);
-    }
-
-    public BufferedImage loadImage()
-    {
-        FileSystem fileSystem = FileSystems.getDefault();
-        String systemPath = fileSystem.getPath("").toAbsolutePath().toString();
-        String appPath = "/app/src/main/java/Bamboo/view/resources/";
-        String fileName = "rules.png";
-        String path = systemPath + appPath + fileName;
-
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return img;
+        BufferedImage img = ResourceLoader.getImage("rules.png");
+        g2d.drawImage(img, x, y, imgWidth, imgHeight,null);
     }
 }
