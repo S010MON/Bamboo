@@ -9,15 +9,15 @@ public class Tile
 {
     private Color color;
     private CubeVector vector;
-    private Color outline ;
-    private BasicStroke circle_thickness ;
+    private Color outline;
+    private BasicStroke circle_thickness;
 
     public Tile(CubeVector vector)
     {
         this.color = Color.white;
         this.vector = vector;
-        this.outline = Color.black ;
-        this.circle_thickness = new BasicStroke(3) ;
+        this.outline = Color.black;
+        this.circle_thickness = new BasicStroke(3);
     }
 
     public void setColour(Color color)
@@ -38,11 +38,11 @@ public class Tile
     }
 
     public Color getOutline(){
-        return outline ;
+        return outline;
     }
 
     public void setOutline(Color greenOutline){
-        outline = greenOutline ;
+        outline = greenOutline;
     }
 
     public void setCircle_thickness(BasicStroke ct) {

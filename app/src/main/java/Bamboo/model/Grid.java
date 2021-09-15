@@ -9,7 +9,7 @@ public interface Grid
 {
     Tile getTile(CubeVector v);
 
-    void setTile(CubeVector v, Color c);
+    void setTile(CubeVector v, Color c) throws TileAlreadyColouredException;
 
     List<Tile> getAllNeighbours(CubeVector v);
 

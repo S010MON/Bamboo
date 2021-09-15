@@ -37,7 +37,7 @@ public class Game
         return grid.getAllTiles();
     }
 
-    public void placeNextAt(CubeVector v)
+    public void placeNextAt(CubeVector v) throws TileAlreadyColouredException
     {
         grid.setTile(v, currentPlayer.getColor());
         toggleTurn();
@@ -50,4 +50,11 @@ public class Game
         else
             currentPlayer = player1;
     }
-}
+
+    public void checkAlreadyCoulouredTiles (Tile tile) throws Exception {
+
+        if(tile.isCouloured())
+            throw new Exception("Tile already coloured") ;
+        }
+    }
+
