@@ -7,8 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StartupPanel extends JPanel {
-    private String player1name;
-    private String player2name;
+
     private boolean settingsReady = false;
     private JPanel displayPanel;
     private HelpPanel helpPanel;
@@ -19,13 +18,7 @@ public class StartupPanel extends JPanel {
         setBackground(Color.BLACK);
         helpPanel = new HelpPanel();
 
-        JButton help = new JButton("Help");
-        help.addActionListener(e -> displayHelpPanel());
-        add(help);
 
-        JButton startButton = new JButton("Start");
-        startButton.addActionListener(e -> toggleSettingReady());
-        add(startButton);
 
         setVisible(true);
 
@@ -47,11 +40,15 @@ public class StartupPanel extends JPanel {
         settingsReady = false;
     }
 
-    private void toggleSettingReady() {
+    public void toggleSettingReady() {
         settingsReady = !settingsReady;
     }
 
-    private void displayHelpPanel() {
+    public void displayHelpPanel() {
         add(displayPanel);
+    }
+
+    public void displaySettingsPanel(){
+
     }
 }
