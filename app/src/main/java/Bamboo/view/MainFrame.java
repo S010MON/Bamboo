@@ -35,7 +35,6 @@ public class MainFrame extends JFrame
     }
 
     private void setCurrentPanel(JPanel outgoing, JPanel incoming) {
-        setVisible(false);
         if(outgoing != null)
             remove(outgoing);
         add(incoming);
