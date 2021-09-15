@@ -12,3 +12,6 @@ A player’s group can’t contain more stones than the number of groups he has.
 
 ### Objective
 The last player to place a stone wins.
+
+
+A copy of the rules, with figures can be found here: http://www.marksteeregames.com/Bamboo_rules.pdf
