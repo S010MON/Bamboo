@@ -59,5 +59,6 @@ public class TileClickListener implements MouseListener
     public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void mouseExited(MouseEvent e) {}
-}
+    public void mouseExited (MouseEvent e){}
+
+ }
