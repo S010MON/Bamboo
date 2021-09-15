@@ -1,6 +1,5 @@
 package Bamboo;
 
-
 import Bamboo.controller.CubeVector;
 import Bamboo.controller.Group;
 import Bamboo.model.Grid;
@@ -13,7 +12,7 @@ import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GroupTest {
+public class checkFinishTest {
     @Test void testNoGroups(){
         Grid grid = makeMockup(3,0,0,1,1);
         assertEquals(Group.checkFinish(grid,0), false);
@@ -42,7 +41,7 @@ public class GroupTest {
         assertEquals(Group.checkFinish(grid, 0), true);
     }
 
-    @Test void testTwoMaxedRedGroups_adjacentLegalMove(){//1st Row: RED,RED,BLUE,EMPTY
+    @Test void testTwoMaxedRedGroups_closeLegalMove(){//1st Row: RED,RED,BLUE,EMPTY
         int[] indices = {0,0,1,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
         Grid grid = specificMockup(3,indices);
         assertEquals(Group.checkFinish(grid, 0), false);
@@ -55,8 +54,6 @@ public class GroupTest {
     }
 
     @Test void testOnlyExtensionViolatesMaxMembers(){
-        //RED has 3 groups, sizes 3,1,1. Only free tile is adjacent to group 1 -->
-        // cannot place because group size (4) would be larger than group count(3)
         int[] indices = {0,0,2,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1};
         Grid grid = specificMockup(2,indices);
         assertEquals(Group.checkFinish(grid, 0), true);

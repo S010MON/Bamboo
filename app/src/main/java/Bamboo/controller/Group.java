@@ -36,7 +36,6 @@ public class Group {
         tiles.addAll(addition);
     }
 
-    //VERY INEFFICIENT
     public Group(List<Tile> list){
         tiles = new ArrayList<Tile>(list);
         grid_tiles = grid.getAllTiles();
@@ -47,13 +46,10 @@ public class Group {
         grid_tiles = grid.getAllTiles();
     }
 
-
-
     public static boolean checkFinish(Grid grid,int current_player){
         Group.setGrid(grid);
         Color player_color;
         List<Tile> all_tiles = grid.getAllTiles();
-        //get player color
         if(current_player == 0){
             player_color = Color.RED;
         }
@@ -61,39 +57,17 @@ public class Group {
             player_color = Color.BLUE;
         }
 
-        //2 ending conditions:
-        //(1) no empty tile left
-        //(2) no possibility to extend any group -> cannot be if there is an empty tile with only empty neighbours
-
-        //(1) iterate through tiles and check colour
-        //if there is no colour there, break loop and set is_finished to false
-        //-> grid cannot be full
         if(!contains_empty(new Group(all_tiles))){
-            //if grid does not contain empty tile, return true
             return true;
         }
-
         if(empty_tile_empty_neighbours(new Group(all_tiles), player_color)){
             return false;
         }
-        //(2) do:
-        //- list all groups and find max allowed size
-        //- check if there is a group below that size
-        //- for all groups that are extendable, check if there are free neighbours
         List<Group> groups = collect_groups(player_color);
         boolean can_place = placeable_with_groups(groups);
         return !can_place;
-        //list all groups
-        //run through tiles and save all adjacent same-colour tiles
-        //save them and check whether it has been the center before
-        //start at top left tile (0,0,0)
-
-
-        //iterate through tiles, collect individual groups
-
     }
 
-    //----lookup function------
     static boolean isin(Tile query, Group list){
         for (Tile tile : list.getTiles()) {
             if (query == tile) {
@@ -102,7 +76,7 @@ public class Group {
         }
         return false;
     }
-    //----Search empty tile function---
+
     static boolean contains_empty(Group tiles){
         for(Tile tile : tiles.getTiles()){
             if(tile.getColour() == Color.WHITE){
@@ -135,7 +109,7 @@ public class Group {
         }
         return false;
     }
-    //collect group a tile belongs to
+
     static Group collect_group(Tile tile, Color color)
     {
         Group group = new Group();
@@ -144,7 +118,7 @@ public class Group {
         ArrayList<Tile> visited_tiles = new ArrayList<>();
         List<Tile> neighbours;
         Tile current_tile = tile;
-        while(visited_tiles.size() < group.size()){//continue as long as not all group members have been visited
+        while(visited_tiles.size() < group.size()){
             neighbours = grid.getAllNeighbours(current_tile.getVector());
             for(Tile nb : neighbours){
                 if(nb.getColour() == color){
@@ -155,7 +129,6 @@ public class Group {
             }
             visited_tiles.add(current_tile);
 
-            //choose next tile to pivot off of
             current_tile = group.get(current_member_id);
             current_member_id ++;
         }
@@ -187,15 +160,12 @@ public class Group {
     public static boolean placeable_with_groups(List<Group> groups){
         int max_group_size = groups.size();
         if(!groups.isEmpty()){
-            for(Group current_group : groups){//for each group:
-                if(current_group.size() < max_group_size){//check if current group can be extended
-                    //there exists a group that is less than max size
-                    //check whether it has adjacent free tiles
+            for(Group current_group : groups){
+                if(current_group.size() < max_group_size){
                     for(Tile tile : current_group.getTiles()){
                         Group nb = new Group(grid.getAllNeighbours(tile.getVector()));
                         for(Tile current_nb : nb.getTiles()){
                             if(current_nb.getColour() == Color.WHITE){
-                                //if there exists an empty tile adjacent to a group member, game cannot be over
                                 return true;
                             }
 
