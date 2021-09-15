@@ -20,17 +20,17 @@ public class ButtonPanel extends JPanel
         setSize(500,500);
 
         /* Settings Button */
-        Button settingsBtn = new Button("btn.png");
+        Button settingsBtn = new Button("btnMode.png");
         settingsBtn.addActionListener(e -> startupPanel.displaySettingsPanel());
         add(settingsBtn);
 
         /* Start Button */
-        Button startBtn = new Button("btn.png");
+        Button startBtn = new Button("btnStart.png");
         startBtn.addActionListener(e -> startupPanel.toggleSettingReady());
         add(startBtn);
 
         /* Help Button */
-        Button helpBtn = new Button("btn.png");
+        Button helpBtn = new Button("btnHelp.png");
         helpBtn.addActionListener(e -> startupPanel.displayHelpPanel());
         add(helpBtn);
 
