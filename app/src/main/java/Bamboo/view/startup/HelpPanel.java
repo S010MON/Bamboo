@@ -13,6 +13,7 @@ public class HelpPanel extends JPanel {
                 "A player’s group can’t contain more stones than the number of groups he has.The last player to place a stone wins");
 
         label.setFont(new Font("Serif", Font.PLAIN, 10));
+        setBackground(Color.RED);
         add(label);
         setVisible(true);
     }

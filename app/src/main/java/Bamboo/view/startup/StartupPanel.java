@@ -9,10 +9,12 @@ import java.awt.*;
 public class StartupPanel extends JPanel {
 
     private boolean settingsReady = false;
-    private JPanel displayPanel;
+    private JPanel currentPanel;
+    private SettingsPanel settingsPanel;
     private HelpPanel helpPanel;
     private JFrame frame;
     private JPanel panel;
+
 
     public StartupPanel() {
         setBackground(Color.BLACK);
@@ -21,11 +23,11 @@ public class StartupPanel extends JPanel {
         ButtonPanel buttonPanel = new ButtonPanel(this);
         add(buttonPanel, BorderLayout.WEST);
 
-        HelpPanel helpPanel = new HelpPanel();
-        add(helpPanel, BorderLayout.CENTER);
+        settingsPanel = new SettingsPanel();
+        helpPanel = new HelpPanel();
+        displaySettingsPanel();
 
         setVisible(true);
-
     }
 
 
@@ -48,11 +50,24 @@ public class StartupPanel extends JPanel {
         settingsReady = !settingsReady;
     }
 
+    private  void removeComponentCenter(){
+        Component centreComp = ((BorderLayout) getLayout()).getLayoutComponent(BorderLayout.CENTER);
+        if(centreComp != null)
+            remove(centreComp);
+    }
+
     public void displayHelpPanel() {
-        add(displayPanel);
+        setVisible(false);
+        removeComponentCenter();
+        add(helpPanel, BorderLayout.CENTER);
+        setVisible(true);
     }
 
     public void displaySettingsPanel(){
-
+        setVisible(false);
+        removeComponentCenter();
+        add(settingsPanel, BorderLayout.CENTER);
+        setVisible(true);
     }
+
 }
