@@ -4,8 +4,12 @@ import Bamboo.controller.Human;
 import Bamboo.controller.Settings;
 import Bamboo.model.Game;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.Toolkit;
 
 public class MainFrame extends JFrame
 {

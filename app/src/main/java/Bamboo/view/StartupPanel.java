@@ -1,6 +1,7 @@
 package Bamboo.view;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 public class StartupPanel extends JPanel {
     private String player1name;
