@@ -2,7 +2,7 @@ package Bamboo;
 
 import Bamboo.controller.CubeVector;
 import Bamboo.controller.GameLogic;
-import Bamboo.controller.Group;
+import Bamboo.controller.GroupController;
 import Bamboo.model.Grid;
 import Bamboo.model.GridArrayImp;
 import Bamboo.model.Tile;
@@ -15,6 +15,7 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class checkFinishTest {
+
     @Test void testNoGroups(){
         Grid grid = makeMockup(3,0,0,1,1);
         assertEquals(GameLogic.checkFinish(grid,0), false);
@@ -59,6 +60,20 @@ public class checkFinishTest {
         int[] indices = {0,0,2,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1};
         Grid grid = specificMockup(2,indices);
         assertEquals(GameLogic.checkFinish(grid, 0), true);
+    }
+
+    @Test void testWebsiteExample(){
+        int[] indices = {1,1,1,0,1
+                ,0,0,0,2,2,0,
+                1,0,2,1,0,1,0,
+                1,0,1,1,0,1,1,1,
+                0,2,2,2,1,0,2,1,2,
+                0,1,0,2,2,1,0,1,
+                0,2,2,1,0,0,0,
+                2,0,2,1,2,1,
+                1,0,0,1,0};
+        Grid grid = specificMockup(4,indices);
+        assertEquals(GameLogic.checkFinish(grid, 1), false);
     }
 
     public Grid makeMockup(int size, int red, int blue, int red_groups, int blue_groups){

@@ -1,85 +1,31 @@
 package Bamboo.controller;
 
 import Bamboo.model.Grid;
+import Bamboo.model.Group;
 import Bamboo.model.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Group {
-    ArrayList<Tile> tiles = new ArrayList<>();
+public class GroupController {
     public static Grid grid;
-    List<Tile> grid_tiles = new ArrayList<>();
 
-    public static void setGrid(Grid grid_){
+    static void setGrid(Grid grid_){
         grid = grid_;
     }
 
-    List<Tile> getTiles(){
-        return tiles;
-    }
-
-    int size(){
-        return tiles.size();
-    }
-
-    void add(Tile tile){
-        tiles.add(tile);
-    }
-
-    Tile get(int index){
-        return tiles.get(index);
-    }
-
-    void addAll(List<Tile> addition){
-        tiles.addAll(addition);
-    }
-
-    void addNew(List<Tile> addition){
-        for(Tile tile : addition){
-            if(notin(tile, new Group(tiles))){
-                tiles.add(tile);
-            }
-        }
-    }
-
-    Group getAllNeighbours(){
-        Group neighbours = new Group();
-        Group final_neighbours = new Group();
-        for(Tile tile : tiles){
-            List<Tile> nbs = grid.getAllNeighbours(tile.getVector());
-            neighbours.addNew(nbs);
-        }
-        for(Tile tile : neighbours.getTiles()){
-            if(notin(tile, new Group(tiles))){
-                final_neighbours.add(tile);
-            }
-        }
-        return final_neighbours;
-    }
-
-    public Group(List<Tile> list){
-        tiles = new ArrayList<Tile>(list);
-        grid_tiles = grid.getAllTiles();
-    }
-
-    public Group(){
-        tiles = new ArrayList<Tile>();
-        grid_tiles = grid.getAllTiles();
-    }
-
-    static boolean isin(Tile query, Group list){
+    static boolean is_in(Tile query, Group list){
         for (Tile tile : list.getTiles()) {
-            if (query == tile) {
+            if (query.getVector().getX() == tile.getVector().getX() && query.getVector().getY() == tile.getVector().getY() && query.getVector().getZ() == tile.getVector().getZ()) {
                 return true;
             }
         }
         return false;
     }
 
-    static boolean notin(Tile query, Group list){
-        return !isin(query, list);
+    public static boolean notin(Tile query, Group list){
+        return !is_in(query, list);
     }
 
     static boolean contains_empty(Group tiles){
@@ -117,15 +63,36 @@ public class Group {
         return false;
     }
 
+    public static List<Group> collect_groups(Color color){
+        List<Tile> tiles = grid.getAllTiles();
+        List<Group> groups = new ArrayList<Group>();
+        Group collected_tiles = new Group();
+        int i = 0;
+        for(Tile tile : tiles){
+            if(tile.getColour() == color){
+                if(notin(tile, collected_tiles)){
+                    Group current_group = collect_group(tile, color);
+                    collected_tiles.addNew(current_group.getTiles());
+                    groups.add(current_group);
+                    i++;
+
+                }
+            }
+        }
+        return groups;
+    }
+    
     static Group collect_group(Tile tile, Color color)
     {
         Group group = new Group();
         group.add(tile);
-        int current_member_id = 0;
-        ArrayList<Tile> visited_tiles = new ArrayList<>();
+        int current_member_id = -1;
+        Group visited_tiles = new Group();
         List<Tile> neighbours;
         Tile current_tile = tile;
         while(visited_tiles.size() < group.size()){
+            current_member_id ++;
+            current_tile = group.get(current_member_id);
             neighbours = grid.getAllNeighbours(current_tile.getVector());
             for(Tile nb : neighbours){
                 if(nb.getColour() == color){
@@ -135,26 +102,8 @@ public class Group {
                 }
             }
             visited_tiles.add(current_tile);
-            current_tile = group.get(current_member_id);
-            current_member_id ++;
         }
         return group;
-    }
-
-    public static List<Group> collect_groups(Color color){
-        List<Tile> tiles = grid.getAllTiles();
-        List<Group> groups = new ArrayList<Group>();
-        Group collected_tiles = new Group();
-        for(Tile tile : tiles){
-            if(notin(tile, collected_tiles)){
-                if(tile.getColour() == color){
-                    Group current_group = collect_group(tile, color);
-                    collected_tiles.addAll(current_group.getTiles());
-                    groups.add(current_group);
-                }
-            }
-        }
-        return groups;
     }
 
     public static int countGroups(Color player_color, Grid grid_){
@@ -200,13 +149,13 @@ public class Group {
     }
 
     public static List<Tile> empty_tiles_with_empty_neighbours(Grid grid, Color player_color){
-        Group.setGrid(grid);
+        setGrid(grid);
         List<Tile> empty_tiles = new ArrayList<>();
         List<Tile> all_tiles = grid.getAllTiles();
         for(Tile tile : all_tiles){
             if(tile.getColour() == Color.WHITE){
                 Group neighbours = new Group(grid.getAllNeighbours(tile.getVector()));
-                if(!Group.contains_color(neighbours, player_color)){
+                if(!contains_color(neighbours, player_color)){
                     empty_tiles.add(tile);
                 }
             }
@@ -215,14 +164,13 @@ public class Group {
     }
 
     public static List<Tile> group_extension_tiles(Grid grid, Color player_color){
-        Group.setGrid(grid);
+        setGrid(grid);
         Group return_tiles = new Group();
-        List<Group> groups = Group.collect_groups(player_color);
+        List<Group> groups = collect_groups(player_color);
         for(Group group : groups){
-            int group_size = group.size();
             Group extension_tiles = group.getAllNeighbours();
             for(Tile extension : extension_tiles.getTiles()){
-                if(is_legal_extension(grid, extension, group, player_color)){
+                if(extension.getColour() == Color.WHITE && is_legal_extension(grid, extension, group, player_color)){
                     return_tiles.add(extension);
                 }
             }
@@ -231,24 +179,52 @@ public class Group {
     }
 
     static boolean is_legal_extension(Grid grid, Tile extension, Group original, Color player_color){
-        boolean has_friendly_nonGroupTiles = Group.has_nonGroup_sameColor_neighbours(extension, original, player_color);
-        int max_size = Group.countGroups(player_color, grid);
+        Group friendly_nonGroupTiles = new Group();
+        int friendly_group_sum = 0;
+        int max_size = countGroups(player_color, grid);
         int group_size = original.size();
         Group neighbours = new Group(grid.getAllNeighbours(extension.getVector()));
         for(Tile nb : neighbours.getTiles()){
-            if(has_friendly_nonGroupTiles){
-                if(nb.getColour() == player_color && Group.notin(nb, original)) {
-                    if (group_size + Group.collect_group(nb, player_color).size() < max_size) {
+            if(nb.getColour() == player_color && notin(nb, original)){
+                Group nb_group = collect_group(nb, player_color);
+                if(!contains_any_of(nb_group, friendly_nonGroupTiles)){
+                    friendly_nonGroupTiles.add(nb);
+                    friendly_group_sum += nb_group.size();
+                }
+            }
+        }
+        if(!has_nonGroup_sameColor_neighbours(extension, original, player_color) && group_size < max_size){
+            return true;
+        }
+        for(Tile nb : neighbours.getTiles()){
+            int neighbouring_group_size = 0;
+            Group neighbour_members = new Group();
+            if(nb.getColour() == player_color && notin(nb, original)) {
+                Group nb_group = collect_group(nb, player_color);
+                if(!contains_any_of(neighbour_members, nb_group)){
+                    neighbouring_group_size += nb_group.size();
+                    neighbour_members.add(nb);
+                }
+
+                if (group_size + neighbouring_group_size < max_size - 1) {
+                    return true;
+                }
+            }
+            else if (friendly_nonGroupTiles.size() == 0){
+                if(nb.getColour() == Color.WHITE){
+                    if(group_size < max_size){
                         return true;
                     }
                 }
             }
-            else{
-                if(nb.getColour() == Color.WHITE){
-                    if(group_size + 1 <= max_size){
-                        return true;
-                    }
-                }
+        }
+        return false;
+    }
+
+    static boolean contains_any_of(Group query, Group group){
+        for(Tile tile : query.getTiles()){
+            if(is_in(tile, group)){
+                return true;
             }
         }
         return false;

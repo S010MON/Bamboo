@@ -2,7 +2,7 @@ package Bamboo;
 
 import Bamboo.controller.CubeVector;
 import Bamboo.controller.GameLogic;
-import Bamboo.controller.Group;
+import Bamboo.controller.GroupController;
 import Bamboo.model.Grid;
 import Bamboo.model.GridArrayImp;
 import Bamboo.model.Tile;
@@ -29,7 +29,7 @@ public class legalMovesTest {
         assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(),15);
     }
 
-    @Test void testRealWorldScenario_red_twoOptions(){
+    @Test void testRealWorldScenario_red_fourOptions(){
         int[] indices = {0,1,0,0,0,1,0,2,2,1,2,2,2,1,2,0,1,2,2};
         Grid grid = specificMockup(2,indices);
         for(Tile tile : GameLogic.getLegalMoves(grid, Color.RED)){
@@ -44,7 +44,31 @@ public class legalMovesTest {
         assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), 0);
     }
 
+    @Test void testWebsiteExample(){
+        int[] indices = {1,1,1,0,1
+                ,0,0,0,2,2,0,
+                1,0,2,1,0,1,0,
+                1,0,1,1,0,1,1,1,
+                0,2,2,2,1,0,2,1,2,
+                0,1,0,2,2,1,0,1,
+                0,2,2,1,0,0,0,
+                2,0,2,1,2,1,
+                1,0,0,1,0};
+        Grid grid = specificMockup(4,indices);
+        assertEquals(GroupController.empty_tiles_with_empty_neighbours(grid, Color.RED).size(), 12);
+    }
 
+    @Test void testRealGrid_red(){
+        int[] indices = {0,0,2,2,1,1,2,2,2,2,0,0,1,2,1,2,2,0,0};
+        Grid grid = specificMockup(2, indices);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), 8);
+    }
+
+    @Test void testRealGrid_blue(){
+        int[] indices = {0,0,2,2,1,1,2,2,2,2,0,0,1,2,1,2,2,0,0};
+        Grid grid = specificMockup(2, indices);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.BLUE).size(), 6);
+    }
 
     public Grid makeMockup(int size, int red, int blue, int red_groups, int blue_groups){
         Grid grid = new GridArrayImp(size);
@@ -71,7 +95,7 @@ public class legalMovesTest {
 
     public Grid specificMockup(int size, int[] indices){
         Grid grid = new GridArrayImp(size);
-        Color[] colors = {Color.RED, Color.BLUE, Color.white};
+        Color[] colors = {Color.RED, Color.BLUE, Color.WHITE};
         List<Tile> tiles = grid.getAllTiles();
         for(int i = 0; i < tiles.size(); i++){
             CubeVector vector = tiles.get(i).getVector();
