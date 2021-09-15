@@ -53,7 +53,7 @@ public class Game
 
     public void checkAlreadyCoulouredTiles (Tile tile) throws Exception {
 
-        if(tile.isCouloured())
+        if(tile.isColoured())
             throw new Exception("Tile already coloured") ;
         }
     }

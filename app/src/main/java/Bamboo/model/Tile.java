@@ -52,4 +52,9 @@ public class Tile
     public BasicStroke getCircle_thickness() {
         return circle_thickness;
     }
+
+    public boolean isColoured()
+    {
+        return !(color == Color.WHITE);
+    }
 }
