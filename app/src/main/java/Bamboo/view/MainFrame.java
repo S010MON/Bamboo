@@ -1,12 +1,11 @@
 package Bamboo.view;
 
-import Bamboo.controller.Human;
 import Bamboo.controller.Settings;
 import Bamboo.model.Game;
+import Bamboo.view.startup.StartupPanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
@@ -14,30 +13,33 @@ import java.awt.Toolkit;
 public class MainFrame extends JFrame
 {
     private Game currentGame;
-    private JPanel currentPanel;
+    private GamePanel gamePanel;
+    private StartupPanel startupPanel = new StartupPanel();
     private Dimension screenSize;
-
 
     public MainFrame()
     {
         buildFrame();
 
-        // TODO add setupPanel ** here ** to get the settings for the new game
-        currentGame = new Game(defaultSettings());
-        currentPanel = new GamePanel(screenSize, currentGame);
+        // Settings Panel
+        setCurrentPanel(null, startupPanel);
+        while (startupPanel.isNotSettingsReady()) {
+            sleep(1000);
+        }
+        Settings settings = startupPanel.getSettings();
+        startupPanel.reset();
 
-        setLayout(new BorderLayout());
-        add(currentPanel);
-        setVisible(true);
+        // Set the current game
+        currentGame = new Game(settings);
+        setCurrentPanel(startupPanel, new GamePanel(screenSize, currentGame));
     }
 
-    /** Temporary Measure for testing - REMOVE! */
-    private Settings defaultSettings()
-    {
-        return new Settings(
-                new Human("Player 1", Color.BLUE),
-                new Human("Player 2", Color.RED),
-                5);
+    private void setCurrentPanel(JPanel outgoing, JPanel incoming) {
+        setVisible(false);
+        if(outgoing != null)
+            remove(outgoing);
+        add(incoming);
+        setVisible(true);
     }
 
     /** All frame settings detailed here */
@@ -48,5 +50,15 @@ public class MainFrame extends JFrame
         setSize(screenSize);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
+        setLayout(new BorderLayout());
+    }
+
+    private void sleep(int amount) {
+        try {
+            Thread.sleep(amount);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
