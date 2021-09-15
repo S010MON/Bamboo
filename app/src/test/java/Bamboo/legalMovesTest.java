@@ -32,7 +32,10 @@ public class legalMovesTest {
     @Test void testRealWorldScenario_red_twoOptions(){
         int[] indices = {0,1,0,0,0,1,0,2,2,1,2,2,2,1,2,0,1,2,2};
         Grid grid = specificMockup(2,indices);
-        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), 2);
+        for(Tile tile : GameLogic.getLegalMoves(grid, Color.RED)){
+            System.out.println(tile.getVector());
+        }
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), 4);
     }
 
     @Test void testOnlyExtensionViolatesMaxMembers(){
@@ -40,6 +43,8 @@ public class legalMovesTest {
         Grid grid = specificMockup(2,indices);
         assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), 0);
     }
+
+
 
     public Grid makeMockup(int size, int red, int blue, int red_groups, int blue_groups){
         Grid grid = new GridArrayImp(size);

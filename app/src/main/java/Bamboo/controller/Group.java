@@ -199,4 +199,58 @@ public class Group {
         return false;
     }
 
+    public static List<Tile> empty_tiles_with_empty_neighbours(Grid grid, Color player_color){
+        Group.setGrid(grid);
+        List<Tile> empty_tiles = new ArrayList<>();
+        List<Tile> all_tiles = grid.getAllTiles();
+        for(Tile tile : all_tiles){
+            if(tile.getColour() == Color.WHITE){
+                Group neighbours = new Group(grid.getAllNeighbours(tile.getVector()));
+                if(!Group.contains_color(neighbours, player_color)){
+                    empty_tiles.add(tile);
+                }
+            }
+        }
+        return empty_tiles;
+    }
+
+    public static List<Tile> group_extension_tiles(Grid grid, Color player_color){
+        Group.setGrid(grid);
+        Group return_tiles = new Group();
+        List<Group> groups = Group.collect_groups(player_color);
+        for(Group group : groups){
+            int group_size = group.size();
+            Group extension_tiles = group.getAllNeighbours();
+            for(Tile extension : extension_tiles.getTiles()){
+                if(is_legal_extension(grid, extension, group, player_color)){
+                    return_tiles.add(extension);
+                }
+            }
+        }
+        return return_tiles.getTiles();
+    }
+
+    static boolean is_legal_extension(Grid grid, Tile extension, Group original, Color player_color){
+        boolean has_friendly_nonGroupTiles = Group.has_nonGroup_sameColor_neighbours(extension, original, player_color);
+        int max_size = Group.countGroups(player_color, grid);
+        int group_size = original.size();
+        Group neighbours = new Group(grid.getAllNeighbours(extension.getVector()));
+        for(Tile nb : neighbours.getTiles()){
+            if(has_friendly_nonGroupTiles){
+                if(nb.getColour() == player_color && Group.notin(nb, original)) {
+                    if (group_size + Group.collect_group(nb, player_color).size() < max_size) {
+                        return true;
+                    }
+                }
+            }
+            else{
+                if(nb.getColour() == Color.WHITE){
+                    if(group_size + 1 <= max_size){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
