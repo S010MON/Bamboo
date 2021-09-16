@@ -1,10 +1,8 @@
 package Bamboo.model;
 
-import Bamboo.controller.Agent;
-import Bamboo.controller.Human;
-import Bamboo.controller.Settings;
-import Bamboo.controller.CubeVector;
+import Bamboo.controller.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,8 +50,13 @@ public class Game
 
     public void placeNextAt(CubeVector v) throws TileAlreadyColouredException
     {
-       grid.setTile(v, currentPlayer.getColor());
-       toggleTurn();
+        if(GameLogic.is_legal_move(this, grid.getTile(v), currentPlayer.getColor()))
+        {
+            grid.setTile(v, currentPlayer.getColor());
+            toggleTurn();
+        }
+        else
+            System.out.println("Illegal Move");
     }
 
     private void toggleTurn()
@@ -63,7 +66,6 @@ public class Game
         else
             currentPlayer = player1;
     }
-
 
     public Graph getGameAsGraph()
     {

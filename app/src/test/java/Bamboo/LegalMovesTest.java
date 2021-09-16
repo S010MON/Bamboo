@@ -2,9 +2,6 @@ package Bamboo;
 
 import Bamboo.controller.CubeVector;
 import Bamboo.controller.GameLogic;
-import Bamboo.controller.GroupController;
-import Bamboo.controller.Settings;
-import Bamboo.controller.Agent;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -12,7 +9,8 @@ import java.util.List;
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class legalMovesTest {
+
+public class LegalMovesTest {
     @Test void testAll_legal_moves(){
         Grid grid = makeMockup(2,0,0,1,0);
         Game game = new Game(grid);

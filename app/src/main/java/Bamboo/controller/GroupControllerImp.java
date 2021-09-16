@@ -83,7 +83,10 @@ public class GroupControllerImp implements GroupController{
 
     static boolean is_in(Tile query, Group list){
         for (Tile tile : list.getTiles()) {
-            if (query.getVector().getX() == tile.getVector().getX() && query.getVector().getY() == tile.getVector().getY() && query.getVector().getZ() == tile.getVector().getZ()) {
+            if (query.getVector().getX() == tile.getVector().getX() &&
+                query.getVector().getY() == tile.getVector().getY() &&
+                query.getVector().getZ() == tile.getVector().getZ())
+            {
                 return true;
             }
         }
