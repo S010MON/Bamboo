@@ -18,7 +18,7 @@ public abstract class GameLogic {
         else player_color = Color.BLUE;
         if(GroupControllerImp.does_not_contain_empty(all_tiles))
             return true;
-        if(GroupControllerImp.empty_tile_with_empty_neighbours(grid, all_tiles, player_color))
+        if(exists_empty_tile_with_empty_neighbours(grid, all_tiles, player_color))
             return false;
         if(legal_group_extension_tiles(game, player_color).size() == 0)
             return true;
@@ -39,7 +39,7 @@ public abstract class GameLogic {
         if(!GroupControllerImp.contains_color(neighbours, player_color))
             return true;
         Group original = GroupControllerImp.get_adjacent_group(grid, move, player_color);
-        List<Group> groups = GroupControllerImp.collect_groups(grid, player_color);
+        List<Group> groups = GroupControllerImp.collect_groups_by_color(grid, player_color);
         int max_current_group_size = 0;
         for(Group group : groups){
             if(group.size() > max_current_group_size)
@@ -47,20 +47,21 @@ public abstract class GameLogic {
         }
         int max_size = GroupControllerImp.count_groups_for_player(game, player_color);
         int group_size = original.size();
-        int other_group_size = 0;
-        int other_group_count = 0;
-        if(!has_nonGroup_sameColor_neighbours(grid, move, original, player_color))
-            if(group_size < max_size)
+        if(!has_nonGroup_sameColor_neighbours(grid, move, original, player_color)){
+            if(group_size < max_size){
                 return true;
-        else
-            return is_valid_group_merger(grid, move, player_color, original, other_group_size, max_size, other_group_count, max_current_group_size);
+            }
+        }
+        else{
+                return is_valid_group_merger(grid, move, player_color, original, max_size, max_current_group_size);
+            }
         return false;
     }
 
     static List<Tile> legal_group_extension_tiles(Game game, Color player_color){
         Grid grid = game.getGrid();
         Group return_tiles = new Group();
-        List<Group> groups = GroupControllerImp.collect_groups(grid, player_color);
+        List<Group> groups = GroupControllerImp.collect_groups_by_color(grid, player_color);
         int max_current_group_size = 0;
         Group visited_extensions = new Group();
         for(Group group : groups){
@@ -71,8 +72,9 @@ public abstract class GameLogic {
             Group extension_tiles = group.getAllNeighbours(grid);
             for(Tile extension : extension_tiles.getTiles()){
                 if(GroupControllerImp.not_in(extension,visited_extensions)){
-                    if(extension.getColour() == Color.WHITE && is_legal_move(game, extension, player_color)){
-                        return_tiles.add(extension);
+                    if(extension.getColour() == Color.WHITE){
+                        if(is_legal_move(game, extension, player_color))
+                            return_tiles.add(extension);
                     }
                     visited_extensions.add(extension);
                 }
@@ -81,15 +83,17 @@ public abstract class GameLogic {
         return return_tiles.getTiles();
     }
 
-    static boolean is_valid_group_merger(Grid grid, Tile move, Color player_color, Group original, int other_group_size, int max_size, int other_group_count, int max_current_group_size){
+    static boolean is_valid_group_merger(Grid grid, Tile move, Color player_color, Group original, int max_size, int max_current_group_size){
         int group_size = original.size();
+        int other_group_size = 0;
+        int other_group_count = 0;
         Group neighbours = new Group(grid.getAllNeighbours(move.getVector()));
         Group found_nonGroup_tiles = new Group();
         List<Group> sameColor_groups = new ArrayList<>();
         for(Tile tile : neighbours.getTiles()){
             if(tile.getColour() == player_color && GroupControllerImp.not_in(tile, original)){
                 found_nonGroup_tiles.add(tile);
-                Group tile_group = GroupControllerImp.collect_group(grid, tile, player_color);
+                Group tile_group = GroupControllerImp.collect_group_from_tile(grid, tile, player_color);
                 if(!contains_group(sameColor_groups, tile_group)){
                     sameColor_groups.add(tile_group);
                     other_group_size += tile_group.size();
@@ -136,4 +140,16 @@ public abstract class GameLogic {
         return false;
     }
 
+    static boolean exists_empty_tile_with_empty_neighbours(Grid grid,Group tiles, Color color){
+        for(Tile tile: tiles.getTiles()){
+            if(tile.getColour() == Color.WHITE){
+                CubeVector vector = tile.getVector();
+                List<Tile> nb = grid.getAllNeighbours(vector);
+                if(!GroupControllerImp.contains_color(new Group(nb), color)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

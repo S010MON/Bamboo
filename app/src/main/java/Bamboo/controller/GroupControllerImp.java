@@ -14,21 +14,21 @@ public class GroupControllerImp implements GroupController{
     //collects group for each tile of that color that it hasnt collected a group for
     public static int count_groups_for_player(Game game, Color player_color){
         Grid grid = game.getGrid();
-        return collect_groups(grid, player_color).size();
+        return collect_groups_by_color(grid, player_color).size();
     }
 
     public static boolean not_in(Tile query, Group list){
         return !is_in(query, list);
     }
 
-    public static List<Group> collect_groups(Grid grid, Color color){
+    public static List<Group> collect_groups_by_color(Grid grid, Color color){
         List<Tile> tiles = grid.getAllTiles();
         List<Group> groups = new ArrayList<Group>();
         Group collected_tiles = new Group();
         for(Tile tile : tiles){
             if(tile.getColour() == color){
                 if(not_in(tile, collected_tiles)){
-                    Group current_group = collect_group(grid, tile, color);
+                    Group current_group = collect_group_from_tile(grid, tile, color);
                     collected_tiles.addNew(current_group.getTiles());
                     groups.add(current_group);
                 }
@@ -37,7 +37,7 @@ public class GroupControllerImp implements GroupController{
         return groups;
     }
 
-    static Group collect_group(Grid grid, Tile tile, Color color)
+    static Group collect_group_from_tile(Grid grid, Tile tile, Color color)
     {
         Group group = new Group();
         group.add(tile);
@@ -65,7 +65,7 @@ public class GroupControllerImp implements GroupController{
         Group neighbours = new Group(grid.getAllNeighbours(tile.getVector()));
         for(Tile nb : neighbours.getTiles()){
             if(nb.getColour() == player_color){
-                return collect_group(grid, nb, player_color);
+                return collect_group_from_tile(grid, nb, player_color);
             }
         }
         return new Group();
@@ -98,19 +98,6 @@ public class GroupControllerImp implements GroupController{
         for(Tile tile : tiles.getTiles()){
             if(tile.getColour() == Color.WHITE){
                 return true;
-            }
-        }
-        return false;
-    }
-
-    static boolean empty_tile_with_empty_neighbours(Grid grid,Group tiles, Color color){
-        for(Tile tile: tiles.getTiles()){
-            if(tile.getColour() == Color.WHITE){
-                CubeVector vector = tile.getVector();
-                List<Tile> nb = grid.getAllNeighbours(vector);
-                if(!contains_color(new Group(nb), color)){
-                    return true;
-                }
             }
         }
         return false;
