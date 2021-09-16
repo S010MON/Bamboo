@@ -22,6 +22,14 @@ public class Game
         currentPlayer = player1;
     }
 
+    public Game(Grid grid){
+        this.grid = grid;
+    }
+
+    public Game(int size){
+        this.grid = new GridArrayImp(size);
+    }
+
     public Agent getCurrentPlayer()
     {
         return currentPlayer;
@@ -36,6 +44,8 @@ public class Game
     {
         return grid.getAllTiles();
     }
+
+    public Grid getGrid(){return grid;}
 
     public void placeNextAt(CubeVector v) throws TileAlreadyColouredException
     {
