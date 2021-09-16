@@ -6,7 +6,7 @@ import Bamboo.controller.VectorConverter;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestVectorConverter
+public class VectorConverterTest
 {
     /* Testing Schema - Cube To Axial
      *        | 1 | 2 | 3 | 4 | 5

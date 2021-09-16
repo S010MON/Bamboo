@@ -5,7 +5,10 @@ import Bamboo.controller.Human;
 import Bamboo.controller.Settings;
 import Bamboo.controller.CubeVector;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 public class Game
 {
@@ -16,7 +19,7 @@ public class Game
 
     public Game(Settings settings)
     {
-        this.grid = new GridArrayImp(settings.boardSize);
+        this.grid = new GridHashImp(settings.boardSize);
         this.player1 = settings.player1;
         this.player2 = settings.player2;
         currentPlayer = player1;
@@ -39,8 +42,8 @@ public class Game
 
     public void placeNextAt(CubeVector v) throws TileAlreadyColouredException
     {
-        grid.setTile(v, currentPlayer.getColor());
-        toggleTurn();
+       grid.setTile(v, currentPlayer.getColor());
+       toggleTurn();
     }
 
     private void toggleTurn()
@@ -51,10 +54,22 @@ public class Game
             currentPlayer = player1;
     }
 
-    public void checkAlreadyCoulouredTiles (Tile tile) throws Exception {
 
-        if(tile.isColoured())
-            throw new Exception("Tile already coloured") ;
+    public Graph getGameAsGraph()
+    {
+        ArrayList<CubeVector> vectors = new ArrayList<>(grid.getAllVectors());
+        ArrayList<Edge> edges = new ArrayList<>();
+        HashMap<CubeVector, Node> nodes = new HashMap<>();
+
+        for(CubeVector v: vectors)
+        {
+            nodes.put(v, new Node(v, grid.getTile(v).getColour()));
+            for(Tile tile: grid.getAllNeighbours(v))
+            {
+                edges.add(new Edge(v, tile.getVector()));
+            }
         }
+        return new Graph(nodes, edges);
     }
+}
 

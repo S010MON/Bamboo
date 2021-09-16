@@ -1,7 +1,7 @@
 package Bamboo;
 
-
 import Bamboo.controller.CubeVector;
+import Bamboo.controller.GameLogic;
 import Bamboo.controller.GroupControllerImp;
 import Bamboo.model.Grid;
 import Bamboo.model.GridArrayImp;
@@ -13,56 +13,35 @@ import java.util.List;
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-public class GroupTest {
-    @Test void testNoGroups(){
-        Grid grid = makeMockup(3,0,0,1,1);
-        assertEquals(GroupControllerImp.countGroups(Color.RED,grid), 0);
+public class LegalMovesTest {
+    @Test void testAll_legal_moves(){
+        Grid grid = makeMockup(2,0,0,1,0);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(),grid.getAllTiles().size());
     }
 
-    @Test void testOneGroup(){
-        Grid grid = makeMockup(3,1,0,1,1);
-        assertEquals(GroupControllerImp.countGroups(Color.RED,grid), 1);
+    @Test void test_one_nonextendable_group(){
+        Grid grid = makeMockup(2,3,0,1,0);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), grid.getAllTiles().size() - 7);
     }
 
-    @Test void testRedGrid_red(){
-        Grid grid = makeMockup(3,100,0,1,1);
-        assertEquals(GroupControllerImp.countGroups(Color.RED,grid), 1);
+    @Test void testOneTile(){
+        Grid grid = makeMockup(2,1,0,1,0);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(),15);
     }
 
-    @Test void testRedGrid_blue(){
-        Grid grid = makeMockup(3,100,0,1,1);
-        assertEquals(GroupControllerImp.countGroups(Color.BLUE,grid), 0);
+    @Test void testRealWorldScenario_red_fourOptions(){
+        int[] indices = {0,1,0,0,0,1,0,2,2,1,2,2,2,1,2,0,1,2,2};
+        Grid grid = specificMockup(2,indices);
+        for(Tile tile : GameLogic.getLegalMoves(grid, Color.RED)){
+            System.out.println(tile.getVector());
+        }
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), 4);
     }
 
-    @Test void testTwoGroups(){
-        int[] indices = {0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
-        Grid grid = specificMockup(2, indices);
-        assertEquals(GroupControllerImp.countGroups(Color.RED, grid), 2);
-    }
-
-    @Test void testOpponentTwoGroups(){
-        int[] indices = {0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
-        Grid grid = specificMockup(2, indices);
-        assertEquals(GroupControllerImp.countGroups(Color.BLUE, grid), 0);
-    }
-
-    @Test void testRealGrid_red(){
-        int[] indices = {0,0,2,2,1,1,2,2,2,2,0,0,1,2,1,2,2,0,0};
-        Grid grid = specificMockup(2, indices);
-        assertEquals(GroupControllerImp.countGroups(Color.RED, grid), 3);
-    }
-
-    @Test void testRealGrid_blue(){
-        int[] indices = {0,0,2,2,1,1,2,2,2,2,0,0,1,1,2,1,2,0,0};
-        Grid grid = specificMockup(2, indices);
-        assertEquals(GroupControllerImp.countGroups(Color.BLUE, grid), 3);
-    }
-
-    @Test void testDifferentGroups(){
-        int[] indices = {0,2,0,2,2,2,2,0,0,0,2,0,2,2,2,2,0,0,0};
-        Grid grid = specificMockup(2, indices);
-        assertEquals(GroupControllerImp.countGroups(Color.RED, grid), 5);
+    @Test void testOnlyExtensionViolatesMaxMembers(){
+        int[] indices = {0,0,2,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1};
+        Grid grid = specificMockup(2,indices);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), 0);
     }
 
     @Test void testWebsiteExample(){
@@ -76,7 +55,19 @@ public class GroupTest {
                 2,0,2,1,2,1,
                 1,0,0,1,0};
         Grid grid = specificMockup(4,indices);
-        assertEquals(GroupControllerImp.countGroups(Color.BLUE, grid), 10);
+        assertEquals(GroupControllerImp.empty_tiles_with_empty_neighbours(grid, Color.RED).size(), 12);
+    }
+
+    @Test void testRealGrid_red(){
+        int[] indices = {0,0,2,2,1,1,2,2,2,2,0,0,1,2,1,2,2,0,0};
+        Grid grid = specificMockup(2, indices);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.RED).size(), 8);
+    }
+
+    @Test void testRealGrid_blue(){
+        int[] indices = {0,0,2,2,1,1,2,2,2,2,0,0,1,2,1,2,2,0,0};
+        Grid grid = specificMockup(2, indices);
+        assertEquals(GameLogic.getLegalMoves(grid, Color.BLUE).size(), 6);
     }
 
     public Grid makeMockup(int size, int red, int blue, int red_groups, int blue_groups){
@@ -104,7 +95,7 @@ public class GroupTest {
 
     public Grid specificMockup(int size, int[] indices){
         Grid grid = new GridArrayImp(size);
-        Color[] colors = {Color.RED, Color.BLUE, Color.white};
+        Color[] colors = {Color.RED, Color.BLUE, Color.WHITE};
         List<Tile> tiles = grid.getAllTiles();
         for(int i = 0; i < tiles.size(); i++){
             CubeVector vector = tiles.get(i).getVector();
@@ -115,3 +106,4 @@ public class GroupTest {
         return grid;
     }
 }
+

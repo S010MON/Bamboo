@@ -9,6 +9,7 @@ public class Tile
 {
     private Color color;
     private CubeVector vector;
+    private boolean coloured;
     private Color outline;
     private BasicStroke circle_thickness;
 
@@ -16,24 +17,25 @@ public class Tile
     {
         this.color = Color.white;
         this.vector = vector;
+        this.coloured = false;
         this.outline = Color.black;
         this.circle_thickness = new BasicStroke(3);
     }
 
-    public void setColour(Color color)
+    public void setColour(Color color) throws TileAlreadyColouredException
     {
-        // Test that this is the first (and only) colour change
-        assert this.color != Color.BLUE && this.color != Color.RED;
+        if(this.color != Color.WHITE)
+            throw new TileAlreadyColouredException();
         this.color = color;
     }
 
     public Color getColour()
-
     {
         return color;
     }
 
-    public CubeVector getVector() {
+    public CubeVector getVector()
+    {
         return vector;
     }
 

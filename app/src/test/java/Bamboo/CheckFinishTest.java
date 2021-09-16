@@ -14,7 +14,8 @@ import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class checkFinishTest {
+public class CheckFinishTest {
+
     @Test void testNoGroups(){
         Grid grid = makeMockup(3,0,0,1,1);
         assertEquals(GameLogic.checkFinish(grid,0), false);
@@ -61,6 +62,20 @@ public class checkFinishTest {
         assertEquals(GameLogic.checkFinish(grid, 0), true);
     }
 
+    @Test void testWebsiteExample(){
+        int[] indices = {1,1,1,0,1
+                ,0,0,0,2,2,0,
+                1,0,2,1,0,1,0,
+                1,0,1,1,0,1,1,1,
+                0,2,2,2,1,0,2,1,2,
+                0,1,0,2,2,1,0,1,
+                0,2,2,1,0,0,0,
+                2,0,2,1,2,1,
+                1,0,0,1,0};
+        Grid grid = specificMockup(4,indices);
+        assertEquals(GameLogic.checkFinish(grid, 1), false);
+    }
+
     public Grid makeMockup(int size, int red, int blue, int red_groups, int blue_groups){
         Grid grid = new GridArrayImp(size);
         int max_red_group_size = red_groups;
@@ -73,8 +88,8 @@ public class checkFinishTest {
             CubeVector vector = tiles.get(i).getVector();
 
             if(red_counter < red){
-                try{
-                grid.setTile(vector, Color.RED);
+                try {
+                    grid.setTile(vector, Color.RED);
                 } catch (TileAlreadyColouredException e) {e.printStackTrace();}
                 red_counter++;
             }
@@ -90,8 +105,8 @@ public class checkFinishTest {
         List<Tile> tiles = grid.getAllTiles();
         for(int i = 0; i < tiles.size(); i++){
             CubeVector vector = tiles.get(i).getVector();
-            try{
-            grid.setTile(vector, colors[indices[i]]);
+            try {
+                grid.setTile(vector, colors[indices[i]]);;
             } catch (TileAlreadyColouredException e) {e.printStackTrace();}
         }
         return grid;

@@ -1,6 +1,7 @@
 package Bamboo.model;
 
 import Bamboo.controller.CubeVector;
+import Bamboo.controller.VectorConverter;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ public class GridArrayImp implements Grid
 {
     private Tile[][][] tiles;
     private List<Tile> tileList;
+    private List<CubeVector> vectors;
     private int width;
     private int offset;
 
@@ -17,6 +19,7 @@ public class GridArrayImp implements Grid
     {
         width = (radius * 2) + 1;
         offset = radius;
+        vectors = new ArrayList<>();
         tileList = new ArrayList<>();
         tiles = buildGrid(radius);
     }
@@ -34,8 +37,6 @@ public class GridArrayImp implements Grid
     public void setTile(CubeVector v, Color c) throws TileAlreadyColouredException
     {
         v = addOffset(v);
-        if(tiles[v.getX()][v.getY()][v.getZ()].getColour() != Color.WHITE)
-            throw new TileAlreadyColouredException();
         tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
     }
 
@@ -75,6 +76,12 @@ public class GridArrayImp implements Grid
         return tileList;
     }
 
+    @Override
+    public List<CubeVector> getAllVectors()
+    {
+        return vectors;
+    }
+
     public CubeVector addOffset(CubeVector v)
     {
         int x = v.getX() + offset;
@@ -104,6 +111,7 @@ public class GridArrayImp implements Grid
                     // Add a new tile without the offset
                     if(((x-offset) + (y-offset) + (z-offset)) == 0)
                     {
+                        vectors.add(new CubeVector((x-offset), (y-offset), (z-offset)));
                         grid[x][y][z] = new Tile(removeOffset(new CubeVector(x, y, z)));
                         tileList.add(grid[x][y][z]);
                     }
