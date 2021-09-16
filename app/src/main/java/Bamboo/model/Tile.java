@@ -3,19 +3,17 @@ package Bamboo.model;
 import Bamboo.controller.CubeVector;
 import java.awt.Color;
 
-import java.awt.*;
-
 public class Tile
 {
     private Color color;
     private CubeVector vector;
-    private boolean coloured ;
+    private boolean coloured;
 
     public Tile(CubeVector vector)
     {
         this.color = Color.white;
         this.vector = vector;
-        this.coloured = false ;
+        this.coloured = false;
     }
 
     public void setColour(Color color)
@@ -26,21 +24,22 @@ public class Tile
     }
 
     public Color getColour()
-
     {
         return color;
     }
 
-    public CubeVector getVector() {
+    public CubeVector getVector()
+    {
         return vector;
     }
 
-    public boolean isCouloured() {
-        return coloured ;
+    public boolean isCouloured()
+    {
+        return coloured;
     }
 
-    public void colouring(){
-        coloured = true ;
-
+    public void colouring()
+    {
+        coloured = true;
     }
 }

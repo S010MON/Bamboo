@@ -35,6 +35,11 @@ public class CubeVector
         else return false;
     }
 
+    public CubeVector copy()
+    {
+        return new CubeVector(x, y, z);
+    }
+
     @Override
     public String toString(){
         return "[" + x + "," + y + "," + z +"]";

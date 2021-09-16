@@ -2,7 +2,7 @@ package Bamboo;
 
 import Bamboo.controller.CubeVector;
 import Bamboo.controller.GameLogic;
-import Bamboo.controller.GroupController;
+import Bamboo.controller.GroupControllerImp;
 import Bamboo.model.Grid;
 import Bamboo.model.GridArrayImp;
 import Bamboo.model.Tile;
@@ -55,7 +55,7 @@ public class legalMovesTest {
                 2,0,2,1,2,1,
                 1,0,0,1,0};
         Grid grid = specificMockup(4,indices);
-        assertEquals(GroupController.empty_tiles_with_empty_neighbours(grid, Color.RED).size(), 12);
+        assertEquals(GroupControllerImp.empty_tiles_with_empty_neighbours(grid, Color.RED).size(), 12);
     }
 
     @Test void testRealGrid_red(){

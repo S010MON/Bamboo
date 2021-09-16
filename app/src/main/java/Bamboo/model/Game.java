@@ -5,7 +5,10 @@ import Bamboo.controller.Human;
 import Bamboo.controller.Settings;
 import Bamboo.controller.CubeVector;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 public class Game
 {
@@ -51,10 +54,21 @@ public class Game
             currentPlayer = player1;
     }
 
-    public void checkAlreadyCoulouredTiles (Tile tile) throws Exception {
+    public Graph getGameAsGraph()
+    {
+        ArrayList<CubeVector> vectors = (ArrayList<CubeVector>) grid.getAllVectors();
+        ArrayList<Edge> edges = new ArrayList<>();
+        HashMap<String, Node> nodes = new HashMap<>();
 
-        if(tile.isCouloured())
-            throw new Exception("Tile already coloured") ;
+        for(CubeVector v: vectors)
+        {
+            nodes.put(v.toString(), new Node(v, grid.getTile(v).getColour()));
+            for(Tile tile: grid.getAllNeighbours(v))
+            {
+                edges.add(new Edge(v, tile.getVector()));
+            }
         }
+        return new Graph(nodes, edges);
     }
+}
 

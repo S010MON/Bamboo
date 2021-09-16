@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupController {
+public class GroupControllerImp {
     public static Grid grid;
 
     static void setGrid(Grid grid_){
