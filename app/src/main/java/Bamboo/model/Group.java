@@ -1,7 +1,9 @@
 package Bamboo.model;
 
+import Bamboo.controller.GroupController;
 import Bamboo.controller.GroupControllerImp;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,24 +32,24 @@ public class Group {
 
     public void addNew(List<Tile> addition){
         for(Tile tile : addition){
-            if(GroupControllerImp.notin(tile, new Group(tiles))){
+            if(GroupControllerImp.not_in(tile, new Group(tiles))){
                 tiles.add(tile);
             }
         }
     }
 
-    public Group getAllNeighbours(){
+    public Group getAllNeighbours(Grid grid){
         Group neighbours = new Group();
         Group final_neighbours = new Group();
         for(Tile tile : tiles){
-            List<Tile> nbs = GroupControllerImp.grid.getAllNeighbours(tile.getVector());
-            neighbours.addNew(nbs);
-        }
-        for(Tile tile : neighbours.getTiles()){
-            if(GroupControllerImp.notin(tile, new Group(tiles))){
-                final_neighbours.add(tile);
+            List<Tile> nbs = grid.getAllNeighbours(tile.getVector());
+            for(Tile nb : nbs){
+                if(nb.getColour() != tiles.get(0).getColour()){
+                    neighbours.add(nb);
+                }
             }
         }
+        final_neighbours.addNew(neighbours.getTiles());
         return final_neighbours;
     }
 
