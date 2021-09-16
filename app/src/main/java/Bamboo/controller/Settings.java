@@ -22,7 +22,7 @@ public class Settings
                 5);
     }
 
-    public static Settings getTestSetting()
+    public static Settings getTestSettings()
     {
         return new Settings(
                 new Human("Player 1", Color.BLUE),

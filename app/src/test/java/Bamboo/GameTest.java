@@ -11,7 +11,7 @@ class GameTest
     @Test
     void testGraphImplementation()
     {
-        Game game = new Game(Settings.getDefaultSetting());
+        Game game = new Game(Settings.getTestSettings());
         Graph graph = game.getGameAsGraph();
         graph.printEdges();
         graph.printNodes();

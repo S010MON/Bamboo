@@ -20,11 +20,6 @@ public class Node
         neighbours = new ArrayList<>();
     }
 
-    public void addNeighbour(Node node)
-    {
-        neighbours.add(node);
-    }
-
     public ArrayList<Node> getUnvisitedNeighbours()
     {
         ArrayList<Node> unvisitedNeighbours = new ArrayList<>();
@@ -35,10 +30,19 @@ public class Node
         }
         return unvisitedNeighbours;
     }
+    public void addNeighbour(Node node)
+    {
+        neighbours.add(node);
+    }
 
     public void visit()
     {
         visited = true;
+    }
+
+    public void setUnvisied()
+    {
+        visited = false;
     }
 
     public boolean isVisited()
@@ -46,9 +50,24 @@ public class Node
         return visited;
     }
 
+    public boolean isNotVisited()
+    {
+        return !isVisited();
+    }
+
+    public void setColor(Color color)
+    {
+        this.color = color;
+    }
+
     public Color getColor()
     {
         return color;
+    }
+
+    public CubeVector getVector()
+    {
+        return vector;
     }
 
     @Override
