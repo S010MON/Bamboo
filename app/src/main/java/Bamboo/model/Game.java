@@ -19,7 +19,7 @@ public class Game
 
     public Game(Settings settings)
     {
-        this.grid = new GridArrayImp(settings.boardSize);
+        this.grid = new GridHashImp(settings.boardSize);
         this.player1 = settings.player1;
         this.player2 = settings.player2;
         currentPlayer = player1;
@@ -42,8 +42,8 @@ public class Game
 
     public void placeNextAt(CubeVector v) throws TileAlreadyColouredException
     {
-        grid.setTile(v, currentPlayer.getColor());
-        toggleTurn();
+       grid.setTile(v, currentPlayer.getColor());
+       toggleTurn();
     }
 
     private void toggleTurn()
@@ -56,13 +56,13 @@ public class Game
 
     public Graph getGameAsGraph()
     {
-        ArrayList<CubeVector> vectors = (ArrayList<CubeVector>) grid.getAllVectors();
+        ArrayList<CubeVector> vectors = new ArrayList<>(grid.getAllVectors());
         ArrayList<Edge> edges = new ArrayList<>();
-        HashMap<String, Node> nodes = new HashMap<>();
+        HashMap<CubeVector, Node> nodes = new HashMap<>();
 
         for(CubeVector v: vectors)
         {
-            nodes.put(v.toString(), new Node(v, grid.getTile(v).getColour()));
+            nodes.put(v, new Node(v, grid.getTile(v).getColour()));
             for(Tile tile: grid.getAllNeighbours(v))
             {
                 edges.add(new Edge(v, tile.getVector()));

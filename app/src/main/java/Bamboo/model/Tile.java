@@ -16,10 +16,10 @@ public class Tile
         this.coloured = false;
     }
 
-    public void setColour(Color color)
+    public void setColour(Color color) throws TileAlreadyColouredException
     {
-        // Test that this is the first (and only) colour change
-        assert this.color != Color.BLUE && this.color != Color.RED;
+        if(this.color != Color.WHITE)
+            throw new TileAlreadyColouredException();
         this.color = color;
     }
 
