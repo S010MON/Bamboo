@@ -11,12 +11,8 @@ public class GamePanel extends JPanel
     private SidePanel sidePanel;
     private Canvas canvas;
 
-
-
     public GamePanel(Dimension screenSize, Game game)
     {
-
-
         this.game = game;
         setSize(screenSize);
         setLayout(new BorderLayout());
@@ -28,18 +24,7 @@ public class GamePanel extends JPanel
         //set the sidePanel panel
         sidePanel = new SidePanel();
         add(sidePanel, BorderLayout.WEST);
-
-
-
-
-
-
-
-
-
-
-
-
+        
         setVisible(true);
     }
 }
