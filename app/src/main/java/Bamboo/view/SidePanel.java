@@ -20,20 +20,16 @@ public class SidePanel extends JPanel {
         JPanel panel1 = new JPanel();
         JPanel panel2 = new JPanel();
 
-;
         setLayout(new BorderLayout());
         panel1.setLayout(new BorderLayout());
         panel2.setLayout(new BorderLayout());
         panel1.setBackground(LIGHT_BLUE);
         panel2.setBackground(LIGHT_BLUE);
 
-
-
         //create the pause button
         JButton pauseButton = new JButton("pause");
         pauseButton.setBackground(VERY_LIGHT_BLUE);
         pauseButton.setForeground(VERY_LIGHT_BLUE);
-
 
         //create the group label
         JLabel groups = new JLabel("Number of groups:");
@@ -59,14 +55,7 @@ public class SidePanel extends JPanel {
             }
         } );
 
-
-
-
-
-
-
         setVisible(true);
-
     }
 
     public void selectionButtonPressed() {
