@@ -49,14 +49,14 @@ public class GridHashImp implements Grid
     }
 
     @Override
-    public List<Tile> getAllNeighbours(CubeVector v)
+    public List<Tile> getAllNeighbours(CubeVector vector)
     {
         List<Tile> list = new ArrayList<>();
         for(CubeVector n: neighbours)
         {
-            CubeVector neighbour = v.add(n);
+            CubeVector neighbour = vector.add(n);
             if(isInBounds(neighbour))
-                list.add(tiles.get(v.add(neighbour)));
+                list.add(tiles.get(neighbour));
         }
         return list;
     }
@@ -76,11 +76,11 @@ public class GridHashImp implements Grid
     private boolean isInBounds(CubeVector v)
     {
         boolean inBounds = true;
-        if(v.getX() >= -radius || v.getX() <= radius)
+        if(v.getX() < -radius || radius < v.getX())
             inBounds = false;
-        if(v.getZ() >= -radius || v.getZ() <= radius)
+        if(v.getY() < -radius || radius < v.getY())
             inBounds = false;
-        if(v.getZ() >= -radius || v.getZ() <= radius)
+        if(v.getZ() < -radius || radius < v.getZ())
             inBounds = false;
         return inBounds;
     }

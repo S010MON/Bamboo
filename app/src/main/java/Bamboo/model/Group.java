@@ -1,9 +1,7 @@
 package Bamboo.model;
 
 import Bamboo.controller.GroupController;
-import Bamboo.controller.GroupControllerImp;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +30,7 @@ public class Group {
 
     public void addNew(List<Tile> addition){
         for(Tile tile : addition){
-            if(GroupControllerImp.not_in(tile, new Group(tiles))){
+            if(GroupController.not_in(tile, new Group(tiles))){
                 tiles.add(tile);
             }
         }
@@ -54,11 +52,11 @@ public class Group {
     }
 
     public Group(List<Tile> list){
-        tiles = new ArrayList<Tile>(list);;
+        tiles = new ArrayList<>(list);
     }
 
     public Group(){
-        tiles = new ArrayList<Tile>();;
+        tiles = new ArrayList<>();
     }
 
 }

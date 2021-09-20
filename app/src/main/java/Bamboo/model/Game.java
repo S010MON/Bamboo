@@ -1,12 +1,7 @@
 package Bamboo.model;
 
 import Bamboo.controller.*;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Stack;
 
 public class Game
 {
@@ -65,23 +60,6 @@ public class Game
             currentPlayer = player2;
         else
             currentPlayer = player1;
-    }
-
-    public Graph getGameAsGraph()
-    {
-        ArrayList<CubeVector> vectors = new ArrayList<>(grid.getAllVectors());
-        ArrayList<Edge> edges = new ArrayList<>();
-        HashMap<CubeVector, Node> nodes = new HashMap<>();
-
-        for(CubeVector v: vectors)
-        {
-            nodes.put(v, new Node(v, grid.getTile(v).getColour()));
-            for(Tile tile: grid.getAllNeighbours(v))
-            {
-                edges.add(new Edge(v, tile.getVector()));
-            }
-        }
-        return new Graph(nodes, edges);
     }
 }
 
