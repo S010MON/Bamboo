@@ -50,7 +50,7 @@ public abstract class GameLogic {
         int max_size = GroupController.count_groups_for_player(game, player_color);
         int group_size = original.size();
         if(!has_nonGroup_sameColor_neighbours(grid, move, original, player_color)){
-            if(group_size < max_size){
+            if(group_size < max_size || max_size == 0){
                 return true;
             }
         }
