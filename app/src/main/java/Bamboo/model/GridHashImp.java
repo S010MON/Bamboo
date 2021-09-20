@@ -1,6 +1,6 @@
 package Bamboo.model;
 
-import Bamboo.controller.CubeVector;
+import Bamboo.controller.Vector;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -10,9 +10,9 @@ import java.util.List;
 
 public class GridHashImp implements Grid
 {
-    private HashMap<CubeVector, Tile> tiles;
-    private ArrayList<CubeVector> neighbours;
-    private int radius;
+    protected HashMap<Vector, Tile> tiles;
+    protected ArrayList<Vector> neighbours;
+    protected int radius;
 
     public GridHashImp(int radius)
     {
@@ -28,7 +28,7 @@ public class GridHashImp implements Grid
                 {
                     if((x + y + z) == 0)
                     {
-                        CubeVector v = new CubeVector(x, y, z);
+                        Vector v = new Vector(x, y, z);
                         tiles.put(v, new Tile(v));
                     }
                 }
@@ -37,24 +37,30 @@ public class GridHashImp implements Grid
     }
 
     @Override
-    public Tile getTile(CubeVector v)
+    public Tile getTile(Vector v)
     {
         return tiles.get(v);
     }
 
     @Override
-    public void setTile(CubeVector v, Color c) throws TileAlreadyColouredException
+    public void setTile(Vector v, Color c) throws TileAlreadyColouredException
     {
         tiles.get(v).setColour(c);
     }
 
     @Override
-    public List<Tile> getAllNeighbours(CubeVector vector)
+    public boolean isLegalMove(Vector vector, Color color)
+    {
+        return false;
+    }
+
+    @Override
+    public List<Tile> getAllNeighbours(Vector vector)
     {
         List<Tile> list = new ArrayList<>();
-        for(CubeVector n: neighbours)
+        for(Vector n: neighbours)
         {
-            CubeVector neighbour = vector.add(n);
+            Vector neighbour = vector.add(n);
             if(isInBounds(neighbour))
                 list.add(tiles.get(neighbour));
         }
@@ -68,12 +74,12 @@ public class GridHashImp implements Grid
     }
 
     @Override
-    public List<CubeVector> getAllVectors()
+    public List<Vector> getAllVectors()
     {
         return tiles.keySet().stream().toList();
     }
 
-    private boolean isInBounds(CubeVector v)
+    private boolean isInBounds(Vector v)
     {
         boolean inBounds = true;
         if(v.getX() < -radius || radius < v.getX())
@@ -85,15 +91,15 @@ public class GridHashImp implements Grid
         return inBounds;
     }
 
-    private ArrayList<CubeVector> buildNeighbourList()
+    private ArrayList<Vector> buildNeighbourList()
     {
-        ArrayList<CubeVector> list = new ArrayList<>();
-        list.add(new CubeVector( 0,-1, 1));
-        list.add(new CubeVector( 0, 1,-1));
-        list.add(new CubeVector( 1, 0,-1));
-        list.add(new CubeVector(-1, 0, 1));
-        list.add(new CubeVector( 1,-1, 0));
-        list.add(new CubeVector(-1, 1, 0));
+        ArrayList<Vector> list = new ArrayList<>();
+        list.add(new Vector( 0,-1, 1));
+        list.add(new Vector( 0, 1,-1));
+        list.add(new Vector( 1, 0,-1));
+        list.add(new Vector(-1, 0, 1));
+        list.add(new Vector( 1,-1, 0));
+        list.add(new Vector(-1, 1, 0));
         return list;
     }
 }

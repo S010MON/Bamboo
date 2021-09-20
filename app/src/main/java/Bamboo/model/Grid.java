@@ -1,19 +1,22 @@
 package Bamboo.model;
 
-import Bamboo.controller.CubeVector;
+import Bamboo.controller.Vector;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Grid
 {
-    Tile getTile(CubeVector v);
+    Tile getTile(Vector v);
 
-    void setTile(CubeVector v, Color c) throws TileAlreadyColouredException;
+    void setTile(Vector v, Color c) throws TileAlreadyColouredException;
 
-    List<Tile> getAllNeighbours(CubeVector v);
+    List<Tile> getAllNeighbours(Vector v);
 
     List<Tile> getAllTiles();
 
-    List<CubeVector> getAllVectors();
+    List<Vector> getAllVectors();
+
+    boolean isLegalMove(Vector vector, Color color);
 }

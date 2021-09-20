@@ -13,6 +13,4 @@ public class App {
         MainFrame frame = new MainFrame() ;
         frame.setVisible(true);
     }
-
-
 }

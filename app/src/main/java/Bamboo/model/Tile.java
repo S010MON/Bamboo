@@ -1,6 +1,6 @@
 package Bamboo.model;
 
-import Bamboo.controller.CubeVector;
+import Bamboo.controller.Vector;
 import java.awt.Color;
 
 import java.awt.*;
@@ -9,13 +9,17 @@ import java.util.ArrayList;
 public class Tile
 {
     private Color color;
-    private CubeVector vector;
+    private Vector vector;
 
     private Color outline;
     private BasicStroke circle_thickness;
     private ArrayList<Tile> groupNeighbours;
+    private ArrayList<Tile> testNeighbours;  // TODO Add all test edges
 
-    public Tile(CubeVector vector)
+    private Color testColor;
+    private boolean testMode = false;
+
+    public Tile(Vector vector)
     {
         this.color = Color.white;
         this.vector = vector;
@@ -43,10 +47,25 @@ public class Tile
 
     public Color getColour()
     {
+        if(testMode)
+            return testColor;
         return color;
     }
 
-    public CubeVector getVector()
+    public void activateTestMode(Color color)
+    {
+        testMode = true;
+
+        testColor = color;
+    }
+
+    public void  deactivateTestMode()
+    {
+        testMode = false;
+        testColor = Color.white;
+    }
+
+    public Vector getVector()
     {
         return vector;
     }

@@ -1,13 +1,14 @@
 package Bamboo.model;
 
-import Bamboo.controller.CubeVector;
+import Bamboo.controller.Vector;
 
 public class Edge
 {
-    public CubeVector v;
-    public CubeVector u;
+    public Vector v;
+    public Vector u;
+    public boolean test = false;
 
-    public Edge(CubeVector v, CubeVector u)
+    public Edge(Vector v, Vector u)
     {
         this.v = v;
         this.u = u;
