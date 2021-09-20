@@ -20,6 +20,8 @@ public class Canvas extends JPanel
     private BasicStroke circle_thickness = new BasicStroke(2);
     private int centreX;
     private int centreY;
+    private int offsetX = 100;
+    private int offsetY = 0;
 
     private Color foreground = Color.white;
     private Color background = new Color(158, 208, 239) ;
@@ -28,8 +30,8 @@ public class Canvas extends JPanel
     public Canvas(Dimension screenSize, Game game)
     {
         this.game = game;
-        centreX = screenSize.width/2;
-        centreY = screenSize.height/2;
+        centreX = (screenSize.width/2) - circle_radius - offsetX;
+        centreY = (screenSize.height/2) - circle_radius - offsetY;
         setSize(screenSize.width, screenSize.height);
         addMouseListener(new TileClickListener(game, this));
         addMouseMotionListener(new RollOverListener(game,this));
