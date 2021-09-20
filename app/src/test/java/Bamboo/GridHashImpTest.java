@@ -2,7 +2,7 @@ package Bamboo;
 
 import Bamboo.controller.CubeVector;
 import Bamboo.model.Grid;
-import Bamboo.model.GridArrayImp;
+import Bamboo.model.GridHashImp;
 import Bamboo.model.Tile;
 
 import java.awt.Color;
@@ -12,13 +12,13 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class GridArrayImpTest
+public class GridHashImpTest
 {
     @Test void testGridWithRadius2()
     {
         int radius = 2;
         int diameter = (2 * radius) + 1;
-        GridArrayImp grid = new GridArrayImp(radius);
+        GridHashImp grid = new GridHashImp(radius);
 
         for (int x = 0; x < diameter; x++)
         {
@@ -51,7 +51,7 @@ class GridArrayImpTest
         exp.add(new Tile(new CubeVector(-1, 0, 1)));
         exp.add(new Tile(new CubeVector(-1, 1, 0)));
 
-        Grid grid = new GridArrayImp(3);
+        Grid grid = new GridHashImp(3);
         ArrayList<Tile> act = (ArrayList<Tile>) grid.getAllNeighbours(new CubeVector(0,0,0));
 
         for(Tile tile: exp)
@@ -71,7 +71,7 @@ class GridArrayImpTest
         exp.add(new Tile(new CubeVector(-2, 1, 1)));
         exp.add(new Tile(new CubeVector(-2, 2, 0)));
 
-        Grid grid = new GridArrayImp(3);
+        Grid grid = new GridHashImp(3);
         ArrayList<Tile> act = (ArrayList<Tile>) grid.getAllNeighbours(new CubeVector(-1,1,0));
 
         for(Tile tile: exp)
@@ -88,7 +88,7 @@ class GridArrayImpTest
         exp.add(new Tile(new CubeVector(-1, 1, 0)));
         exp.add(new Tile(new CubeVector(-2, 1, 1)));
 
-        Grid grid = new GridArrayImp(2);
+        Grid grid = new GridHashImp(2);
         ArrayList<Tile> act = (ArrayList<Tile>) grid.getAllNeighbours(new CubeVector(-2,2,0));
 
         for(Tile tile: exp)

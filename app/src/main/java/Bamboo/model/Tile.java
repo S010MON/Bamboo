@@ -4,13 +4,16 @@ import Bamboo.controller.CubeVector;
 import java.awt.Color;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Tile
 {
     private Color color;
     private CubeVector vector;
+
     private Color outline;
     private BasicStroke circle_thickness;
+    private ArrayList<Tile> groupNeighbours;
 
     public Tile(CubeVector vector)
     {
@@ -18,22 +21,33 @@ public class Tile
         this.vector = vector;
         this.outline = Color.black;
         this.circle_thickness = new BasicStroke(3);
+        this.groupNeighbours = new ArrayList<>();
     }
 
-    public void setColour(Color color)
+    public void setColour(Color color) throws TileAlreadyColouredException
     {
-        // Test that this is the first (and only) colour change
-        assert this.color != Color.BLUE && this.color != Color.RED;
+        if(this.color != Color.WHITE)
+            throw new TileAlreadyColouredException();
         this.color = color;
     }
 
-    public Color getColour()
+    public ArrayList<Tile> getGroupNeighbours()
+    {
+        return groupNeighbours;
+    }
 
+    public void addNeighbour(Tile neighbour)
+    {
+        groupNeighbours.add(neighbour);
+    }
+
+    public Color getColour()
     {
         return color;
     }
 
-    public CubeVector getVector() {
+    public CubeVector getVector()
+    {
         return vector;
     }
 

@@ -1,10 +1,6 @@
 package Bamboo.model;
 
-import Bamboo.controller.Agent;
-import Bamboo.controller.Human;
-import Bamboo.controller.Settings;
-import Bamboo.controller.CubeVector;
-
+import Bamboo.controller.*;
 import java.util.List;
 
 public class Game
@@ -16,10 +12,18 @@ public class Game
 
     public Game(Settings settings)
     {
-        this.grid = new GridArrayImp(settings.boardSize);
+        this.grid = new GridHashImp(settings.boardSize);
         this.player1 = settings.player1;
         this.player2 = settings.player2;
         currentPlayer = player1;
+    }
+
+    public Game(Grid grid){
+        this.grid = grid;
+    }
+
+    public Game(int size){
+        this.grid = new GridArrayImp(size);
     }
 
     public Agent getCurrentPlayer()
@@ -37,10 +41,17 @@ public class Game
         return grid.getAllTiles();
     }
 
+    public Grid getGrid(){return grid;}
+
     public void placeNextAt(CubeVector v) throws TileAlreadyColouredException
     {
-        grid.setTile(v, currentPlayer.getColor());
-        toggleTurn();
+        if(GameLogic.is_legal_move(this, grid.getTile(v), currentPlayer.getColor()))
+        {
+            grid.setTile(v, currentPlayer.getColor());
+            toggleTurn();
+        }
+        else
+            System.out.println("Illegal Move");
     }
 
     private void toggleTurn()
@@ -50,11 +61,5 @@ public class Game
         else
             currentPlayer = player1;
     }
-
-    public void checkAlreadyCoulouredTiles (Tile tile) throws Exception {
-
-        if(tile.isColoured())
-            throw new Exception("Tile already coloured") ;
-        }
-    }
+}
 

@@ -14,4 +14,6 @@ public interface Grid
     List<Tile> getAllNeighbours(CubeVector v);
 
     List<Tile> getAllTiles();
+
+    List<CubeVector> getAllVectors();
 }
