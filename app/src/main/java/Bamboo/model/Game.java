@@ -2,8 +2,6 @@ package Bamboo.model;
 
 import Bamboo.controller.*;
 
-import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Game
@@ -46,9 +44,8 @@ public class Game
 
     public Grid getGrid(){return grid;}
 
-    public void placeNextAt(Vector v) throws TileAlreadyColouredException
+    public void placeNextAt(Vector v)
     {
-        //if(GameLogic.is_legal_move(this, grid.getTile(v), currentPlayer.getColor()))
         if(grid.isLegalMove(v, currentPlayer.getColor()))
         {
             grid.setTile(v, currentPlayer.getColor());
@@ -56,6 +53,7 @@ public class Game
         }
         else
             System.out.println("Illegal Move");
+            // TODO Add user warning.
     }
 
     private void toggleTurn()

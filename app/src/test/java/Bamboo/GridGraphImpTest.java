@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Bamboo.model.Tile;
-import Bamboo.model.TileAlreadyColouredException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -129,11 +128,7 @@ public class GridGraphImpTest
 
         for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
         ArrayList<Vector> act = grid.getGroup(exp.get(0));
@@ -156,11 +151,7 @@ public class GridGraphImpTest
 
         for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
         ArrayList<Vector> act = grid.getGroup(exp.get(0));
@@ -183,11 +174,7 @@ public class GridGraphImpTest
 
         for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
         for (Vector vector : exp)
@@ -212,11 +199,7 @@ public class GridGraphImpTest
 
         for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
         ArrayList<Vector> act = grid.getGroup(exp.get(0));
@@ -240,11 +223,7 @@ public class GridGraphImpTest
 
         for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
         for (Vector vector : exp)
@@ -268,11 +247,7 @@ public class GridGraphImpTest
 
         for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
         ArrayList<ArrayList<Vector>> act = grid.getAllGroupsOfColour(Color.BLUE);
@@ -304,11 +279,7 @@ public class GridGraphImpTest
 
         for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
         ArrayList<ArrayList<Vector>> act = grid.getAllGroupsOfColour(Color.BLUE);

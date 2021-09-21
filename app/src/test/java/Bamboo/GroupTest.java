@@ -89,9 +89,7 @@ public class GroupTest {
             Vector vector = tiles.get(i).getVector();
 
             if(red_counter < red){
-                try {
-                    grid.setTile(vector, Color.RED);
-                } catch (TileAlreadyColouredException e) {e.printStackTrace();}
+                grid.setTile(vector, Color.RED);
                 red_counter++;
             }
             red_group_counter ++;
@@ -106,9 +104,7 @@ public class GroupTest {
         List<Tile> tiles = grid.getAllTiles();
         for(int i = 0; i < tiles.size(); i++){
             Vector vector = tiles.get(i).getVector();
-            try {
-                grid.setTile(vector, colors[indices[i]]);
-            } catch (TileAlreadyColouredException e) {e.printStackTrace();}
+            grid.setTile(vector, colors[indices[i]]);
         }
         return grid;
     }

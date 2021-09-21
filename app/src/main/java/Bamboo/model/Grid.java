@@ -10,7 +10,7 @@ public interface Grid
 {
     Tile getTile(Vector v);
 
-    void setTile(Vector v, Color c) throws TileAlreadyColouredException;
+    void setTile(Vector v, Color c);
 
     List<Tile> getAllNeighbours(Vector v);
 

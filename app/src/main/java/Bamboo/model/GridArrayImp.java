@@ -33,7 +33,7 @@ public class GridArrayImp implements Grid
     }
 
     @Override
-    public void setTile(Vector v, Color c) throws TileAlreadyColouredException
+    public void setTile(Vector v, Color c)
     {
         v = addOffset(v);
         tiles[v.getX()][v.getY()][v.getZ()].setColour(c);

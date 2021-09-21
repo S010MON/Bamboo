@@ -15,7 +15,7 @@ public class GridGraphImp extends GridHashImp implements Grid
     }
 
     @Override
-    public void setTile(Vector v, Color c) throws TileAlreadyColouredException
+    public void setTile(Vector v, Color c)
     {
         for(Tile neighbour: getAllNeighbours(v))
         {
@@ -24,6 +24,12 @@ public class GridGraphImp extends GridHashImp implements Grid
                 tiles.get(v).addNeighbour(neighbour);
                 neighbour.addNeighbour(tiles.get(v));
             }
+
+            if(c.equals(Color.WHITE))
+            {
+                tiles.get(v).removeNeighbour(neighbour);
+                neighbour.removeNeighbour(tiles.get(v));
+            }
         }
         tiles.get(v).setColour(c);
     }
@@ -31,9 +37,9 @@ public class GridGraphImp extends GridHashImp implements Grid
     @Override
     public boolean isLegalMove(Vector vector, Color color)
     {
-        setTestMove(vector, color);
+        setTile(vector, color);
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
-        undoTestMove(vector);
+        setTile(vector, Color.WHITE);
         int noOfGroups = Math.max(groups.size(), 1);
         int maxGroup = getMaxGroupSize(groups);
         return maxGroup <= noOfGroups;
@@ -85,22 +91,6 @@ public class GridGraphImp extends GridHashImp implements Grid
             }
         }
         return group;
-    }
-
-    /**
-     * Sets a reversible colour change up to be tested for legality, undo with {@code undoTestMove} method
-     */
-    private void setTestMove(Vector vector, Color color)
-    {
-        tiles.get(vector).activateTestMode(color);
-    }
-
-    /**
-     * Unsets the specified vector from test mode back into normal mode
-     */
-    private void undoTestMove(Vector vector)
-    {
-        tiles.get(vector).deactivateTestMode();
     }
 
     private int getMaxGroupSize(ArrayList<ArrayList<Vector>> groups)

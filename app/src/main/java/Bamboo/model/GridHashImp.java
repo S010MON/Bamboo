@@ -43,7 +43,7 @@ public class GridHashImp implements Grid
     }
 
     @Override
-    public void setTile(Vector v, Color c) throws TileAlreadyColouredException
+    public void setTile(Vector v, Color c)
     {
         tiles.get(v).setColour(c);
     }
