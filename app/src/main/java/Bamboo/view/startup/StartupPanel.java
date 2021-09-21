@@ -16,6 +16,7 @@ public class StartupPanel extends JPanel {
     private JPanel panel;
 
 
+
     public StartupPanel() {
         setBackground(Color.BLACK);
         setLayout(new BorderLayout());
@@ -33,8 +34,8 @@ public class StartupPanel extends JPanel {
 
     public Settings getSettings() {
         return new Settings(
-                new Human("Player 1", Color.BLUE),
-                new Human("Player 2", Color.RED),
+                new Human(settingsPanel.getConfigurationPanel().getNamePlayer1(), settingsPanel.getConfigurationPanel().getPlayer1Color()),
+                new Human(settingsPanel.getConfigurationPanel().getNamePlayer2(), settingsPanel.getConfigurationPanel().getPlayer2Color()),
                 5);
     }
 
@@ -68,6 +69,7 @@ public class StartupPanel extends JPanel {
         removeComponentCenter();
         add(settingsPanel, BorderLayout.CENTER);
         setVisible(true);
+
     }
 
 }
