@@ -10,6 +10,7 @@ public class Game
     private Agent player1;
     private Agent player2;
     private Agent currentPlayer;
+    private boolean finished;
 
     public Game(Settings settings)
     {
@@ -62,6 +63,11 @@ public class Game
             currentPlayer = player2;
         else
             currentPlayer = player1;
+    }
+
+    public boolean isNotFinished()
+    {
+        return !finished;
     }
 }
 
