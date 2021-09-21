@@ -1,10 +1,16 @@
 package Bamboo.model;
 
 import Bamboo.controller.*;
+import Bamboo.view.Canvas.*;
+import Bamboo.view.RollOverListener;
+
+import java.awt.*;
 import java.util.List;
 
 public class Game
 {
+    private int turn_count_player1 = 0;
+    private int turn_count_player2 = 0;
     private Grid grid;
     private Agent player1;
     private Agent player2;
@@ -47,6 +53,7 @@ public class Game
     {
         if(GameLogic.is_legal_move(this, grid.getTile(v), currentPlayer.getColor()))
         {
+            RollOverListener.update_legal_move_map(this, v, currentPlayer.getColor());
             grid.setTile(v, currentPlayer.getColor());
             toggleTurn();
         }
@@ -54,12 +61,25 @@ public class Game
             System.out.println("Illegal Move");
     }
 
+    public int getTurn_count(Agent player){
+        if(player.getColor() == Color.RED){
+            return turn_count_player1;
+        }
+        else
+            return turn_count_player2;
+    }
+
     private void toggleTurn()
     {
-        if(currentPlayer == player1)
+        if(currentPlayer == player1){
+            turn_count_player1 ++;
             currentPlayer = player2;
-        else
+        }
+        else{
+            turn_count_player2 ++;
             currentPlayer = player1;
+        }
     }
+
 }
 

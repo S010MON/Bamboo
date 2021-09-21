@@ -1,6 +1,8 @@
 package Bamboo.view;
 
 import Bamboo.controller.AxialVector;
+import Bamboo.controller.CubeVector;
+import Bamboo.controller.GameLogic;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
@@ -11,6 +13,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.HashMap;
+import java.util.List;
 
 public class Canvas extends JPanel
 {
