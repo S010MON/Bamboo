@@ -8,6 +8,6 @@ public interface Agent
 {
     String getName();
     boolean isHuman();
-    CubeVector getNextMove(Game game);
+    Vector getNextMove(Game game);
     Color getColor();
 }

@@ -7,7 +7,7 @@ public abstract class VectorConverter
      *  q = x + (z - |z % 2|) / 2
      *  r = z
      */
-    public static AxialVector convertToAxial(CubeVector cube)
+    public static AxialVector convertToAxial(Vector cube)
     {
         int col = cube.getX() + (cube.getZ() - (Math.abs(cube.getZ()) % 2))/2;
         int row = cube.getZ();
@@ -43,11 +43,11 @@ public abstract class VectorConverter
     /**
      * Take a vector[q,r] and convert to [x,y,z]
      */
-    public static CubeVector convertToCube(AxialVector axial)
+    public static Vector convertToCube(AxialVector axial)
     {
         int x = axial.getQ();
         int z = axial.getR();
         int y = -x -z;
-        return new CubeVector(x, y, z);
+        return new Vector(x, y, z);
     }
 }

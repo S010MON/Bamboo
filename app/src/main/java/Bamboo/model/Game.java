@@ -1,6 +1,7 @@
 package Bamboo.model;
 
 import Bamboo.controller.*;
+
 import java.util.List;
 
 public class Game
@@ -12,7 +13,7 @@ public class Game
 
     public Game(Settings settings)
     {
-        this.grid = new GridHashImp(settings.boardSize);
+        this.grid = new GridGraphImp(settings.boardSize);
         this.player1 = settings.player1;
         this.player2 = settings.player2;
         currentPlayer = player1;
@@ -43,15 +44,16 @@ public class Game
 
     public Grid getGrid(){return grid;}
 
-    public void placeNextAt(CubeVector v) throws TileAlreadyColouredException
+    public void placeNextAt(Vector v)
     {
-        if(GameLogic.is_legal_move(this, grid.getTile(v), currentPlayer.getColor()))
+        if(grid.isLegalMove(v, currentPlayer.getColor()))
         {
             grid.setTile(v, currentPlayer.getColor());
             toggleTurn();
         }
         else
             System.out.println("Illegal Move");
+            // TODO Add user warning.
     }
 
     private void toggleTurn()

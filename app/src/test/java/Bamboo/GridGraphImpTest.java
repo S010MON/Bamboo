@@ -1,6 +1,6 @@
 package Bamboo;
 
-import Bamboo.controller.CubeVector;
+import Bamboo.controller.Vector;
 import Bamboo.model.Grid;
 import Bamboo.model.GridGraphImp;
 
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Bamboo.model.Tile;
-import Bamboo.model.TileAlreadyColouredException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,9 +27,9 @@ public class GridGraphImpTest
                 for (int z = 0; z < diameter; z++)
                 {
                     if(x + y + z == 0)
-                        assertEquals(Color.WHITE, grid.getTile(new CubeVector(x,y,z)).getColour());
+                        assertEquals(Color.WHITE, grid.getTile(new Vector(x,y,z)).getColour());
                     else
-                        assertNull(grid.getTile(new CubeVector(x,y,z)));
+                        assertNull(grid.getTile(new Vector(x,y,z)));
                 }
             }
         }
@@ -45,19 +44,19 @@ public class GridGraphImpTest
     @Test void testGetAllNeighbours_centre()
     {
         ArrayList<Tile> exp = new ArrayList<>();
-        exp.add(new Tile(new CubeVector( 0, 1,-1)));
-        exp.add(new Tile(new CubeVector( 0,-1, 1)));
-        exp.add(new Tile(new CubeVector( 1, 0,-1)));
-        exp.add(new Tile(new CubeVector( 1,-1, 0)));
-        exp.add(new Tile(new CubeVector(-1, 0, 1)));
-        exp.add(new Tile(new CubeVector(-1, 1, 0)));
+        exp.add(new Tile(new Vector( 0, 1,-1)));
+        exp.add(new Tile(new Vector( 0,-1, 1)));
+        exp.add(new Tile(new Vector( 1, 0,-1)));
+        exp.add(new Tile(new Vector( 1,-1, 0)));
+        exp.add(new Tile(new Vector(-1, 0, 1)));
+        exp.add(new Tile(new Vector(-1, 1, 0)));
 
         Grid grid = new GridGraphImp(3);
-        ArrayList<Tile> act = (ArrayList<Tile>) grid.getAllNeighbours(new CubeVector(0,0,0));
+        ArrayList<Tile> act = (ArrayList<Tile>) grid.getAllNeighbours(new Vector(0,0,0));
 
         for(Tile tile: exp)
         {
-            CubeVector v = tile.getVector();
+            Vector v = tile.getVector();
             assertTrue(this.tileListContainsVector(act, v));
         }
     }
@@ -65,19 +64,19 @@ public class GridGraphImpTest
     @Test void testGetAllNeighbours_offCentre()
     {
         ArrayList<Tile> exp = new ArrayList<>();
-        exp.add(new Tile(new CubeVector( 0, 0, 0))); //
-        exp.add(new Tile(new CubeVector( 0, 1,-1))); //
-        exp.add(new Tile(new CubeVector(-1, 2,-1))); //
-        exp.add(new Tile(new CubeVector(-1, 0, 1))); //
-        exp.add(new Tile(new CubeVector(-2, 1, 1))); //
-        exp.add(new Tile(new CubeVector(-2, 2, 0))); //
+        exp.add(new Tile(new Vector( 0, 0, 0))); //
+        exp.add(new Tile(new Vector( 0, 1,-1))); //
+        exp.add(new Tile(new Vector(-1, 2,-1))); //
+        exp.add(new Tile(new Vector(-1, 0, 1))); //
+        exp.add(new Tile(new Vector(-2, 1, 1))); //
+        exp.add(new Tile(new Vector(-2, 2, 0))); //
 
         Grid grid = new GridGraphImp(3);
-        ArrayList<Tile> act = (ArrayList<Tile>) grid.getAllNeighbours(new CubeVector(-1,1,0));
+        ArrayList<Tile> act = (ArrayList<Tile>) grid.getAllNeighbours(new Vector(-1,1,0));
 
         for(Tile tile: exp)
         {
-            CubeVector v = tile.getVector();
+            Vector v = tile.getVector();
             assertTrue(this.tileListContainsVector(act, v));
         }
     }
@@ -85,21 +84,21 @@ public class GridGraphImpTest
     @Test void testGetAllNeighbours_edge()
     {
         ArrayList<Tile> exp = new ArrayList<>();
-        exp.add(new Tile(new CubeVector(-1, 2,-1)));
-        exp.add(new Tile(new CubeVector(-1, 1, 0)));
-        exp.add(new Tile(new CubeVector(-2, 1, 1)));
+        exp.add(new Tile(new Vector(-1, 2,-1)));
+        exp.add(new Tile(new Vector(-1, 1, 0)));
+        exp.add(new Tile(new Vector(-2, 1, 1)));
 
         Grid grid = new GridGraphImp(2);
-        ArrayList<Tile> act = (ArrayList<Tile>) grid.getAllNeighbours(new CubeVector(-2,2,0));
+        ArrayList<Tile> act = (ArrayList<Tile>) grid.getAllNeighbours(new Vector(-2,2,0));
 
         for(Tile tile: exp)
         {
-            CubeVector v = tile.getVector();
+            Vector v = tile.getVector();
             assertTrue(this.tileListContainsVector(act, v));
         }
     }
 
-    private boolean tileListContainsVector(List<Tile> list, CubeVector vector)
+    private boolean tileListContainsVector(List<Tile> list, Vector vector)
     {
         for(Tile t: list)
         {
@@ -109,9 +108,9 @@ public class GridGraphImpTest
         return false;
     }
 
-    private boolean vectorListContainsVector(List<CubeVector> list, CubeVector vector)
+    private boolean vectorListContainsVector(List<Vector> list, Vector vector)
     {
-        for(CubeVector v: list)
+        for(Vector v: list)
         {
             if(v.equals(vector))
                 return true;
@@ -124,22 +123,18 @@ public class GridGraphImpTest
         int radius = 2;
         GridGraphImp grid = new GridGraphImp(radius);
 
-        ArrayList<CubeVector> exp = new ArrayList<>();
-        exp.add(new CubeVector( 0, 1,-1));
+        ArrayList<Vector> exp = new ArrayList<>();
+        exp.add(new Vector( 0, 1,-1));
 
-        for(CubeVector vector: exp)
+        for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
-        ArrayList<CubeVector> act = grid.getGroup(exp.get(0));
+        ArrayList<Vector> act = grid.getGroup(exp.get(0));
 
         assertEquals(act.size(), exp.size());
-        for(CubeVector v: exp)
+        for(Vector v: exp)
         {
             assertTrue(vectorListContainsVector(act, v));
         }
@@ -150,23 +145,19 @@ public class GridGraphImpTest
         int radius = 2;
         GridGraphImp grid = new GridGraphImp(radius);
 
-        ArrayList<CubeVector> exp = new ArrayList<>();
-        exp.add(new CubeVector( 0, 1,-1));
-        exp.add(new CubeVector(-1, 1, 0));
+        ArrayList<Vector> exp = new ArrayList<>();
+        exp.add(new Vector( 0, 1,-1));
+        exp.add(new Vector(-1, 1, 0));
 
-        for(CubeVector vector: exp)
+        for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
-        ArrayList<CubeVector> act = grid.getGroup(exp.get(0));
+        ArrayList<Vector> act = grid.getGroup(exp.get(0));
 
         assertEquals(act.size(), exp.size());
-        for(CubeVector v: exp)
+        for(Vector v: exp)
         {
             assertTrue(vectorListContainsVector(act, v));
         }
@@ -177,22 +168,18 @@ public class GridGraphImpTest
         int radius = 2;
         GridGraphImp grid = new GridGraphImp(radius);
 
-        ArrayList<CubeVector> exp = new ArrayList<>();
-        exp.add(new CubeVector( 0, 1,-1));
-        exp.add(new CubeVector( 0,-1, 1));
+        ArrayList<Vector> exp = new ArrayList<>();
+        exp.add(new Vector( 0, 1,-1));
+        exp.add(new Vector( 0,-1, 1));
 
-        for(CubeVector vector: exp)
+        for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
-        for (CubeVector vector : exp)
+        for (Vector vector : exp)
         {
-            ArrayList<CubeVector> act = grid.getGroup(vector);
+            ArrayList<Vector> act = grid.getGroup(vector);
             int expSize = 1;
             assertEquals(expSize, act.size());
             assertTrue(vectorListContainsVector(act, vector));
@@ -204,25 +191,21 @@ public class GridGraphImpTest
         int radius = 2;
         GridGraphImp grid = new GridGraphImp(radius);
 
-        ArrayList<CubeVector> exp = new ArrayList<>();
-        exp.add(new CubeVector( 0, 1,-1));
-        exp.add(new CubeVector( 0,-1, 1));
-        exp.add(new CubeVector( 1, 0,-1));
-        exp.add(new CubeVector( 0, 0, 0));
+        ArrayList<Vector> exp = new ArrayList<>();
+        exp.add(new Vector( 0, 1,-1));
+        exp.add(new Vector( 0,-1, 1));
+        exp.add(new Vector( 1, 0,-1));
+        exp.add(new Vector( 0, 0, 0));
 
-        for(CubeVector vector: exp)
+        for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
-        ArrayList<CubeVector> act = grid.getGroup(exp.get(0));
+        ArrayList<Vector> act = grid.getGroup(exp.get(0));
 
         assertEquals(exp.size(), act.size());
-        for(CubeVector v: exp)
+        for(Vector v: exp)
         {
             assertTrue(vectorListContainsVector(act, v));
         }
@@ -233,26 +216,75 @@ public class GridGraphImpTest
         int radius = 2;
         GridGraphImp grid = new GridGraphImp(radius);
 
-        ArrayList<CubeVector> exp = new ArrayList<>();
-        exp.add(new CubeVector( 0, 1,-1));
-        exp.add(new CubeVector( 0,-1, 1));
-        exp.add(new CubeVector(-2, 1, 1));
+        ArrayList<Vector> exp = new ArrayList<>();
+        exp.add(new Vector( 0, 1,-1));
+        exp.add(new Vector( 0,-1, 1));
+        exp.add(new Vector(-2, 1, 1));
 
-        for(CubeVector vector: exp)
+        for(Vector vector: exp)
         {
-            try {
-                grid.setTile(vector, Color.BLUE);
-            } catch (TileAlreadyColouredException e) {
-                e.printStackTrace();
-            }
+            grid.setTile(vector, Color.BLUE);
         }
 
-        for (CubeVector vector : exp)
+        for (Vector vector : exp)
         {
-            ArrayList<CubeVector> act = grid.getGroup(vector);
+            ArrayList<Vector> act = grid.getGroup(vector);
             int expSize = 1;
             assertEquals(expSize, act.size());
             assertTrue(vectorListContainsVector(act, vector));
         }
+    }
+
+    @Test void testGetAllGroups_3_single()
+    {
+        int radius = 2;
+        GridGraphImp grid = new GridGraphImp(radius);
+
+        ArrayList<Vector> exp = new ArrayList<>();
+        exp.add(new Vector( 0, 1,-1));
+        exp.add(new Vector( 0,-1, 1));
+        exp.add(new Vector(-2, 1, 1));
+
+        for(Vector vector: exp)
+        {
+            grid.setTile(vector, Color.BLUE);
+        }
+
+        ArrayList<ArrayList<Vector>> act = grid.getAllGroupsOfColour(Color.BLUE);
+        assertEquals(3, act.size());
+    }
+
+    @Test void testGetAllGroups_2_triple()
+    {
+        int radius = 3;
+        GridGraphImp grid = new GridGraphImp(radius);
+
+        ArrayList<Vector> exp = new ArrayList<>();
+        exp.add(new Vector( 0, 2,-2));
+        exp.add(new Vector( 1, 1,-2));
+        exp.add(new Vector( 2, 0,-2));
+        exp.add(new Vector( 0, 0, 0));
+        exp.add(new Vector( 1,-1, 0));
+        exp.add(new Vector(-1, 1, 0));
+
+        ArrayList<Vector> group1 = new ArrayList<>();
+        group1.add(new Vector( 0, 2,-2));
+        group1.add(new Vector( 1, 1,-2));
+        group1.add(new Vector( 2, 0,-2));
+
+        ArrayList<Vector> group2 = new ArrayList<>();
+        group2.add(new Vector( 0, 0, 0));
+        group2.add(new Vector( 1,-1, 0));
+        group2.add(new Vector(-1, 1, 0));
+
+        for(Vector vector: exp)
+        {
+            grid.setTile(vector, Color.BLUE);
+        }
+
+        ArrayList<ArrayList<Vector>> act = grid.getAllGroupsOfColour(Color.BLUE);
+        assertEquals(2, act.size());
+        assertEquals(3, act.get(0).size());
+        assertEquals(3, act.get(1).size());
     }
 }

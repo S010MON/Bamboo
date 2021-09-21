@@ -4,7 +4,6 @@ import Bamboo.controller.AxialVector;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
-import Bamboo.model.TileAlreadyColouredException;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -21,32 +20,28 @@ public class TileClickListener implements MouseListener
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        if (game.currentPlayerHuman()) {
-            for (Tile tile : game.getAllTiles()) {
+    public void mouseClicked(MouseEvent e)
+    {
+        if (game.currentPlayerHuman())
+        {
+            for (Tile tile : game.getAllTiles())
+            {
                 AxialVector v = VectorConverter.convertToAxial(tile.getVector());
                 v = VectorConverter.doubleAndOffsetOddRows(v);
                 int r = canvas.getCircle_radius();
                 int x = canvas.getCentreX() + (v.getQ() * r / 2) + r / 2;
                 int y = canvas.getCentreY() + (v.getR() * r / 2) + r / 2;
 
-                try {
-                    if (e.getX() > (x - r / 2)
-                            && e.getX() < (x + r / 2)
-                            && e.getY() > (y - r / 2)
-                            && e.getY() < (y + r / 2)) {
-
-                        game.placeNextAt(tile.getVector());
-                        canvas.repaint();
-                    }
-                }
-
-                catch (TileAlreadyColouredException exception) {
-                    exception.printStackTrace();
-                    }
+                if (e.getX() > (x - r / 2)
+                        && e.getX() < (x + r / 2)
+                        && e.getY() > (y - r / 2)
+                        && e.getY() < (y + r / 2)) {
+                    game.placeNextAt(tile.getVector());
+                    canvas.repaint();
                 }
             }
         }
+    }
 
     @Override
     public void mousePressed(MouseEvent e) {}

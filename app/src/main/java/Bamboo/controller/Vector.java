@@ -1,10 +1,10 @@
 package Bamboo.controller;
 
-public class CubeVector
+public class Vector
 {
     private int x, y, z;
 
-    public CubeVector(int x, int y, int z) {
+    public Vector(int x, int y, int z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -22,9 +22,9 @@ public class CubeVector
         return z;
     }
 
-    public CubeVector add(CubeVector other)
+    public Vector add(Vector other)
     {
-        return new CubeVector((x + other.getX()), (y + other.getY()), (z + other.getZ()));
+        return new Vector((x + other.getX()), (y + other.getY()), (z + other.getZ()));
     }
 
     @Override
@@ -32,7 +32,7 @@ public class CubeVector
     {
         if(this.getClass() == other.getClass())
         {
-            CubeVector v3d = (CubeVector) other;
+            Vector v3d = (Vector) other;
             return this.x == v3d.getX() &&
                     this.y == v3d.getY() &&
                     this.z == v3d.getZ();
@@ -40,9 +40,9 @@ public class CubeVector
         else return false;
     }
 
-    public CubeVector copy()
+    public Vector copy()
     {
-        return new CubeVector(x, y, z);
+        return new Vector(x, y, z);
     }
 
     /**

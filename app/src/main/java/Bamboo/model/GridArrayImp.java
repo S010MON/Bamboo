@@ -1,7 +1,6 @@
 package Bamboo.model;
 
-import Bamboo.controller.CubeVector;
-import Bamboo.controller.VectorConverter;
+import Bamboo.controller.Vector;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ public class GridArrayImp implements Grid
 {
     private Tile[][][] tiles;
     private List<Tile> tileList;
-    private List<CubeVector> vectors;
+    private List<Vector> vectors;
     private int width;
     private int offset;
 
@@ -25,7 +24,7 @@ public class GridArrayImp implements Grid
     }
 
     @Override
-    public Tile getTile(CubeVector v)
+    public Tile getTile(Vector v)
     {
         if(v.getX() + v.getY() + v.getZ() != 0)
             return null;
@@ -34,14 +33,20 @@ public class GridArrayImp implements Grid
     }
 
     @Override
-    public void setTile(CubeVector v, Color c) throws TileAlreadyColouredException
+    public void setTile(Vector v, Color c)
     {
         v = addOffset(v);
         tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
     }
 
     @Override
-    public List<Tile> getAllNeighbours(CubeVector v)
+    public boolean isLegalMove(Vector vector, Color color)
+    {
+        return false;
+    }
+
+    @Override
+    public List<Tile> getAllNeighbours(Vector v)
     {
         v = addOffset(v);
         int x = v.getX();
@@ -77,25 +82,25 @@ public class GridArrayImp implements Grid
     }
 
     @Override
-    public List<CubeVector> getAllVectors()
+    public List<Vector> getAllVectors()
     {
         return vectors;
     }
 
-    public CubeVector addOffset(CubeVector v)
+    public Vector addOffset(Vector v)
     {
         int x = v.getX() + offset;
         int y = v.getY() + offset;
         int z = v.getZ() + offset;
-        return new CubeVector(x, y, z);
+        return new Vector(x, y, z);
     }
 
-    public CubeVector removeOffset(CubeVector v)
+    public Vector removeOffset(Vector v)
     {
         int x = v.getX() - offset;
         int y = v.getY() - offset;
         int z = v.getZ() - offset;
-        return new CubeVector(x, y, z);
+        return new Vector(x, y, z);
     }
 
     private Tile[][][] buildGrid(int radius)
@@ -111,8 +116,8 @@ public class GridArrayImp implements Grid
                     // Add a new tile without the offset
                     if(((x-offset) + (y-offset) + (z-offset)) == 0)
                     {
-                        vectors.add(new CubeVector((x-offset), (y-offset), (z-offset)));
-                        grid[x][y][z] = new Tile(removeOffset(new CubeVector(x, y, z)));
+                        vectors.add(new Vector((x-offset), (y-offset), (z-offset)));
+                        grid[x][y][z] = new Tile(removeOffset(new Vector(x, y, z)));
                         tileList.add(grid[x][y][z]);
                     }
                 }

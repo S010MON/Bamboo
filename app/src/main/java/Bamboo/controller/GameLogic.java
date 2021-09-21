@@ -145,7 +145,7 @@ public abstract class GameLogic {
     static boolean exists_empty_tile_with_empty_neighbours(Grid grid,Group tiles, Color color){
         for(Tile tile: tiles.getTiles()){
             if(tile.getColour() == Color.WHITE){
-                CubeVector vector = tile.getVector();
+                Vector vector = tile.getVector();
                 List<Tile> nb = grid.getAllNeighbours(vector);
                 if(!GroupController.contains_color(new Group(nb), color)){
                     return true;

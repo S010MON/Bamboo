@@ -1,46 +1,21 @@
 package Bamboo.model;
 
-import Bamboo.controller.CubeVector;
+import Bamboo.controller.Vector;
 
 import java.awt.Color;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Stack;
 
-public class GridGraphImp implements Grid
+public class GridGraphImp extends GridHashImp implements Grid
 {
-    private HashMap<CubeVector, Tile> tiles;
-    private ArrayList<CubeVector> neighbours;
-    private int radius;
-
     public GridGraphImp(int radius)
     {
-        this.radius = radius;
-        this.neighbours = buildNeighbourList();
-
-        tiles = new HashMap<>();
-        for (int x = -radius; x <= radius; x++)
-        {
-            for (int y = -radius; y <= radius; y++)
-            {
-                for (int z = -radius; z <= radius; z++)
-                {
-                    if((x + y + z) == 0)
-                    {
-                        CubeVector v = new CubeVector(x, y, z);
-                        tiles.put(v, new Tile(v));
-                    }
-                }
-            }
-        }
+        super(radius);
     }
 
     @Override
-    public Tile getTile(CubeVector v)
-    {
-        return tiles.get(v);
-    }
-
-    @Override
-    public void setTile(CubeVector v, Color c) throws TileAlreadyColouredException
+    public void setTile(Vector v, Color c)
     {
         for(Tile neighbour: getAllNeighbours(v))
         {
@@ -49,45 +24,37 @@ public class GridGraphImp implements Grid
                 tiles.get(v).addNeighbour(neighbour);
                 neighbour.addNeighbour(tiles.get(v));
             }
+
+            if(c.equals(Color.WHITE))
+            {
+                tiles.get(v).removeNeighbour(neighbour);
+                neighbour.removeNeighbour(tiles.get(v));
+            }
         }
         tiles.get(v).setColour(c);
     }
 
     @Override
-    public List<Tile> getAllNeighbours(CubeVector v)
+    public boolean isLegalMove(Vector vector, Color color)
     {
-        List<Tile> list = new ArrayList<>();
-        for(CubeVector n: neighbours)
-        {
-            CubeVector neighbour = v.add(n);
-            if(isInBounds(neighbour))
-                list.add(tiles.get(neighbour));
-        }
-        return list;
+        setTile(vector, color);
+        ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
+        setTile(vector, Color.WHITE);
+        int noOfGroups = Math.max(groups.size(), 1);
+        int maxGroup = getMaxGroupSize(groups);
+        return maxGroup <= noOfGroups;
     }
 
-    @Override
-    public List<Tile> getAllTiles()
+    public ArrayList<ArrayList<Vector>> getAllGroupsOfColour(Color color)
     {
-        return Collections.list(Collections.enumeration(tiles.values()));
-    }
-
-    @Override
-    public List<CubeVector> getAllVectors()
-    {
-        return tiles.keySet().stream().toList();
-    }
-
-    public ArrayList<ArrayList<CubeVector>> getAllGroupsOfColour(Color color)
-    {
-        HashMap<CubeVector, Boolean> visited = new HashMap<>();
-        ArrayList<ArrayList<CubeVector>> groups = new ArrayList<>();
-        for(CubeVector vector: getAllVectors())
-        {
-            if(tiles.get(vector).getColour() == color && !visited.containsKey(vector)) // If it is the colour we are looking for and unvisited
+        HashMap<Vector, Boolean> visited = new HashMap<>();
+        ArrayList<ArrayList<Vector>> groups = new ArrayList<>();
+        for(Vector vector: getAllVectors())
+        {   // If it is the colour we are looking for and is unvisited
+            if(tiles.get(vector).getColour() == color && !visited.containsKey(vector))
             {
-                ArrayList<CubeVector> currentGroup = getGroup(vector);
-                for(CubeVector v: currentGroup)
+                ArrayList<Vector> currentGroup = getGroup(vector);
+                for(Vector v: currentGroup)
                 {
                     visited.put(v, Boolean.TRUE);
                 }
@@ -97,16 +64,16 @@ public class GridGraphImp implements Grid
         return groups;
     }
 
-    public ArrayList<CubeVector> getGroup(CubeVector vector)
+    public ArrayList<Vector> getGroup(Vector vector)
     {
-        ArrayList<CubeVector> group = new ArrayList<>();
-        HashMap<CubeVector, Boolean> visited = new HashMap<>();
+        ArrayList<Vector> group = new ArrayList<>();
+        HashMap<Vector, Boolean> visited = new HashMap<>();
 
-        Stack<CubeVector> stack = new Stack<>();
+        Stack<Vector> stack = new Stack<>();
         stack.push(tiles.get(vector).getVector());
         while (!stack.isEmpty())
         {
-            CubeVector currentNode = stack.pop();
+            Vector currentNode = stack.pop();
 
             if(!visited.containsKey(currentNode))  // Test if we have previously visited the vertex in the group
             {
@@ -126,28 +93,15 @@ public class GridGraphImp implements Grid
         return group;
     }
 
-    private boolean isInBounds(CubeVector v)
+    private int getMaxGroupSize(ArrayList<ArrayList<Vector>> groups)
     {
-        boolean inBounds = true;
-        if(v.getX() < -radius || radius < v.getX())
-            inBounds = false;
-        if(v.getY() < -radius || radius < v.getY())
-            inBounds = false;
-        if(v.getZ() < -radius || radius < v.getZ())
-            inBounds = false;
-        return inBounds;
-    }
-
-    private ArrayList<CubeVector> buildNeighbourList()
-    {
-        ArrayList<CubeVector> list = new ArrayList<>();
-        list.add(new CubeVector( 0,-1, 1));
-        list.add(new CubeVector( 0, 1,-1));
-        list.add(new CubeVector( 1, 0,-1));
-        list.add(new CubeVector(-1, 0, 1));
-        list.add(new CubeVector( 1,-1, 0));
-        list.add(new CubeVector(-1, 1, 0));
-        return list;
+        int max = 1;
+        for (ArrayList<Vector> group : groups)
+        {
+            if (group.size() > max)
+                max = group.size();
+        }
+        return max;
     }
 }
 

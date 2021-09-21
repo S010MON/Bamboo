@@ -1,7 +1,7 @@
 package Bamboo;
 
 
-import Bamboo.controller.CubeVector;
+import Bamboo.controller.Vector;
 import Bamboo.controller.GroupController;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;
@@ -86,12 +86,10 @@ public class GroupTest {
         int blue_group_counter = 1;
         List<Tile> tiles = grid.getAllTiles();
         for(int i = 0; i < tiles.size(); i++){
-            CubeVector vector = tiles.get(i).getVector();
+            Vector vector = tiles.get(i).getVector();
 
             if(red_counter < red){
-                try {
-                    grid.setTile(vector, Color.RED);
-                } catch (TileAlreadyColouredException e) {e.printStackTrace();}
+                grid.setTile(vector, Color.RED);
                 red_counter++;
             }
             red_group_counter ++;
@@ -105,10 +103,8 @@ public class GroupTest {
         Color[] colors = {Color.RED, Color.BLUE, Color.white};
         List<Tile> tiles = grid.getAllTiles();
         for(int i = 0; i < tiles.size(); i++){
-            CubeVector vector = tiles.get(i).getVector();
-            try {
-                grid.setTile(vector, colors[indices[i]]);
-            } catch (TileAlreadyColouredException e) {e.printStackTrace();}
+            Vector vector = tiles.get(i).getVector();
+            grid.setTile(vector, colors[indices[i]]);
         }
         return grid;
     }
