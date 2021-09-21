@@ -1,4 +1,4 @@
-package Bamboo.view;
+package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
 import Bamboo.controller.VectorConverter;
@@ -20,12 +20,10 @@ public class Canvas extends JPanel
     private BasicStroke circle_thickness = new BasicStroke(2);
     private int centreX;
     private int centreY;
-    private int offsetX = 100;
+    private int offsetX = 0;
     private int offsetY = 0;
 
-    private Color foreground = Color.white;
     private Color background = new Color(158, 208, 239) ;
-
 
     public Canvas(Dimension screenSize, Game game)
     {
@@ -48,17 +46,13 @@ public class Canvas extends JPanel
 
     private void paintGrid(Graphics2D g2d)
     {
-        //g2d.setColor(foreground);
         g2d.setStroke(circle_thickness);
-        int i = 1 ;
         for(Tile tile: game.getAllTiles())
         {
             AxialVector v = VectorConverter.convertToAxial(tile.getVector());
             v = VectorConverter.doubleAndOffsetOddRows(v);
             int x = centreX + (v.getQ() * circle_radius/2) ;
             int y = centreY + (v.getR() * circle_radius/2) ;
-
-            //System.out.println(i++ +" " +x+" "+y) ;
 
             g2d.setStroke(tile.getCircle_thickness());
             g2d.setColor(tile.getColour());

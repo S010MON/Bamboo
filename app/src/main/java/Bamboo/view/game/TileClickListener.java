@@ -1,4 +1,4 @@
-package Bamboo.view;
+package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
 import Bamboo.controller.VectorConverter;

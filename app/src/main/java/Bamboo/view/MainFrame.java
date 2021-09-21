@@ -2,6 +2,7 @@ package Bamboo.view;
 
 import Bamboo.controller.Settings;
 import Bamboo.model.Game;
+import Bamboo.view.game.GamePanel;
 import Bamboo.view.startup.StartupPanel;
 
 import javax.swing.JFrame;
@@ -15,7 +16,7 @@ public class MainFrame extends JFrame
     private Game currentGame;
     private GamePanel gamePanel;
     private StartupPanel startupPanel = new StartupPanel();
-    private Dimension screenSize;
+    private Dimension screenSize = new Dimension(800, 700);
 
     public MainFrame()
     {
@@ -44,7 +45,6 @@ public class MainFrame extends JFrame
     /** All frame settings detailed here */
     private void buildFrame()
     {
-        screenSize  = Toolkit.getDefaultToolkit().getScreenSize();
         setTitle("Bamboo");
         setSize(screenSize);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

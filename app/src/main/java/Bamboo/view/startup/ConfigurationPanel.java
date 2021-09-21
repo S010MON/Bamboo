@@ -1,4 +1,6 @@
-package Bamboo.view;
+package Bamboo.view.startup;
+
+import Bamboo.view.resources.Colour;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +42,7 @@ public class ConfigurationPanel extends JPanel {
         panel3 = new JPanel();
         panel4 = new JPanel();
 
-        panel1.setBackground(new Color(158, 208, 239));
+        panel1.setBackground(Colour.background());
         panel1.setLayout(new GridLayout(1,3));
         add(panel1);
 
@@ -48,17 +50,17 @@ public class ConfigurationPanel extends JPanel {
         panel2.setLayout(new GridLayout(1, 3));
         add(panel2);
 
-        panel3.setBackground(new Color(158, 208, 239));
+        panel3.setBackground(Colour.background());
         panel3.setLayout(new GridLayout(1,3));
         add(panel3);
 
-        panel4.setBackground(new Color(158, 208, 239));
+        panel4.setBackground(Colour.background());
         panel4.setLayout(new GridLayout(1,3));
         add(panel4);
 
 
         textLabelPanel = new JPanel() ;
-        textLabelPanel.setBackground(new Color(158, 208, 239));
+        textLabelPanel.setBackground(Colour.background());
         textLabelPanel.setLayout(new BorderLayout());
         player1label = new JLabel("Player 1's name : ") ;
         player1label.setFont(new Font("Serif", Font.PLAIN,35)) ;
@@ -67,7 +69,7 @@ public class ConfigurationPanel extends JPanel {
 
         textFieldPanel = new JPanel() ;
         textFieldPanel.setLayout(null);
-        textFieldPanel.setBackground(new Color(158, 208, 239));
+        textFieldPanel.setBackground(Colour.background());
         player1textfiled = new JTextField() ;
         player1textfiled.setBounds(65,35,300,50);
         textFieldPanel.add(player1textfiled) ;
@@ -75,7 +77,7 @@ public class ConfigurationPanel extends JPanel {
 
         buttonColorPanel = new JPanel();
         buttonColorPanel.setLayout(null);
-        buttonColorPanel.setBackground(new Color(158, 208, 239));
+        buttonColorPanel.setBackground(Colour.background());
 
         red1 = new JButton("RED");
         red1.setBounds(80, 40, 100, 50);
@@ -89,7 +91,7 @@ public class ConfigurationPanel extends JPanel {
         panel1.add(buttonColorPanel) ;
 
         textLabelPanel2 = new JPanel() ;
-        textLabelPanel2.setBackground(new Color(158, 208, 239));
+        textLabelPanel2.setBackground(Colour.background());
         textLabelPanel2.setLayout(new BorderLayout());
         player2label = new JLabel("Player 2's name : ") ;
         player2label.setFont(new Font("Serif", Font.PLAIN,35)) ;
@@ -98,7 +100,7 @@ public class ConfigurationPanel extends JPanel {
 
         textFieldPanel2 = new JPanel() ;
         textFieldPanel2.setLayout(null);
-        textFieldPanel2.setBackground(new Color(158, 208, 239));
+        textFieldPanel2.setBackground(Colour.background());
         player2textField = new JTextField() ;
         player2textField.setBounds(65,35,300,50);
         textFieldPanel2.add(player2textField) ;
@@ -106,7 +108,7 @@ public class ConfigurationPanel extends JPanel {
 
         buttonColorPanel2 = new JPanel();
         buttonColorPanel2.setLayout(null);
-        buttonColorPanel2.setBackground(new Color(158, 208, 239));
+        buttonColorPanel2.setBackground(Colour.background());
 
         red2 = new JButton("RED");
         red2.setBounds(80, 40, 100, 50);
