@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class FileManager
 {
-    private static final String internalPath = "/src/main/java/Bamboo/savedGames/";
+    private static final String internalPath = "/src/main/java/saved/";
 
     public static Game load()
     {

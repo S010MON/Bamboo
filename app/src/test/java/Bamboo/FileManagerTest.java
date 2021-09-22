@@ -52,6 +52,6 @@ public class FileManagerTest
     {
         FileSystem fileSystem = FileSystems.getDefault();
         String path = fileSystem.getPath("").toAbsolutePath().toString();
-        return path.concat("/src/main/java/Bamboo/savedGames/" + fileName);
+        return path.concat("/src/main/java/saved/" + fileName);
     }
 }
