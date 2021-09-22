@@ -99,6 +99,7 @@ public class MainFrame extends JFrame
     public void load()
     {
         Settings settings = FileManager.load();
-        runGame(settings);
+        if(settings != null)
+            runGame(settings);
     }
 }
