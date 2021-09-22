@@ -24,7 +24,9 @@ public class MainFrame extends JFrame
     public void showMenu()
     {
         removeCurrentPanel();
-        add(new StartupPanel(this));
+        StartupPanel startupPanel = new StartupPanel(this);
+        add(startupPanel);
+        currentPanel = startupPanel;
     }
 
     public void runGame(Settings settings)
@@ -33,22 +35,24 @@ public class MainFrame extends JFrame
         Game game = new Game(settings, this);
         Component gamePanel = new GamePanel(screenSize, game);
         add(gamePanel);
-        endGame(gamePanel, null);
+        currentPanel = gamePanel;
     }
 
-    public void endGame(Component currentPanel, Agent winner)
+    public void endGame(Agent winner)
     {
         removeCurrentPanel();
-        Component endGamePanel =  new EndGame(null, screenSize);
+        Component endGamePanel =  new EndGame(winner, screenSize, this);
         add(endGamePanel);
-        sleep(1000);
-        showMenu();
+        currentPanel = endGamePanel;
     }
 
     private void removeCurrentPanel()
     {
         if(currentPanel != null)
+        {
+            currentPanel.setVisible(false);
             remove(currentPanel);
+        }
     }
 
     /** All frame settings detailed here */
@@ -60,14 +64,5 @@ public class MainFrame extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-    }
-
-    private void sleep(int amount) {
-        try {
-            Thread.sleep(amount);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public class GridHashImp implements Grid
 {
     protected HashMap<Vector, Tile> tiles;
-    protected HashMap<Vector, Tile> whiteTiles;
+    protected HashMap<Vector, Boolean> remainingTiles;
     protected ArrayList<Vector> neighbours;
     protected int radius;
 
@@ -21,7 +21,7 @@ public class GridHashImp implements Grid
         neighbours = buildNeighbourList();
 
         tiles = new HashMap<>();
-        whiteTiles = new HashMap<>();
+        remainingTiles = new HashMap<>();
         for (int x = -radius; x <= radius; x++)
         {
             for (int y = -radius; y <= radius; y++)
@@ -32,7 +32,7 @@ public class GridHashImp implements Grid
                     {
                         Vector v = new Vector(x, y, z);
                         tiles.put(v, new Tile(v));
-                        whiteTiles.put(v, new Tile(v));
+                        remainingTiles.put(v, true);
                     }
                 }
             }
@@ -49,7 +49,7 @@ public class GridHashImp implements Grid
     public void setTile(Vector v, Color c)
     {
         tiles.get(v).setColour(c);
-        whiteTiles.remove(v);
+        remainingTiles.replace(v, false);
     }
 
     @Override
@@ -86,16 +86,16 @@ public class GridHashImp implements Grid
     @Override
     public boolean isFinished(Color currentColour)
     {
-        if(whiteTiles.isEmpty())
+        if(remainingTiles.isEmpty())
             return true;
 
-        boolean hasLegalMove = false;
-        for(Vector v: whiteTiles.keySet())
+        boolean finished = true;
+        for(Vector v: tiles.keySet())
         {
-            if(isLegalMove(v, currentColour))
-                hasLegalMove = true;
+            if(tiles.get(v).getColour() == Color.WHITE && isLegalMove(v, currentColour))
+                finished = false;
         }
-        return hasLegalMove;
+        return finished;
     }
 
     private boolean isInBounds(Vector v)
