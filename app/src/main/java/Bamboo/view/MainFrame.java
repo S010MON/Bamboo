@@ -1,40 +1,59 @@
 package Bamboo.view;
 
+import Bamboo.controller.Agent;
 import Bamboo.controller.Settings;
 import Bamboo.model.Game;
 import Bamboo.view.startup.StartupPanel;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame
 {
-    private Game currentGame;
-    private GamePanel gamePanel;
-    private StartupPanel startupPanel = new StartupPanel();
+    private Component currentPanel = null;
     private Dimension screenSize;
 
     public MainFrame()
     {
         buildFrame();
-
-        // Settings Panel
-        setCurrentPanel(null, startupPanel);
-        while (startupPanel.isNotSettingsReady()) {
-            sleep(1000);
-        }
-        Settings settings = startupPanel.getSettings();
-        startupPanel.reset();
-
-        // Set the current game
-        currentGame = new Game(settings);
-        setCurrentPanel(startupPanel, new GamePanel(screenSize, currentGame));
+        setVisible(true);
+        showMenu();
     }
 
-    private void setCurrentPanel(JPanel outgoing, JPanel incoming) {
-        if(outgoing != null)
-            remove(outgoing);
-        add(incoming);
-        setVisible(true);
+    public void showMenu()
+    {
+        removeCurrentPanel();
+        StartupPanel startupPanel = new StartupPanel(this);
+        add(startupPanel);
+        currentPanel = startupPanel;
+    }
+
+    public void runGame(Settings settings)
+    {
+        removeCurrentPanel();
+        Game game = new Game(settings, this);
+        Component gamePanel = new GamePanel(screenSize, game);
+        add(gamePanel);
+        currentPanel = gamePanel;
+    }
+
+    public void endGame(Agent winner)
+    {
+        removeCurrentPanel();
+        Component endGamePanel =  new EndGame(winner, screenSize, this);
+        add(endGamePanel);
+        currentPanel = endGamePanel;
+    }
+
+    private void removeCurrentPanel()
+    {
+        if(currentPanel != null)
+        {
+            currentPanel.setVisible(false);
+            remove(currentPanel);
+        }
     }
 
     /** All frame settings detailed here */
@@ -72,14 +91,5 @@ public class MainFrame extends JFrame
 
     public void load() {
 
-    }
-
-    private void sleep(int amount) {
-        try {
-            Thread.sleep(amount);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

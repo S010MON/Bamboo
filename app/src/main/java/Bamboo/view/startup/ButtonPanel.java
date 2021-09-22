@@ -26,7 +26,7 @@ public class ButtonPanel extends JPanel
 
         /* Start Button */
         Button startBtn = new Button("btnStart.png");
-        startBtn.addActionListener(e -> startupPanel.toggleSettingReady());
+        startBtn.addActionListener(e -> startupPanel.startGame());
         add(startBtn);
 
         /* Help Button */

@@ -1,4 +1,4 @@
-package Bamboo.view;
+package Bamboo.view.startup;
 
 import javax.swing.*;
 import java.awt.*;

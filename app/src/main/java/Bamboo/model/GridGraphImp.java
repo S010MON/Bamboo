@@ -32,11 +32,14 @@ public class GridGraphImp extends GridHashImp implements Grid
             }
         }
         tiles.get(v).setColour(c);
+        remainingTiles.remove(v);
     }
 
     @Override
     public boolean isLegalMove(Vector vector, Color color)
     {
+        if(tiles.get(vector).getColour() != Color.WHITE)
+            return false;
         setTile(vector, color);
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
         setTile(vector, Color.WHITE);
