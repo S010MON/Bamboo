@@ -102,4 +102,11 @@ public class GridHashImp implements Grid
         list.add(new Vector(-1, 1, 0));
         return list;
     }
+    public Grid deepCopy() {
+        Grid copy = new GridArrayImp(radius);
+        for(Tile tile: getAllTiles()){
+            copy.setTile(tile.getVector(), tile.getColour());
+        }
+        return copy;
+    }
 }
