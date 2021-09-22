@@ -7,6 +7,7 @@ import Bamboo.view.startup.StartupPanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame
@@ -64,5 +65,31 @@ public class MainFrame extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+        setJMenuBar(new MenuBar(this));
+    }
+
+    public void quit() {
+        Object[] options = {"Yes","No"};
+
+        int n = JOptionPane.showOptionDialog(this, "Do you want to save and quit? ",
+                "Bamboo", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+                options[1]);
+
+        if (n == JOptionPane.NO_OPTION)
+            System.exit(0);
+        else
+            saveAndQuit();
+    }
+
+    public void saveAndQuit() {
+
+    }
+
+    public void save() {
+
+    }
+
+    public void load() {
+
     }
 }
