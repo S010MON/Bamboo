@@ -6,9 +6,7 @@ import Bamboo.view.startup.StartupPanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 
 public class MainFrame extends JFrame
 {
@@ -16,6 +14,7 @@ public class MainFrame extends JFrame
     private GamePanel gamePanel;
     private StartupPanel startupPanel = new StartupPanel();
     private Dimension screenSize;
+    private MenuBar fileMenu;
 
     public MainFrame()
     {
@@ -50,6 +49,20 @@ public class MainFrame extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+        setJMenuBar(new MenuBar(this));
+    }
+
+
+    public void quit() {
+
+    }
+
+    public void save() {
+
+    }
+
+    public void load() {
+
     }
 
     private void sleep(int amount) {
