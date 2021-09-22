@@ -67,4 +67,9 @@ public class StartupPanel extends JPanel {
 
     }
 
+    public void load()
+    {
+        view.load();
+    }
+
 }

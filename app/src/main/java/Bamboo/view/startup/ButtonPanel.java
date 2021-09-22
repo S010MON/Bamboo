@@ -34,6 +34,11 @@ public class ButtonPanel extends JPanel
         helpBtn.addActionListener(e -> startupPanel.displayHelpPanel());
         add(helpBtn);
 
+        /* Load Button */
+        Button loadBtn = new Button("btn.png");
+        loadBtn.addActionListener(e -> startupPanel.load());
+        add(loadBtn);
+
         setVisible(true);
     }
 }
