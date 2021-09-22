@@ -1,15 +1,13 @@
 package Bamboo.view;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class MenuBar extends JMenuBar{
+public class MenuBar extends JMenuBar
+{
     private JMenu fileMenu;
     private JMenuItem saveBtn;
     private JMenuItem loadBtn;
     private JMenuItem quitBtn;
-
 
     public MenuBar(MainFrame mainFrame) {
 

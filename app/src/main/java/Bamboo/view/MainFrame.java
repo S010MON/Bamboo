@@ -3,8 +3,6 @@ package Bamboo.view;
 import Bamboo.controller.Settings;
 import Bamboo.model.Game;
 import Bamboo.view.startup.StartupPanel;
-
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -51,7 +49,6 @@ public class MainFrame extends JFrame
         setJMenuBar(new MenuBar(this));
     }
 
-
     public void quit() {
         Object[] options = {"Yes","No"};
 
@@ -59,12 +56,10 @@ public class MainFrame extends JFrame
                 "Bamboo", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
                 options[1]);
 
-        if (n == JOptionPane.NO_OPTION) {
+        if (n == JOptionPane.NO_OPTION)
             System.exit(0);
-        }
-        else {
+        else
             saveAndQuit();
-        }
     }
 
     public void saveAndQuit() {
