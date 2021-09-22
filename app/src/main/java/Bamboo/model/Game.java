@@ -53,7 +53,6 @@ public class Game
     {
         if(GameLogic.is_legal_move(this, grid.getTile(v), currentPlayer.getColor()))
         {
-            RollOverListener.update_legal_move_map(this, v, currentPlayer.getColor());
             grid.setTile(v, currentPlayer.getColor());
             toggleTurn();
         }

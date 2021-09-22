@@ -36,6 +36,8 @@ public abstract class GameLogic {
     }
 
     public static boolean is_legal_move(Game game, Tile move, Color player_color){
+        if(move.getColour() != Color.WHITE)
+            return false;
         Grid grid = game.getGrid();
         Group neighbours = new Group(grid.getAllNeighbours(move.getVector()));
         if(!GroupController.contains_color(neighbours, player_color))
