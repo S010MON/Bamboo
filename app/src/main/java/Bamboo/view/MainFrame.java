@@ -75,19 +75,13 @@ public class MainFrame extends JFrame
     public void quit() {
         Object[] options = {"Yes","No"};
 
-        int n = JOptionPane.showOptionDialog(this, "Do you want to save and quit? ",
+        int response = JOptionPane.showOptionDialog(this, "Are you sure you want to quit? ",
                 "Bamboo", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
                 options[1]);
-
-        if (n == JOptionPane.NO_OPTION)
+        if (response == JOptionPane.YES_OPTION) {
+            save();
             System.exit(0);
-        else
-            saveAndQuit();
-    }
-
-    public void saveAndQuit()
-    {
-
+        }
     }
 
     public void save()
