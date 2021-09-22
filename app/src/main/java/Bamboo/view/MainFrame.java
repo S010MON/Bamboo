@@ -1,6 +1,7 @@
-package Bamboo.view.game;
+package Bamboo.view;
 
 import Bamboo.controller.Agent;
+import Bamboo.controller.FileManager;
 import Bamboo.controller.Settings;
 import Bamboo.model.Game;
 import Bamboo.view.EndGame;
@@ -83,15 +84,18 @@ public class MainFrame extends JFrame
             saveAndQuit();
     }
 
-    public void saveAndQuit() {
+    public void saveAndQuit()
+    {
 
     }
 
-    public void save() {
+    public void save()
+    {
 
     }
 
-    public void load() {
-
+    public void load()
+    {
+        FileManager.load();
     }
 }

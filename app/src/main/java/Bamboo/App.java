@@ -1,6 +1,6 @@
 package Bamboo;
 
-import Bamboo.view.game.MainFrame;
+import Bamboo.view.MainFrame;
 
 public class App {
 

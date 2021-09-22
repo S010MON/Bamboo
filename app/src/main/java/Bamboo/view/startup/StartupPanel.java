@@ -2,7 +2,7 @@ package Bamboo.view.startup;
 
 import Bamboo.controller.Human;
 import Bamboo.controller.Settings;
-import Bamboo.view.game.MainFrame;
+import Bamboo.view.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;

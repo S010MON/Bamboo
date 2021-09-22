@@ -1,7 +1,5 @@
 package Bamboo.view;
 
-import Bamboo.view.game.MainFrame;
-
 import javax.swing.*;
 
 public class MenuBar extends JMenuBar
@@ -22,7 +20,7 @@ public class MenuBar extends JMenuBar
 
          /* Load button */
         loadBtn = new JMenuItem("Load");
-        loadBtn.addActionListener( e -> mainFrame.save());
+        loadBtn.addActionListener( e -> mainFrame.load());
         fileMenu.add(loadBtn);
 
          /* Quit button */
