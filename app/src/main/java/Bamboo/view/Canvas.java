@@ -61,7 +61,6 @@ public class Canvas extends JPanel
         }
         Tile rollover = RollOverListener.getRolloverTile();
         if(rollover != null){
-            System.out.println("Rollover not null");
             Color color;
             if(GameLogic.is_legal_move(game, rollover, game.getCurrentPlayer().getColor())){
                 color = game.getCurrentPlayer().getColor();
