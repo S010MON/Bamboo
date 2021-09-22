@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.HashMap;
 
 public class FileManager
@@ -41,7 +42,7 @@ public class FileManager
             writeToFile(file, game);
 
         } catch (Exception e) {
-
+            e.printStackTrace();
             showDialogIOError("Unable to save file");
         }
     }
@@ -84,6 +85,7 @@ public class FileManager
         {
             data[i] = reader.readLine();
         }
+        reader.close();
 
         // Remove the human readable parts (i.e. stuff before '=')
         for(int i = 0; i < data.length; i++)
@@ -133,21 +135,22 @@ public class FileManager
     private static void writeToFile(File file, Game game) throws IOException
     {
         FileWriter writer = new FileWriter(file,false);
-        writer.write(fileHeader);
-        writer.write("radius=" + game.getSettings().boardSize);
-        writer.write("name=" + game.getSettings().player1.getName());
-        writer.write("colour=" + colourAsString(game.getSettings().player1.getColor()));
-        writer.write("type=" + game.getSettings().player1.getType());
-        writer.write("name=" + game.getSettings().player2.getName());
-        writer.write("colour=" + colourAsString(game.getSettings().player2.getColor()));
-        writer.write("type=" + game.getSettings().player2.getType());
-        writer.write("EOS\n#\n# Start of tiles\n#  Layout: x,y,z,colour\nSOT");
+        writer.write(fileHeader + "\n");
+        writer.write("radius=" + game.getSettings().boardSize + "\n");
+        writer.write("name=" + game.getSettings().player1.getName() + "\n");
+        writer.write("colour=" + colourAsString(game.getSettings().player1.getColor()) + "\n");
+        writer.write("type=" + game.getSettings().player1.getType() + "\n");
+        writer.write("name=" + game.getSettings().player2.getName() + "\n");
+        writer.write("colour=" + colourAsString(game.getSettings().player2.getColor()) + "\n");
+        writer.write("type=" + game.getSettings().player2.getType()+ "\n");
+        writer.write("EOS\n#\n# Start of tiles\n# Layout: x,y,z,colour\nSOT\n");
         for (Tile tile: game.getGrid().getAllTiles())
         {
             if(tile.getColour() != Color.WHITE)
-                writer.write(tile.toCSV());
+                writer.write(tile.toCSV() + "\n");
         }
-        writer.write("EOS\n");
+        writer.write("EOT\n");
+        writer.close();
     }
 
     /**
@@ -158,7 +161,8 @@ public class FileManager
         StringBuilder fileName = new StringBuilder();
         fileName.append("bamboo");
         fileName.append("_");
-        fileName.append(LocalDateTime.now().toString());
+        String time = LocalDateTime.now().toString().substring(0, 16);
+        fileName.append(time);
         return fileName.toString();
     }
 

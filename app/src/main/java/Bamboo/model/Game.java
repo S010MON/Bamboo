@@ -20,7 +20,8 @@ public class Game
         this.player1 = settings.player1;
         this.player2 = settings.player2;
         this.view = view;
-        currentPlayer = settings.getCurrentPlayer();
+        this.currentPlayer = settings.getCurrentPlayer();
+        this.settings = settings;
 
         if(settings.tiles != null)
         {

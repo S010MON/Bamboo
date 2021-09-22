@@ -9,12 +9,13 @@ public class Settings
     public Agent player2;
     public int boardSize;
     public HashMap<Vector, Color> tiles;
-    private Agent currentPlayer = player1;
+    private Agent currentPlayer;
 
     public Settings(Agent player1, Agent player2, int boardSize) {
         this.player1 = player1;
         this.player2 = player2;
         this.boardSize = boardSize;
+        this.currentPlayer = player1;
     }
 
     public void addTiles(HashMap<Vector, Color> tiles)

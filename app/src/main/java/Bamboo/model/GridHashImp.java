@@ -93,7 +93,10 @@ public class GridHashImp implements Grid
         for(Vector v: tiles.keySet())
         {
             if(tiles.get(v).getColour() == Color.WHITE && isLegalMove(v, currentColour))
+            {
                 finished = false;
+                break;
+            }
         }
         return finished;
     }
