@@ -96,6 +96,7 @@ public class MainFrame extends JFrame
 
     public void load()
     {
-        FileManager.load();
+        Settings settings = FileManager.load();
+        runGame(settings);
     }
 }

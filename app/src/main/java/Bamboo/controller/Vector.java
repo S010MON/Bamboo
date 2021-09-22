@@ -75,4 +75,9 @@ public class Vector
     public String toString(){
         return "[" + x + "," + y + "," + z +"]";
     }
+
+    public String toCSV()
+    {
+        return x + "," + y + "," + z;
+    }
 }

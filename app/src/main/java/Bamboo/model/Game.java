@@ -11,7 +11,6 @@ public class Game
     private Agent player1;
     private Agent player2;
     private Agent currentPlayer;
-    private boolean finished;
     private MainFrame view;
 
     public Game(Settings settings, MainFrame view)
@@ -20,8 +19,15 @@ public class Game
         this.player1 = settings.player1;
         this.player2 = settings.player2;
         this.view = view;
-        currentPlayer = player1;
-        finished = false;
+        currentPlayer = settings.getCurrentPlayer();
+
+        if(settings.tiles != null)
+        {
+            for(Vector v: settings.tiles.keySet())
+            {
+                grid.setTile(v, settings.tiles.get(v));
+            }
+        }
     }
 
     public Game(Grid grid){

@@ -14,16 +14,18 @@ public class FileManager
 {
     private static final String internalPath = "/src/main/java/saved/";
 
-    public static Game load()
+    public static Settings load()
     {
         try {
+
             File file = promptUserForFile();
+            Settings settings = readSettingsFromFile(file);
+            settings.addTiles(readTilesFromFile(file));
+            return settings;
 
-
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             showDialogIOError("Unable to load file");
         }
-
         return null;
     }
 
