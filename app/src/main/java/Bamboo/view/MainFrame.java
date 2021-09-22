@@ -4,8 +4,8 @@ import Bamboo.controller.Settings;
 import Bamboo.model.Game;
 import Bamboo.view.startup.StartupPanel;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+
+import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame
@@ -14,7 +14,6 @@ public class MainFrame extends JFrame
     private GamePanel gamePanel;
     private StartupPanel startupPanel = new StartupPanel();
     private Dimension screenSize;
-    private MenuBar fileMenu;
 
     public MainFrame()
     {
@@ -54,6 +53,21 @@ public class MainFrame extends JFrame
 
 
     public void quit() {
+        Object[] options = {"Yes","No"};
+
+        int n = JOptionPane.showOptionDialog(this, "Do you want to save and quit? ",
+                "Bamboo", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+                options[1]);
+
+        if (n == JOptionPane.NO_OPTION) {
+            System.exit(0);
+        }
+        else {
+            saveAndQuit();
+        }
+    }
+
+    public void saveAndQuit() {
 
     }
 
