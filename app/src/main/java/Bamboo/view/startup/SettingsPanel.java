@@ -1,7 +1,5 @@
 package Bamboo.view.startup;
 
-import Bamboo.view.ConfigurationPanel;
-
 import javax.swing.*;
 import java.awt.*;
 

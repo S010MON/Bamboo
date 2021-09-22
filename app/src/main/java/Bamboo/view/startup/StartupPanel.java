@@ -2,22 +2,24 @@ package Bamboo.view.startup;
 
 import Bamboo.controller.Human;
 import Bamboo.controller.Settings;
+import Bamboo.view.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class StartupPanel extends JPanel {
 
-    private boolean settingsReady = false;
     private JPanel currentPanel;
     private SettingsPanel settingsPanel;
     private HelpPanel helpPanel;
     private JFrame frame;
     private JPanel panel;
+    private MainFrame view;
+    private Settings settings = Settings.getDefaultSetting();
 
-
-
-    public StartupPanel() {
+    public StartupPanel(MainFrame view)
+    {
+        this.view = view;
         setBackground(Color.BLACK);
         setLayout(new BorderLayout());
 
@@ -36,19 +38,12 @@ public class StartupPanel extends JPanel {
         return new Settings(
                 new Human(settingsPanel.getConfigurationPanel().getNamePlayer1(), settingsPanel.getConfigurationPanel().getPlayer1Color()),
                 new Human(settingsPanel.getConfigurationPanel().getNamePlayer2(), settingsPanel.getConfigurationPanel().getPlayer2Color()),
-                5);
+                1); // TODO Change back to 5 !!!
     }
 
-    public boolean isNotSettingsReady() {
-        return !settingsReady;
-    }
-
-    public void reset() {
-        settingsReady = false;
-    }
-
-    public void toggleSettingReady() {
-        settingsReady = !settingsReady;
+    public void startGame()
+    {
+        view.runGame(settings);
     }
 
     private  void removeComponentCenter(){

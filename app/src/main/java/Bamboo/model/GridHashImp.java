@@ -11,6 +11,7 @@ import java.util.List;
 public class GridHashImp implements Grid
 {
     protected HashMap<Vector, Tile> tiles;
+    protected HashMap<Vector, Tile> whiteTiles;
     protected ArrayList<Vector> neighbours;
     protected int radius;
 
@@ -20,6 +21,7 @@ public class GridHashImp implements Grid
         neighbours = buildNeighbourList();
 
         tiles = new HashMap<>();
+        whiteTiles = new HashMap<>();
         for (int x = -radius; x <= radius; x++)
         {
             for (int y = -radius; y <= radius; y++)
@@ -30,6 +32,7 @@ public class GridHashImp implements Grid
                     {
                         Vector v = new Vector(x, y, z);
                         tiles.put(v, new Tile(v));
+                        whiteTiles.put(v, new Tile(v));
                     }
                 }
             }
@@ -46,6 +49,7 @@ public class GridHashImp implements Grid
     public void setTile(Vector v, Color c)
     {
         tiles.get(v).setColour(c);
+        whiteTiles.remove(v);
     }
 
     @Override
@@ -77,6 +81,21 @@ public class GridHashImp implements Grid
     public List<Vector> getAllVectors()
     {
         return tiles.keySet().stream().toList();
+    }
+
+    @Override
+    public boolean isFinished(Color currentColour)
+    {
+        if(whiteTiles.isEmpty())
+            return true;
+
+        boolean hasLegalMove = false;
+        for(Vector v: whiteTiles.keySet())
+        {
+            if(isLegalMove(v, currentColour))
+                hasLegalMove = true;
+        }
+        return hasLegalMove;
     }
 
     private boolean isInBounds(Vector v)

@@ -19,4 +19,6 @@ public interface Grid
     List<Vector> getAllVectors();
 
     boolean isLegalMove(Vector vector, Color color);
+
+    boolean isFinished(Color currentColour);
 }

@@ -10,6 +10,7 @@ public class GridArrayImp implements Grid
 {
     private Tile[][][] tiles;
     private List<Tile> tileList;
+    private List<Tile> emptyList;
     private List<Vector> vectors;
     private int width;
     private int offset;
@@ -37,6 +38,7 @@ public class GridArrayImp implements Grid
     {
         v = addOffset(v);
         tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
+        emptyList.remove(tiles[v.getX()][v.getY()][v.getZ()]);
     }
 
     @Override
@@ -87,6 +89,21 @@ public class GridArrayImp implements Grid
         return vectors;
     }
 
+    @Override
+    public boolean isFinished(Color currentColour)
+    {
+        if(emptyList.size() == 0)
+            return true;
+
+        boolean hasLegalMove = false;
+        for(Tile tile: emptyList)
+        {
+            if(isLegalMove(tile.getVector(), currentColour))
+                hasLegalMove = true;
+        }
+        return hasLegalMove;
+    }
+
     public Vector addOffset(Vector v)
     {
         int x = v.getX() + offset;
@@ -119,6 +136,7 @@ public class GridArrayImp implements Grid
                         vectors.add(new Vector((x-offset), (y-offset), (z-offset)));
                         grid[x][y][z] = new Tile(removeOffset(new Vector(x, y, z)));
                         tileList.add(grid[x][y][z]);
+                        emptyList.add(grid[x][y][z]);
                     }
                 }
             }

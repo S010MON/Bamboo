@@ -11,9 +11,7 @@ import java.awt.*;
 
 public class MainFrame extends JFrame
 {
-    private Game currentGame;
     private Component currentPanel = null;
-    private StartupPanel startupPanel = new StartupPanel();
     private Dimension screenSize;
 
     public MainFrame()
@@ -25,55 +23,32 @@ public class MainFrame extends JFrame
 
     public void showMenu()
     {
-        add(startupPanel);
-        while (startupPanel.isNotSettingsReady()) {
-            sleep(1000);
-        }
-        Settings settings = startupPanel.getSettings();
-        startupPanel.reset();
-        runGame(startupPanel, settings);
+        removeCurrentPanel();
+        add(new StartupPanel(this));
     }
 
-    public void showMenu(Component currentPanel)
+    public void runGame(Settings settings)
     {
-        remove(currentPanel);
-        add(startupPanel);
-        while (startupPanel.isNotSettingsReady()) {
-            sleep(1000);
-        }
-        Settings settings = startupPanel.getSettings();
-        startupPanel.reset();
-        runGame(startupPanel, settings);
-    }
-
-    public void runGame(Component currentPanel, Settings settings)
-    {
-        remove(currentPanel);
-        Game game = new Game(settings);
+        removeCurrentPanel();
+        Game game = new Game(settings, this);
         Component gamePanel = new GamePanel(screenSize, game);
         add(gamePanel);
-        while (game.isNotFinished()) {
-            sleep(1000);
-        }
         endGame(gamePanel, null);
     }
 
     public void endGame(Component currentPanel, Agent winner)
     {
-        remove(currentPanel);
+        removeCurrentPanel();
         Component endGamePanel =  new EndGame(null, screenSize);
         add(endGamePanel);
-        sleep(10000);
-        showMenu(endGamePanel);
+        sleep(1000);
+        showMenu();
     }
 
-    private void setCurrentPanel(JPanel incoming)
+    private void removeCurrentPanel()
     {
         if(currentPanel != null)
             remove(currentPanel);
-        add(incoming);
-        currentPanel = incoming;
-        setVisible(true);
     }
 
     /** All frame settings detailed here */
