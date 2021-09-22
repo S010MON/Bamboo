@@ -12,6 +12,7 @@ public class Game
     private Agent player2;
     private Agent currentPlayer;
     private MainFrame view;
+    private Settings settings;
 
     public Game(Settings settings, MainFrame view)
     {
@@ -27,6 +28,23 @@ public class Game
             {
                 grid.setTile(v, settings.tiles.get(v));
             }
+        }
+    }
+
+    public void placeNextAt(Vector v)
+    {
+        if(grid.isLegalMove(v, currentPlayer.getColor()))
+        {
+            grid.setTile(v, currentPlayer.getColor());
+            toggleTurn();
+        }
+        else
+            System.out.println("Illegal Move");
+        // TODO Add user warning.
+
+        if(grid.isFinished(currentPlayer.getColor())) {
+            System.out.println("Game ended");
+            view.endGame(currentPlayer);
         }
     }
 
@@ -55,21 +73,9 @@ public class Game
 
     public Grid getGrid(){return grid;}
 
-    public void placeNextAt(Vector v)
+    public Settings getSettings()
     {
-        if(grid.isLegalMove(v, currentPlayer.getColor()))
-        {
-            grid.setTile(v, currentPlayer.getColor());
-            toggleTurn();
-        }
-        else
-            System.out.println("Illegal Move");
-            // TODO Add user warning.
-
-        if(grid.isFinished(currentPlayer.getColor())) {
-            System.out.println("Game ended");
-            view.endGame(currentPlayer);
-        }
+        return settings;
     }
 
     private void toggleTurn()
@@ -79,5 +85,7 @@ public class Game
         else
             currentPlayer = player1;
     }
+
+
 }
 

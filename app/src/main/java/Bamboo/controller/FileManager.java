@@ -1,6 +1,7 @@
 package Bamboo.controller;
 
 import Bamboo.model.Game;
+import Bamboo.model.Tile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,21 +13,37 @@ import java.util.HashMap;
 
 public class FileManager
 {
-    private static final String internalPath = "/src/main/java/saved/";
+    private static final String internalPath = "/app/src/main/java/saved/";
+    private static final String fileHeader = "# Any lines that start with a '#' are ignored\n#\n# Settings\n#\nSOS";
 
     public static Settings load()
     {
         try {
-
             File file = promptUserForFile();
             Settings settings = readSettingsFromFile(file);
             settings.addTiles(readTilesFromFile(file));
             return settings;
 
         } catch (Exception e) {
+
             showDialogIOError("Unable to load file");
         }
         return null;
+    }
+
+    public static void save(Game game)
+    {
+        try {
+            String filePath = getFilePath(createFileName());
+            File file = new File(filePath);
+            if (!file.exists())
+                file.createNewFile();
+            writeToFile(file, game);
+
+        } catch (Exception e) {
+
+            showDialogIOError("Unable to save file");
+        }
     }
 
     private static File promptUserForFile() throws FileNotFoundException
@@ -38,7 +55,8 @@ public class FileManager
 
         String chosenFilePath = null;
         int returnValue = chooser.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
+        if (returnValue == JFileChooser.APPROVE_OPTION)
+        {
             chosenFilePath = chooser.getSelectedFile().getPath();
             System.out.println(chosenFilePath);
         }
@@ -112,6 +130,26 @@ public class FileManager
         return tiles;
     }
 
+    private static void writeToFile(File file, Game game) throws IOException
+    {
+        FileWriter writer = new FileWriter(file,false);
+        writer.write(fileHeader);
+        writer.write("radius=" + game.getSettings().boardSize);
+        writer.write("name=" + game.getSettings().player1.getName());
+        writer.write("colour=" + colourAsString(game.getSettings().player1.getColor()));
+        writer.write("type=" + game.getSettings().player1.getType());
+        writer.write("name=" + game.getSettings().player2.getName());
+        writer.write("colour=" + colourAsString(game.getSettings().player2.getColor()));
+        writer.write("type=" + game.getSettings().player2.getType());
+        writer.write("EOS\n#\n# Start of tiles\n#  Layout: x,y,z,colour\nSOT");
+        for (Tile tile: game.getGrid().getAllTiles())
+        {
+            if(tile.getColour() != Color.WHITE)
+                writer.write(tile.toCSV());
+        }
+        writer.write("EOS\n");
+    }
+
     /**
      * Creates a name with the LocalDateTime of the saved game
      */
@@ -150,6 +188,16 @@ public class FileManager
             return Color.BLUE;
         else
             return Color.WHITE;
+    }
+
+    private static String colourAsString(Color colour)
+    {
+        if(colour.equals(Color.RED))
+            return "RED";
+        else if (colour.equals(Color.BLUE))
+            return "BLUE";
+        else
+            return "WHITE";
     }
 
     private static Agent parseAgent(String agent, String name, Color color)

@@ -3,14 +3,15 @@ package Bamboo;
 import Bamboo.controller.FileManager;
 import Bamboo.controller.Settings;
 import Bamboo.controller.Vector;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.*;
 import java.io.File;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.util.HashMap;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FileManagerTest
 {
