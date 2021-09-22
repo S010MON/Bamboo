@@ -1,5 +1,7 @@
 package Bamboo.view;
 
+import Bamboo.view.game.MainFrame;
+
 import javax.swing.*;
 
 public class MenuBar extends JMenuBar

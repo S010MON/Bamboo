@@ -1,12 +1,14 @@
-package Bamboo.view;
+package Bamboo.view.game;
 
 import Bamboo.controller.Agent;
 import Bamboo.controller.Settings;
 import Bamboo.model.Game;
+import Bamboo.view.EndGame;
+import Bamboo.view.MenuBar;
+import Bamboo.view.game.GamePanel;
 import Bamboo.view.startup.StartupPanel;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.*;
 import java.awt.*;
 

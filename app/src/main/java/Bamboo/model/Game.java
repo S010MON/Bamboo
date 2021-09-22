@@ -1,7 +1,7 @@
 package Bamboo.model;
 
 import Bamboo.controller.*;
-import Bamboo.view.MainFrame;
+import Bamboo.view.game.MainFrame;
 
 import java.util.List;
 
