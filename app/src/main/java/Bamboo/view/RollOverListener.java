@@ -16,6 +16,7 @@ import java.util.List;
 
 public class RollOverListener implements MouseMotionListener {
 
+    private static Tile rolledOverTile = new Tile(new CubeVector(20,20,20));
     private int legality_indication_threshold = 0;
 
     private Game game;
@@ -32,7 +33,6 @@ public class RollOverListener implements MouseMotionListener {
     }
 
     public void mouseMoved(MouseEvent e) {
-
         int X = e.getX();
         int Y = e.getY();
 
@@ -48,27 +48,20 @@ public class RollOverListener implements MouseMotionListener {
                     && Y > (y - r / 2)
                     && Y < (y + r / 2)) {
 
-
-                tile.setOutline(new Color(56, 154, 51));
-
-                if(game.getTurn_count(game.getCurrentPlayer()) >= legality_indication_threshold){
-                    if(game.getCurrentPlayer().getColor() == Color.RED && !GameLogic.is_legal_move(game, tile, Color.RED))
-                        tile.setOutline(Color.BLACK);
-                    if(game.getCurrentPlayer().getColor() == Color.BLUE && !GameLogic.is_legal_move(game, tile, Color.BLUE))
-                        tile.setOutline(Color.BLACK);
-                }
-
-                tile.setCircle_thickness(new BasicStroke(6));
+                rolledOverTile = tile;
                 canvas.repaint();
             } else {
                 tile.setOutline(Color.black);
                 tile.setCircle_thickness(new BasicStroke(3));
-
                 canvas.repaint();
             }
 
         }
 
+    }
+
+    public static Tile getRolloverTile(){
+        return rolledOverTile;
     }
 
 }
