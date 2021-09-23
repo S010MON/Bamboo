@@ -61,16 +61,15 @@ public class MainFrame extends JFrame
     /** All frame settings detailed here */
     private void buildFrame()
     {
-        screenSize  = Toolkit.getDefaultToolkit().getScreenSize();
+        screenSize = new Dimension(800, 700);
         setTitle("Bamboo");
         setSize(screenSize);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
-        setJMenuBar(new MenuBar(this));
     }
 
-    public void quit() {
+    public void quitGame() {
         Object[] options = {"Yes","No"};
 
         int response = JOptionPane.showOptionDialog(this, "Are you sure you want to quit? ",
@@ -78,8 +77,19 @@ public class MainFrame extends JFrame
                 options[1]);
         if (response == JOptionPane.YES_OPTION) {
             save();
-            System.exit(0);
+            showMenu();
         }
+    }
+
+    public void quitProgram()
+    {
+        Object[] options = {"Yes","No"};
+
+        int response = JOptionPane.showOptionDialog(this, "Are you sure you want to quit? ",
+                "Bamboo", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+                options[1]);
+        if (response == JOptionPane.YES_OPTION)
+            System.exit(0);
     }
 
     public void save()

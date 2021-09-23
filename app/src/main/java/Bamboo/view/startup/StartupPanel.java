@@ -7,13 +7,10 @@ import Bamboo.view.MainFrame;
 import javax.swing.*;
 import java.awt.*;
 
-public class StartupPanel extends JPanel {
-
-    private JPanel currentPanel;
+public class StartupPanel extends JPanel
+{
     private SettingsPanel settingsPanel;
     private HelpPanel helpPanel;
-    private JFrame frame;
-    private JPanel panel;
     private MainFrame view;
     private Settings settings = Settings.getDefaultSetting();
 
@@ -32,7 +29,6 @@ public class StartupPanel extends JPanel {
 
         setVisible(true);
     }
-
 
     public Settings getSettings() {
         return new Settings(
@@ -67,9 +63,9 @@ public class StartupPanel extends JPanel {
 
     }
 
-    public void load()
+    public MainFrame getMainFrame()
     {
-        view.load();
+        return view;
     }
 
 }

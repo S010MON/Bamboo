@@ -51,8 +51,8 @@ public class ConfigurationPanel extends JPanel {
         textLabelPanel = new JPanel() ;
         textLabelPanel.setBackground(Colour.background());
         textLabelPanel.setLayout(new BorderLayout());
-        player1label = new JLabel("Player 1's name : ") ;
-        player1label.setFont(new Font("Serif", Font.PLAIN,20)) ;
+        player1label = new JLabel("PLAYER 1: ") ;
+        player1label.setFont(new Font("SansSerif", Font.PLAIN,20)) ;
         textLabelPanel.add(player1label,BorderLayout.EAST) ;
         panel1.add(textLabelPanel) ;
 
@@ -70,8 +70,8 @@ public class ConfigurationPanel extends JPanel {
         textLabelPanel2 = new JPanel() ;
         textLabelPanel2.setBackground(Colour.background());
         textLabelPanel2.setLayout(new BorderLayout());
-        player2label = new JLabel("Player 2's name : ") ;
-        player2label.setFont(new Font("Serif", Font.PLAIN,20)) ;
+        player2label = new JLabel("PLAYER 2: ") ;
+        player2label.setFont(new Font("SansSerif", Font.PLAIN,20)) ;
         textLabelPanel2.add(player2label,BorderLayout.EAST) ;
         panel2.add(textLabelPanel2) ;
 
@@ -86,10 +86,10 @@ public class ConfigurationPanel extends JPanel {
         buttonPanel2 = new ButtonPanel(Color.blue) ;
         panel2.add(buttonPanel2) ;
 
-        toggleButton = new JButton("Toggle") ;
-        toggleButton.setBounds(105, 27, 75, 35);
+        toggleButton = new Button("btnToggle.png") ;
+        toggleButton.setBounds(50,50,145,55);
         toggleButton.addActionListener(e -> {buttonPanel1.changeColor();buttonPanel2.changeColor();});
-        buttonPanel1.add(toggleButton) ;
+        panel3.add(toggleButton) ;
 
     }
 

@@ -20,7 +20,7 @@ public class Canvas extends JPanel
     private BasicStroke circle_thickness = new BasicStroke(2);
     private int centreX;
     private int centreY;
-    private int offsetX = 100;
+    private int offsetX = 0;
     private int offsetY = 0;
 
     private Color background = new Color(158, 208, 239) ;

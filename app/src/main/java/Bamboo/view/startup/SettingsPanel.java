@@ -25,15 +25,15 @@ public class SettingsPanel extends JPanel {
         buttonPanel.setLayout(null);
 
         hvh = new Button("btnMulti.png") ;
-        hvh.setBounds(100,50,200,100);
+        hvh.setBounds(100,50,145,55);
         hvh.addActionListener(e -> configurationPanel.setVisible(true));
 
         hva = new Button("btnSingle.png") ;
-        hva.setBounds(250,50,200,100);
+        hva.setBounds(250,50,145,55);
         hva.addActionListener(e -> configurationPanel.setVisible(false));
 
         ava = new Button("btnDemo.png") ;
-        ava.setBounds(400,50,200,100);
+        ava.setBounds(400,50,145,55);
         hva.addActionListener(e -> configurationPanel.setVisible(false));
 
         buttonPanel.add(hvh) ;
