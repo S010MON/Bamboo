@@ -1,9 +1,10 @@
-package Bamboo.view;
+package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
+import Bamboo.view.game.Canvas;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -12,7 +13,7 @@ import java.awt.event.MouseMotionListener;
 public class RollOverListener implements MouseMotionListener {
 
     private Game game;
-    private Canvas canvas;
+    private Bamboo.view.game.Canvas canvas;
 
     public RollOverListener(Game game, Canvas canvas) {
         this.game = game;

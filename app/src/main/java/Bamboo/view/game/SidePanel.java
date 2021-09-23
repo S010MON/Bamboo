@@ -1,4 +1,4 @@
-package Bamboo.view;
+package Bamboo.view.game;
 
 
 import org.checkerframework.checker.units.qual.C;

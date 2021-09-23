@@ -1,4 +1,4 @@
-package Bamboo.view;
+package Bamboo.view.game;
 
 import Bamboo.model.Game;
 
@@ -9,7 +9,7 @@ public class GamePanel extends JPanel
 {
     private Game game;
     private SidePanel sidePanel;
-    private Canvas canvas;
+    private Bamboo.view.game.Canvas canvas;
 
     public GamePanel(Dimension screenSize, Game game)
     {
@@ -27,4 +27,6 @@ public class GamePanel extends JPanel
         
         setVisible(true);
     }
+
+
 }

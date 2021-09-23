@@ -1,10 +1,6 @@
 package Bamboo;
 
-import Bamboo.view.MainFrame;
-import Bamboo.model.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import Bamboo.view.game.MainFrame;
 
 public class App {
 

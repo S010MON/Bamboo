@@ -27,6 +27,6 @@ public class Settings
         return new Settings(
                 new Human("Player 1", Color.BLUE),
                 new Human("Player 2", Color.RED),
-                2);
+                1);
     }
 }

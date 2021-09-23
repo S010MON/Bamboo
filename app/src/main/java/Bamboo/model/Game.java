@@ -1,6 +1,7 @@
 package Bamboo.model;
 
 import Bamboo.controller.*;
+import Bamboo.view.game.MainFrame;
 
 import java.util.List;
 
@@ -10,13 +11,17 @@ public class Game
     private Agent player1;
     private Agent player2;
     private Agent currentPlayer;
+    private boolean finished;
+    private MainFrame view;
 
-    public Game(Settings settings)
+    public Game(Settings settings, MainFrame view)
     {
         this.grid = new GridGraphImp(settings.boardSize);
         this.player1 = settings.player1;
         this.player2 = settings.player2;
+        this.view = view;
         currentPlayer = player1;
+        finished = false;
     }
 
     public Game(Grid grid){
@@ -24,7 +29,7 @@ public class Game
     }
 
     public Game(int size){
-        this.grid = new GridArrayImp(size);
+        this.grid = new GridGraphImp(size);
     }
 
     public Agent getCurrentPlayer()
@@ -54,6 +59,11 @@ public class Game
         else
             System.out.println("Illegal Move");
             // TODO Add user warning.
+
+        if(grid.isFinished(currentPlayer.getColor())) {
+            System.out.println("Game ended");
+            view.endGame(currentPlayer);
+        }
     }
 
     private void toggleTurn()
