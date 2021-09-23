@@ -1,13 +1,14 @@
-package Bamboo.view;
-
+package Bamboo.view.game;
 
 import Bamboo.model.Game;
+import Bamboo.view.resources.Colour;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SidePanel extends JPanel {
-    private Color background = new Color(158, 208, 239) ;
+public class SidePanel extends JPanel
+{
+    private Color background = Colour.background() ;
     GroupsPanel groupsPanel;
     PlayerPanel playerPanel;
 

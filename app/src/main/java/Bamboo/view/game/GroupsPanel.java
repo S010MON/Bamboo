@@ -1,7 +1,4 @@
-package Bamboo.view;
-
-
-import Bamboo.controller.GroupController;
+package Bamboo.view.game;
 
 import javax.swing.*;
 import java.awt.*;
