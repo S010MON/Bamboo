@@ -1,10 +1,9 @@
-package Bamboo.view.game;
+package Bamboo.view;
 
 import Bamboo.controller.Agent;
+import Bamboo.controller.FileManager;
 import Bamboo.controller.Settings;
 import Bamboo.model.Game;
-import Bamboo.view.EndGame;
-import Bamboo.view.MenuBar;
 import Bamboo.view.game.GamePanel;
 import Bamboo.view.startup.StartupPanel;
 
