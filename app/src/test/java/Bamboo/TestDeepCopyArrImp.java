@@ -15,7 +15,7 @@ public class TestDeepCopyArrImp {
     @Test void testDeepCopy()
     {
         GridArrayImp oldGrid = new GridArrayImp(3);
-        Vector v = new Vector(1,-1,0);
+        Vector v = new Vector(1,1,0);
         oldGrid.setTile(v, Color.RED);
 
         Tile oldTile = oldGrid.getTile(v);
@@ -29,8 +29,6 @@ public class TestDeepCopyArrImp {
         System.out.println(color2);
 
         assertEquals(true, true);
-
     }
-
 
 }

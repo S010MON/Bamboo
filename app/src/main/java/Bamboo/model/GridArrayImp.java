@@ -13,11 +13,13 @@ public class GridArrayImp implements Grid
     private List<Vector> vectors;
     private int width;
     private int offset;
+    private int radius;
 
     public GridArrayImp(int radius)
     {
         width = (radius * 2) + 1;
         offset = radius;
+        this.radius = radius;
         vectors = new ArrayList<>();
         tileList = new ArrayList<>();
         tiles = buildGrid(radius);
@@ -36,7 +38,23 @@ public class GridArrayImp implements Grid
     public void setTile(Vector v, Color c)
     {
         v = addOffset(v);
-        tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
+        boolean check = checkLegalVector(v);
+        if (check){
+            tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
+        }
+        else{
+           System.out.println("illegal vector");
+        }
+    }
+
+    public boolean checkLegalVector(Vector v){
+        if (v.getX() + v.getY() + v.getZ() == 0 || v != null){
+            return true;
+        }
+        else{
+            throw new NullPointerException("invalid vector");
+
+        }
     }
 
     @Override
@@ -136,5 +154,13 @@ public class GridArrayImp implements Grid
         if(z < 0 || z >= width)
             inBounds = false;
         return inBounds;
+    }
+
+    public Grid deepCopy() {
+        Grid copy = new GridArrayImp(radius);
+        for(Tile tile: getAllTiles()){
+            copy.setTile(tile.getVector(), tile.getColour());
+        }
+        return copy;
     }
 }

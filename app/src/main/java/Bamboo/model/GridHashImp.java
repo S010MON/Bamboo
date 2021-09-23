@@ -103,7 +103,7 @@ public class GridHashImp implements Grid
         return list;
     }
     public Grid deepCopy() {
-        Grid copy = new GridArrayImp(radius);
+        Grid copy = new GridHashImp(radius);
         for(Tile tile: getAllTiles()){
             copy.setTile(tile.getVector(), tile.getColour());
         }
