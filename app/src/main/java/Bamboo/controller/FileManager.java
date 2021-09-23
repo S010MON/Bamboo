@@ -40,7 +40,7 @@ public class FileManager
             if (!file.exists())
                 file.createNewFile();
             writeToFile(file, game);
-
+            showDialogSuccess("File saved");
         } catch (Exception e) {
             e.printStackTrace();
             showDialogIOError("Unable to save file");
@@ -161,8 +161,7 @@ public class FileManager
         StringBuilder fileName = new StringBuilder();
         fileName.append("bamboo");
         fileName.append("_");
-        String time = LocalDateTime.now().toString().substring(0, 16);
-        fileName.append(time);
+        fileName.append(currentDateTimeAsString());
         return fileName.toString();
     }
 
@@ -182,6 +181,14 @@ public class FileManager
                 message,
                 "File Input/Output Error",
                 JOptionPane.WARNING_MESSAGE);
+    }
+
+    private static void showDialogSuccess(String message)
+    {
+        JOptionPane.showMessageDialog(null,
+                message,
+                "Info Message",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     private static Color parseColour(String colour)
@@ -210,5 +217,14 @@ public class FileManager
             return new Human(name, color);
         else
             return null; // TODO Extend here for AI
+    }
+
+    private static String currentDateTimeAsString()
+    {
+        String time = LocalDateTime.now().toString();
+        time = time.substring(0, 16);
+        time = time.replace(":", "");
+        time = time.replace("T", "_");
+        return time;
     }
 }
