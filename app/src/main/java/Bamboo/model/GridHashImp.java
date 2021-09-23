@@ -48,16 +48,10 @@ public class GridHashImp implements Grid
     @Override
     public void setTile(Vector v, Color c)
     {
-        checkLegalVector(v);
+        if (v.getX() + v.getY() + v.getZ() != 0)
+            throw new NullPointerException("the vector is invalid");
         tiles.get(v).setColour(c);
         remainingTiles.replace(v, false);
-    }
-
-    public void checkLegalVector(Vector v){
-
-        if (v.getX() + v.getY() + v.getZ() != 0) {
-            throw new NullPointerException("the vector is invalid");
-        }
     }
 
     @Override
