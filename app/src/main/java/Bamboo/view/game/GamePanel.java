@@ -22,7 +22,7 @@ public class GamePanel extends JPanel
         add(canvas, BorderLayout.CENTER);
 
         //set the sidePanel panel
-        sidePanel = new SidePanel();
+        sidePanel = new SidePanel(game);
         add(sidePanel, BorderLayout.WEST);
         
         setVisible(true);
