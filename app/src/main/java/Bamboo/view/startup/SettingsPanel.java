@@ -1,37 +1,39 @@
 package Bamboo.view.startup;
 
+import Bamboo.view.resources.Colour;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class SettingsPanel extends JPanel {
 
     private JPanel buttonPanel ;
-    private JButton hvh ;
-    private JButton hva ;
-    private JButton ava ;
+    private Button hvh ;
+    private Button hva ;
+    private Button ava ;
     private ConfigurationPanel configurationPanel ;
 
     public SettingsPanel() {
 
-        setBackground(new Color(158, 208, 239));
+        setBackground(Colour.background());
         setLayout(new GridLayout(2,1));
         setVisible(true);
 
         configurationPanel = new ConfigurationPanel() ;
         buttonPanel = new JPanel() ;
-        buttonPanel.setBackground(new Color(158, 208, 239));
+        buttonPanel.setBackground(Colour.background());
         buttonPanel.setLayout(null);
 
-        hvh = new JButton("HUMAN vs HUMAN") ;
-        hvh.setBounds(300,50,200,100);
+        hvh = new Button("btnMulti.png");
+        hvh.setBounds(100,50,200,100);
         hvh.addActionListener(e -> configurationPanel.setVisible(true));
 
-        hva = new JButton("HUMAN vs AI") ;
-        hva.setBounds(550,50,200,100);
+        hva = new Button("btnSingle.png") ;
+        hva.setBounds(250,50,200,100);
         hva.addActionListener(e -> configurationPanel.setVisible(false));
 
-        ava = new JButton("AI vs AI") ;
-        ava.setBounds(800,50,200,100);
+        ava = new Button("btnDemo.png") ;
+        ava.setBounds(400,50,200,100);
         hva.addActionListener(e -> configurationPanel.setVisible(false));
 
         buttonPanel.add(hvh) ;

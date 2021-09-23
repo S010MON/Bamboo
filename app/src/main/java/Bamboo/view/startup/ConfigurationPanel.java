@@ -10,32 +10,22 @@ public class ConfigurationPanel extends JPanel {
     private JPanel panel2;
     private JPanel panel3;
     private JPanel panel4;
-
-    private JPanel buttonColorPanel;
     private JPanel textLabelPanel ;
     private JPanel textFieldPanel ;
-
-    private JPanel buttonColorPanel2 ;
     private JPanel textLabelPanel2 ;
     private JPanel textFieldPanel2 ;
-
-    private JButton red1;
-    private JButton blue1;
-    private JButton red2;
-    private JButton blue2;
-
+    private ButtonPanel buttonPanel1 ;
+    private ButtonPanel buttonPanel2 ;
+    private JButton toggleButton ;
     private JLabel player1label;
     private JLabel player2label;
-
     private JTextField player1textfiled;
     private JTextField player2textField;
-
-
 
     public ConfigurationPanel(){
 
         setLayout(new GridLayout(4, 1));
-        setVisible(false);
+        setVisible(true);
 
         panel1 = new JPanel();
         panel2 = new JPanel();
@@ -58,12 +48,11 @@ public class ConfigurationPanel extends JPanel {
         panel4.setLayout(new GridLayout(1,3));
         add(panel4);
 
-
         textLabelPanel = new JPanel() ;
         textLabelPanel.setBackground(Colour.background());
         textLabelPanel.setLayout(new BorderLayout());
         player1label = new JLabel("Player 1's name : ") ;
-        player1label.setFont(new Font("Serif", Font.PLAIN,35)) ;
+        player1label.setFont(new Font("Serif", Font.PLAIN,20)) ;
         textLabelPanel.add(player1label,BorderLayout.EAST) ;
         panel1.add(textLabelPanel) ;
 
@@ -71,30 +60,18 @@ public class ConfigurationPanel extends JPanel {
         textFieldPanel.setLayout(null);
         textFieldPanel.setBackground(Colour.background());
         player1textfiled = new JTextField() ;
-        player1textfiled.setBounds(65,35,300,50);
+        player1textfiled.setBounds(20,28,200,30);
         textFieldPanel.add(player1textfiled) ;
         panel1.add(textFieldPanel) ;
 
-        buttonColorPanel = new JPanel();
-        buttonColorPanel.setLayout(null);
-        buttonColorPanel.setBackground(Colour.background());
-
-        red1 = new JButton("RED");
-        red1.setBounds(80, 40, 100, 50);
-        red1.addActionListener(e -> changeColorButton(red1,blue1,red2,blue2,Color.red,Color.blue));
-        buttonColorPanel.add(red1);
-
-        blue1 = new JButton("BLUE");
-        blue1.setBounds(210, 40, 100, 50);
-        blue1.addActionListener(e -> changeColorButton(blue1,red1,blue2,red2,Color.blue,Color.red)) ;
-        buttonColorPanel.add(blue1);
-        panel1.add(buttonColorPanel) ;
+        buttonPanel1 = new ButtonPanel(Color.red) ;
+        panel1.add(buttonPanel1) ;
 
         textLabelPanel2 = new JPanel() ;
         textLabelPanel2.setBackground(Colour.background());
         textLabelPanel2.setLayout(new BorderLayout());
         player2label = new JLabel("Player 2's name : ") ;
-        player2label.setFont(new Font("Serif", Font.PLAIN,35)) ;
+        player2label.setFont(new Font("Serif", Font.PLAIN,20)) ;
         textLabelPanel2.add(player2label,BorderLayout.EAST) ;
         panel2.add(textLabelPanel2) ;
 
@@ -102,26 +79,17 @@ public class ConfigurationPanel extends JPanel {
         textFieldPanel2.setLayout(null);
         textFieldPanel2.setBackground(Colour.background());
         player2textField = new JTextField() ;
-        player2textField.setBounds(65,35,300,50);
+        player2textField.setBounds(20,28,200,30);
         textFieldPanel2.add(player2textField) ;
         panel2.add(textFieldPanel2) ;
 
-        buttonColorPanel2 = new JPanel();
-        buttonColorPanel2.setLayout(null);
-        buttonColorPanel2.setBackground(Colour.background());
+        buttonPanel2 = new ButtonPanel(Color.blue) ;
+        panel2.add(buttonPanel2) ;
 
-        red2 = new JButton("RED");
-        red2.setBounds(80, 40, 100, 50);
-        red2.addActionListener(e -> changeColorButton(red2,red1,blue2,blue1,Color.red,Color.blue)) ;
-        buttonColorPanel2.add(red2);
-
-        blue2 = new JButton("BLUE");
-        blue2.setBackground(Color.red);
-        blue2.setBounds(210, 40, 100, 50);
-        blue2.addActionListener(e -> changeColorButton(blue2,red2,blue1,red1,Color.blue,Color.red)) ;
-        buttonColorPanel2.add(blue2);
-
-        panel2.add(buttonColorPanel2) ;
+        toggleButton = new JButton("Toggle") ;
+        toggleButton.setBounds(105, 27, 75, 35);
+        toggleButton.addActionListener(e -> {buttonPanel1.changeColor();buttonPanel2.changeColor();});
+        buttonPanel1.add(toggleButton) ;
 
 }
 
@@ -129,38 +97,35 @@ public class ConfigurationPanel extends JPanel {
 
     public String getNamePlayer2(){ return player2textField.getText();}
 
-    public Color getPlayer1Color(){
-        if (blue1.getBackground()==Color.blue)
-            return blue1.getBackground() ;
-        else
-            return red1.getBackground() ;
-}
-    public Color getPlayer2Color(){
-        if(blue2.getBackground()==Color.blue)
-            return blue2.getBackground() ;
-        else
-            return red2.getBackground() ;
-}
-    private void changeColorButton(JButton button1, JButton button2 ,JButton button3, JButton button4, Color color1, Color color2){
+    public Color getPlayer1Color(){return buttonPanel1.getPlayerColor();}
 
-        button1.setBackground(color1);
-        button1.setOpaque(true);
-        button1.setBorderPainted(false);
+    public Color getPlayer2Color(){return buttonPanel2.getPlayerColor();}
 
-        button4.setBackground(color2);
-        button4.setOpaque(true);
-        button4.setBorderPainted(false);
 
-        if(button2.getBackground()!=null){
-            button2.setBackground(null);
-            button2.setOpaque(false);
-            button2.setBorderPainted(true);
+    class ButtonPanel extends JPanel{
+        private Color color ;
+
+        public ButtonPanel(Color color){
+            this.color = color ;
+            setLayout(null);
+            setBackground(Colour.background());
+        }
+        public void paint(Graphics g) {
+            super.paint(g);
+            g.setColor(color);
+            g.fillOval(30,27,30,30);
         }
 
-        if(button3.getBackground()!=null){
-            button3.setBackground(null);
-            button3.setOpaque(false);
-            button3.setBorderPainted(true);
+        public void changeColor(){
+            if(color == Color.blue){
+                color = Color.red ;
+            }
+            else
+                color = Color.blue ;
+            repaint();
+        }
+        public Color getPlayerColor(){
+            return color ;
         }
     }
 }
