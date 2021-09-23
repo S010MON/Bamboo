@@ -62,6 +62,7 @@ public class Game
             currentPlayer = player2;
         else
             currentPlayer = player1;
+
     }
 }
 
