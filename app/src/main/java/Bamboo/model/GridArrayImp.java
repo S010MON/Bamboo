@@ -37,24 +37,20 @@ public class GridArrayImp implements Grid
     @Override
     public void setTile(Vector v, Color c)
     {
+        checkLegalVector(v);
+
         v = addOffset(v);
-        boolean check = checkLegalVector(v);
-        if (check){
-            tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
-        }
-        else{
-           System.out.println("illegal vector");
-        }
+
+        tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
+
     }
 
-    public boolean checkLegalVector(Vector v){
-        if (v.getX() + v.getY() + v.getZ() == 0 || v != null){
-            return true;
-        }
-        else{
-            throw new NullPointerException("invalid vector");
+    public void checkLegalVector(Vector v){
 
-        }
+            if (v.getX() + v.getY() + v.getZ() != 0) {
+                throw new NullPointerException("the vector is invalid");
+            }
+
     }
 
     @Override

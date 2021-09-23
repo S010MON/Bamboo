@@ -1,5 +1,6 @@
 package Bamboo;
 
+import Bamboo.model.GridHashImp;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,8 +15,8 @@ public class TestDeepCopyHashMapImp {
 
     @Test
     void testDeepCopyHashMapImp() {
-        GridArrayImp oldGrid = new GridArrayImp(3);
-        Vector v = new Vector(1, -1, 0);
+        GridHashImp oldGrid = new GridHashImp(3);
+        Vector v = new Vector(1, 1, 0);
         oldGrid.setTile(v, Color.RED);
 
         Tile oldTile = oldGrid.getTile(v);
