@@ -5,6 +5,7 @@ import Bamboo.controller.Settings;
 import Bamboo.model.Game;
 import Bamboo.view.EndGame;
 import Bamboo.view.MenuBar;
+import Bamboo.view.game.GamePanel;
 import Bamboo.view.startup.StartupPanel;
 
 import javax.swing.JFrame;
@@ -14,7 +15,8 @@ import java.awt.*;
 public class MainFrame extends JFrame
 {
     private Component currentPanel = null;
-    private Dimension screenSize = new Dimension(800, 700);
+    private Dimension screenSize;
+    private Game currentGame;
 
     public MainFrame()
     {
@@ -34,8 +36,8 @@ public class MainFrame extends JFrame
     public void runGame(Settings settings)
     {
         removeCurrentPanel();
-        Game game = new Game(settings, this);
-        Component gamePanel = new GamePanel(screenSize, game);
+        currentGame = new Game(settings, this);
+        Component gamePanel = new GamePanel(screenSize, currentGame);
         add(gamePanel);
         currentPanel = gamePanel;
     }
@@ -60,6 +62,7 @@ public class MainFrame extends JFrame
     /** All frame settings detailed here */
     private void buildFrame()
     {
+        screenSize  = Toolkit.getDefaultToolkit().getScreenSize();
         setTitle("Bamboo");
         setSize(screenSize);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,25 +74,25 @@ public class MainFrame extends JFrame
     public void quit() {
         Object[] options = {"Yes","No"};
 
-        int n = JOptionPane.showOptionDialog(this, "Do you want to save and quit? ",
+        int response = JOptionPane.showOptionDialog(this, "Are you sure you want to quit? ",
                 "Bamboo", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
                 options[1]);
-
-        if (n == JOptionPane.NO_OPTION)
+        if (response == JOptionPane.YES_OPTION) {
+            save();
             System.exit(0);
-        else
-            saveAndQuit();
+        }
     }
 
-    public void saveAndQuit() {
-
+    public void save()
+    {
+        if(currentPanel instanceof GamePanel)
+            FileManager.save(currentGame);
     }
 
-    public void save() {
-
-    }
-
-    public void load() {
-
+    public void load()
+    {
+        Settings settings = FileManager.load();
+        if(settings != null)
+            runGame(settings);
     }
 }

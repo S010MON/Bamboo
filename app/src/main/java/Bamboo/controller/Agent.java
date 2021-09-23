@@ -7,7 +7,7 @@ import java.awt.Color;
 public interface Agent
 {
     String getName();
-    boolean isHuman();
+    String getType();
     Vector getNextMove(Game game);
     Color getColor();
 }

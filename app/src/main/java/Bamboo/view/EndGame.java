@@ -1,7 +1,6 @@
 package Bamboo.view;
 
 import Bamboo.controller.Agent;
-import Bamboo.view.game.MainFrame;
 import Bamboo.view.resources.ResourceLoader;
 
 import javax.swing.*;

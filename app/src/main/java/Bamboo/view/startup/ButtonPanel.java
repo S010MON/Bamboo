@@ -24,15 +24,20 @@ public class ButtonPanel extends JPanel
         settingsBtn.addActionListener(e -> startupPanel.displaySettingsPanel());
         add(settingsBtn);
 
-        /* Start Button */
-        Button startBtn = new Button("btnStart.png");
-        startBtn.addActionListener(e -> startupPanel.startGame());
-        add(startBtn);
-
         /* Help Button */
         Button helpBtn = new Button("btnHelp.png");
         helpBtn.addActionListener(e -> startupPanel.displayHelpPanel());
         add(helpBtn);
+
+        /* Load Button */
+        Button loadBtn = new Button("btn.png");
+        loadBtn.addActionListener(e -> startupPanel.load());
+        add(loadBtn);
+
+        /* Start Button */
+        Button startBtn = new Button("btnStart.png");
+        startBtn.addActionListener(e -> startupPanel.startGame());
+        add(startBtn);
 
         setVisible(true);
     }

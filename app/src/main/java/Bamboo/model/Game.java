@@ -1,7 +1,7 @@
 package Bamboo.model;
 
 import Bamboo.controller.*;
-import Bamboo.view.game.MainFrame;
+import Bamboo.view.MainFrame;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ public class Game
     private Agent player1;
     private Agent player2;
     private Agent currentPlayer;
-    private boolean finished;
     private MainFrame view;
+    private Settings settings;
 
     public Game(Settings settings, MainFrame view)
     {
@@ -20,8 +20,33 @@ public class Game
         this.player1 = settings.player1;
         this.player2 = settings.player2;
         this.view = view;
-        currentPlayer = player1;
-        finished = false;
+        this.currentPlayer = settings.getCurrentPlayer();
+        this.settings = settings;
+
+        if(settings.tiles != null)
+        {
+            for(Vector v: settings.tiles.keySet())
+            {
+                grid.setTile(v, settings.tiles.get(v));
+            }
+        }
+    }
+
+    public void placeNextAt(Vector v)
+    {
+        if(grid.isLegalMove(v, currentPlayer.getColor()))
+        {
+            grid.setTile(v, currentPlayer.getColor());
+            toggleTurn();
+        }
+        else
+            System.out.println("Illegal Move");
+        // TODO Add user warning.
+
+        if(grid.isFinished(currentPlayer.getColor())) {
+            System.out.println("Game ended");
+            view.endGame(currentPlayer);
+        }
     }
 
     public Game(Grid grid){
@@ -49,21 +74,9 @@ public class Game
 
     public Grid getGrid(){return grid;}
 
-    public void placeNextAt(Vector v)
+    public Settings getSettings()
     {
-        if(grid.isLegalMove(v, currentPlayer.getColor()))
-        {
-            grid.setTile(v, currentPlayer.getColor());
-            toggleTurn();
-        }
-        else
-            System.out.println("Illegal Move");
-            // TODO Add user warning.
-
-        if(grid.isFinished(currentPlayer.getColor())) {
-            System.out.println("Game ended");
-            view.endGame(currentPlayer);
-        }
+        return settings;
     }
 
     private void toggleTurn()
@@ -74,5 +87,7 @@ public class Game
             currentPlayer = player1;
 
     }
+
+
 }
 

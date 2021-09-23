@@ -1,17 +1,36 @@
 package Bamboo.controller;
 
 import java.awt.*;
+import java.util.HashMap;
 
 public class Settings
 {
     public Agent player1;
     public Agent player2;
     public int boardSize;
+    public HashMap<Vector, Color> tiles;
+    private Agent currentPlayer;
 
     public Settings(Agent player1, Agent player2, int boardSize) {
         this.player1 = player1;
         this.player2 = player2;
         this.boardSize = boardSize;
+        this.currentPlayer = player1;
+    }
+
+    public void addTiles(HashMap<Vector, Color> tiles)
+    {
+        this.tiles = tiles;
+    }
+
+    public void setCurrentPlayer(Agent currentPlayer)
+    {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public Agent getCurrentPlayer()
+    {
+        return currentPlayer;
     }
 
     public static Settings getDefaultSetting()

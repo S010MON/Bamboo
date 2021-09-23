@@ -1,0 +1,21 @@
+# Any lines that start with a '#' are ignored
+#
+# Settings
+#
+SOS
+radius=5
+name=joe
+colour=RED
+type=HUMAN
+name=bob
+colour=BLUE
+type=HUMAN
+EOS
+#
+# Start of tiles
+# Layout: x,y,z,colour
+SOT
+0,0,0,BLUE
+0,1,-1,RED
+EOT
+

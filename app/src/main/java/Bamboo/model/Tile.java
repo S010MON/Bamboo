@@ -70,8 +70,18 @@ public class Tile
         return circle_thickness;
     }
 
-    public boolean isColoured()
+    public String toCSV()
     {
-        return !(color == Color.WHITE);
+        return vector.toCSV() + "," + getColourAsString();
+    }
+
+    private String getColourAsString()
+    {
+        if(color.equals(Color.BLUE))
+            return "BLUE";
+        else if (color.equals(Color.RED))
+            return "RED";
+        else
+            return "WHITE";
     }
 }

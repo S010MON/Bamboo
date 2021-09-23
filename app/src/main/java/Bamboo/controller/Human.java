@@ -21,8 +21,8 @@ public class Human implements Agent
     }
 
     @Override
-    public boolean isHuman() {
-        return true;
+    public String getType() {
+        return "HUMAN";
     }
 
     @Override
