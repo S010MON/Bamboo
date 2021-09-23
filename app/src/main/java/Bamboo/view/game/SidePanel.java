@@ -1,35 +1,34 @@
 package Bamboo.view.game;
 
-
-import org.checkerframework.checker.units.qual.C;
+import Bamboo.view.resources.Colour;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SidePanel extends JPanel {
-    public static Color LIGHT_BLUE = new Color(153,204,255);
-    public static Color VERY_LIGHT_BLUE = new Color(204,229,255);
-    public SidePanel() {
+public class SidePanel extends JPanel
+{
+    public SidePanel()
+    {
         buildSidePanel();
     }
 
-    public void buildSidePanel() {
-
+    public void buildSidePanel()
+    {
         JPanel panel1 = new JPanel();
         JPanel panel2 = new JPanel();
 
         setLayout(new BorderLayout());
         panel1.setLayout(new BorderLayout());
         panel2.setLayout(new BorderLayout());
-        panel1.setBackground(LIGHT_BLUE);
-        panel2.setBackground(LIGHT_BLUE);
+        panel1.setBackground(Colour.background());
+        panel2.setBackground(Colour.background());
 
         //create the pause button
         JButton pauseButton = new JButton("pause");
-        pauseButton.setBackground(VERY_LIGHT_BLUE);
-        pauseButton.setForeground(VERY_LIGHT_BLUE);
+        pauseButton.setBackground(Colour.background());
+        pauseButton.setForeground(Colour.background());
 
         //create the group label
         JLabel groups = new JLabel("Number of groups:");
