@@ -3,10 +3,7 @@ package Bamboo.model;
 import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
 
-import Bamboo.view.game.Canvas;
-import Bamboo.view.game.RollOverListener;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 public class Game

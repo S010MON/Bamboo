@@ -1,11 +1,12 @@
 package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
-import Bamboo.controller.CubeVector;
 import Bamboo.controller.GameLogic;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
+import Bamboo.view.RollOverListener;
+import Bamboo.view.resources.Colour;
 
 import javax.swing.JPanel;
 import java.awt.BasicStroke;
@@ -13,8 +14,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.HashMap;
-import java.util.List;
 
 public class Canvas extends JPanel
 {
@@ -27,7 +26,7 @@ public class Canvas extends JPanel
     private int offsetX = 100;
     private int offsetY = 0;
 
-    private Color background = new Color(158, 208, 239) ;
+    private Color background = Colour.background();
 
     public Canvas(Dimension screenSize, Game game)
     {
