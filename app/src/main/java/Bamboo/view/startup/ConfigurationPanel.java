@@ -19,7 +19,7 @@ public class ConfigurationPanel extends JPanel {
     private JButton toggleButton ;
     private JLabel player1label;
     private JLabel player2label;
-    private JTextField player1textfiled;
+    private JTextField player1textField;
     private JTextField player2textField;
 
     public ConfigurationPanel(){
@@ -59,9 +59,9 @@ public class ConfigurationPanel extends JPanel {
         textFieldPanel = new JPanel() ;
         textFieldPanel.setLayout(null);
         textFieldPanel.setBackground(Colour.background());
-        player1textfiled = new JTextField() ;
-        player1textfiled.setBounds(20,28,200,30);
-        textFieldPanel.add(player1textfiled) ;
+        player1textField = new JTextField() ;
+        player1textField.setBounds(20,28,200,30);
+        textFieldPanel.add(player1textField) ;
         panel1.add(textFieldPanel) ;
 
         buttonPanel1 = new ButtonPanel(Color.red) ;
@@ -93,7 +93,7 @@ public class ConfigurationPanel extends JPanel {
 
     }
 
-    public String getNamePlayer1(){ return player1textfiled.getText();}
+    public String getNamePlayer1(){ return player1textField.getText();}
 
     public String getNamePlayer2(){ return player2textField.getText();}
 
