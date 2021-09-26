@@ -3,10 +3,16 @@ package Bamboo.model;
 import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
 
+import Bamboo.view.game.Canvas;
+import Bamboo.view.game.RollOverListener;
+
+import java.awt.*;
 import java.util.List;
 
 public class Game
 {
+    private int turn_count_player1 = 0;
+    private int turn_count_player2 = 0;
     private Grid grid;
     private Agent player1;
     private Agent player2;
@@ -79,15 +85,24 @@ public class Game
         return settings;
     }
 
-    private void toggleTurn()
-    {
-        if(currentPlayer == player1)
-            currentPlayer = player2;
+    public int getTurn_count(Agent player){
+        if(player.getColor() == Color.RED){
+            return turn_count_player1;
+        }
         else
-            currentPlayer = player1;
-
+            return turn_count_player2;
     }
 
-
+    private void toggleTurn()
+    {
+        if(currentPlayer == player1){
+            turn_count_player1 ++;
+            currentPlayer = player2;
+        }
+        else{
+            turn_count_player2 ++;
+            currentPlayer = player1;
+         }
+    }
 }
 

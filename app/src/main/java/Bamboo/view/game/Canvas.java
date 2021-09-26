@@ -1,6 +1,8 @@
 package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
+import Bamboo.controller.CubeVector;
+import Bamboo.controller.GameLogic;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
@@ -11,16 +13,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.HashMap;
+import java.util.List;
 
 public class Canvas extends JPanel
 {
     private Game game;
 
-    private int circle_radius = 50;
+    private static int circle_radius = 50;
     private BasicStroke circle_thickness = new BasicStroke(2);
-    private int centreX;
-    private int centreY;
-    private int offsetX = 0;
+    private static int centreX;
+    private static int centreY;
+    private int offsetX = 100;
     private int offsetY = 0;
 
     private Color background = new Color(158, 208, 239) ;
@@ -49,28 +53,43 @@ public class Canvas extends JPanel
         g2d.setStroke(circle_thickness);
         for(Tile tile: game.getAllTiles())
         {
-            AxialVector v = VectorConverter.convertToAxial(tile.getVector());
-            v = VectorConverter.doubleAndOffsetOddRows(v);
-            int x = centreX + (v.getQ() * circle_radius/2);
-            int y = centreY + (v.getR() * circle_radius/2);
-
-            g2d.setStroke(tile.getCircle_thickness());
-            g2d.setColor(tile.getColour());
-            g2d.fillOval(x,y,circle_radius,circle_radius);
-            g2d.setColor(tile.getOutline());
-            g2d.drawOval(x, y, circle_radius, circle_radius);
+            colorTile(tile, tile.getColour(), g2d);
+        }
+        Tile rollover = RollOverListener.getRolloverTile();
+        if(rollover != null){
+            Color color;
+            if(GameLogic.is_legal_move(game, rollover, game.getCurrentPlayer().getColor())){
+                color = game.getCurrentPlayer().getColor();
+            }
+            else{
+                color = Color.GRAY;
+            }
+            colorTile(rollover, color, g2d);
         }
     }
 
-    public int getCircle_radius() {
+    private void colorTile(Tile tile, Color color, Graphics2D g2d){
+        AxialVector v = VectorConverter.convertToAxial(tile.getVector());
+        v = VectorConverter.doubleAndOffsetOddRows(v);
+        int x = centreX + (v.getQ() * circle_radius/2) ;
+        int y = centreY + (v.getR() * circle_radius/2) ;
+
+        g2d.setStroke(tile.getCircle_thickness());
+        g2d.setColor(color);
+        g2d.fillOval(x,y,circle_radius,circle_radius);
+        g2d.setColor(tile.getOutline());
+        g2d.drawOval(x, y, circle_radius, circle_radius);
+    }
+
+    public static int getCircle_radius() {
         return circle_radius;
     }
 
-    public int getCentreX() {
+    public static int getCentreX() {
         return centreX;
     }
 
-    public int getCentreY() {
+    public static int getCentreY() {
         return centreY;
     }
 }

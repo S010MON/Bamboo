@@ -1,6 +1,8 @@
-package Bamboo.view.game;
+package Bamboo.view;
 
 import Bamboo.controller.AxialVector;
+import Bamboo.controller.Vector;
+import Bamboo.controller.GameLogic;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
@@ -9,8 +11,14 @@ import Bamboo.view.resources.Colour;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.HashMap;
+import java.util.List;
+
 
 public class RollOverListener implements MouseMotionListener {
+
+    private static Tile rolledOverTile = new Tile(new CubeVector(20,20,20));
+    private int legality_indication_threshold = 0;
 
     private Game game;
     private Bamboo.view.game.Canvas canvas;
@@ -38,12 +46,11 @@ public class RollOverListener implements MouseMotionListener {
             int y = canvas.getCentreY() + (v.getR() * r / 2) + r / 2;
 
             if (X > (x - r / 2)
-                && X < (x + r / 2)
-                && Y > (y - r / 2)
-                && Y < (y + r / 2))
-            {
-                tile.setOutline(Colour.circle_outline());
-                tile.setCircle_thickness(new BasicStroke(6));
+                    && X < (x + r / 2)
+                    && Y > (y - r / 2)
+                    && Y < (y + r / 2)) {
+
+                rolledOverTile = tile;
                 canvas.repaint();
             } else {
                 tile.setOutline(Color.black);
@@ -55,5 +62,10 @@ public class RollOverListener implements MouseMotionListener {
         }
 
     }
+
+    public static Tile getRolloverTile(){
+        return rolledOverTile;
+    }
+
 }
 
