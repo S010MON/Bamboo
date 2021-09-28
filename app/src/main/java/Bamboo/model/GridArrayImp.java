@@ -21,7 +21,8 @@ public class GridArrayImp implements Grid
         offset = radius;
         vectors = new ArrayList<>();
         tileList = new ArrayList<>();
-        tiles = buildGrid(radius);
+        emptyList = new ArrayList<>();
+        tiles = buildGrid();
     }
 
     @Override
@@ -120,7 +121,7 @@ public class GridArrayImp implements Grid
         return new Vector(x, y, z);
     }
 
-    private Tile[][][] buildGrid(int radius)
+    private Tile[][][] buildGrid()
     {
         Tile[][][] grid = new Tile[width][width][width];
 
