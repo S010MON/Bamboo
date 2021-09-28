@@ -2,6 +2,7 @@ package Bamboo.view;
 
 import Bamboo.controller.Settings;
 import Bamboo.model.Game;
+import Bamboo.model.Grid;
 import Bamboo.view.startup.StartupPanel;
 
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import java.awt.Toolkit;
 public class MainFrame extends JFrame
 {
     private Game currentGame;
+    private Grid cuurentGrid;
     private GamePanel gamePanel;
     private StartupPanel startupPanel = new StartupPanel();
     private Dimension screenSize;
@@ -31,7 +33,9 @@ public class MainFrame extends JFrame
 
         // Set the current game
         currentGame = new Game(settings);
-        setCurrentPanel(startupPanel, new GamePanel(screenSize, currentGame));
+
+
+        setCurrentPanel(startupPanel, new GamePanel(screenSize, currentGame,cuurentGrid));
     }
 
     private void setCurrentPanel(JPanel outgoing, JPanel incoming) {

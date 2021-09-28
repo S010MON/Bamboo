@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PlayerPanel extends JPanel {
-    Game game;
+    private  Game game;
     private Color background = new Color(158, 208, 239) ;
 
     public PlayerPanel(Game game){
@@ -20,6 +20,9 @@ public class PlayerPanel extends JPanel {
         setVisible(true);
 
     }
+    public void update ()
+    {
 
+    }
 
 }

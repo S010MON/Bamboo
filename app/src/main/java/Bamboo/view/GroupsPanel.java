@@ -18,5 +18,7 @@ public class GroupsPanel extends JPanel {
         add(numberOfGroups);
         setVisible(true);
     }
+    // Create a method that countd groups
+
 
 }

@@ -23,7 +23,7 @@ public class SidePanel extends JPanel {
 
     public void update()
     {
-
+        //create a method that will upate the game panel, with the change of players
     }
 
 }
