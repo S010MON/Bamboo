@@ -310,8 +310,8 @@ public class VectorConverterTest
      */
     @Test void testHalveAndAlignRows_a()
     {
-        AxialVector v = new AxialVector(-10,10);
-        AxialVector exp = new AxialVector(-5,5);
+        AxialVector v = new AxialVector(-10,20);
+        AxialVector exp = new AxialVector(-5,10);
         AxialVector act = VectorConverter.halveAndAlignOddRows(v);
         assertEquals(exp, act);
     }
@@ -334,8 +334,8 @@ public class VectorConverterTest
 
     @Test void testHalveAndAlignRows_d()
     {
-        AxialVector v = new AxialVector(1,10);
-        AxialVector exp = new AxialVector(-5,5);
+        AxialVector v = new AxialVector(2,20);
+        AxialVector exp = new AxialVector(1,10);
         AxialVector act = VectorConverter.halveAndAlignOddRows(v);
         assertEquals(exp, act);
     }
