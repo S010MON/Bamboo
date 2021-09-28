@@ -1,4 +1,3 @@
-Status:
 ![workflow](https://github.com/S010MON/Bamboo/actions/workflows/gradle_build.yml/badge.svg)
 
 # Bamboo
