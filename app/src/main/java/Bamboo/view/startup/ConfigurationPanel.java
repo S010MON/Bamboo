@@ -36,7 +36,7 @@ public class ConfigurationPanel extends JPanel {
         panel1.setLayout(new GridLayout(1,3));
         add(panel1);
 
-        panel2.setBackground(Color.red);
+        panel2.setBackground(Colour.background());
         panel2.setLayout(new GridLayout(1, 3));
         add(panel2);
 
