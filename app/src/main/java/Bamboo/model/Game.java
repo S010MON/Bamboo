@@ -60,6 +60,21 @@ public class Game
         this.grid = new GridGraphImp(size);
     }
 
+    public int getNumberOfGroupsForPlayer(Agent player){
+        if(player.equals(player1))
+            return 1;
+        else
+            return 2;
+    }
+
+    public int getSizeOfMaxOfGroups(Agent player){
+
+        if(player.equals(player1))
+            return 3;
+        else
+            return 5;
+    }
+
     public Agent getCurrentPlayer()
     {
         return currentPlayer;
@@ -100,6 +115,7 @@ public class Game
             turn_count_player2 ++;
             currentPlayer = player1;
          }
+        view.nextTurn();
     }
 }
 
