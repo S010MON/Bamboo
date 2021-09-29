@@ -49,9 +49,6 @@ public class RollOverListener implements MouseMotionListener {
                     && X < (x + r / 2)
                     && Y > (y - r / 2)
                     && Y < (y + r / 2)) {
-                System.out.println(tile.getVector());
-
-
                 rolledOverTile = tile;
                 canvas.repaint();
                 break;
