@@ -14,10 +14,13 @@ public class InfoPanel extends JPanel {
     private  JLabel player;
     private JLabel currentPlayer;
 
+
+
     public InfoPanel(String firstPlayer)
     {
+        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setBackground(background);
-        setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
+
 
         numberOfGroupsLabel = new JLabel("NumberOfGroups:");
         add(numberOfGroupsLabel);
