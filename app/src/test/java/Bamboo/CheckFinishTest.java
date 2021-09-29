@@ -1,7 +1,6 @@
 package Bamboo;
 
 import Bamboo.controller.Vector;
-import Bamboo.controller.GameLogic;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;
 import java.util.List;

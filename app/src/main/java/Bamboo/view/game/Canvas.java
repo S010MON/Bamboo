@@ -1,7 +1,6 @@
 package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
-import Bamboo.controller.GameLogic;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
@@ -57,7 +56,7 @@ public class Canvas extends JPanel
         Tile rollover = RollOverListener.getRolloverTile();
         if(rollover != null){
             Color color;
-            if(GameLogic.is_legal_move(game, rollover, game.getCurrentPlayer().getColor())){
+            if(game.getGrid().isLegalMove(rollover.getVector(), game.getCurrentPlayer().getColor())){
                 color = game.getCurrentPlayer().getColor();
             }
             else{

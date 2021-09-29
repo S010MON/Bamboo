@@ -1,7 +1,5 @@
 package Bamboo.model;
 
-import Bamboo.controller.GroupController;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +28,18 @@ public class Group {
 
     public void addNew(List<Tile> addition){
         for(Tile tile : addition){
-            if(GroupController.not_in(tile, new Group(tiles))){
+            if(new Group(tiles).contains(tile)){
                 tiles.add(tile);
             }
         }
+    }
+
+    public boolean contains(Tile tile){
+        for(Tile t : tiles){
+            if(t == tile)
+                return true;
+        }
+        return false;
     }
 
     public Group getAllNeighbours(Grid grid){

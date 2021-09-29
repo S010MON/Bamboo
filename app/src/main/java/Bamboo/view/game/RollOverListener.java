@@ -2,18 +2,14 @@ package Bamboo.view;
 
 import Bamboo.controller.AxialVector;
 import Bamboo.controller.Vector;
-import Bamboo.controller.GameLogic;
 import Bamboo.controller.VectorConverter;
 import Bamboo.view.game.Canvas;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
-import Bamboo.view.resources.Colour;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class RollOverListener implements MouseMotionListener {

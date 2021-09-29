@@ -5,6 +5,7 @@ import Bamboo.controller.Vector;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Stack;
 
 public class GridGraphImp extends GridHashImp implements Grid
@@ -96,7 +97,7 @@ public class GridGraphImp extends GridHashImp implements Grid
         return group;
     }
 
-    private int getMaxGroupSize(ArrayList<ArrayList<Vector>> groups)
+    public int getMaxGroupSize(ArrayList<ArrayList<Vector>> groups)
     {
         int max = 1;
         for (ArrayList<Vector> group : groups)
@@ -105,6 +106,16 @@ public class GridGraphImp extends GridHashImp implements Grid
                 max = group.size();
         }
         return max;
+    }
+
+    public int evaluateGame(Color color){
+        ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
+        int group_count = groups.size();
+        int value = group_count * group_count;
+        for(ArrayList<Vector> group : groups){
+            value -= group.size();
+        }
+        return value;
     }
 }
 

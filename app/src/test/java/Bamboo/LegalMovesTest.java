@@ -1,14 +1,11 @@
 package Bamboo;
 
 import Bamboo.controller.Vector;
-import Bamboo.controller.GameLogic;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import java.awt.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class LegalMovesTest {
     @Test void testAll_legal_moves(){

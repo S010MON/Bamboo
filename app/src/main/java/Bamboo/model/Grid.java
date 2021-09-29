@@ -20,5 +20,13 @@ public interface Grid
 
     boolean isLegalMove(Vector vector, Color color);
 
+    ArrayList<ArrayList<Vector>> getAllGroupsOfColour(Color color);
+
+    ArrayList<Vector> getGroup(Vector vector);
+
+    int getMaxGroupSize(ArrayList<ArrayList<Vector>> groups);
+
+    int evaluateGame(Color color);
+
     boolean isFinished(Color currentColour);
 }

@@ -40,6 +40,7 @@ public class Game
         if(grid.isLegalMove(v, currentPlayer.getColor()))
         {
             grid.setTile(v, currentPlayer.getColor());
+            System.out.println(grid.evaluateGame(currentPlayer.getColor()));
             toggleTurn();
         }
         else

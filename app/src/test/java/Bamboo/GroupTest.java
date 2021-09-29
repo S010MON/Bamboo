@@ -2,14 +2,11 @@ package Bamboo;
 
 
 import Bamboo.controller.Vector;
-import Bamboo.controller.GroupController;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import java.awt.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class GroupTest {
     @Test void testNoGroups(){
