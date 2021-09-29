@@ -1,6 +1,7 @@
 package Bamboo.model;
 
 import Bamboo.controller.Vector;
+import Bamboo.view.startup.SettingsPanel;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -17,7 +18,12 @@ public class GridArrayImp implements Grid
 
     public GridArrayImp(int radius)
     {
+
+        //radius = 1;
         width = (radius * 2) + 1;
+        //SettingsPanel slider = new SettingsPanel();
+
+        //width = slider.getSliderValue();
         offset = radius;
         vectors = new ArrayList<>();
         tileList = new ArrayList<>();

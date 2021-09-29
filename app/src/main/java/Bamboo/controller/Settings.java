@@ -1,6 +1,6 @@
 package Bamboo.controller;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
 
 public class Settings
@@ -11,7 +11,7 @@ public class Settings
     public HashMap<Vector, Color> tiles;
     private Agent currentPlayer;
 
-    public Settings(Agent player1, Agent player2, int boardSize) {
+    public Settings(Agent player1, Agent player2, int boardSize){
         this.player1 = player1;
         this.player2 = player2;
         this.boardSize = boardSize;
@@ -45,7 +45,7 @@ public class Settings
     {
         return new Settings(
                 new Human("Player 1", Color.BLUE),
-                new Human("Player 2", Color.RED),
-                1);
+                new Human("Player 2", Color.RED), 2
+                );
     }
 }
