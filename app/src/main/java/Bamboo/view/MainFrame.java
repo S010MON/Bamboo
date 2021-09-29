@@ -14,7 +14,7 @@ import java.awt.Toolkit;
 public class MainFrame extends JFrame
 {
     private Game currentGame;
-    private Grid cuurentGrid;
+
     private GamePanel gamePanel;
     private StartupPanel startupPanel = new StartupPanel();
     private Dimension screenSize;
@@ -35,7 +35,7 @@ public class MainFrame extends JFrame
         currentGame = new Game(settings);
 
 
-        setCurrentPanel(startupPanel, new GamePanel(screenSize, currentGame,cuurentGrid));
+        setCurrentPanel(startupPanel, new GamePanel(screenSize, currentGame));
     }
 
     private void setCurrentPanel(JPanel outgoing, JPanel incoming) {

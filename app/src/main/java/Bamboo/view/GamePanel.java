@@ -9,14 +9,13 @@ import java.awt.*;
 public class GamePanel extends JPanel
 {
     private Game game;
-    private Grid grid;
     private SidePanel sidePanel;
     private Canvas canvas;
 
-    public GamePanel(Dimension screenSize, Game game, Grid grid)
+    public GamePanel(Dimension screenSize, Game game)
     {
         this.game = game;
-        this.grid = grid;
+        
 
         setSize(screenSize);
         setLayout(new BorderLayout());
