@@ -36,7 +36,7 @@ public class MainFrame extends JFrame
     {
         removeCurrentPanel();
         currentGame = new Game(settings, this);
-        Component gamePanel = new GamePanel(screenSize, currentGame);
+        Component gamePanel = new GamePanel(screenSize, currentGame, this);
         add(gamePanel);
         currentPanel = gamePanel;
     }
@@ -103,5 +103,13 @@ public class MainFrame extends JFrame
         Settings settings = FileManager.load();
         if(settings != null)
             runGame(settings);
+    }
+
+    public void nextTurn()
+    {
+        if(currentGame != null && currentPanel!=null) {
+            GamePanel panel = (GamePanel) currentPanel;
+            panel.updateSidePanel();
+        }
     }
 }
