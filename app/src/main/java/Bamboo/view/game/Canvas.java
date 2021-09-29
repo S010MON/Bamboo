@@ -2,10 +2,11 @@ package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
 import Bamboo.controller.GameLogic;
+import Bamboo.controller.Vector;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
-import Bamboo.view.RollOverListener;
+import Bamboo.view.game.RollOverListener;
 import Bamboo.view.resources.Colour;
 
 import javax.swing.JPanel;
@@ -25,6 +26,8 @@ public class Canvas extends JPanel
     private static int centreY;
     private int offsetX = 100;
     private int offsetY = 0;
+
+    Tile previous_rollover = new Tile(new Vector(0,0,0));
 
     private Color background = Colour.background();
 
@@ -56,6 +59,7 @@ public class Canvas extends JPanel
         }
         Tile rollover = RollOverListener.getRolloverTile();
         if(rollover != null){
+            System.out.println(rollover.getVector());
             Color color;
             if(GameLogic.is_legal_move(game, rollover, game.getCurrentPlayer().getColor())){
                 color = game.getCurrentPlayer().getColor();
@@ -63,7 +67,11 @@ public class Canvas extends JPanel
             else{
                 color = Color.GRAY;
             }
+            previous_rollover = rollover;
             colorTile(rollover, color, g2d);
+        }
+        else{
+            colorTile(previous_rollover, Color.WHITE, g2d);
         }
     }
 
