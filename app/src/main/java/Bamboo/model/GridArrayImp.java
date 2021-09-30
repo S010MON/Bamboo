@@ -105,6 +105,7 @@ public class GridArrayImp implements Grid
         return hasLegalMove;
     }
 
+
     public Vector addOffset(Vector v)
     {
         int x = v.getX() + offset;
