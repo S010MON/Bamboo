@@ -1,5 +1,6 @@
 package Bamboo.view.startup;
 
+import Bamboo.view.resources.Button;
 import Bamboo.view.resources.Colour;
 
 import javax.swing.*;

@@ -4,7 +4,7 @@ import Bamboo.controller.Agent;
 import Bamboo.model.Game;
 import Bamboo.view.MainFrame;
 import Bamboo.view.resources.Colour;
-import Bamboo.view.startup.Button;
+import Bamboo.view.resources.Button;
 import javax.swing.*;
 import java.awt.*;
 

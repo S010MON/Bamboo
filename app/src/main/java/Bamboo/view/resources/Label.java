@@ -1,13 +1,12 @@
-package Bamboo.view.startup;
+package Bamboo.view.resources;
 
-import Bamboo.view.resources.ResourceLoader;
+import javax.swing.JLabel;
+import javax.swing.BorderFactory;
+import java.awt.Color;
 
-import javax.swing.*;
-import java.awt.*;
-
-public class Button extends JButton
+public class Label extends JLabel
 {
-    public Button(String iconName)
+    public Label(String iconName)
     {
         this.setBorder(BorderFactory.createEmptyBorder());
         this.setBackground(new Color(158, 208, 239));

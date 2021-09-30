@@ -1,5 +1,6 @@
 package Bamboo.view.startup;
 
+import Bamboo.view.resources.Button;
 import Bamboo.view.resources.Colour;
 
 import javax.swing.*;
@@ -8,9 +9,9 @@ import java.awt.*;
 public class SettingsPanel extends JPanel
 {
     private JPanel buttonPanel;
-    private Button hvh;
-    private Button hva;
-    private Button ava;
+    private Bamboo.view.resources.Button hvh;
+    private Bamboo.view.resources.Button hva;
+    private Bamboo.view.resources.Button ava;
     private ConfigurationPanel configurationPanel;
 
     public SettingsPanel()
@@ -24,11 +25,11 @@ public class SettingsPanel extends JPanel
         buttonPanel.setBackground(Colour.background());
         buttonPanel.setLayout(null);
 
-        hvh = new Button("btnMulti.png");
+        hvh = new Bamboo.view.resources.Button("btnMulti.png");
         hvh.setBounds(100,50,145,55);
         hvh.addActionListener(e -> configurationPanel.setVisible(true));
 
-        hva = new Button("btnSingle.png");
+        hva = new Bamboo.view.resources.Button("btnSingle.png");
         hva.setBounds(250,50,145,55);
         hva.addActionListener(e -> configurationPanel.setVisible(false));
 

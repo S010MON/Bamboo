@@ -1,52 +1,63 @@
 package Bamboo.view.game;
 
-import Bamboo.model.Game;
+import Bamboo.view.resources.Colour;
+import Bamboo.view.resources.Label;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class InfoPanel extends JPanel {
-    private Color background = new Color(158, 208, 239) ;
-    private JLabel numberOfGroupsLabel;
-    private JLabel numberOfGroups;
-    private  JLabel maxSizeOfGroupsLabel;
-    private JLabel maxSizeOfGroups;
-    private  JLabel player;
-    private JLabel currentPlayer;
+public class InfoPanel extends JPanel
+{
+    private Label groupsLabel;
+    private JLabel groupsDisplay;
 
+    private Label sizeLabel;
+    private JLabel sizeDisplay;
+
+    private Label playerLabel;
+    private JLabel playerDisplay;
 
 
     public InfoPanel(String firstPlayer)
     {
-        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        setBackground(background);
+        BoxLayout layout = new BoxLayout(this,BoxLayout.Y_AXIS);
+        setLayout(layout);
+        setBackground(Colour.background());
 
+        groupsLabel = new  Label("labelGroups.png");
+        groupsLabel.setAlignmentX(0.5f);
+        add(groupsLabel);
 
-        numberOfGroupsLabel = new JLabel("NumberOfGroups:");
-        add(numberOfGroupsLabel);
+        groupsDisplay = new JLabel("0");
+        groupsDisplay.setAlignmentX(0.5f);
+        groupsDisplay.setFont(new Font("Monospaced", Font.PLAIN, 22));
+        add(groupsDisplay);
 
-        numberOfGroups = new JLabel("0");
-        add(numberOfGroups);
+        sizeLabel = new Label("labelSize.png");
+        sizeLabel.setAlignmentX(0.5f);
+        add(sizeLabel);
 
-        maxSizeOfGroupsLabel = new JLabel("MaxSize:");
-        add(maxSizeOfGroupsLabel);
+        sizeDisplay = new JLabel("0");
+        sizeDisplay.setAlignmentX(0.5f);
+        sizeDisplay.setFont(new Font("Monospaced", Font.PLAIN, 22));
+        add(sizeDisplay);
 
-        maxSizeOfGroups = new JLabel("0");
-        add(maxSizeOfGroups);
+        playerLabel = new Label("labelPlayer.png");
+        playerLabel.setAlignmentX(0.5f);
+        add(playerLabel);
 
-        player = new JLabel("Player:");
-        add(player);
-
-        currentPlayer = new JLabel(firstPlayer);
-        add(currentPlayer);
+        playerDisplay = new JLabel(firstPlayer);
+        playerDisplay.setAlignmentX(0.5f);
+        playerDisplay.setFont(new Font("Monospaced", Font.PLAIN, 22));
+        add(playerDisplay);
 
         setVisible(true);
     }
 
     public void update(String name, Integer maxSize, Integer noOfGroups)
     {
-        numberOfGroups.setText(noOfGroups.toString());
-        maxSizeOfGroups.setText(maxSize.toString());
-        currentPlayer.setText(name);
+        groupsDisplay.setText(noOfGroups.toString());
+        sizeDisplay.setText(maxSize.toString());
+        playerDisplay.setText(name);
     }
 }
