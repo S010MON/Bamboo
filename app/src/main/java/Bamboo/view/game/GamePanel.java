@@ -1,6 +1,7 @@
 package Bamboo.view.game;
 
 import Bamboo.model.Game;
+import Bamboo.view.MainFrame;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -11,7 +12,7 @@ public class GamePanel extends JPanel
     private SidePanel sidePanel;
     private Bamboo.view.game.Canvas canvas;
 
-    public GamePanel(Dimension screenSize, Game game)
+    public GamePanel(Dimension screenSize, Game game, MainFrame mainFrame)
     {
         this.game = game;
         setSize(screenSize);
@@ -22,10 +23,15 @@ public class GamePanel extends JPanel
         add(canvas, BorderLayout.CENTER);
 
         //set the sidePanel panel
-        sidePanel = new SidePanel(game);
+        sidePanel = new SidePanel(game, mainFrame, canvas);
         add(sidePanel, BorderLayout.WEST);
         
         setVisible(true);
+    }
+
+    public void updateSidePanel()
+    {
+        sidePanel.updateInfo();
     }
 
 

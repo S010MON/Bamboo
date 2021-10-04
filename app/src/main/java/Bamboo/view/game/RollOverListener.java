@@ -1,4 +1,4 @@
-package Bamboo.view;
+package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
 import Bamboo.controller.Vector;
@@ -41,21 +41,18 @@ public class RollOverListener implements MouseMotionListener {
             int r = canvas.getCircle_radius();
             int x = canvas.getCentreX() + (v.getQ() * r / 2) + r / 2;
             int y = canvas.getCentreY() + (v.getR() * r / 2) + r / 2;
-
             if (X > (x - r / 2)
                     && X < (x + r / 2)
                     && Y > (y - r / 2)
                     && Y < (y + r / 2)) {
-
                 rolledOverTile = tile;
                 canvas.repaint();
-            } else {
+                break;
+            }
                 tile.setOutline(Color.black);
                 tile.setCircle_thickness(new BasicStroke(3));
-
+                rolledOverTile = null;
                 canvas.repaint();
-            }
-
         }
 
     }

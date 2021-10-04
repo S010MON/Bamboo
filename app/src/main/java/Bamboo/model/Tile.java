@@ -14,6 +14,7 @@ public class Tile
     private Color outline;
     private BasicStroke circle_thickness;
     private ArrayList<Tile> groupNeighbours;
+    private boolean isCouloured ;
 
     public Tile(Vector vector)
     {
@@ -22,6 +23,7 @@ public class Tile
         this.outline = Color.black;
         this.circle_thickness = new BasicStroke(3);
         this.groupNeighbours = new ArrayList<>();
+        this.isCouloured = false ;
     }
 
     public void setColour(Color color)
@@ -54,19 +56,23 @@ public class Tile
         return vector;
     }
 
-    public Color getOutline(){
+    public Color getOutline()
+    {
         return outline;
     }
 
-    public void setOutline(Color greenOutline){
+    public void setOutline(Color greenOutline)
+    {    
         outline = greenOutline;
     }
 
-    public void setCircle_thickness(BasicStroke ct) {
+    public void setCircle_thickness(BasicStroke ct)
+    {
         circle_thickness = ct;
     }
 
-    public BasicStroke getCircle_thickness() {
+    public BasicStroke getCircle_thickness()
+    {
         return circle_thickness;
     }
 
@@ -83,5 +89,15 @@ public class Tile
             return "RED";
         else
             return "WHITE";
+    }
+    
+    public void color()
+    {
+        isCouloured = true;
+    }
+    
+    public boolean isCouloured()
+    {
+        return isCouloured;
     }
 }

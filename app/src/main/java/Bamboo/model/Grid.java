@@ -29,4 +29,5 @@ public interface Grid
     int evaluateGame(Color color);
 
     boolean isFinished(Color currentColour);
+
 }
