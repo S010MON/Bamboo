@@ -1,6 +1,7 @@
 package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
+import Bamboo.controller.Vector;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
@@ -112,14 +113,13 @@ public class Canvas extends JPanel
         int x = centreX + (v.getQ() * circle_radius/2) ;
         int y = centreY + (v.getR() * circle_radius/2) ;
 
-        if(GameLogic.is_legal_move(game, tile, game.getCurrentPlayer().getColor())){
-
+        if(game.getGrid().isLegalMove(tile.getVector(), game.getCurrentPlayer().getColor()))
+        {
             g2d.setStroke(tile.getCircle_thickness());
             g2d.setColor(new Color(44, 154, 21));
             g2d.fillOval(x+14,y+14,circle_radius-30,circle_radius-30);
             g2d.setColor(tile.getOutline());
             g2d.drawOval(x, y, circle_radius, circle_radius);
-
         }
     }
     public void changeHint() {
