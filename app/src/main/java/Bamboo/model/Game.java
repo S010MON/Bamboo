@@ -4,6 +4,7 @@ import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game
@@ -16,6 +17,7 @@ public class Game
     private Agent currentPlayer;
     private MainFrame view;
     private Settings settings;
+    private List<String> informations ;
 
     public Game(Settings settings, MainFrame view)
     {
@@ -25,6 +27,7 @@ public class Game
         this.view = view;
         this.currentPlayer = settings.getCurrentPlayer();
         this.settings = settings;
+        this.informations = new ArrayList<String>() ;
 
         if(settings.tiles != null)
         {
@@ -117,5 +120,8 @@ public class Game
          }
         view.nextTurn();
     }
+
+    public List<String>getInformations(){return informations ; }
+    public void addInformations(String string){informations.add(string) ; }
 }
 

@@ -21,4 +21,5 @@ public interface Grid
     boolean isLegalMove(Vector vector, Color color);
 
     boolean isFinished(Color currentColour);
+
 }

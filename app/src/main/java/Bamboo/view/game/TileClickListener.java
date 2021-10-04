@@ -39,6 +39,11 @@ public class TileClickListener implements MouseListener
                         && e.getY() < (y + r / 2)) {
                     game.placeNextAt(tile.getVector());
                     canvas.repaint();
+                    if(!tile.isCouloured()){
+                        game.getInformations().add(tile.toCSV()) ;
+                        tile.color();
+                        System.out.println(game.getInformations().toString()) ;
+                    }
                 }
             }
         }
