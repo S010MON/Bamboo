@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class GridHashImp implements Grid
+public abstract class GridHashImp implements Grid
 {
     protected HashMap<Vector, Tile> tiles;
     protected HashMap<Vector, Boolean> remainingTiles;

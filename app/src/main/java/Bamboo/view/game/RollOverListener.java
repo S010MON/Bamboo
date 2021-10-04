@@ -1,25 +1,18 @@
 package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
-import Bamboo.controller.Vector;
-import Bamboo.controller.GameLogic;
 import Bamboo.controller.VectorConverter;
-import Bamboo.view.game.Canvas;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
-import Bamboo.view.resources.Colour;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.HashMap;
-import java.util.List;
 
 
-public class RollOverListener implements MouseMotionListener {
-
-    private static Tile rolledOverTile = new Tile(new Vector(20,20,20));
-    private int legality_indication_threshold = 0;
+public class RollOverListener implements MouseMotionListener
+{
+    private Tile rolledOverTile = null;
 
     private Game game;
     private Canvas canvas;
@@ -30,10 +23,6 @@ public class RollOverListener implements MouseMotionListener {
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
     public void mouseMoved(MouseEvent e) {
 
         int X = e.getX();
@@ -45,25 +34,28 @@ public class RollOverListener implements MouseMotionListener {
             int r = canvas.getCircle_radius();
             int x = canvas.getCentreX() + (v.getQ() * r / 2) + r / 2;
             int y = canvas.getCentreY() + (v.getR() * r / 2) + r / 2;
+
             if (X > (x - r / 2)
                     && X < (x + r / 2)
                     && Y > (y - r / 2)
                     && Y < (y + r / 2)) {
+
                 rolledOverTile = tile;
                 canvas.repaint();
-                break;
-            }
+            } else {
                 tile.setOutline(Color.black);
                 tile.setCircle_thickness(new BasicStroke(3));
-                rolledOverTile = null;
-                canvas.repaint();
-        }
 
+                canvas.repaint();
+            }
+        }
     }
 
-    public static Tile getRolloverTile(){
+    public Tile getRolloverTile(){
         return rolledOverTile;
     }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {}
 }
 

@@ -1,12 +1,10 @@
 package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
-import Bamboo.controller.GameLogic;
 import Bamboo.controller.Vector;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
-import Bamboo.view.game.RollOverListener;
 import Bamboo.view.resources.Colour;
 
 import javax.swing.JPanel;
@@ -31,6 +29,7 @@ public class Canvas extends JPanel
     Tile previous_rollover = new Tile(new Vector(0,0,0));
 
     private Color background = Colour.background();
+    private RollOverListener rollOverListener;
 
     public Canvas(Dimension screenSize, Game game)
     {
@@ -40,7 +39,8 @@ public class Canvas extends JPanel
         centreY = (screenSize.height/2) - circle_radius - offsetY;
         setSize(screenSize.width, screenSize.height);
         addMouseListener(new TileClickListener(game, this));
-        addMouseMotionListener(new RollOverListener(game,this));
+        rollOverListener = new RollOverListener(game, this);
+        addMouseMotionListener(rollOverListener);
     }
 
     @Override
@@ -64,10 +64,10 @@ public class Canvas extends JPanel
                 colorLegalTiles(tile, g2d);
             }
         }
-        Tile rollover = RollOverListener.getRolloverTile();
+        Tile rollover = rollOverListener.getRolloverTile();
         if(rollover != null){
             Color color;
-            if(GameLogic.is_legal_move(game, rollover, game.getCurrentPlayer().getColor())){
+            if(game.getGrid().isLegalMove(rollover.getVector(), game.getCurrentPlayer().getColor())){
                 color = game.getCurrentPlayer().getColor();
             }
             else{
@@ -113,14 +113,13 @@ public class Canvas extends JPanel
         int x = centreX + (v.getQ() * circle_radius/2) ;
         int y = centreY + (v.getR() * circle_radius/2) ;
 
-        if(GameLogic.is_legal_move(game, tile, game.getCurrentPlayer().getColor())){
-
+        if(game.getGrid().isLegalMove(tile.getVector(), game.getCurrentPlayer().getColor()))
+        {
             g2d.setStroke(tile.getCircle_thickness());
             g2d.setColor(new Color(44, 154, 21));
             g2d.fillOval(x+14,y+14,circle_radius-30,circle_radius-30);
             g2d.setColor(tile.getOutline());
             g2d.drawOval(x, y, circle_radius, circle_radius);
-
         }
     }
     public void changeHint() {
