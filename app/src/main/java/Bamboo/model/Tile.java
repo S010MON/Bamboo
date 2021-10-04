@@ -62,7 +62,7 @@ public class Tile
     }
 
     public void setOutline(Color greenOutline)
-        
+    {    
         outline = greenOutline;
     }
 
