@@ -26,6 +26,7 @@ public class Canvas extends JPanel
     private static int centreY;
     private int offsetX = 100;
     private int offsetY = 0;
+    private boolean hint ;
 
     Tile previous_rollover = new Tile(new Vector(0,0,0));
 
@@ -33,6 +34,7 @@ public class Canvas extends JPanel
 
     public Canvas(Dimension screenSize, Game game)
     {
+        this.hint = false ;
         this.game = game;
         centreX = (screenSize.width/2) - circle_radius - offsetX;
         centreY = (screenSize.height/2) - circle_radius - offsetY;
@@ -45,17 +47,22 @@ public class Canvas extends JPanel
     public void paint(Graphics g)
     {
         super.paint(g);
-        Graphics2D g2d = (Graphics2D) g;
+       Graphics2D g2d = (Graphics2D) g;
         paintGrid(g2d);
         setBackground(background);
     }
 
     private void paintGrid(Graphics2D g2d)
     {
+
         g2d.setStroke(circle_thickness);
         for(Tile tile: game.getAllTiles())
         {
             colorTile(tile, tile.getColour(), g2d);
+
+            if(hint) {
+                colorLegalTiles(tile, g2d);
+            }
         }
         Tile rollover = RollOverListener.getRolloverTile();
         if(rollover != null){
@@ -97,6 +104,33 @@ public class Canvas extends JPanel
 
     public static int getCentreY() {
         return centreY;
+    }
+
+    public void colorLegalTiles(Tile tile, Graphics2D g2d){
+
+        AxialVector v = VectorConverter.convertToAxial(tile.getVector());
+        v = VectorConverter.doubleAndOffsetOddRows(v);
+        int x = centreX + (v.getQ() * circle_radius/2) ;
+        int y = centreY + (v.getR() * circle_radius/2) ;
+
+        if(GameLogic.is_legal_move(game, tile, game.getCurrentPlayer().getColor())){
+
+            g2d.setStroke(tile.getCircle_thickness());
+            g2d.setColor(new Color(44, 154, 21));
+            g2d.fillOval(x+14,y+14,circle_radius-30,circle_radius-30);
+            g2d.setColor(tile.getOutline());
+            g2d.drawOval(x, y, circle_radius, circle_radius);
+
+        }
+    }
+    public void changeHint() {
+        if (!hint)
+            hint = true;
+        else
+            hint = false ;
+    }
+    public void changeHintToFalse(){
+        hint = false ;
     }
 }
 

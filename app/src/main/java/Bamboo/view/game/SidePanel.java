@@ -14,14 +14,29 @@ public class SidePanel extends JPanel
     private Color background = Colour.background() ;
     private Game game;
     private InfoPanel infoPanel;
+    private Canvas canvas ;
 
-    public SidePanel(Game game, MainFrame mainFrame) {
+    public SidePanel(Game game, MainFrame mainFrame, Canvas canvas) {
+        this.canvas = canvas ;
         this.game = game;
         setBackground(background);
         setLayout(new BorderLayout());
         infoPanel = new InfoPanel(game.getCurrentPlayer().getName());
         add(infoPanel, BorderLayout.NORTH);
         Button quitButton = new Button("btnQuit.png");
+
+
+        JPanel panelHint = new JPanel() ;
+        panelHint.setBackground(Colour.background());
+        panelHint.setLayout(new BorderLayout());
+        add(panelHint,BorderLayout.CENTER) ;
+        Button hintTrueButton = new Button("btn.png") ;
+        hintTrueButton.addActionListener(e -> {canvas.changeHint();
+        canvas.repaint();});
+        panelHint.add(hintTrueButton, BorderLayout.SOUTH) ;
+
+
+
         add(quitButton, BorderLayout.SOUTH);
         quitButton.addActionListener(e -> mainFrame.quitGame());
         setVisible(true);
