@@ -58,7 +58,6 @@ public class RollOverListener implements MouseMotionListener {
                 rolledOverTile = null;
                 canvas.repaint();
         }
-
     }
 
     public static Tile getRolloverTile(){
