@@ -4,6 +4,7 @@ import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game
@@ -16,6 +17,7 @@ public class Game
     private Agent currentPlayer;
     private MainFrame view;
     private Settings settings;
+    private List<String> informations ;
 
     public Game(Settings settings, MainFrame view)
     {
@@ -25,6 +27,7 @@ public class Game
         this.view = view;
         this.currentPlayer = settings.getCurrentPlayer();
         this.settings = settings;
+        this.informations = new ArrayList<String>() ;
 
         if(settings.tiles != null)
         {
@@ -59,6 +62,21 @@ public class Game
 
     public Game(int size){
         this.grid = new GridGraphImp(size);
+    }
+
+    public int getNumberOfGroupsForPlayer(Agent player){
+        if(player.equals(player1))
+            return 1;
+        else
+            return 2;
+    }
+
+    public int getSizeOfMaxOfGroups(Agent player){
+
+        if(player.equals(player1))
+            return 3;
+        else
+            return 5;
     }
 
     public Agent getCurrentPlayer()
@@ -101,6 +119,10 @@ public class Game
             turn_count_player2 ++;
             currentPlayer = player1;
          }
+        view.nextTurn();
     }
+
+    public List<String>getInformations(){return informations ; }
+    public void addInformations(String string){informations.add(string) ; }
 }
 

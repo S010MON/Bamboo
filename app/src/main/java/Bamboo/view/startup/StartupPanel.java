@@ -30,16 +30,16 @@ public class StartupPanel extends JPanel
         setVisible(true);
     }
 
+    public void startGame()
+    {
+        view.runGame(getSettings());
+    }
+
     public Settings getSettings() {
         return new Settings(
                 new Human(settingsPanel.getConfigurationPanel().getNamePlayer1(), settingsPanel.getConfigurationPanel().getPlayer1Color()),
                 new Human(settingsPanel.getConfigurationPanel().getNamePlayer2(), settingsPanel.getConfigurationPanel().getPlayer2Color()),
-                1); // TODO Change back to 5 !!!
-    }
-
-    public void startGame()
-    {
-        view.runGame(settings);
+                5);
     }
 
     private  void removeComponentCenter(){
@@ -67,5 +67,4 @@ public class StartupPanel extends JPanel
     {
         return view;
     }
-
 }

@@ -1,9 +1,8 @@
-package Bamboo.view.startup;
+package Bamboo.view.resources;
 
-import Bamboo.view.resources.ResourceLoader;
-
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.BorderFactory;
+import java.awt.Color;
 
 public class Button extends JButton
 {
