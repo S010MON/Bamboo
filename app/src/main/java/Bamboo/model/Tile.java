@@ -56,19 +56,23 @@ public class Tile
         return vector;
     }
 
-    public Color getOutline(){
+    public Color getOutline()
+    {
         return outline;
     }
 
-    public void setOutline(Color greenOutline){
+    public void setOutline(Color greenOutline)
+        
         outline = greenOutline;
     }
 
-    public void setCircle_thickness(BasicStroke ct) {
+    public void setCircle_thickness(BasicStroke ct)
+    {
         circle_thickness = ct;
     }
 
-    public BasicStroke getCircle_thickness() {
+    public BasicStroke getCircle_thickness()
+    {
         return circle_thickness;
     }
 
@@ -86,6 +90,14 @@ public class Tile
         else
             return "WHITE";
     }
-    public void color(){isCouloured = true;}
-    public boolean isCouloured(){return isCouloured;}
+    
+    public void color()
+    {
+        isCouloured = true;
+    }
+    
+    public boolean isCouloured()
+    {
+        return isCouloured;
+    }
 }
