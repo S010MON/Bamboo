@@ -44,7 +44,6 @@ public class TileClickListener implements MouseListener
                         tile.color();
                         System.out.println(game.getInformations().toString()) ;
                     }
-
                 }
             }
         }
