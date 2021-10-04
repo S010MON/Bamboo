@@ -4,7 +4,6 @@ import Bamboo.controller.AxialVector;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
-import Bamboo.view.RollOverListener;
 import Bamboo.view.resources.Colour;
 
 import javax.swing.JPanel;
@@ -26,6 +25,7 @@ public class Canvas extends JPanel
     private int offsetY = 0;
 
     private Color background = Colour.background();
+    private RollOverListener rollOverListener;
 
     public Canvas(Dimension screenSize, Game game)
     {
@@ -34,7 +34,8 @@ public class Canvas extends JPanel
         centreY = (screenSize.height/2) - circle_radius - offsetY;
         setSize(screenSize.width, screenSize.height);
         addMouseListener(new TileClickListener(game, this));
-        addMouseMotionListener(new RollOverListener(game,this));
+        rollOverListener = new RollOverListener(game, this);
+        addMouseMotionListener(rollOverListener);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class Canvas extends JPanel
         {
             colorTile(tile, tile.getColour(), g2d);
         }
-        Tile rollover = RollOverListener.getRolloverTile();
+        Tile rollover = rollOverListener.getRolloverTile();
         if(rollover != null){
             Color color;
             if(game.getGrid().isLegalMove(rollover.getVector(), game.getCurrentPlayer().getColor())){

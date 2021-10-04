@@ -1,20 +1,18 @@
 package Bamboo;
 
 import Bamboo.controller.Vector;
-import Bamboo.model.Grid;
-import Bamboo.model.GridGraphImp;
+import Bamboo.model.*;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import Bamboo.model.Tile;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GridGraphImpTest
 {
-    @Test void testGridWithRadius2()
+    @Test void test_grid_with_radius_2()
     {
         int radius = 2;
         int diameter = (2 * radius) + 1;
@@ -41,7 +39,7 @@ public class GridGraphImpTest
      * Off-Centre   [-1,1,0] -> [0,0,0],[0,1,-1],[-1,2,-1],[-1,0,1],[-2,1,1],[-2,2,0]
      * Edge         [-2,2,0] -> [-1,2,-1],[-1,1,0],[-2,1,1]
      */
-    @Test void testGetAllNeighbours_centre()
+    @Test void test_get_all_neighbours_centre()
     {
         ArrayList<Tile> exp = new ArrayList<>();
         exp.add(new Tile(new Vector( 0, 1,-1)));
@@ -61,7 +59,7 @@ public class GridGraphImpTest
         }
     }
 
-    @Test void testGetAllNeighbours_offCentre()
+    @Test void test_get_all_neighbours_offCentre()
     {
         ArrayList<Tile> exp = new ArrayList<>();
         exp.add(new Tile(new Vector( 0, 0, 0))); //
@@ -81,7 +79,7 @@ public class GridGraphImpTest
         }
     }
 
-    @Test void testGetAllNeighbours_edge()
+    @Test void test_get_all_neighbours_edge()
     {
         ArrayList<Tile> exp = new ArrayList<>();
         exp.add(new Tile(new Vector(-1, 2,-1)));

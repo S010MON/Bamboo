@@ -1,9 +1,7 @@
-package Bamboo.view;
+package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
-import Bamboo.controller.Vector;
 import Bamboo.controller.VectorConverter;
-import Bamboo.view.game.Canvas;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
 
@@ -12,10 +10,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
 
-public class RollOverListener implements MouseMotionListener {
-
-    private static Tile rolledOverTile = new Tile(new Vector(20,20,20));
-    private int legality_indication_threshold = 0;
+public class RollOverListener implements MouseMotionListener
+{
+    private Tile rolledOverTile = null;
 
     private Game game;
     private Canvas canvas;
@@ -26,10 +23,6 @@ public class RollOverListener implements MouseMotionListener {
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
     public void mouseMoved(MouseEvent e) {
 
         int X = e.getX();
@@ -55,14 +48,14 @@ public class RollOverListener implements MouseMotionListener {
 
                 canvas.repaint();
             }
-
         }
-
     }
 
-    public static Tile getRolloverTile(){
+    public Tile getRolloverTile(){
         return rolledOverTile;
     }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {}
 }
 

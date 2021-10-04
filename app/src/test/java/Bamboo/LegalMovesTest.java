@@ -3,154 +3,96 @@ package Bamboo;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 
 import java.awt.*;
 
-public class LegalMovesTest {
-    @Test void testAll_legal_moves(){
-        Grid grid = makeMockup(2,0,0,1,0);
-        Game game = new Game(grid);
-        assertEquals(GameLogic.getLegalMoves(game, Color.RED).size(),grid.getAllTiles().size());
-    }
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-    @Test void test_one_nonextendable_group(){
-        Grid grid = makeMockup(2,3,0,1,0);
-        Game game = new Game(grid);
-        assertEquals(GameLogic.getLegalMoves(game, Color.RED).size(), grid.getAllTiles().size() - 7);
-    }
-
-    @Test void testOneTile(){
-        Grid grid = makeMockup(2,1,0,1,0);
-        Game game = new Game(grid);
-        assertEquals(GameLogic.getLegalMoves(game, Color.RED).size(),15);
-    }
-
-    @Test void testRealWorldScenario_red_fourOptions(){
-        int[] indices = {0,1,0,0,0,1,0,2,2,1,2,2,2,1,2,0,1,2,2};
-        Grid grid = specificMockup(2,indices);
-        Game game = new Game(grid);
-        for(Tile tile : GameLogic.getLegalMoves(game, Color.RED)){
-            System.out.println(tile.getVector());
+public class LegalMovesTest
+{
+    @Test void test_is_legal_array_empty()
+    {
+        Grid grid = new GridArrayImp(2);
+        for(Tile tile: grid.getAllTiles())
+        {
+            assertTrue(grid.isLegalMove(tile.getVector(), Color.RED));
         }
-        assertEquals(GameLogic.getLegalMoves(game, Color.RED).size(), 4);
     }
 
-    @Test void testOnlyExtensionViolatesMaxMembers(){
-        int[] indices = {0,0,2,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1};
-        Grid grid = specificMockup(2,indices);
-        Game game = new Game(grid);
-        assertEquals(GameLogic.getLegalMoves(game, Color.RED).size(), 0);
-    }
-
-    @Test void testWebsiteExample_1_red(){
-        int[] indices = {1,1,1,0,1
-                ,0,0,0,2,2,0,
-                1,0,2,1,0,1,0,
-                1,0,1,1,0,1,1,1,
-                0,2,2,2,1,0,2,1,2,
-                0,1,0,2,2,1,0,1,
-                0,2,2,1,0,0,0,
-                2,0,2,1,2,1,
-                1,0,0,1,0};
-        Grid grid = specificMockup(4,indices);
-        Game game = new Game(grid);
-        for(Tile tile : GameLogic.getLegalMoves(game, Color.RED)){
-            System.out.println(tile.getVector());
+    @Test void test_is_legal_graph_empty()
+    {
+        Grid grid = new GridGraphImp(2);
+        for(Tile tile: grid.getAllTiles())
+        {
+            assertTrue(grid.isLegalMove(tile.getVector(), Color.RED));
         }
-        assertEquals(GameLogic.getLegalMoves(game, Color.RED).size(), 12);
     }
 
-    @Test void testWebsiteExample_1_blue(){
-        int[] indices = {1,1,1,0,1
-                ,0,0,0,2,2,0,
-                1,0,2,1,0,1,0,
-                1,0,1,1,0,1,1,1,
-                0,2,2,2,1,0,2,1,2,
-                0,1,0,2,2,1,0,1,
-                0,2,2,1,0,0,0,
-                2,0,2,1,2,1,
-                1,0,0,1,0};
-        Grid grid = specificMockup(4,indices);
-        Game game = new Game(grid);
-        assertEquals(GameLogic.getLegalMoves(game, Color.BLUE).size(), 14);
-    }
-
-    @Test void testWebsiteExample_2_red(){
-        int[] indices = {1,1,1,0,1
-                ,0,0,0,2,2,0,
-                1,0,2,1,0,1,0,
-                1,0,1,1,0,1,1,1,
-                0,2,2,0,1,0,1,1,1,
-                0,1,0,2,2,1,0,1,
-                0,2,2,1,0,0,0,
-                0,0,2,1,0,1,
-                1,0,0,1,0};
-        Grid grid = specificMockup(4,indices);
-        Game game = new Game(grid);
-        assertEquals(GameLogic.getLegalMoves(game, Color.RED).size(), 2);
-    }
-
-    @Test void testWebsiteExample_2_blue(){
-        int[] indices = {1,1,1,0,1
-                ,0,0,0,2,2,0,
-                1,0,2,1,0,1,0,
-                1,0,1,1,0,1,1,1,
-                0,2,2,0,1,0,1,1,1,
-                0,1,0,2,2,1,0,1,
-                0,2,2,1,0,0,0,
-                0,0,2,1,0,1,
-                1,0,0,1,0};
-        Grid grid = specificMockup(4,indices);
-        Game game = new Game(grid);
-        assertEquals(GameLogic.getLegalMoves(game, Color.BLUE).size(), 4);
-    }
-
-    @Test void testRealGrid_red(){
-        int[] indices = {0,0,2,2,1,1,2,2,2,2,0,0,1,2,1,2,2,0,0};
-        Grid grid = specificMockup(2, indices);
-        Game game = new Game(grid);
-        assertEquals(GameLogic.getLegalMoves(game, Color.RED).size(), 8);
-    }
-
-    @Test void testRealGrid_blue(){
-        int[] indices = {0,0,2,2,1,1,2,2,2,2,0,0,1,2,1,2,2,0,0};
-        Grid grid = specificMockup(2, indices);
-        Game game = new Game(grid);
-        assertEquals(GameLogic.getLegalMoves(game, Color.BLUE).size(), 6);
-    }
-
-    public Grid makeMockup(int size, int red, int blue, int red_groups, int blue_groups){
-        Grid grid = new GridArrayImp(size);
-        int max_red_group_size = red_groups;
-        int red_counter = 0;
-        int red_group_counter = 0;
-        int blue_counter = 0;
-        int blue_group_counter = 1;
-        List<Tile> tiles = grid.getAllTiles();
-        for(int i = 0; i < tiles.size(); i++){
-            Vector vector = tiles.get(i).getVector();
-
-            if(red_counter < red)
-            {
-                grid.setTile(vector, Color.RED);
-                red_counter++;
-            }
-            red_group_counter ++;
-
+    @Test void test_is_legal_array_full()
+    {
+        Grid grid = new GridArrayImp(2);
+        for(Tile tile: grid.getAllTiles())
+        {
+            grid.setTile(tile.getVector(), Color.BLUE);
+            assertFalse(grid.isLegalMove(tile.getVector(), Color.RED));
         }
-        return grid;
     }
 
-    public Grid specificMockup(int size, int[] indices){
-        Grid grid = new GridArrayImp(size);
-        Color[] colors = {Color.RED, Color.BLUE, Color.WHITE};
-        List<Tile> tiles = grid.getAllTiles();
-        for(int i = 0; i < tiles.size(); i++){
-            Vector vector = tiles.get(i).getVector();
-            grid.setTile(vector, colors[indices[i]]);
+    @Test void test_is_legal_graph_full()
+    {
+        Grid grid = new GridGraphImp(2);
+        for(Tile tile: grid.getAllTiles())
+        {
+            grid.setTile(tile.getVector(), Color.BLUE);
+            assertFalse(grid.isLegalMove(tile.getVector(), Color.RED));
         }
-        return grid;
+    }
+
+    @Test void test_is_legal_array_adjacent_same_colour()
+    {
+        Grid grid = new GridArrayImp(2);
+        grid.setTile(new Vector(0,0,0), Color.BLUE);
+        assertFalse(grid.isLegalMove(new Vector(1,-1,0), Color.BLUE));
+    }
+
+    @Test void test_is_legal_graph_adjacent_same_colour()
+    {
+        Grid grid = new GridGraphImp(2);
+        grid.setTile(new Vector(0,0,0), Color.BLUE);
+        assertFalse(grid.isLegalMove(new Vector(1,-1,0), Color.BLUE));
+    }
+
+    @Test void test_is_legal_array_adjacent_different_colour()
+    {
+        Grid grid = new GridArrayImp(2);
+        grid.setTile(new Vector(0,0,0), Color.BLUE);
+        assertTrue(grid.isLegalMove(new Vector(1,-1,0), Color.RED));
+    }
+
+    @Test void test_is_legal_graph_adjacent_different_colour()
+    {
+        Grid grid = new GridGraphImp(2);
+        grid.setTile(new Vector(0,0,0), Color.BLUE);
+        assertTrue(grid.isLegalMove(new Vector(1,-1,0), Color.RED));
+    }
+
+    @Test void test_is_legal_array_group_too_big()
+    {
+        Grid grid = new GridArrayImp(2);
+        grid.setTile(new Vector(0,0,0), Color.BLUE);
+        grid.setTile(new Vector(1,-1,0), Color.BLUE);
+        grid.setTile(new Vector(1,0,-1), Color.BLUE);
+        assertFalse(grid.isLegalMove(new Vector(0,-1,1), Color.BLUE));
+    }
+
+    @Test void test_is_legal_graph_group_too_big()
+    {
+        Grid grid = new GridGraphImp(2);
+        grid.setTile(new Vector(0,0,0), Color.BLUE);
+        grid.setTile(new Vector(1,-1,0), Color.BLUE);
+        grid.setTile(new Vector(1,0,-1), Color.BLUE);
+        assertFalse(grid.isLegalMove(new Vector(0,-1,1), Color.BLUE));
     }
 }
 
