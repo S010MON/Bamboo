@@ -19,6 +19,7 @@ import java.util.List;
 public class RollOverListener implements MouseMotionListener {
 
     private static Tile rolledOverTile = new Tile(new Vector(20,20,20));
+
     private int legality_indication_threshold = 0;
 
     private Game game;
@@ -52,11 +53,13 @@ public class RollOverListener implements MouseMotionListener {
                 rolledOverTile = tile;
                 canvas.repaint();
                 break;
-            }
+
+            } else {
                 tile.setOutline(Color.black);
                 tile.setCircle_thickness(new BasicStroke(3));
                 rolledOverTile = null;
                 canvas.repaint();
+            }
         }
     }
 

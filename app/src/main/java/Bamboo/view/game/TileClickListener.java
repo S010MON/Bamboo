@@ -1,6 +1,7 @@
 package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
+import Bamboo.controller.GameLogic;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
@@ -39,7 +40,8 @@ public class TileClickListener implements MouseListener
                         && e.getY() < (y + r / 2)) {
                     game.placeNextAt(tile.getVector());
                     canvas.repaint();
-                    canvas.changeHintToFalse();
+                    if(GameLogic.is_legal_move(game,tile,game.getCurrentPlayer().getColor())){
+                    canvas.changeHintToFalse();}
                     if(!tile.isCouloured()){
                         game.getInformations().add(tile.toCSV()) ;
                         tile.color();

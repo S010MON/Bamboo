@@ -70,8 +70,9 @@ public class Canvas extends JPanel {
             previous_rollover = rollover;
             colorTile(rollover, color, g2d);
         } else {
-            colorTile(previous_rollover, Color.WHITE, g2d);
-
+            if (!previous_rollover.isCouloured()) {
+                colorTile(previous_rollover, Color.WHITE, g2d);
+            }
             if (hint) {
                 if (GameLogic.is_legal_move(game, previous_rollover, game.getCurrentPlayer().getColor())) {
                     colorLegalTile(previous_rollover, g2d);

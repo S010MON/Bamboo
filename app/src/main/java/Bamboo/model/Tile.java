@@ -15,6 +15,7 @@ public class Tile
     private BasicStroke circle_thickness;
     private ArrayList<Tile> groupNeighbours;
     private boolean isCouloured ;
+    private boolean isOn ;
 
     public Tile(Vector vector)
     {
@@ -24,6 +25,7 @@ public class Tile
         this.circle_thickness = new BasicStroke(3);
         this.groupNeighbours = new ArrayList<>();
         this.isCouloured = false ;
+        this.isOn = false ;
     }
 
     public void setColour(Color color)
@@ -100,4 +102,6 @@ public class Tile
     {
         return isCouloured;
     }
-}
+
+    }
+
