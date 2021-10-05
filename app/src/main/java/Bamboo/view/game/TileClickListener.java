@@ -7,27 +7,23 @@ import Bamboo.model.Game;
 import Bamboo.model.Tile;
 import Bamboo.view.game.Canvas;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class TileClickListener implements MouseListener
-{
+public class TileClickListener implements MouseListener {
     private Game game;
     private Canvas canvas;
 
-    public TileClickListener(Game game, Canvas canvas)
-    {
+    public TileClickListener(Game game, Canvas canvas) {
         this.game = game;
         this.canvas = canvas;
     }
 
     @Override
-    public void mouseClicked(MouseEvent e)
-    {
-        if (game.currentPlayerHuman())
-        {
-            for (Tile tile : game.getAllTiles())
-            {
+    public void mouseClicked(MouseEvent e) {
+        if (game.currentPlayerHuman()) {
+            for (Tile tile : game.getAllTiles()) {
                 AxialVector v = VectorConverter.convertToAxial(tile.getVector());
                 v = VectorConverter.doubleAndOffsetOddRows(v);
                 int r = canvas.getCircle_radius();
@@ -40,12 +36,15 @@ public class TileClickListener implements MouseListener
                         && e.getY() < (y + r / 2)) {
                     game.placeNextAt(tile.getVector());
                     canvas.repaint();
-                    if(GameLogic.is_legal_move(game,tile,game.getCurrentPlayer().getColor())){
-                    canvas.changeHintToFalse();}
-                    if(!tile.isCouloured()){
-                        game.getInformations().add(tile.toCSV()) ;
-                        tile.color();
-                        System.out.println(game.getInformations().toString()) ;
+                    if (GameLogic.is_legal_move(game, tile, game.getCurrentPlayer().getColor())) {
+                        canvas.changeHintToFalse();
+                    }
+                    if (!tile.isCouloured()) {
+                        if (tile.getColour() != Color.WHITE) {
+                            game.getInformations().add(tile.toCSV());
+                            tile.color();
+                            System.out.println(game.getInformations().toString());
+                        }
                     }
                 }
             }
@@ -53,15 +52,19 @@ public class TileClickListener implements MouseListener
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    }
 
     @Override
-    public void mouseReleased(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {
+    }
 
     @Override
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+    }
 
     @Override
-    public void mouseExited (MouseEvent e){}
+    public void mouseExited(MouseEvent e) {
+    }
 
- }
+}
