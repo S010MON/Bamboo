@@ -78,6 +78,12 @@ public class Canvas extends JPanel
         }
         else{
             colorTile(previous_rollover, previous_rollover.getColour(), g2d);
+
+            if (hint) {
+                if (game.getGrid().isLegalMove(previous_rollover.getVector(), game.getCurrentPlayer().getColor())) {
+                    colorLegalTiles(previous_rollover, g2d);
+                }
+            }
         }
     }
 
