@@ -4,11 +4,12 @@ import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Game
 {
+    private static final boolean LOG_MOVES = true;
+
     private int turn_count_player1 = 0;
     private int turn_count_player2 = 0;
     private Grid grid;
@@ -17,7 +18,6 @@ public class Game
     private Agent currentPlayer;
     private MainFrame view;
     private Settings settings;
-    private List<String> informations ;
 
     public Game(Settings settings, MainFrame view)
     {
@@ -27,7 +27,6 @@ public class Game
         this.view = view;
         this.currentPlayer = settings.getCurrentPlayer();
         this.settings = settings;
-        this.informations = new ArrayList<String>() ;
 
         if(settings.tiles != null)
         {
@@ -43,12 +42,12 @@ public class Game
         if(grid.isLegalMove(v, currentPlayer.getColor()))
         {
             grid.setTile(v, currentPlayer.getColor());
+
+            if(LOG_MOVES) Logger.logMove(v, currentPlayer.getColor());
+
             System.out.println(grid.evaluateGame(currentPlayer.getColor()));
             toggleTurn();
         }
-        else
-            System.out.println("Illegal Move");
-        // TODO Add user warning.
 
         if(grid.isFinished(currentPlayer.getColor())) {
             System.out.println("Game ended");
@@ -102,9 +101,8 @@ public class Game
     }
 
     public int getTurn_count(Agent player){
-        if(player.getColor() == Color.RED){
+        if(player.getColor() == Color.RED)
             return turn_count_player1;
-        }
         else
             return turn_count_player2;
     }
@@ -121,8 +119,5 @@ public class Game
          }
         view.nextTurn();
     }
-
-    public List<String>getInformations(){return informations ; }
-    public void addInformations(String string){informations.add(string) ; }
 }
 

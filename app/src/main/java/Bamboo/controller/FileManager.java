@@ -148,12 +148,6 @@ public class FileManager
         }
 
         writer.write("EOT\n");
-
-        writer.write("\n# Game Informations in Order \n#") ;
-        for(int i = 0 ; i<game.getInformations().size() ; i++){
-            writer.write("\n");
-            writer.write(game.getInformations().get(i));
-        }
         writer.close();
     }
 
