@@ -77,7 +77,7 @@ public class Canvas extends JPanel
             colorTile(rollover, color, g2d);
         }
         else{
-            colorTile(previous_rollover, Color.WHITE, g2d);
+            colorTile(previous_rollover, previous_rollover.getColour(), g2d);
         }
     }
 
