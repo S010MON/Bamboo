@@ -2,6 +2,7 @@ package Bamboo.view.startup;
 
 import Bamboo.view.resources.Button;
 import Bamboo.view.resources.Colour;
+import Bamboo.view.resources.ResourceLoader;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
