@@ -14,6 +14,8 @@ public class StartupPanel extends JPanel
     private MainFrame view;
     private Settings settings = Settings.getDefaultSetting();
 
+    private int size = 5;
+
     public StartupPanel(MainFrame view)
     {
         this.view = view;
@@ -39,7 +41,7 @@ public class StartupPanel extends JPanel
         return new Settings(
                 new Human(settingsPanel.getConfigurationPanel().getNamePlayer1(), settingsPanel.getConfigurationPanel().getPlayer1Color()),
                 new Human(settingsPanel.getConfigurationPanel().getNamePlayer2(), settingsPanel.getConfigurationPanel().getPlayer2Color()),
-                5);
+                settingsPanel.getBoardSize());
     }
 
     private  void removeComponentCenter(){
@@ -67,4 +69,5 @@ public class StartupPanel extends JPanel
     {
         return view;
     }
+
 }
