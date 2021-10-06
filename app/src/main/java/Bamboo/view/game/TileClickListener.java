@@ -45,9 +45,7 @@ public class TileClickListener implements MouseListener
                     canvas.repaint();
 
                     if(!tile.isCouloured()){
-                        game.getInformations().add(tile.toCSV()) ;
                         tile.color();
-                        System.out.println(game.getInformations().toString()) ;
                     }
                 }
             }
