@@ -17,11 +17,11 @@ public class Game
     private Agent currentPlayer;
     private MainFrame view;
     private Settings settings;
-    private List<String> informations ;
+    private List<String> informations;
 
     public Game(Settings settings, MainFrame view)
     {
-        this.grid = new GridGraphImp(settings.boardSize);
+        this.grid = new GridArrayImp(settings.boardSize);
         this.player1 = settings.player1;
         this.player2 = settings.player2;
         this.view = view;
@@ -45,38 +45,22 @@ public class Game
             grid.setTile(v, currentPlayer.getColor());
             System.out.println(grid.evaluateGame(currentPlayer.getColor()));
             toggleTurn();
-        }
-        else
-            System.out.println("Illegal Move");
-        // TODO Add user warning.
 
-        if(grid.isFinished(currentPlayer.getColor())) {
-            System.out.println("Game ended");
-            view.endGame(currentPlayer);
+            if(grid.isFinished(currentPlayer.getColor())) {
+                System.out.println("Game ended");
+                view.endGame(currentPlayer);
+            }
         }
     }
 
-    public Game(Grid grid){
-        this.grid = grid;
+    public int getNumberOfGroupsForPlayer(Agent player)
+    {
+            return grid.getAllGroupsOfColour(player.getColor()).size();
     }
 
-    public Game(int size){
-        this.grid = new GridGraphImp(size);
-    }
-
-    public int getNumberOfGroupsForPlayer(Agent player){
-        if(player.equals(player1))
-            return 1;
-        else
-            return 2;
-    }
-
-    public int getSizeOfMaxOfGroups(Agent player){
-
-        if(player.equals(player1))
-            return 3;
-        else
-            return 5;
+    public int getSizeOfMaxOfGroups(Agent player)
+    {
+            return 2; // TODO add implementation
     }
 
     public Agent getCurrentPlayer()
@@ -102,9 +86,8 @@ public class Game
     }
 
     public int getTurn_count(Agent player){
-        if(player.getColor() == Color.RED){
+        if(player.getColor() == Color.RED)
             return turn_count_player1;
-        }
         else
             return turn_count_player2;
     }
@@ -122,7 +105,14 @@ public class Game
         view.nextTurn();
     }
 
-    public List<String>getInformations(){return informations ; }
-    public void addInformations(String string){informations.add(string) ; }
+    public List<String>getInformations()
+    {
+        return informations ;
+    }
+
+    public void addInformations(String string)
+    {
+        informations.add(string) ;
+    }
 }
 

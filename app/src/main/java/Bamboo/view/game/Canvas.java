@@ -122,12 +122,14 @@ public class Canvas extends JPanel
             g2d.drawOval(x, y, circle_radius, circle_radius);
         }
     }
+
     public void changeHint() {
         if (!hint)
             hint = true;
         else
-            hint = false ;
+            hint = false;
     }
+
     public void changeHintToFalse(){
         hint = false ;
     }

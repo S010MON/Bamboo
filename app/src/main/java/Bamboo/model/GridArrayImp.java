@@ -43,6 +43,13 @@ public class GridArrayImp implements Grid
         emptyList.remove(tiles[v.getX()][v.getY()][v.getZ()]);
     }
 
+    private void unSetTile(Vector v)
+    {
+        v = addOffset(v);
+        tiles[v.getX()][v.getY()][v.getZ()].setColour(Color.WHITE);
+        emptyList.add(tiles[v.getX()][v.getY()][v.getZ()]);
+    }
+
     @Override
     public List<Tile> getAllNeighbours(Vector v)
     {
@@ -160,7 +167,7 @@ public class GridArrayImp implements Grid
             return false;
         setTile(vector, color);
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
-        setTile(vector, Color.WHITE);
+        unSetTile(vector);
         int noOfGroups = Math.max(groups.size(), 1);
         int maxGroup = getMaxGroupSize(groups);
         return maxGroup <= noOfGroups;
