@@ -22,7 +22,7 @@ public class Canvas extends JPanel
     private BasicStroke circle_thickness = new BasicStroke(2);
     private static int centreX;
     private static int centreY;
-    private int offsetX = 100;
+    private int offsetX = 90;
     private int offsetY = 0;
     private boolean hint ;
 
@@ -77,7 +77,13 @@ public class Canvas extends JPanel
             colorTile(rollover, color, g2d);
         }
         else{
-            colorTile(previous_rollover, Color.WHITE, g2d);
+            colorTile(previous_rollover, previous_rollover.getColour(), g2d);
+
+            if (hint) {
+                if (game.getGrid().isLegalMove(previous_rollover.getVector(), game.getCurrentPlayer().getColor())) {
+                    colorLegalTiles(previous_rollover, g2d);
+                }
+            }
         }
     }
 
@@ -122,12 +128,14 @@ public class Canvas extends JPanel
             g2d.drawOval(x, y, circle_radius, circle_radius);
         }
     }
+
     public void changeHint() {
         if (!hint)
             hint = true;
         else
-            hint = false ;
+            hint = false;
     }
+
     public void changeHintToFalse(){
         hint = false ;
     }

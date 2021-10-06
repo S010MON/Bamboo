@@ -1,6 +1,7 @@
 package Bamboo.model;
 
 import Bamboo.controller.Vector;
+import Bamboo.view.startup.SettingsPanel;
 
 import java.awt.Color;
 import java.lang.reflect.Array;
@@ -18,7 +19,12 @@ public class GridArrayImp implements Grid
 
     public GridArrayImp(int radius)
     {
+
+        //radius = 1;
         width = (radius * 2) + 1;
+        //SettingsPanel slider = new SettingsPanel();
+
+        //width = slider.getSliderValue();
         offset = radius;
         vectors = new ArrayList<>();
         tileList = new ArrayList<>();
@@ -41,6 +47,13 @@ public class GridArrayImp implements Grid
         v = addOffset(v);
         tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
         emptyList.remove(tiles[v.getX()][v.getY()][v.getZ()]);
+    }
+
+    private void unSetTile(Vector v)
+    {
+        v = addOffset(v);
+        tiles[v.getX()][v.getY()][v.getZ()].setColour(Color.WHITE);
+        emptyList.add(tiles[v.getX()][v.getY()][v.getZ()]);
     }
 
     @Override
@@ -160,7 +173,7 @@ public class GridArrayImp implements Grid
             return false;
         setTile(vector, color);
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
-        setTile(vector, Color.WHITE);
+        unSetTile(vector);
         int noOfGroups = Math.max(groups.size(), 1);
         int maxGroup = getMaxGroupSize(groups);
         return maxGroup <= noOfGroups;

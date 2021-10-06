@@ -21,7 +21,7 @@ public class Game
 
     public Game(Settings settings, MainFrame view)
     {
-        this.grid = new GridGraphImp(settings.boardSize);
+        this.grid = new GridArrayImp(settings.boardSize);
         this.player1 = settings.player1;
         this.player2 = settings.player2;
         this.view = view;
@@ -48,34 +48,21 @@ public class Game
             System.out.println(grid.evaluateGame(currentPlayer.getColor()));
             toggleTurn();
         }
-
-        if(grid.isFinished(currentPlayer.getColor())) {
+        if(grid.isFinished(currentPlayer.getColor()))
+        {
             System.out.println("Game ended");
             view.endGame(currentPlayer);
         }
     }
 
-    public Game(Grid grid){
-        this.grid = grid;
+    public int getNumberOfGroupsForPlayer(Agent player)
+    {
+            return grid.getAllGroupsOfColour(player.getColor()).size();
     }
 
-    public Game(int size){
-        this.grid = new GridGraphImp(size);
-    }
-
-    public int getNumberOfGroupsForPlayer(Agent player){
-        if(player.equals(player1))
-            return 1;
-        else
-            return 2;
-    }
-
-    public int getSizeOfMaxOfGroups(Agent player){
-
-        if(player.equals(player1))
-            return 3;
-        else
-            return 5;
+    public int getSizeOfMaxOfGroups(Agent player)
+    {
+            return 2; // TODO add implementation
     }
 
     public Agent getCurrentPlayer()

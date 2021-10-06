@@ -42,9 +42,11 @@ public class RollOverListener implements MouseMotionListener
 
                 rolledOverTile = tile;
                 canvas.repaint();
+                break ;
             } else {
                 tile.setOutline(Color.black);
                 tile.setCircle_thickness(new BasicStroke(3));
+                rolledOverTile = null ;
 
                 canvas.repaint();
             }
