@@ -6,10 +6,7 @@ import Bamboo.model.Tile;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.HashMap;
 
 public class FileManager
@@ -35,7 +32,7 @@ public class FileManager
     public static void save(Game game)
     {
         try {
-            String filePath = getFilePath(createFileName());
+            String filePath = FilePath.getFilePath(createFileName());
             File file = new File(filePath);
             if (!file.exists())
                 file.createNewFile();
@@ -49,7 +46,7 @@ public class FileManager
 
     private static File promptUserForFile() throws FileNotFoundException
     {
-        String openAtPath = getFilePath("");
+        String openAtPath = FilePath.getFilePath("");
         JFileChooser chooser = new JFileChooser(openAtPath);
         chooser.setDialogTitle("Choose a saved game: ");
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -151,12 +148,6 @@ public class FileManager
         }
 
         writer.write("EOT\n");
-
-        writer.write("\n# Game Informations in Order \n#") ;
-        for(int i = 0 ; i<game.getInformations().size() ; i++){
-            writer.write("\n");
-            writer.write(game.getInformations().get(i));
-        }
         writer.close();
     }
 
@@ -172,15 +163,6 @@ public class FileManager
         return fileName.toString();
     }
 
-    /**
-     * Creates a file path to saved games with the correct file name appended
-     */
-    private static String getFilePath(String fileName)
-    {
-        FileSystem fileSystem = FileSystems.getDefault();
-        String path = fileSystem.getPath("").toAbsolutePath().toString();
-        return path.concat(internalPath + fileName);
-    }
 
     private static void showDialogIOError(String message)
     {
