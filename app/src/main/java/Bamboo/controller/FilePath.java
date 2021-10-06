@@ -2,6 +2,7 @@ package Bamboo.controller;
 
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
+import java.util.Locale;
 
 public class FilePath
 {
@@ -16,7 +17,7 @@ public class FilePath
     {
         FileSystem fileSystem = FileSystems.getDefault();
         String path = fileSystem.getPath("").toAbsolutePath().toString();
-        String os = System.getProperty("os.name");
+        String os = System.getProperty("os.name").toLowerCase();
         if(os.contains("nix") || os.contains("nux") || os.contains("aix"))
             return path.concat(internalPathUnix + fileName);
         if(os.contains("mac"))

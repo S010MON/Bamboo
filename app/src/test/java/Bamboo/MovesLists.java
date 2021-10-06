@@ -21,7 +21,7 @@ public class MovesLists
             String line = reader.readLine();
 
             do{
-                System.out.println(line);
+
                 String[] subString = line.split(",");
                 int x = Integer.parseInt(subString[0]);
                 int y = Integer.parseInt(subString[1]);
