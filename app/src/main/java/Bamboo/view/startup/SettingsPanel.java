@@ -13,19 +13,24 @@ import java.util.Hashtable;
 
 public class SettingsPanel extends JPanel {
 
-    private JPanel buttonPanel ;
-    private Button hvh ;
-    private Button hva ;
-    private Button ava ;
-    private ConfigurationPanel configurationPanel ;
+    private JPanel buttonPanel;
+    private Button hvh;
+    private Button hva;
+    private Button ava;
+    private ConfigurationPanel configurationPanel;
     private JSlider slider;
     private Image boardPicture;
     private int boardSize = 5;
 
-    public SettingsPanel()
-    {
+    private JLabel labelImage2;
+    private JLabel labelImage3;
+    private JLabel labelImage4;
+    private JLabel labelImage5;
+
+
+    public SettingsPanel() {
         setBackground(Colour.background());
-        setLayout(new GridLayout(3,3));
+        setLayout(new GridLayout(4, 3));
         setVisible(true);
 
         configurationPanel = new ConfigurationPanel();
@@ -35,13 +40,14 @@ public class SettingsPanel extends JPanel {
 
         hvh = new Bamboo.view.resources.Button("btnMulti.png");
         ////////////
-        slider = new JSlider(JSlider.HORIZONTAL, 2,7,boardSize);
-        boardPicture = ResourceLoader.getImage("BoardSize5.PNG");
+        slider = new JSlider(JSlider.HORIZONTAL, 2, 5, boardSize);
         slider.addChangeListener(e -> {
             JSlider src = (JSlider) e.getSource();
             if (src.getValueIsAdjusting())
                 boardSize = slider.getValue();
-                changeBoardImage(boardSize);
+            changeBoardImage2(boardSize);
+            System.out.println(boardSize);
+
         });
 
         slider.setPaintLabels(true);
@@ -58,16 +64,16 @@ public class SettingsPanel extends JPanel {
 
         ///////////////////
 
-        hvh = new Button("btnMulti.png") ;
-        hvh.setBounds(100,50,145,55);
+        hvh = new Button("btnMulti.png");
+        hvh.setBounds(100, 50, 145, 55);
         hvh.addActionListener(e -> configurationPanel.setVisible(true));
 
         hva = new Bamboo.view.resources.Button("btnSingle.png");
-        hva.setBounds(250,50,145,55);
+        hva.setBounds(250, 50, 145, 55);
         hva.addActionListener(e -> configurationPanel.setVisible(false));
 
         ava = new Button("btnDemo.png");
-        ava.setBounds(400,50,145,55);
+        ava.setBounds(400, 50, 145, 55);
         hva.addActionListener(e -> configurationPanel.setVisible(false));
 
         buttonPanel.add(hvh);
@@ -77,37 +83,67 @@ public class SettingsPanel extends JPanel {
 
         add(configurationPanel);
 
-        add(buttonPanel) ;
-        add(slider) ;
-        add(configurationPanel) ;
+        JPanel panelImage = new JPanel();
+        panelImage.setBackground(Colour.background());
+
+        labelImage5 = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardsizeDim5.png")));
+        labelImage4 = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim4.png")));
+        labelImage4.setVisible(false);
+        labelImage3 = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim3.png")));
+        labelImage3.setVisible(false);
+        labelImage2 = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim2.png")));
+        labelImage2.setVisible(false);
+
+        panelImage.add(labelImage4);
+        panelImage.add(labelImage3);
+        panelImage.add(labelImage2);
+        panelImage.add(labelImage5);
+        add(panelImage);
+
+        add(slider);
+        add(configurationPanel);
     }
 
-    public ConfigurationPanel getConfigurationPanel(){
-        return configurationPanel ;
+    public ConfigurationPanel getConfigurationPanel() {
+        return configurationPanel;
     }
 
     public int getBoardSize() {
         return boardSize;
     }
 
-    //take a number and swap the image
-    private void changeBoardImage(int size){
-        switch (size){
-            case 2: boardPicture = ResourceLoader.getImage("BoardSize2.PNG");
-            break;
-            case 3: boardPicture = ResourceLoader.getImage("BoardSize3.PNG");
-            break;
-            case 4: boardPicture = ResourceLoader.getImage("BoardSize4.PNG");
-                break;
-            case 5: boardPicture = ResourceLoader.getImage("BoardSize5.PNG");
-                break;
-            case 6: boardPicture = ResourceLoader.getImage("BoardSize6.PNG");
-                break;
-            case 7: boardPicture = ResourceLoader.getImage("BoardSize7.PNG");
-                break;
-        }
-        repaint();
-    }
+    private void changeBoardImage2(int size) {
 
+        if (size == 2) {
+            labelImage3.setVisible(false);
+            labelImage4.setVisible(false);
+            labelImage5.setVisible(false);
+            labelImage2.setVisible(true);
+
+        }
+
+        if (size == 3) {
+            labelImage2.setVisible(false);
+            labelImage4.setVisible(false);
+            labelImage5.setVisible(false);
+            labelImage3.setVisible(true);
+
+        }
+
+        if (size == 4) {
+            labelImage2.setVisible(false);
+            labelImage3.setVisible(false);
+            labelImage5.setVisible(false);
+            labelImage4.setVisible(true);
+        }
+
+        if (size == 5) {
+            labelImage2.setVisible(false);
+            labelImage3.setVisible(false);
+            labelImage4.setVisible(false);
+            labelImage5.setVisible(true);
+
+        }
+    }
 
 }

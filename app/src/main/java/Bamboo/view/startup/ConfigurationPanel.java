@@ -62,7 +62,7 @@ public class ConfigurationPanel extends JPanel
         textFieldPanel.setLayout(null);
         textFieldPanel.setBackground(Colour.background());
         player1textField = new JTextField();
-        player1textField.setBounds(20,28,200,30);
+        player1textField.setBounds(20,8,200,30);
         textFieldPanel.add(player1textField);
         panel1.add(textFieldPanel);
 
@@ -81,7 +81,7 @@ public class ConfigurationPanel extends JPanel
         textFieldPanel2.setLayout(null);
         textFieldPanel2.setBackground(Colour.background());
         player2textField = new JTextField();
-        player2textField.setBounds(20,28,200,30);
+        player2textField.setBounds(20,8,200,30);
         textFieldPanel2.add(player2textField);
         panel2.add(textFieldPanel2);
 
@@ -117,7 +117,7 @@ public class ConfigurationPanel extends JPanel
         {
             super.paint(g);
             g.setColor(color);
-            g.fillOval(30,27,30,30);
+            g.fillOval(30,8,30,30);
         }
 
         public void changeColor()
