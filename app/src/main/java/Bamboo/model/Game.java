@@ -21,7 +21,7 @@ public class Game
 
     public Game(Settings settings, MainFrame view)
     {
-        this.grid = new GridArrayImp(settings.boardSize);
+        this.grid = new GridGraphImp(settings.boardSize);
         this.player1 = settings.player1;
         this.player2 = settings.player2;
         this.view = view;
