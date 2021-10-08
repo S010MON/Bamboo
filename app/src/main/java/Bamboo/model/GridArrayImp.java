@@ -231,6 +231,8 @@ public class GridArrayImp implements Grid
     }
 
     public int evaluateGame(Color color){
+        if(isFinished(color))
+            return -1000000;
         Color other_color;
         if(color == Color.RED)
             other_color = Color.BLUE;
