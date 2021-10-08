@@ -27,8 +27,9 @@ public class HelpPanel extends JPanel
         g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
         int x = 0;
         int y = 0;
-        int imgWidth = 1004;
-        int imgHeight = 822;
+        int imgWidth = 640;
+        int imgHeight = 660
+                ;
         BufferedImage img = ResourceLoader.getImage("rules.png");
         g2d.drawImage(img, x, y, imgWidth, imgHeight,null);
     }
