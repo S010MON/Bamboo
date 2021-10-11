@@ -1,10 +1,8 @@
 package Bamboo.model;
 
 import Bamboo.controller.Vector;
-import Bamboo.view.startup.SettingsPanel;
 
 import java.awt.Color;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +17,7 @@ public class GridArrayImp implements Grid
 
     public GridArrayImp(int radius)
     {
-
-        //radius = 1;
         width = (radius * 2) + 1;
-        //SettingsPanel slider = new SettingsPanel();
-
-        //width = slider.getSliderValue();
         offset = radius;
         vectors = new ArrayList<>();
         tileList = new ArrayList<>();
@@ -113,8 +106,85 @@ public class GridArrayImp implements Grid
         return hasLegalMove;
     }
 
+    @Override
+    public boolean isLegalMove(Vector vector, Color color)
+    {
+        if(getTile(vector).getColour() != Color.WHITE)
+            return false;
+        setTile(vector, color);
+        ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
+        unSetTile(vector);
+        int noOfGroups = Math.max(groups.size(), 1);
+        int maxGroup = getLargestSize(groups);
+        return maxGroup <= noOfGroups;
+    }
 
-    public Vector addOffset(Vector v)
+    @Override
+    public ArrayList<ArrayList<Vector>> getAllGroupsOfColour(Color color){
+        List<Tile> tiles = this.getAllTiles();
+        ArrayList<ArrayList<Vector>> groups = new ArrayList<>();
+        ArrayList<Vector> collected_tiles = new ArrayList<>();
+        for(Tile tile : tiles){
+            if(tile.getColour() == color){
+                if(!collected_tiles.contains(tile.getVector())){
+                    ArrayList<Vector> current_group = this.getGroup(tile.getVector());
+                    collected_tiles.addAll(current_group);
+                    groups.add(current_group);
+                }
+            }
+        }
+        return groups;
+    }
+
+    @Override
+    public ArrayList<Vector> getGroup(Vector vector)
+    {
+        ArrayList<Vector> group = new ArrayList<>();
+        group.add(vector);
+        int current_member_id = -1;
+        ArrayList<Vector> visited_tiles = new ArrayList<>();
+        List<Tile> neighbours;
+        Vector current_tile = vector;
+        while(visited_tiles.size() < group.size()){
+            current_member_id ++;
+            current_tile = group.get(current_member_id);
+            neighbours = this.getAllNeighbours(current_tile);
+            for(Tile nb : neighbours){
+                if(nb.getColour() == this.getTile(vector).getColour()){
+                    if(!group.contains(nb.getVector())){
+                        group.add(nb.getVector());
+                    }
+                }
+            }
+            visited_tiles.add(current_tile);
+        }
+        return group;
+    }
+
+    @Override
+    public int getMaxGroupSize(Color colour)
+    {
+        int maxSize = 0;
+        for(ArrayList<Vector> group: getAllGroupsOfColour(colour))
+        {
+            if(group.size() > maxSize)
+                maxSize = group.size();
+        }
+        return maxSize;
+    }
+
+    @Override
+    public int evaluateGame(Color color){
+        ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
+        int group_count = groups.size();
+        int value = group_count * group_count;
+        for(ArrayList<Vector> group : groups){
+            value -= group.size();
+        }
+        return value;
+    }
+
+    private Vector addOffset(Vector v)
     {
         int x = v.getX() + offset;
         int y = v.getY() + offset;
@@ -122,7 +192,7 @@ public class GridArrayImp implements Grid
         return new Vector(x, y, z);
     }
 
-    public Vector removeOffset(Vector v)
+    private Vector removeOffset(Vector v)
     {
         int x = v.getX() - offset;
         int y = v.getY() - offset;
@@ -166,60 +236,7 @@ public class GridArrayImp implements Grid
         return inBounds;
     }
 
-    @Override
-    public boolean isLegalMove(Vector vector, Color color)
-    {
-        if(getTile(vector).getColour() != Color.WHITE)
-            return false;
-        setTile(vector, color);
-        ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
-        unSetTile(vector);
-        int noOfGroups = Math.max(groups.size(), 1);
-        int maxGroup = getMaxGroupSize(groups);
-        return maxGroup <= noOfGroups;
-    }
-
-    public ArrayList<ArrayList<Vector>> getAllGroupsOfColour(Color color){
-        List<Tile> tiles = this.getAllTiles();
-        ArrayList<ArrayList<Vector>> groups = new ArrayList<>();
-        ArrayList<Vector> collected_tiles = new ArrayList<>();
-        for(Tile tile : tiles){
-            if(tile.getColour() == color){
-                if(!collected_tiles.contains(tile.getVector())){
-                    ArrayList<Vector> current_group = this.getGroup(tile.getVector());
-                    collected_tiles.addAll(current_group);
-                    groups.add(current_group);
-                }
-            }
-        }
-        return groups;
-    }
-
-    public ArrayList<Vector> getGroup(Vector vector)
-    {
-        ArrayList<Vector> group = new ArrayList<>();
-        group.add(vector);
-        int current_member_id = -1;
-        ArrayList<Vector> visited_tiles = new ArrayList<>();
-        List<Tile> neighbours;
-        Vector current_tile = vector;
-        while(visited_tiles.size() < group.size()){
-            current_member_id ++;
-            current_tile = group.get(current_member_id);
-            neighbours = this.getAllNeighbours(current_tile);
-            for(Tile nb : neighbours){
-                if(nb.getColour() == this.getTile(vector).getColour()){
-                    if(!group.contains(nb.getVector())){
-                        group.add(nb.getVector());
-                    }
-                }
-            }
-            visited_tiles.add(current_tile);
-        }
-        return group;
-    }
-
-    public int getMaxGroupSize(ArrayList<ArrayList<Vector>> groups)
+    private int getLargestSize(ArrayList<ArrayList<Vector>> groups)
     {
         int max = 1;
         for (ArrayList<Vector> group : groups)
@@ -228,15 +245,5 @@ public class GridArrayImp implements Grid
                 max = group.size();
         }
         return max;
-    }
-
-    public int evaluateGame(Color color){
-        ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
-        int group_count = groups.size();
-        int value = group_count * group_count;
-        for(ArrayList<Vector> group : groups){
-            value -= group.size();
-        }
-        return value;
     }
 }

@@ -62,7 +62,7 @@ public class Game
 
     public int getSizeOfMaxOfGroups(Agent player)
     {
-            return 2; // TODO add implementation
+        return grid.getMaxGroupSize(player.getColor());
     }
 
     public Agent getCurrentPlayer()
