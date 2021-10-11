@@ -63,6 +63,20 @@ public class GridGraphImp implements Grid
         remainingTiles.remove(v);
     }
 
+    private void unSetTile(Vector v)
+    {
+        for(Tile neighbour: getAllNeighbours(v))
+        {
+            if(neighbour.getColour() == Color.BLUE || neighbour.getColour() == Color.RED )
+            {
+                tiles.get(v).removeNeighbour(neighbour);
+                neighbour.removeNeighbour(tiles.get(v));
+            }
+        }
+        tiles.get(v).setColour(Color.WHITE);
+        remainingTiles.put(v, true);
+    }
+
     @Override
     public boolean isLegalMove(Vector vector, Color color)
     {
@@ -70,7 +84,7 @@ public class GridGraphImp implements Grid
             return false;
         setTile(vector, color);
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
-        setTile(vector, Color.WHITE);
+        unSetTile(vector);
         int noOfGroups = Math.max(groups.size(), 1);
         int maxGroup = getLargestSize(groups);
         return maxGroup <= noOfGroups;
