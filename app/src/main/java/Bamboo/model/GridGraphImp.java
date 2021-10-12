@@ -197,6 +197,17 @@ public class GridGraphImp implements Grid
 
     @Override
     public int evaluateGame(Color color){
+        if(isFinished(color))
+            return -1000000;
+        Color other_color;
+        if(color == Color.RED)
+            other_color = Color.BLUE;
+        else
+            other_color = Color.RED;
+        return evaluateGameForColor(color) - evaluateGameForColor(other_color);
+    }
+
+    int evaluateGameForColor(Color color){
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
         int group_count = groups.size();
         int value = group_count * group_count;
