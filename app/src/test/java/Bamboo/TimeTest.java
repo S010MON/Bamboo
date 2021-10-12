@@ -1,5 +1,6 @@
 package Bamboo;
 
+import Bamboo.controller.Logger;
 import Bamboo.controller.Vector;
 import Bamboo.model.Grid;
 import Bamboo.model.GridArrayImp;
@@ -13,19 +14,23 @@ public class TimeTest
 {
     public static void main(String[] args)
     {
-        int iterations = 100000;
+        int iterations = 10;
 
         Data graphData = new Data();
+        Logger.logToCSV("graphData.csv", Data.getCSVHeader());
         for(int i = 0; i < iterations; i++)
         {
             graphData = graphData.add(testGraphImp());
+            Logger.logToCSV("graphData.csv", graphData.toCSV());
         }
         System.out.println(iterations + " iteration Graph implementation: \n" + graphData.toString());
 
         Data arrayData = new Data();
+        Logger.logToCSV("arrayData.csv", Data.getCSVHeader());
         for(int i = 0; i < iterations; i++)
         {
             arrayData = arrayData.add(testArrayImp());
+            Logger.logToCSV("arrayData.csv", arrayData.toCSV());
         }
         System.out.println(iterations + " iterations of Array implementation: \n" + arrayData.toString());
     }
@@ -143,6 +148,7 @@ public class TimeTest
 
 class Data
 {
+    public long totalTime;
     public long sumInsertions;
     public long sumChecks;
     public long insertionMax;
@@ -152,6 +158,7 @@ class Data
 
     public Data()
     {
+        this.totalTime = 0;
         this.sumInsertions = 0;
         this.sumChecks = 0;
         this.insertionMax = 0;
@@ -167,6 +174,7 @@ class Data
                 long legalMax,
                 long legalMin)
     {
+        this.totalTime = sumChecks + sumInsertions;
         this.sumInsertions = sumInsertions;
         this.sumChecks = sumChecks;
         this.insertionMax = insertionMax;
@@ -188,11 +196,34 @@ class Data
     @Override
     public String toString()
     {
-        return "Total time for insertions: " + this.sumInsertions + "ms\n" +
+        return  "Total time: " + this.totalTime + "ms\n" +
+                "Total time for insertions: " + this.sumInsertions + "ms\n" +
                 "Max time for a single insertion: " + this.insertionMax + "ms\n" +
                 "Min time for a single insertion: " + this.insertionMin + "ms\n" +
                 "Total time for checks: " + this.sumChecks + "ms\n" +
                 "Max time for a single check: " + this.legalMax + "ms\n" +
                 "Min time for a single check: " + this.legalMin + "ms\n";
+    }
+
+    public String toCSV()
+    {
+        return  totalTime + "," +
+                sumInsertions + "," +
+                insertionMax + "," +
+                insertionMin + "," +
+                sumChecks + "," +
+                insertionMax + "," +
+                insertionMin;
+    }
+
+    public static String getCSVHeader()
+    {
+        return "totalTime,"+
+                "sumInsertions,"+
+                "insertionMax,"+
+                "insertionMin,"+
+                "sumChecks,"+
+                "insertionMax,"+
+                "insertionMin";
     }
 }

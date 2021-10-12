@@ -34,4 +34,23 @@ public class Logger
         else
             return 'w';
     }
+
+    public static void logToCSV(String fileName, String data)
+    {
+        try {
+
+            String filePath = FilePath.getFilePath(fileName);
+            File file = new File(filePath);
+
+            if (!file.exists())
+                file.createNewFile();
+
+            FileWriter writer = new FileWriter(file,true);
+            writer.write(data + "\n");
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Unable to write to CSV file");
+        }
+    }
 }
