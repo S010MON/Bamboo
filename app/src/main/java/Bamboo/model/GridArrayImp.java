@@ -103,8 +103,11 @@ public class GridArrayImp implements Grid
     {
         if(emptyList.size() == 0)
             return true;
-        for(Tile tile : emptyList)
+        System.out.println("Empty size: " + emptyList.size());
+        for(int i = 0; i < emptyList.size(); i++)
         {
+            Tile tile = emptyList.get(i);
+            System.out.println("Iterating " + tile.getVector());
             if(isLegalMove(tile.getVector(), currentColour))
                 return false;
         }
