@@ -45,12 +45,10 @@ public class Game
 
             if(LOG_MOVES) Logger.logMove(v, currentPlayer.getColor());
 
-            System.out.println(grid.evaluateGame(currentPlayer.getColor()));
             toggleTurn();
         }
         if(grid.isFinished(currentPlayer.getColor()))
         {
-            System.out.println("Game ended");
             view.endGame(currentPlayer);
         }
     }
