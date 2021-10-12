@@ -63,6 +63,20 @@ public class GridGraphImp implements Grid
         remainingTiles.remove(v);
     }
 
+    private void unSetTile(Vector v)
+    {
+        for(Tile neighbour: getAllNeighbours(v))
+        {
+            if(neighbour.getColour() == Color.BLUE || neighbour.getColour() == Color.RED )
+            {
+                tiles.get(v).removeNeighbour(neighbour);
+                neighbour.removeNeighbour(tiles.get(v));
+            }
+        }
+        tiles.get(v).setColour(Color.WHITE);
+        remainingTiles.put(v, true);
+    }
+
     @Override
     public boolean isLegalMove(Vector vector, Color color)
     {
@@ -70,9 +84,9 @@ public class GridGraphImp implements Grid
             return false;
         setTile(vector, color);
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
-        setTile(vector, Color.WHITE);
+        unSetTile(vector);
         int noOfGroups = Math.max(groups.size(), 1);
-        int maxGroup = getMaxGroupSize(groups);
+        int maxGroup = getLargestSize(groups);
         return maxGroup <= noOfGroups;
     }
 
@@ -119,6 +133,7 @@ public class GridGraphImp implements Grid
         return tiles.keySet().stream().toList();
     }
 
+    @Override
     public ArrayList<ArrayList<Vector>> getAllGroupsOfColour(Color color)
     {
         HashMap<Vector, Boolean> visited = new HashMap<>();
@@ -138,6 +153,7 @@ public class GridGraphImp implements Grid
         return groups;
     }
 
+    @Override
     public ArrayList<Vector> getGroup(Vector vector)
     {
         ArrayList<Vector> group = new ArrayList<>();
@@ -167,17 +183,19 @@ public class GridGraphImp implements Grid
         return group;
     }
 
-    public int getMaxGroupSize(ArrayList<ArrayList<Vector>> groups)
+    @Override
+    public int getMaxGroupSize(Color colour)
     {
-        int max = 1;
-        for (ArrayList<Vector> group : groups)
+        int maxSize = 0;
+        for(ArrayList<Vector> group: getAllGroupsOfColour(colour))
         {
-            if (group.size() > max)
-                max = group.size();
+            if(group.size() > maxSize)
+                maxSize = group.size();
         }
-        return max;
+        return maxSize;
     }
 
+    @Override
     public int evaluateGame(Color color){
         if(isFinished(color))
             return -1000000;
@@ -198,6 +216,18 @@ public class GridGraphImp implements Grid
         }
         return value;
     }
+
+    private int getLargestSize(ArrayList<ArrayList<Vector>> groups)
+    {
+        int max = 1;
+        for (ArrayList<Vector> group : groups)
+        {
+            if (group.size() > max)
+                max = group.size();
+        }
+        return max;
+    }
+
 
     private ArrayList<Vector> buildNeighbourList()
     {
