@@ -103,14 +103,12 @@ public class GridArrayImp implements Grid
     {
         if(emptyList.size() == 0)
             return true;
-
-        boolean hasLegalMove = false;
-        for(Tile tile: emptyList)
+        for(Tile tile : emptyList)
         {
             if(isLegalMove(tile.getVector(), currentColour))
-                hasLegalMove = true;
+                return false;
         }
-        return hasLegalMove;
+        return true;
     }
 
 
