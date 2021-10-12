@@ -14,7 +14,7 @@ public class TimeTest
 {
     public static void main(String[] args)
     {
-        int iterations = 10;
+        int iterations = 100000;
 
         Data graphData = new Data();
         Logger.logToCSV("graphData.csv", Data.getCSVHeader());
