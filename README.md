@@ -17,3 +17,20 @@ The last player to place a stone wins.
 
 
 A copy of the rules, with figures can be found here: http://www.marksteeregames.com/Bamboo_rules.pdf
+
+<br/>
+
+## Installation Instructions
+Clone the source code repository and navigate to /Bamboo then run:
+
+    $ gradle build
+    
+    $ gradle run
+
+<br/>
+
+## Dependencies
+Ensure the following are installed before running:
+- Java 16 or later
+- Gradle 7.1
+
