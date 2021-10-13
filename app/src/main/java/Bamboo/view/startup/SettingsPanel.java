@@ -46,8 +46,6 @@ public class SettingsPanel extends JPanel {
             if (src.getValueIsAdjusting())
                 boardSize = slider.getValue();
             changeBoardImage2(boardSize);
-            System.out.println(boardSize);
-
         });
 
         slider.setPaintLabels(true);
