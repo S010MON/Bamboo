@@ -18,6 +18,7 @@ public class SettingsPanel extends JPanel {
     private Button hva;
     private Button ava;
     private ConfigurationPanel configurationPanel;
+    private SingleConfigurationPanel singleConfigurationPanel ;
     private JSlider slider;
     private Image boardPicture;
     private int boardSize = 5;
@@ -34,6 +35,11 @@ public class SettingsPanel extends JPanel {
         setVisible(true);
 
         configurationPanel = new ConfigurationPanel();
+        singleConfigurationPanel = new SingleConfigurationPanel() ;
+        JPanel containerCP = new JPanel() ;
+
+
+
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
         buttonPanel.setLayout(null);
@@ -64,22 +70,28 @@ public class SettingsPanel extends JPanel {
 
         hvh = new Button("btnMulti.png");
         hvh.setBounds(100, 50, 145, 55);
-        hvh.addActionListener(e -> configurationPanel.setVisible(true));
+        hvh.addActionListener(e -> {
+            containerCP.setVisible(false);
+            containerCP.remove(singleConfigurationPanel);
+            containerCP.add(configurationPanel, BorderLayout.CENTER);
+            containerCP.setVisible(true);});
 
         hva = new Bamboo.view.resources.Button("btnSingle.png");
         hva.setBounds(250, 50, 145, 55);
-        hva.addActionListener(e -> configurationPanel.setVisible(false));
+        hva.addActionListener(e -> {
+            containerCP.setVisible(false);
+            containerCP.remove(configurationPanel);
+            containerCP.add(singleConfigurationPanel,BorderLayout.CENTER) ;
+            containerCP.setVisible(true);});
 
         ava = new Button("btnDemo.png");
         ava.setBounds(400, 50, 145, 55);
-        hva.addActionListener(e -> configurationPanel.setVisible(false));
+        ava.addActionListener(e -> {containerCP.setVisible(false);});
 
         buttonPanel.add(hvh);
         buttonPanel.add(hva);
         buttonPanel.add(ava);
         add(buttonPanel);
-
-        add(configurationPanel);
 
         JPanel panelImage = new JPanel();
         panelImage.setBackground(Colour.background());
@@ -99,7 +111,11 @@ public class SettingsPanel extends JPanel {
         add(panelImage);
 
         add(slider);
-        add(configurationPanel);
+
+        containerCP.setLayout(new BorderLayout());
+        containerCP.setVisible(false);
+        add(containerCP) ;
+
     }
 
     public ConfigurationPanel getConfigurationPanel() {

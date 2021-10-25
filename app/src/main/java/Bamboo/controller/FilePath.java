@@ -8,7 +8,7 @@ public class FilePath
 {
     private static final String internalPathUnix = "/app/src/main/java/saved/";
     private static final String internalPathWin = "/app/src/main/java/saved/";
-    private static final String internalPathMac = "/src/main/java/saved/";
+    private static final String internalPathMac = "/app/src/main/java/saved/";
 
     /**
      * Creates a file path to saved games with the correct file name appended
