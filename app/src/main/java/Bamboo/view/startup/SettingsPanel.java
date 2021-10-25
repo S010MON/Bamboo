@@ -13,16 +13,11 @@ import java.util.Hashtable;
 
 public class SettingsPanel extends JPanel
 {
-    private JPanel buttonPanel;
-    private Button multiBtn;
-    private Button singleBtn;
-    private Button demoBtn;
     private ConfigurationPanel configurationPanel;
     private JSlider slider;
-    private int boardSize = 5;
-
     private JLabel[] labelImage = new JLabel[4];
     private int labelImagesOffset = 2;
+    private int boardSize = 5;
 
     public SettingsPanel()
     {
@@ -31,11 +26,9 @@ public class SettingsPanel extends JPanel
         setVisible(true);
 
         configurationPanel = new ConfigurationPanel();
-        buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
         buttonPanel.setLayout(null);
-
-        multiBtn = new Bamboo.view.resources.Button("btnMulti.png");
 
         slider = new JSlider(JSlider.HORIZONTAL, 2, 5, boardSize);
         slider.addChangeListener(e -> {
@@ -47,25 +40,17 @@ public class SettingsPanel extends JPanel
 
         slider.setPaintLabels(true);
         slider.setBackground(Colour.background());
+        slider.setLabelTable(buildHashtableOfPositions());
 
-        Hashtable position = new Hashtable();
-        position.put(2, new JLabel("2"));
-        position.put(3, new JLabel("3"));
-        position.put(4, new JLabel("4"));
-        position.put(5, new JLabel("5"));
-        position.put(6, new JLabel("6"));
-        position.put(7, new JLabel("7"));
-        slider.setLabelTable(position);
-
-        multiBtn = new Button("btnMulti.png");
+        Button multiBtn = new Button("btnMulti.png");
         multiBtn.setBounds(100, 50, 145, 55);
         multiBtn.addActionListener(e -> configurationPanel.setVisible(true));
 
-        singleBtn = new Bamboo.view.resources.Button("btnSingle.png");
+        Button singleBtn = new Button("btnSingle.png");
         singleBtn.setBounds(250, 50, 145, 55);
         singleBtn.addActionListener(e -> configurationPanel.setVisible(false));
 
-        demoBtn = new Button("btnDemo.png");
+        Button demoBtn = new Button("btnDemo.png");
         demoBtn.setBounds(400, 50, 145, 55);
         demoBtn.addActionListener(e -> configurationPanel.setVisible(false));
 
@@ -81,14 +66,6 @@ public class SettingsPanel extends JPanel
         add(panelImage);
         add(slider);
         add(configurationPanel);
-    }
-
-    public ConfigurationPanel getConfigurationPanel() {
-        return configurationPanel;
-    }
-
-    public int getBoardSize() {
-        return boardSize;
     }
 
     private JPanel buildImagePanel()
@@ -111,6 +88,18 @@ public class SettingsPanel extends JPanel
         return panel;
     }
 
+    private Hashtable buildHashtableOfPositions()
+    {
+        Hashtable position = new Hashtable();
+        position.put(2, new JLabel("2"));
+        position.put(3, new JLabel("3"));
+        position.put(4, new JLabel("4"));
+        position.put(5, new JLabel("5"));
+        position.put(6, new JLabel("6"));
+        position.put(7, new JLabel("7"));
+        return position;
+    }
+
     private void changeBoardImage2(int size)
     {
         size = size - labelImagesOffset;
@@ -122,4 +111,11 @@ public class SettingsPanel extends JPanel
         labelImage[size].setVisible(true);
     }
 
+    public ConfigurationPanel getConfigurationPanel() {
+        return configurationPanel;
+    }
+
+    public int getBoardSize() {
+        return boardSize;
+    }
 }
