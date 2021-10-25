@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Game
 {
-    private static final boolean LOG_MOVES = true;
+    private static final boolean LOG_MOVES = false;
 
     private int turn_count_player1 = 0;
     private int turn_count_player2 = 0;
@@ -43,14 +43,13 @@ public class Game
         {
             grid.setTile(v, currentPlayer.getColor());
 
-            if(LOG_MOVES) Logger.logMove(v, currentPlayer.getColor());
-
-            System.out.println(grid.evaluateGame(currentPlayer.getColor()));
+            if(LOG_MOVES) 
+              Logger.logMove(v, currentPlayer.getColor());
+            
             toggleTurn();
         }
         if(grid.isFinished(currentPlayer.getColor()))
         {
-            System.out.println("Game ended");
             view.endGame(currentPlayer);
         }
     }
@@ -62,7 +61,7 @@ public class Game
 
     public int getSizeOfMaxOfGroups(Agent player)
     {
-            return 2; // TODO add implementation
+        return grid.getMaxGroupSize(player.getColor());
     }
 
     public Agent getCurrentPlayer()

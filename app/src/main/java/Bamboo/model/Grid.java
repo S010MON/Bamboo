@@ -24,7 +24,7 @@ public interface Grid
 
     ArrayList<Vector> getGroup(Vector vector);
 
-    int getMaxGroupSize(ArrayList<ArrayList<Vector>> groups);
+    int getMaxGroupSize(Color colour);
 
     int evaluateGame(Color color);
 
