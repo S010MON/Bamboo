@@ -86,6 +86,11 @@ public class Game
         return settings;
     }
 
+    public int getBoardSize()
+    {
+        return settings.boardSize;
+    }
+
     public int getTurn_count(Agent player){
         if(player.getColor() == Color.RED)
             return turn_count_player1;

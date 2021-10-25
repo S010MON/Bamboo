@@ -16,7 +16,8 @@ public class Human implements Agent
     }
 
     @Override
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
