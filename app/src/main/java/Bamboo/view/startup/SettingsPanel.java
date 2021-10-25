@@ -4,31 +4,28 @@ import Bamboo.view.resources.Button;
 import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.ResourceLoader;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JSlider;
+import javax.swing.ImageIcon;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 
-public class SettingsPanel extends JPanel {
-
+public class SettingsPanel extends JPanel
+{
     private JPanel buttonPanel;
-    private Button hvh;
-    private Button hva;
-    private Button ava;
+    private Button multiBtn;
+    private Button singleBtn;
+    private Button demoBtn;
     private ConfigurationPanel configurationPanel;
     private JSlider slider;
-    private Image boardPicture;
     private int boardSize = 5;
 
-    private JLabel labelImage2;
-    private JLabel labelImage3;
-    private JLabel labelImage4;
-    private JLabel labelImage5;
+    private JLabel[] labelImage = new JLabel[4];
+    private int labelImagesOffset = 2;
 
-
-    public SettingsPanel() {
+    public SettingsPanel()
+    {
         setBackground(Colour.background());
         setLayout(new GridLayout(4, 3));
         setVisible(true);
@@ -38,8 +35,8 @@ public class SettingsPanel extends JPanel {
         buttonPanel.setBackground(Colour.background());
         buttonPanel.setLayout(null);
 
-        hvh = new Bamboo.view.resources.Button("btnMulti.png");
-        ////////////
+        multiBtn = new Bamboo.view.resources.Button("btnMulti.png");
+
         slider = new JSlider(JSlider.HORIZONTAL, 2, 5, boardSize);
         slider.addChangeListener(e -> {
             JSlider src = (JSlider) e.getSource();
@@ -60,44 +57,28 @@ public class SettingsPanel extends JPanel {
         position.put(7, new JLabel("7"));
         slider.setLabelTable(position);
 
-        ///////////////////
+        multiBtn = new Button("btnMulti.png");
+        multiBtn.setBounds(100, 50, 145, 55);
+        multiBtn.addActionListener(e -> configurationPanel.setVisible(true));
 
-        hvh = new Button("btnMulti.png");
-        hvh.setBounds(100, 50, 145, 55);
-        hvh.addActionListener(e -> configurationPanel.setVisible(true));
+        singleBtn = new Bamboo.view.resources.Button("btnSingle.png");
+        singleBtn.setBounds(250, 50, 145, 55);
+        singleBtn.addActionListener(e -> configurationPanel.setVisible(false));
 
-        hva = new Bamboo.view.resources.Button("btnSingle.png");
-        hva.setBounds(250, 50, 145, 55);
-        hva.addActionListener(e -> configurationPanel.setVisible(false));
+        demoBtn = new Button("btnDemo.png");
+        demoBtn.setBounds(400, 50, 145, 55);
+        demoBtn.addActionListener(e -> configurationPanel.setVisible(false));
 
-        ava = new Button("btnDemo.png");
-        ava.setBounds(400, 50, 145, 55);
-        hva.addActionListener(e -> configurationPanel.setVisible(false));
+        buttonPanel.add(multiBtn);
+        buttonPanel.add(singleBtn);
+        buttonPanel.add(demoBtn);
 
-        buttonPanel.add(hvh);
-        buttonPanel.add(hva);
-        buttonPanel.add(ava);
-        add(buttonPanel);
-
-        add(configurationPanel);
-
-        JPanel panelImage = new JPanel();
+        JPanel panelImage = buildImagePanel();
         panelImage.setBackground(Colour.background());
 
-        labelImage5 = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardsizeDim5.png")));
-        labelImage4 = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim4.png")));
-        labelImage4.setVisible(false);
-        labelImage3 = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim3.png")));
-        labelImage3.setVisible(false);
-        labelImage2 = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim2.png")));
-        labelImage2.setVisible(false);
-
-        panelImage.add(labelImage4);
-        panelImage.add(labelImage3);
-        panelImage.add(labelImage2);
-        panelImage.add(labelImage5);
+        add(buttonPanel);
+        add(configurationPanel);
         add(panelImage);
-
         add(slider);
         add(configurationPanel);
     }
@@ -110,38 +91,35 @@ public class SettingsPanel extends JPanel {
         return boardSize;
     }
 
-    private void changeBoardImage2(int size) {
+    private JPanel buildImagePanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setBackground(Colour.background());
 
-        if (size == 2) {
-            labelImage3.setVisible(false);
-            labelImage4.setVisible(false);
-            labelImage5.setVisible(false);
-            labelImage2.setVisible(true);
+        labelImage[0] = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim2.png")));
+        labelImage[0].setVisible(false);
+        labelImage[1] = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim3.png")));
+        labelImage[1].setVisible(false);
+        labelImage[2] = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim4.png")));
+        labelImage[2].setVisible(false);
+        labelImage[3] = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim5.png")));
 
+        panel.add(labelImage[0]);
+        panel.add(labelImage[1]);
+        panel.add(labelImage[2]);
+        panel.add(labelImage[3]);
+        return panel;
+    }
+
+    private void changeBoardImage2(int size)
+    {
+        size = size - labelImagesOffset;
+        for(int i = 0; i < labelImage.length; i++)
+        {
+            if(i != size)
+                labelImage[i].setVisible(false);
         }
-
-        if (size == 3) {
-            labelImage2.setVisible(false);
-            labelImage4.setVisible(false);
-            labelImage5.setVisible(false);
-            labelImage3.setVisible(true);
-
-        }
-
-        if (size == 4) {
-            labelImage2.setVisible(false);
-            labelImage3.setVisible(false);
-            labelImage5.setVisible(false);
-            labelImage4.setVisible(true);
-        }
-
-        if (size == 5) {
-            labelImage2.setVisible(false);
-            labelImage3.setVisible(false);
-            labelImage4.setVisible(false);
-            labelImage5.setVisible(true);
-
-        }
+        labelImage[size].setVisible(true);
     }
 
 }

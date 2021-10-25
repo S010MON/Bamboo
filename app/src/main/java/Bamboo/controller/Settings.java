@@ -40,12 +40,4 @@ public class Settings
                 new Human("Player 2", Color.RED),
                 5);
     }
-
-    public static Settings getTestSettings()
-    {
-        return new Settings(
-                new Human("Player 1", Color.BLUE),
-                new Human("Player 2", Color.RED), 2
-                );
-    }
 }
