@@ -35,15 +35,11 @@ public class Random implements Agent
         boolean keepGoing = true;
         while(keepGoing)
         {
-            int x = generateRandomInt(max);
-            int y = generateRandomInt(max);
-            int z = generateRandomInt(max);
-
-            v = new Vector(x, y, z);
+            v = generateRandomVector(max);
             if (game.getGrid().isLegalMove(v, colour))
                 keepGoing = false;
         }
-        return new Vector(0,0,0);
+        return v;
     }
 
     @Override
@@ -53,9 +49,30 @@ public class Random implements Agent
     }
 
     /**
-     * @return a random number n where:
-     *  -max < n < max
+     * @return a random number v where:
+     *  -max < v_x < max
+     *  -max < v_y < max
+     *  -max < v_z < max
+     *  and v_x + v_y + v_z = 0
      */
+    public Vector generateRandomVector(int max)
+    {
+        boolean keepGoing = true;
+        Vector v = new Vector(0,0,0);
+        while (keepGoing)
+        {
+            int x = generateRandomInt(max);
+            int y = generateRandomInt(max);
+            int z = (-x) + (-y);
+
+            if( x+y+z == 0)
+                keepGoing = false;
+
+            v = new Vector(x,y,z);
+        }
+        return v;
+    }
+
     public int generateRandomInt(int max)
     {
         boolean negative = Math.random() < 0.5;
