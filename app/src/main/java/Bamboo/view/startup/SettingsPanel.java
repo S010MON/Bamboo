@@ -47,6 +47,7 @@ public class SettingsPanel extends JPanel {
         hvh = new Bamboo.view.resources.Button("btnMulti.png");
         ////////////
         slider = new JSlider(JSlider.HORIZONTAL, 2, 5, boardSize);
+
         slider.addChangeListener(e -> {
             JSlider src = (JSlider) e.getSource();
             if (src.getValueIsAdjusting())
@@ -66,7 +67,6 @@ public class SettingsPanel extends JPanel {
         position.put(7, new JLabel("7"));
         slider.setLabelTable(position);
 
-        ///////////////////
 
         hvh = new Button("btnMulti.png");
         hvh.setBounds(100, 50, 145, 55);
@@ -110,7 +110,18 @@ public class SettingsPanel extends JPanel {
         panelImage.add(labelImage5);
         add(panelImage);
 
-        add(slider);
+        JPanel sliderPanel = new JPanel() ;
+        sliderPanel.setBackground(Colour.background());
+        sliderPanel.setLayout(new GridLayout(1,3));
+        JPanel sliderEmptyPanel1 = new JPanel();
+        sliderEmptyPanel1.setBackground(Colour.background());
+        JPanel sliderEmptyPanel2 = new JPanel() ;
+        sliderEmptyPanel2.setBackground(Colour.background());
+
+        sliderPanel.add(sliderEmptyPanel1) ;
+        sliderPanel.add(slider);
+        sliderPanel.add(sliderEmptyPanel2) ;
+        add(sliderPanel) ;
 
         containerCP.setLayout(new BorderLayout());
         containerCP.setVisible(false);

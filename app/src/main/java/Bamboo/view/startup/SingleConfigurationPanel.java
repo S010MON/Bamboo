@@ -14,10 +14,17 @@ public class SingleConfigurationPanel extends JPanel {
     private JPanel panel4;
     private JPanel textLabelPanel;
     private JPanel textFieldPanel;
+    private JPanel textLabelPanel2;
+    private JPanel textFieldPanel2;
     private ConfigurationPanel.ButtonPanel buttonPanel1;
+    private ConfigurationPanel.ButtonPanel buttonPanel2;
     private JButton toggleButton;
     private JLabel player1label;
+    private JLabel AIlabel;
     private JTextField player1textField;
+    private JComboBox AIcombobox;
+    private String[] AIstring ;
+
 
 
     public SingleConfigurationPanel()
@@ -64,21 +71,44 @@ public class SingleConfigurationPanel extends JPanel {
 
         buttonPanel1 = new ConfigurationPanel.ButtonPanel(Color.red);
         panel1.add(buttonPanel1);
+        ////////////////////////////:
 
+        textLabelPanel2 = new JPanel();
+        textLabelPanel2.setBackground(Colour.background());
+        textLabelPanel2.setLayout(new BorderLayout());
+        AIlabel = new JLabel("SELECT AI : ");
+        AIlabel.setFont(new Font("SansSerif", Font.PLAIN,20));
+        textLabelPanel2.add(AIlabel,BorderLayout.EAST);
+        panel2.add(textLabelPanel2);
+
+        textFieldPanel2 = new JPanel();
+        textFieldPanel2.setLayout(null);
+        textFieldPanel2.setBackground(Colour.background());
+        AIstring = new String[]{"MinMax", "Neuronal Network", "Monte Carlo Search Tree"};
+        AIcombobox = new JComboBox(AIstring);
+        AIcombobox.setBounds(20,8,200,30);
+        textFieldPanel2.add(AIcombobox);
+        panel2.add(textFieldPanel2);
+
+        buttonPanel2 = new ConfigurationPanel.ButtonPanel(Color.blue);
+        panel2.add(buttonPanel2);
 
 
         toggleButton = new Button("btnToggle.png");
         toggleButton.setBounds(50,50,145,55);
-        toggleButton.addActionListener(e -> {buttonPanel1.changeColor();});
+        toggleButton.addActionListener(e -> {buttonPanel1.changeColor();buttonPanel2.changeColor();});
         panel3.add(toggleButton);
     }
 
     public String getNamePlayer1(){ return player1textField.getText();}
 
+    public String getAI(){ return  (String) AIcombobox.getSelectedItem() ; }
+
 
 
     public Color getPlayer1Color(){return buttonPanel1.getPlayerColor();}
 
+    public  Color getAIcolor(){return buttonPanel2.getPlayerColor() ; }
 
 
     class SingleButtonPanel extends JPanel
