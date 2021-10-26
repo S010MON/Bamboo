@@ -168,7 +168,7 @@ public class SettingsPanel extends JPanel
         mode = Mode.DEMO;
         currentPanel.setVisible(false);
         currentPanel.remove(multiConfigurationPanel);
-        currentPanel.add(singleConfigurationPanel, BorderLayout.CENTER);
+        currentPanel.remove(singleConfigurationPanel);
         currentPanel.setVisible(true);
     }
 
