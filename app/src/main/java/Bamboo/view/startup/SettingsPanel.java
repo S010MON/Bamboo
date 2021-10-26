@@ -15,7 +15,7 @@ public class SettingsPanel extends JPanel
 {
     private MultiConfigurationPanel multiConfigurationPanel;
     private SingleConfigurationPanel singleConfigurationPanel;
-    private Panel currentPanel;
+    private JPanel currentPanel;
 
     private JSlider slider;
     private JLabel[] labelImage = new JLabel[4];
@@ -31,7 +31,7 @@ public class SettingsPanel extends JPanel
 
         multiConfigurationPanel = new MultiConfigurationPanel();
         singleConfigurationPanel = new SingleConfigurationPanel();
-        JPanel currentPanel = new JPanel() ;
+
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
@@ -64,14 +64,7 @@ public class SettingsPanel extends JPanel
         buttonPanel.add(multiBtn);
         buttonPanel.add(singleBtn);
         buttonPanel.add(demoBtn);
-
-        JPanel panelImage = buildImagePanel();
-        panelImage.setBackground(Colour.background());
-
         add(buttonPanel);
-        add(panelImage);
-        add(slider);
-        add(multiConfigurationPanel);
 
         JPanel sliderPanel = new JPanel() ;
         sliderPanel.setBackground(Colour.background());
@@ -84,11 +77,16 @@ public class SettingsPanel extends JPanel
         sliderPanel.add(sliderEmptyPanel1) ;
         sliderPanel.add(slider);
         sliderPanel.add(sliderEmptyPanel2) ;
+
+        add(buildImagePanel()) ;
         add(sliderPanel) ;
 
+        currentPanel = new JPanel() ;
         currentPanel.setLayout(new BorderLayout());
-        currentPanel.setVisible(false);
+        currentPanel.setVisible(true);
+        currentPanel.setBackground(Colour.background());
         add(currentPanel) ;
+
     }
 
     private JPanel buildImagePanel()
@@ -110,6 +108,7 @@ public class SettingsPanel extends JPanel
         panel.add(labelImage[3]);
         return panel;
     }
+
 
     private Hashtable buildHashtableOfPositions()
     {
