@@ -31,7 +31,6 @@ public class SettingsPanel extends JPanel
         multiConfigurationPanel = new MultiConfigurationPanel();
         singleConfigurationPanel = new SingleConfigurationPanel();
 
-
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
         buttonPanel.setLayout(null);
@@ -75,22 +74,22 @@ public class SettingsPanel extends JPanel
         sliderPanel.setLayout(new GridLayout(1,3));
         JPanel sliderEmptyPanel1 = new JPanel();
         sliderEmptyPanel1.setBackground(Colour.background());
-        JPanel sliderEmptyPanel2 = new JPanel() ;
+        JPanel sliderEmptyPanel2 = new JPanel();
         sliderEmptyPanel2.setBackground(Colour.background());
 
-        sliderPanel.add(sliderEmptyPanel1) ;
+        sliderPanel.add(sliderEmptyPanel1);
         sliderPanel.add(slider);
-        sliderPanel.add(sliderEmptyPanel2) ;
+        sliderPanel.add(sliderEmptyPanel2);
 
-        add(buildImagePanel()) ;
-        add(sliderPanel) ;
+        add(buildImagePanel());
+        add(sliderPanel);
 
-        currentPanel = new JPanel() ;
+        currentPanel = new JPanel();
         currentPanel.setLayout(new BorderLayout());
         currentPanel.setVisible(true);
         currentPanel.setBackground(Colour.background());
-        add(currentPanel) ;
-
+        add(currentPanel);
+        selectMulti();
     }
 
     private JPanel buildImagePanel()
