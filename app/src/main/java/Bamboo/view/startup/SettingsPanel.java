@@ -13,7 +13,8 @@ import java.util.Hashtable;
 
 public class SettingsPanel extends JPanel
 {
-    private ConfigurationPanel configurationPanel;
+    private MultiConfigurationPanel multiConfigurationPanel;
+    private SingleConfigurationPanel singleConfigurationPanel;
     private JSlider slider;
     private JLabel[] labelImage = new JLabel[4];
     private Mode mode = Mode.MULTI;
@@ -26,7 +27,9 @@ public class SettingsPanel extends JPanel
         setLayout(new GridLayout(4, 3));
         setVisible(true);
 
-        configurationPanel = new ConfigurationPanel();
+        multiConfigurationPanel = new MultiConfigurationPanel();
+        singleConfigurationPanel = new SingleConfigurationPanel();
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
         buttonPanel.setLayout(null);
@@ -65,7 +68,7 @@ public class SettingsPanel extends JPanel
         add(buttonPanel);
         add(panelImage);
         add(slider);
-        add(configurationPanel);
+        add(multiConfigurationPanel);
     }
 
     private JPanel buildImagePanel()
@@ -111,8 +114,8 @@ public class SettingsPanel extends JPanel
         labelImage[size].setVisible(true);
     }
 
-    public ConfigurationPanel getConfigurationPanel() {
-        return configurationPanel;
+    public MultiConfigurationPanel getMultiConfigurationPanel() {
+        return multiConfigurationPanel;
     }
 
     public int getBoardSize() {
@@ -122,19 +125,22 @@ public class SettingsPanel extends JPanel
     public void selectMulti()
     {
         mode = Mode.MULTI;
-        configurationPanel.setVisible(true);
+        singleConfigurationPanel.setVisible(false);
+        multiConfigurationPanel.setVisible(true);
     }
 
     public void selectSingle()
     {
         mode = Mode.SINGLE;
-        configurationPanel.setVisible(false);
+        multiConfigurationPanel.setVisible(false);
+        singleConfigurationPanel.setVisible(true);
     }
 
     public void selectDemo()
     {
         mode = Mode.DEMO;
-        configurationPanel.setVisible(false);
+        singleConfigurationPanel.setVisible(false);
+        multiConfigurationPanel.setVisible(false);
     }
 
     public Mode getMode()

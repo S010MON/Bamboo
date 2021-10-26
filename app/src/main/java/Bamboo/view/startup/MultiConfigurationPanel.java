@@ -6,7 +6,7 @@ import Bamboo.view.resources.Colour;
 import javax.swing.*;
 import java.awt.*;
 
-public class ConfigurationPanel extends JPanel
+public class MultiConfigurationPanel extends JPanel
 {
     private JPanel textLabelPanel;
     private JPanel textFieldPanel;
@@ -20,7 +20,7 @@ public class ConfigurationPanel extends JPanel
     private JTextField player1textField;
     private JTextField player2textField;
 
-    public ConfigurationPanel()
+    public MultiConfigurationPanel()
     {
         setLayout(new GridLayout(4, 1));
         setVisible(true);

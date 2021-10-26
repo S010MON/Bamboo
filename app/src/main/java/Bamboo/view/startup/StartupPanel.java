@@ -43,18 +43,18 @@ public class StartupPanel extends JPanel
         switch (settingsPanel.getMode())
         {
             case SINGLE: return new Settings(
-                            new Human(settingsPanel.getConfigurationPanel().getNamePlayer1(), settingsPanel.getConfigurationPanel().getPlayer1Color()),
-                            new Random(settingsPanel.getConfigurationPanel().getPlayer2Color()),
+                            new Human(settingsPanel.getMultiConfigurationPanel().getNamePlayer1(), settingsPanel.getMultiConfigurationPanel().getPlayer1Color()),
+                            new Random(settingsPanel.getMultiConfigurationPanel().getPlayer2Color()),
                             settingsPanel.getBoardSize());
                             
             case MULTI: return new Settings(
-                            new Human(settingsPanel.getConfigurationPanel().getNamePlayer1(), settingsPanel.getConfigurationPanel().getPlayer1Color()),
-                            new Human(settingsPanel.getConfigurationPanel().getNamePlayer2(), settingsPanel.getConfigurationPanel().getPlayer2Color()),
+                            new Human(settingsPanel.getMultiConfigurationPanel().getNamePlayer1(), settingsPanel.getMultiConfigurationPanel().getPlayer1Color()),
+                            new Human(settingsPanel.getMultiConfigurationPanel().getNamePlayer2(), settingsPanel.getMultiConfigurationPanel().getPlayer2Color()),
                             settingsPanel.getBoardSize());
 
             case DEMO: return new Settings(
-                            new Random(settingsPanel.getConfigurationPanel().getPlayer1Color()),
-                            new Random(settingsPanel.getConfigurationPanel().getPlayer2Color()),
+                            new Random(settingsPanel.getMultiConfigurationPanel().getPlayer1Color()),
+                            new Random(settingsPanel.getMultiConfigurationPanel().getPlayer2Color()),
                             settingsPanel.getBoardSize());
         }
         return null;

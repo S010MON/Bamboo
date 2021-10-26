@@ -6,18 +6,14 @@ import Bamboo.view.resources.Colour;
 import javax.swing.*;
 import java.awt.*;
 
-public class SingleConfigurationPanel extends JPanel {
-
-    private JPanel panel1;
-    private JPanel panel2;
-    private JPanel panel3;
-    private JPanel panel4;
+public class SingleConfigurationPanel extends JPanel
+{
     private JPanel textLabelPanel;
     private JPanel textFieldPanel;
     private JPanel textLabelPanel2;
     private JPanel textFieldPanel2;
-    private ConfigurationPanel.ButtonPanel buttonPanel1;
-    private ConfigurationPanel.ButtonPanel buttonPanel2;
+    private SingleButtonPanel buttonPanel1;
+    private SingleButtonPanel buttonPanel2;
     private JButton toggleButton;
     private JLabel player1label;
     private JLabel AIlabel;
@@ -25,30 +21,27 @@ public class SingleConfigurationPanel extends JPanel {
     private JComboBox AIcombobox;
     private String[] AIstring ;
 
-
-
     public SingleConfigurationPanel()
     {
         setLayout(new GridLayout(4, 1));
         setVisible(true);
 
-        panel1 = new JPanel();
-        panel2 = new JPanel();
-        panel3 = new JPanel();
-        panel4 = new JPanel();
-
+        JPanel panel1 = new JPanel();
         panel1.setBackground(Colour.background());
         panel1.setLayout(new GridLayout(1,3));
         add(panel1);
 
+        JPanel panel2 = new JPanel();
         panel2.setBackground(Colour.background());
         panel2.setLayout(new GridLayout(1, 3));
         add(panel2);
 
+        JPanel panel3 = new JPanel();
         panel3.setBackground(Colour.background());
         panel3.setLayout(new GridLayout(1,3));
         add(panel3);
 
+        JPanel panel4 = new JPanel();
         panel4.setBackground(Colour.background());
         panel4.setLayout(new GridLayout(1,3));
         add(panel4);
@@ -69,9 +62,8 @@ public class SingleConfigurationPanel extends JPanel {
         textFieldPanel.add(player1textField);
         panel1.add(textFieldPanel);
 
-        buttonPanel1 = new ConfigurationPanel.ButtonPanel(Color.red);
+        buttonPanel1 = new SingleButtonPanel(Color.red);
         panel1.add(buttonPanel1);
-        ////////////////////////////:
 
         textLabelPanel2 = new JPanel();
         textLabelPanel2.setBackground(Colour.background());
@@ -90,9 +82,8 @@ public class SingleConfigurationPanel extends JPanel {
         textFieldPanel2.add(AIcombobox);
         panel2.add(textFieldPanel2);
 
-        buttonPanel2 = new ConfigurationPanel.ButtonPanel(Color.blue);
+        buttonPanel2 = new SingleButtonPanel(Color.blue);
         panel2.add(buttonPanel2);
-
 
         toggleButton = new Button("btnToggle.png");
         toggleButton.setBounds(50,50,145,55);
@@ -104,12 +95,9 @@ public class SingleConfigurationPanel extends JPanel {
 
     public String getAI(){ return  (String) AIcombobox.getSelectedItem() ; }
 
-
-
     public Color getPlayer1Color(){return buttonPanel1.getPlayerColor();}
 
     public  Color getAIcolor(){return buttonPanel2.getPlayerColor() ; }
-
 
     class SingleButtonPanel extends JPanel
     {
@@ -120,6 +108,7 @@ public class SingleConfigurationPanel extends JPanel {
             this.color = color;
             setLayout(null);
             setBackground(Colour.background());
+            setVisible(true);
         }
 
         public void paint(Graphics g)
