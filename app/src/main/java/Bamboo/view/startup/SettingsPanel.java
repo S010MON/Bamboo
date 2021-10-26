@@ -36,7 +36,12 @@ public class SettingsPanel extends JPanel
         buttonPanel.setBackground(Colour.background());
         buttonPanel.setLayout(null);
 
-        slider = new JSlider(JSlider.HORIZONTAL, 2, 5, boardSize);
+        slider = new JSlider(JSlider.HORIZONTAL, 2, 5, boardSize) {
+            @Override
+            public void updateUI() {
+                setUI(new CustomSliderUI(this));
+            }
+        };
         slider.addChangeListener(e -> {
             JSlider src = (JSlider) e.getSource();
             if (src.getValueIsAdjusting())
