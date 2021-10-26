@@ -9,7 +9,6 @@ import java.util.List;
 public class Game
 {
     private static final boolean LOG_MOVES = false;
-
     private int turn_count_player1 = 0;
     private int turn_count_player2 = 0;
     private Grid grid;
