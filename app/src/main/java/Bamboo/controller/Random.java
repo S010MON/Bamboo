@@ -43,7 +43,7 @@ public class Random implements Agent
             if (game.getGrid().isLegalMove(v, colour))
                 keepGoing = false;
         }
-        return v;
+        return new Vector(0,0,0);
     }
 
     @Override

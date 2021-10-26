@@ -20,27 +20,27 @@ public class ButtonPanel extends JPanel
         setSize(500,500);
 
         /* Settings Button */
-        Bamboo.view.resources.Button settingsBtn = new Bamboo.view.resources.Button("btnMode.png");
+        Button settingsBtn = new Button("btnMode.png");
         settingsBtn.addActionListener(e -> startupPanel.displaySettingsPanel());
         add(settingsBtn);
 
         /* Help Button */
-        Bamboo.view.resources.Button helpBtn = new Bamboo.view.resources.Button("btnHelp.png");
+        Button helpBtn = new Button("btnHelp.png");
         helpBtn.addActionListener(e -> startupPanel.displayHelpPanel());
         add(helpBtn);
 
         /* Load Button */
-        Bamboo.view.resources.Button loadBtn = new Bamboo.view.resources.Button("btnLoad.png");
+        Button loadBtn = new Button("btnLoad.png");
         loadBtn.addActionListener(e -> startupPanel.getMainFrame().load());
         add(loadBtn);
 
         /* Start Button */
-        Bamboo.view.resources.Button startBtn = new Bamboo.view.resources.Button("btnStart.png");
+        Button startBtn = new Button("btnStart.png");
         startBtn.addActionListener(e -> startupPanel.startGame());
         add(startBtn);
 
         /* Quit Button */
-        Bamboo.view.resources.Button quitBtn = new Button("btnQuit.png");
+        Button quitBtn = new Button("btnQuit.png");
         quitBtn.addActionListener(e -> startupPanel.getMainFrame().quitProgram());
         add(quitBtn);
 

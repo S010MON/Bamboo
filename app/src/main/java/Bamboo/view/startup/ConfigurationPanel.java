@@ -8,16 +8,12 @@ import java.awt.*;
 
 public class ConfigurationPanel extends JPanel
 {
-    private JPanel panel1;
-    private JPanel panel2;
-    private JPanel panel3;
-    private JPanel panel4;
     private JPanel textLabelPanel;
     private JPanel textFieldPanel;
     private JPanel textLabelPanel2;
     private JPanel textFieldPanel2;
-    private ButtonPanel buttonPanel1;
-    private ButtonPanel buttonPanel2;
+    private ColourButtonPanel buttonPanel1;
+    private ColourButtonPanel buttonPanel2;
     private JButton toggleButton;
     private JLabel player1label;
     private JLabel player2label;
@@ -29,23 +25,22 @@ public class ConfigurationPanel extends JPanel
         setLayout(new GridLayout(4, 1));
         setVisible(true);
 
-        panel1 = new JPanel();
-        panel2 = new JPanel();
-        panel3 = new JPanel();
-        panel4 = new JPanel();
-
+        JPanel panel1 = new JPanel();
         panel1.setBackground(Colour.background());
         panel1.setLayout(new GridLayout(1,3));
         add(panel1);
 
+        JPanel panel2 = new JPanel();
         panel2.setBackground(Colour.background());
         panel2.setLayout(new GridLayout(1, 3));
         add(panel2);
 
+        JPanel panel3 = new JPanel();
         panel3.setBackground(Colour.background());
         panel3.setLayout(new GridLayout(1,3));
         add(panel3);
 
+        JPanel panel4 = new JPanel();
         panel4.setBackground(Colour.background());
         panel4.setLayout(new GridLayout(1,3));
         add(panel4);
@@ -61,12 +56,13 @@ public class ConfigurationPanel extends JPanel
         textFieldPanel = new JPanel();
         textFieldPanel.setLayout(null);
         textFieldPanel.setBackground(Colour.background());
+
         player1textField = new JTextField();
         player1textField.setBounds(20,8,200,30);
         textFieldPanel.add(player1textField);
         panel1.add(textFieldPanel);
 
-        buttonPanel1 = new ButtonPanel(Color.red);
+        buttonPanel1 = new ColourButtonPanel(Color.red);
         panel1.add(buttonPanel1);
 
         textLabelPanel2 = new JPanel();
@@ -85,7 +81,7 @@ public class ConfigurationPanel extends JPanel
         textFieldPanel2.add(player2textField);
         panel2.add(textFieldPanel2);
 
-        buttonPanel2 = new ButtonPanel(Color.blue);
+        buttonPanel2 = new ColourButtonPanel(Color.blue);
         panel2.add(buttonPanel2);
 
         toggleButton = new Button("btnToggle.png");
@@ -102,11 +98,11 @@ public class ConfigurationPanel extends JPanel
 
     public Color getPlayer2Color(){return buttonPanel2.getPlayerColor();}
 
-    class ButtonPanel extends JPanel
+    class ColourButtonPanel extends JPanel
     {
         private Color color;
 
-        public ButtonPanel(Color color)
+        public ColourButtonPanel(Color color)
         {
             this.color = color;
             setLayout(null);

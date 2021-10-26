@@ -1,6 +1,7 @@
 package Bamboo.view.startup;
 
 import Bamboo.controller.Human;
+import Bamboo.controller.Random;
 import Bamboo.controller.Settings;
 import Bamboo.view.MainFrame;
 
@@ -37,11 +38,26 @@ public class StartupPanel extends JPanel
         view.runGame(getSettings());
     }
 
-    public Settings getSettings() {
-        return new Settings(
-                new Human(settingsPanel.getConfigurationPanel().getNamePlayer1(), settingsPanel.getConfigurationPanel().getPlayer1Color()),
-                new Human(settingsPanel.getConfigurationPanel().getNamePlayer2(), settingsPanel.getConfigurationPanel().getPlayer2Color()),
-                settingsPanel.getBoardSize());
+    public Settings getSettings()
+    {
+        switch (settingsPanel.getMode())
+        {
+            case SINGLE: return new Settings(
+                            new Human(settingsPanel.getConfigurationPanel().getNamePlayer1(), settingsPanel.getConfigurationPanel().getPlayer1Color()),
+                            new Random(settingsPanel.getConfigurationPanel().getPlayer2Color()),
+                            settingsPanel.getBoardSize());
+                            
+            case MULTI: return new Settings(
+                            new Human(settingsPanel.getConfigurationPanel().getNamePlayer1(), settingsPanel.getConfigurationPanel().getPlayer1Color()),
+                            new Human(settingsPanel.getConfigurationPanel().getNamePlayer2(), settingsPanel.getConfigurationPanel().getPlayer2Color()),
+                            settingsPanel.getBoardSize());
+
+            case DEMO: return new Settings(
+                            new Random(settingsPanel.getConfigurationPanel().getPlayer2Color()),
+                            new Random(settingsPanel.getConfigurationPanel().getPlayer2Color()),
+                            settingsPanel.getBoardSize());
+        }
+        return null;
     }
 
     private  void removeComponentCenter(){
@@ -69,5 +85,4 @@ public class StartupPanel extends JPanel
     {
         return view;
     }
-
 }

@@ -16,6 +16,7 @@ public class SettingsPanel extends JPanel
     private ConfigurationPanel configurationPanel;
     private JSlider slider;
     private JLabel[] labelImage = new JLabel[4];
+    private Mode mode = Mode.MULTI;
     private int labelImagesOffset = 2;
     private int boardSize = 5;
 
@@ -44,15 +45,15 @@ public class SettingsPanel extends JPanel
 
         Button multiBtn = new Button("btnMulti.png");
         multiBtn.setBounds(100, 50, 145, 55);
-        multiBtn.addActionListener(e -> configurationPanel.setVisible(true));
+        multiBtn.addActionListener(e -> selectMulti());
 
         Button singleBtn = new Button("btnSingle.png");
         singleBtn.setBounds(250, 50, 145, 55);
-        singleBtn.addActionListener(e -> configurationPanel.setVisible(false));
+        singleBtn.addActionListener(e -> selectSingle());
 
         Button demoBtn = new Button("btnDemo.png");
         demoBtn.setBounds(400, 50, 145, 55);
-        demoBtn.addActionListener(e -> configurationPanel.setVisible(false));
+        demoBtn.addActionListener(e -> selectDemo());
 
         buttonPanel.add(multiBtn);
         buttonPanel.add(singleBtn);
@@ -62,7 +63,6 @@ public class SettingsPanel extends JPanel
         panelImage.setBackground(Colour.background());
 
         add(buttonPanel);
-        add(configurationPanel);
         add(panelImage);
         add(slider);
         add(configurationPanel);
@@ -117,5 +117,28 @@ public class SettingsPanel extends JPanel
 
     public int getBoardSize() {
         return boardSize;
+    }
+
+    public void selectMulti()
+    {
+        mode = Mode.MULTI;
+        configurationPanel.setVisible(true);
+    }
+
+    public void selectSingle()
+    {
+        mode = Mode.SINGLE;
+        configurationPanel.setVisible(false);
+    }
+
+    public void selectDemo()
+    {
+        mode = Mode.DEMO;
+        configurationPanel.setVisible(false);
+    }
+
+    public Mode getMode()
+    {
+        return mode;
     }
 }
