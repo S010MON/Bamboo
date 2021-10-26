@@ -15,6 +15,8 @@ public class SettingsPanel extends JPanel
 {
     private MultiConfigurationPanel multiConfigurationPanel;
     private SingleConfigurationPanel singleConfigurationPanel;
+    private Panel currentPanel;
+
     private JSlider slider;
     private JLabel[] labelImage = new JLabel[4];
     private Mode mode = Mode.MULTI;
@@ -29,6 +31,7 @@ public class SettingsPanel extends JPanel
 
         multiConfigurationPanel = new MultiConfigurationPanel();
         singleConfigurationPanel = new SingleConfigurationPanel();
+        JPanel currentPanel = new JPanel() ;
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
@@ -69,6 +72,23 @@ public class SettingsPanel extends JPanel
         add(panelImage);
         add(slider);
         add(multiConfigurationPanel);
+
+        JPanel sliderPanel = new JPanel() ;
+        sliderPanel.setBackground(Colour.background());
+        sliderPanel.setLayout(new GridLayout(1,3));
+        JPanel sliderEmptyPanel1 = new JPanel();
+        sliderEmptyPanel1.setBackground(Colour.background());
+        JPanel sliderEmptyPanel2 = new JPanel() ;
+        sliderEmptyPanel2.setBackground(Colour.background());
+
+        sliderPanel.add(sliderEmptyPanel1) ;
+        sliderPanel.add(slider);
+        sliderPanel.add(sliderEmptyPanel2) ;
+        add(sliderPanel) ;
+
+        currentPanel.setLayout(new BorderLayout());
+        currentPanel.setVisible(false);
+        add(currentPanel) ;
     }
 
     private JPanel buildImagePanel()
@@ -125,22 +145,28 @@ public class SettingsPanel extends JPanel
     public void selectMulti()
     {
         mode = Mode.MULTI;
-        singleConfigurationPanel.setVisible(false);
-        multiConfigurationPanel.setVisible(true);
+        currentPanel.setVisible(false);
+        currentPanel.remove(singleConfigurationPanel);
+        currentPanel.add(multiConfigurationPanel, BorderLayout.CENTER);
+        currentPanel.setVisible(true);
     }
 
     public void selectSingle()
     {
         mode = Mode.SINGLE;
-        multiConfigurationPanel.setVisible(false);
-        singleConfigurationPanel.setVisible(true);
+        currentPanel.setVisible(false);
+        currentPanel.remove(multiConfigurationPanel);
+        currentPanel.add(singleConfigurationPanel, BorderLayout.CENTER);
+        currentPanel.setVisible(true);
     }
 
     public void selectDemo()
     {
         mode = Mode.DEMO;
-        singleConfigurationPanel.setVisible(false);
-        multiConfigurationPanel.setVisible(false);
+        currentPanel.setVisible(false);
+        currentPanel.remove(multiConfigurationPanel);
+        currentPanel.add(singleConfigurationPanel, BorderLayout.CENTER);
+        currentPanel.setVisible(true);
     }
 
     public Mode getMode()
