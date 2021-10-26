@@ -26,7 +26,7 @@ public interface Grid
 
     int getMaxGroupSize(Color colour);
 
-    int evaluateGame(Color color);
+    int evaluateGame();
 
     boolean isFinished(Color currentColour);
 

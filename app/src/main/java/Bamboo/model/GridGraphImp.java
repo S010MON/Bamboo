@@ -193,15 +193,12 @@ public class GridGraphImp implements Grid
     }
 
     @Override
-    public int evaluateGame(Color color){
-        if(isFinished(color))
+    public int evaluateGame(){
+        if(isFinished(Color.RED))
             return -1000000;
-        Color other_color;
-        if(color == Color.RED)
-            other_color = Color.BLUE;
-        else
-            other_color = Color.RED;
-        return evaluateGameForColor(color) - evaluateGameForColor(other_color);
+        if(isFinished(Color.BLUE))
+            return 1000000;
+        return evaluateGameForColor(Color.RED) - evaluateGameForColor(Color.BLUE);
     }
 
     int evaluateGameForColor(Color color){
