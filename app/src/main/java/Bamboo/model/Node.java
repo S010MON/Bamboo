@@ -14,7 +14,7 @@ public class Node {
         this.children = new ArrayList<>();
         this.grid = new_grid;
         this.level = 0;
-        this.value = new_grid.evaluateGame(Color.RED);
+        this.value = new_grid.evaluateGame();
     }
 
     public void addChild(GridGraphImp new_grid){
@@ -33,7 +33,7 @@ public class Node {
     }
 
     public int getValue(){
-        return grid.evaluateGame(Color.RED);
+        return grid.evaluateGame();
     }
 
     public GridGraphImp getGrid(){
