@@ -63,15 +63,12 @@ public class GridGraphImp implements Grid
         remainingTiles.remove(v);
     }
 
-    private void unSetTile(Vector v)
+    public void unSetTile(Vector v)
     {
         for(Tile neighbour: getAllNeighbours(v))
         {
-            if(neighbour.getColour() == Color.BLUE || neighbour.getColour() == Color.RED )
-            {
-                tiles.get(v).removeNeighbour(neighbour);
-                neighbour.removeNeighbour(tiles.get(v));
-            }
+            tiles.get(v).removeNeighbour(neighbour);
+            neighbour.removeNeighbour(tiles.get(v));
         }
         tiles.get(v).setColour(Color.WHITE);
         remainingTiles.put(v, true);
