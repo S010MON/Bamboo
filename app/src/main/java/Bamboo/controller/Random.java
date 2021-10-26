@@ -65,11 +65,12 @@ public class Random implements Agent
             int y = generateRandomInt(max);
             int z = (-x) + (-y);
 
-            if( x+y+z == 0)
+            if((x+y+z == 0) && (z <= max) && (z >= -max))
                 keepGoing = false;
 
             v = new Vector(x,y,z);
         }
+        System.out.println(v.toString());
         return v;
     }
 

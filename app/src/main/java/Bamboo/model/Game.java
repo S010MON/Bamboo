@@ -3,15 +3,12 @@ package Bamboo.model;
 import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
 
-import java.awt.Color;
 import java.util.List;
 
 public class Game
 {
     private static final boolean LOG_MOVES = false;
 
-    private int turn_count_player1 = 0;
-    private int turn_count_player2 = 0;
     private Grid grid;
     private Agent player1;
     private Agent player2;
@@ -93,14 +90,10 @@ public class Game
 
     private void toggleTurn()
     {
-        if(currentPlayer == player1){
-            turn_count_player1 ++;
+        if(currentPlayer == player1)
             currentPlayer = player2;
-        }
-        else{
-            turn_count_player2 ++;
+        else
             currentPlayer = player1;
-         }
         view.nextTurn();
     }
 }

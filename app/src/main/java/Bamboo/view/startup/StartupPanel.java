@@ -53,7 +53,7 @@ public class StartupPanel extends JPanel
                             settingsPanel.getBoardSize());
 
             case DEMO: return new Settings(
-                            new Random(settingsPanel.getConfigurationPanel().getPlayer2Color()),
+                            new Random(settingsPanel.getConfigurationPanel().getPlayer1Color()),
                             new Random(settingsPanel.getConfigurationPanel().getPlayer2Color()),
                             settingsPanel.getBoardSize());
         }
