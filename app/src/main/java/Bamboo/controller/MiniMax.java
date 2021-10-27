@@ -11,11 +11,6 @@ public class MiniMax implements Agent{
     String name = "Tim";
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
-    private int maxEval, minEval;
-    int legals = 0;
-    int whites = 0;
-    int eval = 0;
-    Vector bestMove;
 
     public MiniMax(Color color){
         this.color = color;
@@ -43,9 +38,12 @@ public class MiniMax implements Agent{
             System.out.println("Updating uncolored vectors...");
             updateUncoloredVectors(game);
         }
-
+        int depth = (int)Math.round(2.2*Math.exp(-0.03*uncolored_vectors.size()) + 1.65);
+        //depth = 3;
+        System.out.println("Depth: " + depth);
+        System.out.println("Remaining: " + uncolored_vectors.size());
         Node start = new Node(game.getGrid());
-        return minimaxMove(start, 3, this.color);
+        return minimaxMove(start, depth, this.color);
     }
 
     @Override
@@ -74,16 +72,17 @@ public class MiniMax implements Agent{
             maximizingPlayer = true;
         else
             maximizingPlayer = false;
+        System.out.println("Agent color: " + agent_color + " maximizing: " + maximizingPlayer);
         int evaluation = minimax(node, depth, maximizingPlayer);
-        Grid temp = node.getGrid().copy();
         ArrayList<Node> options = node.getChildren();
-        for(int i = 0; i < options.size(); i++){
-            System.out.println("Is " + options.get(i).getValue() + " = " + evaluation + "?");
-            if(options.get(i).getValue() == evaluation && temp.isLegalMove(options.get(i).getMove(),agent_color)){
-                System.out.println("Decision: " + options.get(i).getMove());
-                return options.get(i).getMove();
+        for (Node option : options) {
+            System.out.println("Is " + option.getValue() + " = " + evaluation + "? -- " + option + "; Eval:" + option.getGrid().evaluateGame());
+            if (option.getValue() == node.getValue()) {
+                System.out.println("Decision: " + option.getMove());
+                return option.getMove();
             }
         }
+        System.out.println("DID NOT FIND BEST MOVE");
         return new Vector(0,0,0);
     }
 
@@ -94,22 +93,24 @@ public class MiniMax implements Agent{
         else
             current_color = Color.BLUE;
         Grid grid = node.getGrid();
-        if(depth == 0){
+        if(depth == 0 || grid.isFinished(current_color)){
+            node.setValue(grid.evaluateGame());
             return grid.evaluateGame();
         }
-        addLegalChildren(node,grid,current_color);
+        addLegalChildren(node,current_color);
         if(maximizingPlayer){
-            maxEval = -1000000;
+            int maxEval = -1000000;
+            int eval;
             for(Node child : node.getChildren()){
                 eval = minimax(child,depth - 1,false);
-                child.setValue(eval);
                 maxEval = Math.max(eval,maxEval);
             }
             node.setValue(maxEval);
             return maxEval;
         }
         else{
-            minEval = 10000000;
+            int eval;
+            int minEval = 10000000;
             for(Node child : node.getChildren()){
                 eval =  minimax(child,depth - 1,true);
                 minEval = Math.min(eval,minEval);
@@ -119,27 +120,14 @@ public class MiniMax implements Agent{
         }
     }
 
-    void addLegalChildren(Node node, Grid grid, Color current_color) {
+    void addLegalChildren(Node node, Color current_color) {
+        Grid grid = node.getGrid();
         for (Vector v : uncolored_vectors) {
             if (grid.isLegalMove(v, current_color)) {
                 Grid copy = grid.copy();
                 makeMove(copy, v, current_color);
                 node.addChild(copy,v);
-                legals += 1;
-                //System.out.println("Legals: " + legals);
-                //System.out.println(grid.getTile(v).getColour());
-                if (grid.getTile(v).getColour() == Color.WHITE) {
-                    whites += 1;
-                    //System.out.println("Whites: " + whites);
-                }
             }
         }
-    }
-
-    Color swappedColor(Color current_color){
-        if(current_color == Color.RED)
-            return Color.BLUE;
-        else
-            return Color.RED;
     }
 }
