@@ -14,13 +14,15 @@ public class NodeMCTS extends Node
     private int plays;
     private int wins;
     private int visits;
+    private int possibleMoves;
 
     public NodeMCTS(Grid new_grid, Color colour)
     {
         super(new_grid);
-        int plays = 0;
-        int wins = 0;
-        int visits = 0;
+        plays = 0;
+        wins = 0;
+        visits = 0;
+
         this.colour = colour;
     }
 

@@ -86,6 +86,16 @@ public class GridArrayImp implements Grid
     }
 
     @Override
+    public List<Vector> getAllRemainingMoves() {
+        List<Vector> list = new ArrayList<>();
+        for(Tile t: emptyList)
+        {
+            list.add(t.getVector());
+        }
+        return list;
+    }
+
+    @Override
     public List<Vector> getAllVectors()
     {
         return vectors;
