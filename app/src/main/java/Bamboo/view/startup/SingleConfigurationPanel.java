@@ -76,7 +76,7 @@ public class SingleConfigurationPanel extends JPanel
         textFieldPanel2 = new JPanel();
         textFieldPanel2.setLayout(null);
         textFieldPanel2.setBackground(Colour.background());
-        AIstring = new String[]{"MinMax", "Neuronal Network", "Monte Carlo Search Tree"};
+        AIstring = new String[]{"Random", "MiniMax", "Neural Network", "Monte Carlo Search Tree"};
         AIcombobox = new JComboBox(AIstring);
         AIcombobox.setBounds(20,8,200,30);
         textFieldPanel2.add(AIcombobox);
