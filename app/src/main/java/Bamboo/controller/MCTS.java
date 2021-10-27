@@ -1,12 +1,14 @@
 package Bamboo.controller;
 
 import Bamboo.model.Game;
+import Bamboo.model.NodeMCTS;
 
 import java.awt.Color;
 
 public class MCTS implements Agent
 {
     private Color colour;
+    private NodeMCTS root;
 
     public MCTS(Color colour)
     {
