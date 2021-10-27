@@ -71,6 +71,14 @@ public class Game
        return currentPlayer instanceof Human;
     }
 
+    public boolean nextPlayerAI()
+    {
+        if(currentPlayer == player1)
+            return !(player1 instanceof Human);
+        else
+            return !(player2 instanceof  Human);
+    }
+
     public List<Tile> getAllTiles()
     {
         return grid.getAllTiles();

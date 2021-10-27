@@ -49,11 +49,12 @@ public class TileClickListener implements MouseListener
                     }
                 }
             }
-        }
-        else
-        {
-            game.placeNextAt(game.getCurrentPlayer().getNextMove(game));
-            canvas.repaint();
+
+            if(game.nextPlayerAI())
+            {
+                game.placeNextAt(game.getCurrentPlayer().getNextMove(game));
+                canvas.repaint();
+            }
         }
     }
 
