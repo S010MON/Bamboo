@@ -38,7 +38,7 @@ public class MiniMax implements Agent{
             System.out.println("Updating uncolored vectors...");
             updateUncoloredVectors(game);
         }
-        int depth = (int)Math.round(2.2*Math.exp(-0.03*uncolored_vectors.size()) + 1.65);
+        int depth = (int)Math.round(5*Math.exp(-0.054*uncolored_vectors.size()) + 1.55);
         //depth = 3;
         System.out.println("Depth: " + depth);
         System.out.println("Remaining: " + uncolored_vectors.size());
