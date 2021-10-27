@@ -6,18 +6,18 @@ import java.util.ArrayList;
 public class Node {
     Node parent;
     ArrayList<Node> children;
-    GridGraphImp grid;
+    Grid grid;
     int level;
     int value;
 
-    public Node(GridGraphImp new_grid){
+    public Node(Grid new_grid){
         this.children = new ArrayList<>();
         this.grid = new_grid;
         this.level = 0;
         this.value = new_grid.evaluateGame();
     }
 
-    public void addChild(GridGraphImp new_grid){
+    public void addChild(Grid new_grid){
         Node temp = new Node(new_grid);
         temp.setLevel(this.level + 1);
         temp.setParent(this);
@@ -36,7 +36,7 @@ public class Node {
         return grid.evaluateGame();
     }
 
-    public GridGraphImp getGrid(){
+    public Grid getGrid(){
         return grid;
     }
 
