@@ -3,10 +3,11 @@ package Bamboo.model;
 import Bamboo.controller.Vector;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
-public class NodeMCTS extends Node
+public class NodeMCTS
 {
     private Color colour;
 
@@ -14,39 +15,55 @@ public class NodeMCTS extends Node
     private int plays;
     private int wins;
     private int visits;
-    private int possibleMoves;
+    private Grid grid;
+    private ArrayList<NodeMCTS> children;
+    private Stack<Vector> unexplored;
 
-    public NodeMCTS(Grid new_grid, Color colour)
+    public NodeMCTS(Grid grid, Color colour)
     {
-        super(new_grid);
         plays = 0;
         wins = 0;
-        visits = 0;
-
+        visits = 1;
+        unexplored = collectRemainingMoves(grid);
+        children =  new ArrayList<>();
+        this.grid = grid;
         this.colour = colour;
     }
 
-    public Node select()
+    /**
+     * Select the next node to be expanded
+     */
+    public NodeMCTS select()
     {
-        if(children.isEmpty())
+        /* children not fully explored? -> select randomly */
+        if(!unexplored.isEmpty())
         {
-
+            Vector v = selectNextLegalMove();
+            Grid gridCopy = grid.copy();
+            grid.setTile(v, colour);
+            return new NodeMCTS(gridCopy, toggleColour(colour));
         }
-        return null;
-    }
 
-    public void expand()
-    {
-
+        /* children explored? -> select by UCB */
+        NodeMCTS best = children.get(0);
+        double bestUCB = best.getUCBscore(visits);
+        for(NodeMCTS n: children)
+        {
+            if(n.getUCBscore(visits) > bestUCB)
+            {
+                best = n;
+                bestUCB = n.getUCBscore(visits);
+            }
+        }
+        return best;
     }
 
     /**
      * Plays the game randomly until termination
-     * @param colour - the current colour of the game
      * @return  if win -> 1,
-     *          else -> -1
+     *          else -> 0
      */
-    public int playout(Color colour)
+    public int playout()
     {
         Color startingColour = colour;
         Stack<Vector> moves = collectRemainingMoves(grid);
@@ -63,7 +80,7 @@ public class NodeMCTS extends Node
             {
                 keepGoing = false;
                 if(colour == startingColour)
-                    return -1;
+                    return 0;
                 else
                     return 1;
             }
@@ -84,6 +101,11 @@ public class NodeMCTS extends Node
         return x_bar + (C * Math.sqrt(frac));
     }
 
+    public boolean isLeaf()
+    {
+        return !children.isEmpty();
+    }
+
     /**
      * @return a shuffled stack of all the remaining
      * available moves in the current grid
@@ -98,6 +120,16 @@ public class NodeMCTS extends Node
         }
         Collections.shuffle(stack);
         return stack;
+    }
+
+    private Vector selectNextLegalMove()
+    {
+        Vector selected = unexplored.pop();
+        while(!grid.isLegalMove(selected, colour))
+        {
+            selected = unexplored.pop();
+        }
+        return selected;
     }
 
     private Color toggleColour(Color colour)
