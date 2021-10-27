@@ -201,6 +201,15 @@ public class GridGraphImp implements Grid
         return evaluateGameForColor(Color.RED) - evaluateGameForColor(Color.BLUE);
     }
 
+    @Override
+    public Grid copy(){
+        Grid temp = new GridGraphImp(this.radius);
+        for(Tile tile : this.getAllTiles()){
+            temp.setTile(tile.getVector(), tile.getColour());
+        }
+        return temp;
+    }
+
     int evaluateGameForColor(Color color){
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
         int group_count = groups.size();

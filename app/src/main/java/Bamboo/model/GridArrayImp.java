@@ -181,6 +181,16 @@ public class GridArrayImp implements Grid
         return evaluateGameForColor(Color.RED) - evaluateGameForColor(Color.BLUE);
     }
 
+    @Override
+    public Grid copy(){
+        int radius = (this.width - 1)/2;
+        Grid temp = new GridArrayImp(radius);
+        for(Tile tile : this.getAllTiles()){
+            temp.setTile(tile.getVector(), tile.getColour());
+        }
+        return temp;
+    }
+
     int evaluateGameForColor(Color color){
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
         int group_count = groups.size();

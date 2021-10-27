@@ -1,8 +1,11 @@
 package Bamboo.controller;
 
 import Bamboo.model.Game;
+import Bamboo.model.Tile;
 
 import java.awt.*;
+import java.util.Collections;
+import java.util.Stack;
 
 public class Random implements Agent
 {
@@ -29,15 +32,21 @@ public class Random implements Agent
     @Override
     public Vector getNextMove(Game game)
     {
-        int max = game.getBoardSize();
-        Vector v = new Vector(0,0,0);
-
-        boolean keepGoing = true;
-        while(keepGoing)
+        Stack<Vector> stack = new Stack<>();
+        for(Tile t: game.getAllTiles())
         {
-            v = generateRandomVector(max);
-            if (game.getGrid().isLegalMove(v, colour))
-                keepGoing = false;
+            if(!t.isCouloured())
+                stack.add(t.getVector());
+        }
+        Collections.shuffle(stack);
+
+        boolean found = false;
+        Vector v = null;
+        while(!found)
+        {
+            v = stack.pop();
+            if(game.getGrid().isLegalMove(v, game.getCurrentPlayer().getColor()))
+                found = true;
         }
         return v;
     }
@@ -46,41 +55,5 @@ public class Random implements Agent
     public Color getColor()
     {
         return colour;
-    }
-
-    /**
-     * @return a random number v where:
-     *  -max < v_x < max
-     *  -max < v_y < max
-     *  -max < v_z < max
-     *  and v_x + v_y + v_z = 0
-     */
-    public Vector generateRandomVector(int max)
-    {
-        boolean keepGoing = true;
-        Vector v = new Vector(0,0,0);
-        while (keepGoing)
-        {
-            int x = generateRandomInt(max);
-            int y = generateRandomInt(max);
-            int z = (-x) + (-y);
-
-            if((x+y+z == 0) && (z <= max) && (z >= -max))
-                keepGoing = false;
-
-            v = new Vector(x,y,z);
-        }
-        System.out.println(v.toString());
-        return v;
-    }
-
-    public int generateRandomInt(int max)
-    {
-        boolean negative = Math.random() < 0.5;
-        int n = 1;
-        if(negative)
-            n = -1;
-
-        return (int) (Math.random() * n * max);
     }
 }
