@@ -2,25 +2,34 @@ package Bamboo.model;
 
 import java.awt.*;
 import java.util.ArrayList;
+import Bamboo.controller.*;
 
 public class Node {
-    Node parent;
-    ArrayList<Node> children;
-    Grid grid;
-    int level;
-    int value;
+    private Node parent;
+    private ArrayList<Node> children;
+    private Grid grid;
+    private int level;
+    private int value;
+    private Vector move;
 
     public Node(Grid new_grid){
         this.children = new ArrayList<>();
         this.grid = new_grid;
         this.level = 0;
-        this.value = new_grid.evaluateGame();
     }
 
     public void addChild(Grid new_grid){
         Node temp = new Node(new_grid);
         temp.setLevel(this.level + 1);
         temp.setParent(this);
+        children.add(temp);
+    }
+
+    public void addChild(Grid new_grid, Vector move){
+        Node temp = new Node(new_grid);
+        temp.setLevel(this.level + 1);
+        temp.setParent(this);
+        temp.setMove(move);
         children.add(temp);
     }
 
@@ -33,8 +42,14 @@ public class Node {
     }
 
     public int getValue(){
-        return grid.evaluateGame();
+        return this.value;
     }
+
+    public void setValue(int val){this.value = val;}
+
+    public Vector getMove(){return this.move;}
+
+    public void setMove(Vector move){this.move = move;}
 
     public Grid getGrid(){
         return grid;

@@ -60,7 +60,8 @@ public class GridGraphImp implements Grid
             }
         }
         tiles.get(v).setColour(c);
-        remainingTiles.remove(v);
+        if(c != Color.white)
+            remainingTiles.remove(v);
     }
 
     public void unSetTile(Vector v)
