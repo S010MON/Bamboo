@@ -1,6 +1,8 @@
-package Bamboo.model;
+package Bamboo.controller.MCTS;
 
 import Bamboo.controller.Vector;
+import Bamboo.model.Grid;
+import Bamboo.model.Tile;
 
 import java.awt.Color;
 import java.util.ArrayList;
