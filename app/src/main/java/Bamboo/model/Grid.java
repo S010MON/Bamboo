@@ -29,4 +29,6 @@ public interface Grid
     int evaluateGame();
 
     boolean isFinished(Color currentColour);
+
+    Grid copy();
 }
