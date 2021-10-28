@@ -21,6 +21,8 @@ public class NodeMCTS
     private ArrayList<NodeMCTS> children;
     private Stack<Vector> unexplored;
 
+    // Some code
+
     public NodeMCTS(Grid grid, Color colour)
     {
         plays = 0;
