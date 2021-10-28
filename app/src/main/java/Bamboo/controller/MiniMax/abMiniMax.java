@@ -7,13 +7,13 @@ import Bamboo.model.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MiniMax implements Agent {
-    String name = "Max";
+public class abMiniMax implements Agent {
+    String name = "Anton";
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
-    int totalEvaluations = 0;
+    int totalEvaluations;
 
-    public MiniMax(Color color){
+    public abMiniMax(Color color){
         this.color = color;
     }
 
@@ -69,7 +69,7 @@ public class MiniMax implements Agent {
             maximizingPlayer = true;
         else
             maximizingPlayer = false;
-        int evaluation = minimax(node, depth, maximizingPlayer);//This must stay in for now
+        int evaluation = minimax(node, depth, -1000000,1000000, maximizingPlayer);//This must stay in for now
         ArrayList<NodeMM> options = node.getChildren();
         for (NodeMM option : options) {
             if (option.getValue() == node.getValue()) {
@@ -79,7 +79,7 @@ public class MiniMax implements Agent {
         return new Vector(0,0,0);
     }
 
-    public int minimax(NodeMM node, int depth, boolean maximizingPlayer){
+    public int minimax(NodeMM node, int depth, int alpha, int beta, boolean maximizingPlayer){
         totalEvaluations += 1;
         Color current_color;
         if(maximizingPlayer)
@@ -92,17 +92,19 @@ public class MiniMax implements Agent {
             return grid.evaluateGame();
         }
         addLegalChildren(node,current_color);
-        return switch_minimax(node, depth, maximizingPlayer);
+        return switch_minimax(node, depth,alpha,beta, maximizingPlayer);
     }
 
-    public int switch_minimax(NodeMM node, int depth,boolean maximizingPlayer){
+    public int switch_minimax(NodeMM node, int depth, int alpha, int beta, boolean maximizingPlayer){
         int eval;
         if(maximizingPlayer){
             int maxEval = -1000000;
             for(NodeMM child : node.getChildren()){
-
-                eval = minimax(child,depth - 1,false);
+                eval = minimax(child,depth - 1,alpha, beta,false);
                 maxEval = Math.max(eval,maxEval);
+                if(maxEval >= beta)
+                    break;
+                alpha = Math.max(alpha,maxEval);
             }
             node.setValue(maxEval);
             return maxEval;
@@ -110,8 +112,11 @@ public class MiniMax implements Agent {
         else{
             int minEval = 1000000;
             for(NodeMM child : node.getChildren()){
-                eval =  minimax(child,depth - 1,true);
+                eval =  minimax(child,depth - 1,alpha, beta,true);
                 minEval = Math.min(eval,minEval);
+                if(minEval <= alpha)
+                    break;
+                beta = Math.min(beta,minEval);
             }
             node.setValue(minEval);
             return minEval;

@@ -10,6 +10,7 @@ public class NodeMM {
     private Grid grid;
     private int level;
     private int value;
+    private int guess;
     private Vector move;
 
     public NodeMM(Grid new_grid){
@@ -25,12 +26,21 @@ public class NodeMM {
         children.add(temp);
     }
 
+    public void addChild(NodeMM node){
+        children.add(node);
+    }
+
     public void addChild(Grid new_grid, Vector move){
         NodeMM temp = new NodeMM(new_grid);
         temp.setLevel(this.level + 1);
         temp.setParent(this);
         temp.setMove(move);
+        temp.setGuess(move.getX()^2 + move.getY()^2 + move.getZ()^2);
         children.add(temp);
+    }
+
+    public void removeChild(NodeMM child){
+        this.children.remove(child);
     }
 
     public void setLevel(int lvl){
@@ -46,6 +56,10 @@ public class NodeMM {
     }
 
     public void setValue(int val){this.value = val;}
+
+    public int getGuess(){return this.guess;}
+
+    public void setGuess(int guess){this.guess = guess;}
 
     public Vector getMove(){return this.move;}
 

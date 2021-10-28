@@ -4,7 +4,6 @@ import Bamboo.controller.MiniMax.MiniMax;
 import Bamboo.controller.MiniMax.NodeMM;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;
-
 import java.awt.*;
 import java.util.ArrayList;
 
