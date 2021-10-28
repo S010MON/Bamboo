@@ -57,12 +57,4 @@ public class MiniMaxTest {
         agent.minimax(start,3,true);
         System.out.println("Calls: " + agent.getCalls());
     }
-
-    @Test void minimaxCallsGrid4(){
-        NodeMM start = new NodeMM(new GridGraphImp(4));
-        MiniMax agent = new MiniMax(Color.BLUE);
-        agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        agent.minimax(start,3,true);
-        System.out.println("Calls: " + agent.getCalls());
-    }
 }
