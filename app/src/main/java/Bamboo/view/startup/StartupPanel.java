@@ -1,8 +1,7 @@
 package Bamboo.view.startup;
 
 import Bamboo.controller.Human;
-import Bamboo.controller.MiniMax;
-import Bamboo.controller.Random;
+import Bamboo.controller.MiniMax.MiniMax;
 import Bamboo.controller.Settings;
 import Bamboo.view.MainFrame;
 
@@ -54,8 +53,8 @@ public class StartupPanel extends JPanel
                             settingsPanel.getBoardSize());
 
             case DEMO: return new Settings(
-                            new Random(settingsPanel.getMultiConfigurationPanel().getPlayer1Color()),
-                            new Random(settingsPanel.getMultiConfigurationPanel().getPlayer2Color()),
+                            new MiniMax(settingsPanel.getMultiConfigurationPanel().getPlayer1Color()),
+                            new MiniMax(settingsPanel.getMultiConfigurationPanel().getPlayer2Color()),
                             settingsPanel.getBoardSize());
         }
         return null;

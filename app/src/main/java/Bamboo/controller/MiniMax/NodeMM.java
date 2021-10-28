@@ -1,32 +1,32 @@
-package Bamboo.model;
+package Bamboo.controller.MiniMax;
 
-import java.awt.*;
 import java.util.ArrayList;
 import Bamboo.controller.*;
+import Bamboo.model.Grid;
 
-public class Node {
-    private Node parent;
-    private ArrayList<Node> children;
+public class NodeMM {
+    private NodeMM parent;
+    private ArrayList<NodeMM> children;
     private Grid grid;
     private int level;
     private int value;
     private Vector move;
 
-    public Node(Grid new_grid){
+    public NodeMM(Grid new_grid){
         this.children = new ArrayList<>();
         this.grid = new_grid;
         this.level = 0;
     }
 
     public void addChild(Grid new_grid){
-        Node temp = new Node(new_grid);
+        NodeMM temp = new NodeMM(new_grid);
         temp.setLevel(this.level + 1);
         temp.setParent(this);
         children.add(temp);
     }
 
     public void addChild(Grid new_grid, Vector move){
-        Node temp = new Node(new_grid);
+        NodeMM temp = new NodeMM(new_grid);
         temp.setLevel(this.level + 1);
         temp.setParent(this);
         temp.setMove(move);
@@ -55,15 +55,15 @@ public class Node {
         return grid;
     }
 
-    public void setParent(Node pnt){
+    public void setParent(NodeMM pnt){
         this.parent = pnt;
     }
 
-    public Node getParent(){
+    public NodeMM getParent(){
         return parent;
     }
 
-    public ArrayList<Node> getChildren(){
+    public ArrayList<NodeMM> getChildren(){
         return children;
     }
 

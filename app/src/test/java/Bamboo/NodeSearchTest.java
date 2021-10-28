@@ -1,6 +1,7 @@
 package Bamboo;
 
-import Bamboo.controller.MiniMax;
+import Bamboo.controller.MiniMax.MiniMax;
+import Bamboo.controller.MiniMax.NodeMM;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NodeSearchTest {
     @Test void testTreeDepthTwo(){
-        Node start = new Node(new GridGraphImp(2));
+        NodeMM start = new NodeMM(new GridGraphImp(2));
         MiniMax agent = new MiniMax(Color.RED);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         //agent.addAllChildren(start,2,Color.RED);
