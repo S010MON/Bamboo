@@ -69,8 +69,8 @@ public class NodeMM {
         return grid;
     }
 
-    public void setParent(NodeMM pnt){
-        this.parent = pnt;
+    public void setParent(NodeMM prnt){
+        this.parent = prnt;
     }
 
     public NodeMM getParent(){
