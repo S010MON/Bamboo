@@ -111,7 +111,7 @@ public class TimeTest
         return  finishTime - startTime;
     }
 
-    @Test void testGraph1000()
+    void testGraph1000()
     {
         long sum=0;
         for(int i=0; i<10000; i++)
@@ -135,7 +135,7 @@ public class TimeTest
         return finishTime - startTime;
     }
 
-    @Test void testArray1000()
+    void testArray1000()
     {
         long sum=0;
         for(int i=0; i<10000; i++)

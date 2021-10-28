@@ -51,7 +51,7 @@ public class MiniMaxTest {
     }
 
     @Test void minimaxCallsGrid3(){
-        NodeMM start = new NodeMM(new GridGraphImp(3));
+        NodeMM start = new NodeMM(new GridGraphImp(2));
         MiniMax agent = new MiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent.minimax(start,2,true);
