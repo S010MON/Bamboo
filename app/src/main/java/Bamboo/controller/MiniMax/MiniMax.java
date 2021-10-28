@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class MiniMax implements Agent {
-    String name = "Tim";
+    String name = "Max";
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
 
@@ -89,9 +89,13 @@ public class MiniMax implements Agent {
             return grid.evaluateGame();
         }
         addLegalChildren(node,current_color);
+        return switch_minimax(node, depth, maximizingPlayer);
+    }
+
+    public int switch_minimax(NodeMM node, int depth,boolean maximizingPlayer){
+        int eval;
         if(maximizingPlayer){
             int maxEval = -1000000;
-            int eval;
             for(NodeMM child : node.getChildren()){
                 eval = minimax(child,depth - 1,false);
                 maxEval = Math.max(eval,maxEval);
@@ -100,7 +104,6 @@ public class MiniMax implements Agent {
             return maxEval;
         }
         else{
-            int eval;
             int minEval = 1000000;
             for(NodeMM child : node.getChildren()){
                 eval =  minimax(child,depth - 1,true);
@@ -111,7 +114,7 @@ public class MiniMax implements Agent {
         }
     }
 
-    void addLegalChildren(NodeMM node, Color current_color) {
+    public void addLegalChildren(NodeMM node, Color current_color) {
         Grid grid = node.getGrid();
         for (Vector v : uncolored_vectors) {
             if (grid.isLegalMove(v, current_color)) {
