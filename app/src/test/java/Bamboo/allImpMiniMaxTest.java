@@ -20,8 +20,8 @@ public class allImpMiniMaxTest {
         abMiniMax agent2 = new abMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent2.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        Vector move1 = agent.minimaxMove(start,3,Color.BLUE);
-        Vector move2 = agent2.minimaxMove(start,3,Color.BLUE);
+        Vector move1 = agent.minimaxMove(start,2,Color.BLUE);
+        Vector move2 = agent2.minimaxMove(start,2,Color.BLUE);
         assertEquals(move1,move2);
     }
 
@@ -31,8 +31,8 @@ public class allImpMiniMaxTest {
         sortedABMiniMax agent2 = new sortedABMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent2.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        Vector move1 = agent.minimaxMove(start,3,Color.BLUE);
-        Vector move2 = agent2.minimaxMove(start,3,Color.BLUE);
+        Vector move1 = agent.minimaxMove(start,2,Color.BLUE);
+        Vector move2 = agent2.minimaxMove(start,2,Color.BLUE);
         assertEquals(move1,move2);
     }
 
@@ -42,8 +42,8 @@ public class allImpMiniMaxTest {
         sortedABMiniMax agent2 = new sortedABMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent2.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        Vector move1 = agent.minimaxMove(start,3,Color.BLUE);
-        Vector move2 = agent2.minimaxMove(start,3,Color.BLUE);
+        Vector move1 = agent.minimaxMove(start,2,Color.BLUE);
+        Vector move2 = agent2.minimaxMove(start,2, Color.BLUE);
         assertEquals(move1,move2);
     }
 }

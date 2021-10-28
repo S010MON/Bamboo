@@ -56,7 +56,7 @@ public class sortedABMiniMaxTest {
         NodeMM start = new NodeMM(new GridGraphImp(3));
         sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        agent.minimax(start,3,-1000000,1000000,true);
+        agent.minimax(start,2,-1000000,1000000,true);
         System.out.println("Calls: " + agent.getCalls());
     }
 
@@ -64,7 +64,7 @@ public class sortedABMiniMaxTest {
         NodeMM start = new NodeMM(new GridGraphImp(4));
         sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        agent.minimax(start,3,-1000000,1000000,true);
+        agent.minimax(start,2,-1000000,1000000,true);
         System.out.println("Calls: " + agent.getCalls());
     }
 
@@ -72,7 +72,7 @@ public class sortedABMiniMaxTest {
         NodeMM start = new NodeMM(new GridGraphImp(5));
         sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        agent.minimax(start,3,-1000000,1000000,true);
+        agent.minimax(start,2,-1000000,1000000,true);
         System.out.println("Calls: " + agent.getCalls());
     }
 
@@ -80,7 +80,7 @@ public class sortedABMiniMaxTest {
         NodeMM start = new NodeMM(new GridGraphImp(6));
         sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        agent.minimax(start,3,-1000000,1000000,true);
+        agent.minimax(start,2,-1000000,1000000,true);
         System.out.println("Calls: " + agent.getCalls());
     }
 }
