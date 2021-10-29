@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class allImpMiniMaxTest {
     @Test void regularEqualsPruning(){
-        NodeMM start = new NodeMM(new GridGraphImp(3));
+        NodeMM start = new NodeMM(new GridGraphImp(2));
         MiniMax agent = new MiniMax(Color.BLUE);
         abMiniMax agent2 = new abMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));

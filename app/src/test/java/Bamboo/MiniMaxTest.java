@@ -56,5 +56,6 @@ public class MiniMaxTest {
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent.minimax(start,2,true);
         System.out.println("Calls: " + agent.getCalls());
+        assertEquals(1,1);
     }
 }
