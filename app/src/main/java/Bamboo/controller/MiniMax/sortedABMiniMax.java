@@ -42,7 +42,6 @@ public class sortedABMiniMax implements Agent {
         }
         int depth = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
         NodeMM start = new NodeMM(game.getGrid());
-        System.out.println("Total minimax calls: " + totalEvaluations + ", depth: " + depth);
         return minimaxMove(start, depth, this.color);
     }
 
@@ -72,7 +71,6 @@ public class sortedABMiniMax implements Agent {
         else
             maximizingPlayer = false;
         int evaluation = minimax(node, depth, -1000000,1000000, maximizingPlayer);//This must stay in for now
-        System.out.println("Foreseen game evaluation: " + node.getValue());
         ArrayList<NodeMM> options = node.getChildren();
         for (NodeMM option : options) {
             if (option.getValue() == node.getValue()) {

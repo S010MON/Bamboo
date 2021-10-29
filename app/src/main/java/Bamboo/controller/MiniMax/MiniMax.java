@@ -40,7 +40,6 @@ public class MiniMax implements Agent {
         }
         int depth = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
         NodeMM start = new NodeMM(game.getGrid());
-        System.out.println("Total minimax calls: " + totalEvaluations);
         return minimaxMove(start, depth, this.color);
     }
 
