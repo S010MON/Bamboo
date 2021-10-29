@@ -88,8 +88,8 @@ public class abMiniMax implements Agent {
             current_color = Color.BLUE;
         Grid grid = node.getGrid();
         if(depth == 0 || grid.isFinished(current_color)){
-            node.setValue(grid.evaluateGame());
-            return grid.evaluateGame();
+            node.setValue(grid.evaluateGame(current_color));
+            return grid.evaluateGame(current_color);
         }
         addLegalChildren(node,current_color);
         return switch_minimax(node, depth,alpha,beta, maximizingPlayer);
@@ -132,6 +132,7 @@ public class abMiniMax implements Agent {
                 node.addChild(copy,v);
             }
         }
+        //System.out.println("Total children: " + node.getChildren().size());
     }
 
     public int getCalls(){

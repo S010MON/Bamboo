@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -56,7 +57,7 @@ public class sortedABMiniMaxTest {
         NodeMM start = new NodeMM(new GridGraphImp(3));
         sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        agent.minimax(start,2,-1000000,1000000,true);
+        agent.minimax(start,3,-1000000,1000000,true);
         System.out.println("Calls: " + agent.getCalls());
     }
 
@@ -64,7 +65,7 @@ public class sortedABMiniMaxTest {
         NodeMM start = new NodeMM(new GridGraphImp(4));
         sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        agent.minimax(start,2,-1000000,1000000,true);
+        agent.minimax(start,3,-1000000,1000000,true);
         System.out.println("Calls: " + agent.getCalls());
     }
 
@@ -72,15 +73,28 @@ public class sortedABMiniMaxTest {
         NodeMM start = new NodeMM(new GridGraphImp(5));
         sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        agent.minimax(start,2,-1000000,1000000,true);
+        agent.minimax(start,3,-1000000,1000000,true);
         System.out.println("Calls: " + agent.getCalls());
     }
 
-    @Test void minimaxCallsGrid6(){
-        NodeMM start = new NodeMM(new GridGraphImp(6));
+    @Test void sortNodes(){
+        NodeMM start = new NodeMM(new GridGraphImp(5));
         sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        agent.minimax(start,2,-1000000,1000000,true);
-        System.out.println("Calls: " + agent.getCalls());
+        agent.addLegalChildren(start,Color.BLUE);
+        int before = start.getChildren().size();
+        int after = start.getChildren().size();
+        System.out.println(before);
+        assertEquals(before,after);
+    }
+
+    @Test void sortedNodesGuesses(){
+        NodeMM start = new NodeMM(new GridGraphImp(5));
+        sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
+        agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
+        agent.addLegalChildren(start,Color.BLUE);
+        for(NodeMM child : start.getChildren()){
+            System.out.println(child.getGuess());
+        }
     }
 }

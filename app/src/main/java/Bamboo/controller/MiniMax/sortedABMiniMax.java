@@ -72,6 +72,7 @@ public class sortedABMiniMax implements Agent {
         else
             maximizingPlayer = false;
         int evaluation = minimax(node, depth, -1000000,1000000, maximizingPlayer);//This must stay in for now
+        System.out.println("Foreseen game evaluation: " + node.getValue());
         ArrayList<NodeMM> options = node.getChildren();
         for (NodeMM option : options) {
             if (option.getValue() == node.getValue()) {
@@ -86,12 +87,13 @@ public class sortedABMiniMax implements Agent {
         Color current_color;
         if(maximizingPlayer)
             current_color = Color.RED;
-        else
+        else{
             current_color = Color.BLUE;
+        }
         Grid grid = node.getGrid();
         if(depth == 0 || grid.isFinished(current_color)){
-            node.setValue(grid.evaluateGame());
-            return grid.evaluateGame();
+            node.setValue(grid.evaluateGame(current_color));
+            return grid.evaluateGame(current_color);
         }
         addLegalChildren(node,current_color);
         return switch_minimax(node, depth,alpha,beta, maximizingPlayer);
@@ -134,41 +136,7 @@ public class sortedABMiniMax implements Agent {
                 node.addChild(copy,v);
             }
         }
-        sortChildren(node,current_color);
-    }
-
-    void sortChildren(NodeMM parent, Color color){
-        boolean maximize = color == Color.RED;
-        ArrayList<Integer> values = new ArrayList<>();
-        ArrayList<NodeMM> children = new ArrayList<>(parent.getChildren());
-        for(NodeMM child : children){
-            values.add(child.getGuess());
-            parent.removeChild(child);
-        }
-        if(maximize){
-            int i = 0;
-            int max = -2000000;
-            for(NodeMM child : children){
-                if(child.getGuess() >= max){
-                    parent.addChild(child);
-                    values.set(i,-2000000);
-                    i ++;
-                    max = Collections.max(values);
-                }
-            }
-        }
-        else{
-            int i = 0;
-            int min = 2000000;
-            for(NodeMM child : children){
-                if(child.getGuess() <= min){
-                    parent.addChild(child);
-                    values.set(i,2000000);
-                    i ++;
-                    min = Collections.min(values);
-                }
-            }
-        }
+        node.sortChildren();
     }
 
     public int getCalls(){

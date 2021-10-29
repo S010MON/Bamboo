@@ -4,6 +4,7 @@ import Bamboo.controller.Human;
 import Bamboo.controller.MiniMax.MiniMax;
 import Bamboo.controller.MiniMax.abMiniMax;
 import Bamboo.controller.MiniMax.sortedABMiniMax;
+import Bamboo.controller.Random;
 import Bamboo.controller.Settings;
 import Bamboo.view.MainFrame;
 

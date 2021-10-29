@@ -35,7 +35,7 @@ public class NodeMM {
         temp.setLevel(this.level + 1);
         temp.setParent(this);
         temp.setMove(move);
-        temp.setGuess(move.getX()^2 + move.getY()^2 + move.getZ()^2);
+        temp.setGuess(move.getX()*move.getX() + move.getY()*move.getY() + move.getZ()*move.getZ());
         children.add(temp);
     }
 
@@ -83,5 +83,20 @@ public class NodeMM {
 
     public String toString(){
         return "node at lv " + level;
+    }
+
+    public void sortChildren(){
+        for(int i = 0; i < children.size(); i++){
+            for(int j = children.size() - 1; j >= 0; j--){
+                if(i >= j){
+                    break;
+                }
+                if(children.get(i).getGuess() < children.get(j).getGuess()){
+                    NodeMM temp = children.get(i);
+                    children.set(i,children.get(j));
+                    children.set(j,temp);
+                }
+            }
+        }
     }
 }

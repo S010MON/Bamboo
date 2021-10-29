@@ -14,36 +14,14 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class allImpMiniMaxTest {
-    @Test void regularAndPruning(){
+    @Test void regularEqualsPruning(){
         NodeMM start = new NodeMM(new GridGraphImp(3));
         MiniMax agent = new MiniMax(Color.BLUE);
         abMiniMax agent2 = new abMiniMax(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent2.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        Vector move1 = agent.minimaxMove(start,2,Color.BLUE);
-        Vector move2 = agent2.minimaxMove(start,2,Color.BLUE);
-        assertEquals(move1,move2);
-    }
-
-    @Test void regularAndSorted(){
-        NodeMM start = new NodeMM(new GridGraphImp(3));
-        MiniMax agent = new MiniMax(Color.BLUE);
-        sortedABMiniMax agent2 = new sortedABMiniMax(Color.BLUE);
-        agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        agent2.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        Vector move1 = agent.minimaxMove(start,2,Color.BLUE);
-        Vector move2 = agent2.minimaxMove(start,2,Color.BLUE);
-        assertEquals(move1,move2);
-    }
-
-    @Test void pruningAndSorted(){
-        NodeMM start = new NodeMM(new GridGraphImp(3));
-        abMiniMax agent = new abMiniMax(Color.BLUE);
-        sortedABMiniMax agent2 = new sortedABMiniMax(Color.BLUE);
-        agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        agent2.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
-        Vector move1 = agent.minimaxMove(start,2,Color.BLUE);
-        Vector move2 = agent2.minimaxMove(start,2, Color.BLUE);
+        Vector move1 = agent.minimaxMove(start,3,Color.BLUE);
+        Vector move2 = agent2.minimaxMove(start,3,Color.BLUE);
         assertEquals(move1,move2);
     }
 }
