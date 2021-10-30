@@ -48,7 +48,7 @@ public class Game
         if(grid.isFinished(currentPlayer.getColor()))
         {
             try {Thread.sleep(2000); } catch (Exception exception){}
-            view.endGame(getCurrentPlayer());
+            view.endGame(getNonCurrentPlayer());
         }
     }
 
