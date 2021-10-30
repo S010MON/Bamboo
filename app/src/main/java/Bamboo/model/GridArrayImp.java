@@ -183,7 +183,7 @@ public class GridArrayImp implements Grid
     }
 
     @Override
-    public int evaluateGame(){
+    public int evaluateGame(Color color){
         if(isFinished(Color.RED))
             return -1000000;
         if(isFinished(Color.BLUE))
