@@ -1,16 +1,15 @@
 package Bamboo;
 
+import Bamboo.controller.MiniMax.NodeMM;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;
-
-import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class NodeTreeTest {
     @Test void testNodePosition(){
-        Node start = new Node(new GridGraphImp(4));
+        NodeMM start = new NodeMM(new GridGraphImp(4));
         start.addChild(new GridGraphImp(3));
         start.addChild(new GridGraphImp(5));
         assertEquals(start.getChildren().get(0).getGrid().getAllTiles().size(),new GridGraphImp(3).getAllTiles().size());
@@ -18,7 +17,7 @@ public class NodeTreeTest {
     }
 
     @Test void testNodeEmptyLevel(){
-        Node start = new Node(new GridGraphImp(4));
+        NodeMM start = new NodeMM(new GridGraphImp(4));
         GridGraphImp g1 = new GridGraphImp(3);
         start.addChild(g1);
         assertEquals(start.getChildren().get(0).getChildren().size(),0);

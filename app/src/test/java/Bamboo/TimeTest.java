@@ -14,7 +14,7 @@ public class TimeTest
 {
     public static void main(String[] args)
     {
-        int iterations = 100000;
+        int iterations = 100;
 
         Data graphData = new Data();
         Logger.logToCSV("graphData.csv", Data.getCSVHeader());
@@ -111,7 +111,7 @@ public class TimeTest
         return  finishTime - startTime;
     }
 
-    @Test void testGraph1000()
+    void testGraph1000()
     {
         long sum=0;
         for(int i=0; i<10000; i++)
@@ -135,7 +135,7 @@ public class TimeTest
         return finishTime - startTime;
     }
 
-    @Test void testArray1000()
+    void testArray1000()
     {
         long sum=0;
         for(int i=0; i<10000; i++)
