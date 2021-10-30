@@ -1,7 +1,6 @@
 package Bamboo.controller;
 
 import java.util.Arrays;
-import java.util.Locale;
 
 public enum AgentType
 {

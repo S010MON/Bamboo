@@ -14,7 +14,6 @@ public class StartupPanel extends JPanel
     private SettingsPanel settingsPanel;
     private HelpPanel helpPanel;
     private MainFrame view;
-
     private int size = 5;
 
     public StartupPanel(MainFrame view)
