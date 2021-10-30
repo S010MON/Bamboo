@@ -1,5 +1,6 @@
 package Bamboo.view.startup;
 
+import Bamboo.controller.AgentFactory;
 import Bamboo.controller.Human;
 import Bamboo.controller.MiniMax.MiniMax;
 import Bamboo.controller.MiniMax.abMiniMax;
@@ -46,18 +47,18 @@ public class StartupPanel extends JPanel
         switch (settingsPanel.getMode())
         {
             case SINGLE: return new Settings(
-                            new Human(settingsPanel.getMultiConfigurationPanel().getNamePlayer1(), settingsPanel.getMultiConfigurationPanel().getPlayer1Color()),
-                            new sortedABMiniMax(settingsPanel.getMultiConfigurationPanel().getPlayer2Color()),
+                            new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
+                            AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
                             settingsPanel.getBoardSize());
                             
             case MULTI: return new Settings(
-                            new Human(settingsPanel.getMultiConfigurationPanel().getNamePlayer1(), settingsPanel.getMultiConfigurationPanel().getPlayer1Color()),
-                            new Human(settingsPanel.getMultiConfigurationPanel().getNamePlayer2(), settingsPanel.getMultiConfigurationPanel().getPlayer2Color()),
+                            new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
+                            new Human(settingsPanel.getPlayer2Name(), settingsPanel.getPlayer2Colour()),
                             settingsPanel.getBoardSize());
 
             case DEMO: return new Settings(
-                            new MiniMax(settingsPanel.getMultiConfigurationPanel().getPlayer1Color()),
-                            new MiniMax(settingsPanel.getMultiConfigurationPanel().getPlayer2Color()),
+                            new MiniMax(settingsPanel.getPlayer1Colour()),
+                            new MiniMax(settingsPanel.getPlayer2Colour()),
                             settingsPanel.getBoardSize());
         }
         return null;

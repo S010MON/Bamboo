@@ -1,5 +1,6 @@
 package Bamboo.view.startup;
 
+import Bamboo.controller.AgentType;
 import Bamboo.view.resources.Button;
 import Bamboo.view.resources.Colour;
 
@@ -76,8 +77,8 @@ public class SingleConfigurationPanel extends JPanel
         textFieldPanel2 = new JPanel();
         textFieldPanel2.setLayout(null);
         textFieldPanel2.setBackground(Colour.background());
-        AIstring = new String[]{"MinMax", "Neuronal Network", "Monte Carlo Search Tree"};
-        AIcombobox = new JComboBox(AIstring);
+        AIstring = AgentType.getNames(AgentType.class);
+        AIcombobox = new JComboBox(AgentType.values());
         AIcombobox.setBounds(20,8,200,30);
         textFieldPanel2.add(AIcombobox);
         panel2.add(textFieldPanel2);
@@ -93,7 +94,10 @@ public class SingleConfigurationPanel extends JPanel
 
     public String getNamePlayer1(){ return player1textField.getText();}
 
-    public String getAI(){ return  (String) AIcombobox.getSelectedItem() ; }
+    public AgentType getAgentType()
+    {
+        return  (AgentType) AIcombobox.getSelectedItem();
+    }
 
     public Color getPlayer1Color(){return buttonPanel1.getPlayerColor();}
 
