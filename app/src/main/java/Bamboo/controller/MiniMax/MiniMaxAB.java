@@ -7,13 +7,13 @@ import Bamboo.model.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class abMiniMax implements Agent {
+public class MiniMaxAB implements Agent {
     String name = "Anton";
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
     int totalEvaluations;
 
-    public abMiniMax(Color color){
+    public MiniMaxAB(Color color){
         this.color = color;
     }
 

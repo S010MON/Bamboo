@@ -3,9 +3,6 @@ package Bamboo.view.startup;
 import Bamboo.controller.AgentFactory;
 import Bamboo.controller.Human;
 import Bamboo.controller.MiniMax.MiniMax;
-import Bamboo.controller.MiniMax.abMiniMax;
-import Bamboo.controller.MiniMax.sortedABMiniMax;
-import Bamboo.controller.Random;
 import Bamboo.controller.Settings;
 import Bamboo.view.MainFrame;
 
@@ -17,7 +14,6 @@ public class StartupPanel extends JPanel
     private SettingsPanel settingsPanel;
     private HelpPanel helpPanel;
     private MainFrame view;
-    private Settings settings = Settings.getDefaultSetting();
 
     private int size = 5;
 
@@ -44,24 +40,20 @@ public class StartupPanel extends JPanel
 
     public Settings getSettings()
     {
-        switch (settingsPanel.getMode())
-        {
-            case SINGLE: return new Settings(
-                            new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
-                            AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
-                            settingsPanel.getBoardSize());
-                            
-            case MULTI: return new Settings(
-                            new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
-                            new Human(settingsPanel.getPlayer2Name(), settingsPanel.getPlayer2Colour()),
-                            settingsPanel.getBoardSize());
-
-            case DEMO: return new Settings(
-                            new MiniMax(settingsPanel.getPlayer1Colour()),
-                            new MiniMax(settingsPanel.getPlayer2Colour()),
-                            settingsPanel.getBoardSize());
-        }
-        return null;
+        return switch (settingsPanel.getMode()) {
+            case SINGLE -> new Settings(
+                    new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
+                    AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
+                    settingsPanel.getBoardSize());
+            case MULTI -> new Settings(
+                    new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
+                    new Human(settingsPanel.getPlayer2Name(), settingsPanel.getPlayer2Colour()),
+                    settingsPanel.getBoardSize());
+            case DEMO -> new Settings(
+                    new MiniMax(settingsPanel.getPlayer1Colour()),
+                    new MiniMax(settingsPanel.getPlayer2Colour()),
+                    settingsPanel.getBoardSize());
+        };
     }
 
     private  void removeComponentCenter(){
