@@ -168,9 +168,9 @@ public class SettingsPanel extends JPanel
 
     public String getPlayer2Name()
     {
-        if(getMode() == Mode.SINGLE)
-            return "Computer";
-        return multiConfigurationPanel.getNamePlayer2();
+        if(getMode() == Mode.MULTI)
+            return multiConfigurationPanel.getNamePlayer2();
+        return "Computer";
     }
 
     public AgentType getAgentType()
