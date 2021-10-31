@@ -94,26 +94,30 @@ public class NodeMCTS
     public int playout()
     {
         Color startingColour = colour;
+        Color currrentColour = colour;
         Stack<Vector> moves = collectRemainingMoves(grid);
 
         while (!moves.isEmpty())
         {
-            if(grid.isLegalMove(moves.peek(), colour))
+            if(grid.isLegalMove(moves.peek(), currrentColour))
             {
-                grid.setTile(moves.pop(), colour);
-                if(grid.isFinished(colour))
+                grid.setTile(moves.pop(), currrentColour);
+                if(grid.isFinished(currrentColour))
                 {
-                    if (colour == startingColour)
+                    if (currrentColour == startingColour)
                         return 1;
                     else
                         return 0;
                 }
-                colour = toggleColour(colour);
+                colour = toggleColour(currrentColour);
             }
             else
                 moves.pop();
         }
-        return 0;
+        if (currrentColour == startingColour)
+            return 1;
+        else
+            return 0;
     }
 
     /**
