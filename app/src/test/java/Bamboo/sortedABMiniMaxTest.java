@@ -1,23 +1,21 @@
 package Bamboo;
 
-import Bamboo.controller.MiniMax.MiniMax;
 import Bamboo.controller.MiniMax.NodeMM;
-import Bamboo.controller.MiniMax.abMiniMax;
-import Bamboo.controller.MiniMax.sortedABMiniMax;
+import Bamboo.controller.MiniMax.MiniMaxAB;
+import Bamboo.controller.MiniMax.MiniMaxSortedAB;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class sortedABMiniMaxTest {
     @Test void legalChildGeneration(){
         NodeMM start = new NodeMM(new GridGraphImp(2));
-        abMiniMax agent = new abMiniMax(Color.BLUE);
+        MiniMaxAB agent = new MiniMaxAB(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         start.getGrid().setTile(new Vector(0,0,0),Color.BLUE);
         agent.addLegalChildren(start,Color.BLUE);
@@ -29,7 +27,7 @@ public class sortedABMiniMaxTest {
 
     @Test void childEvaluationEqualsMiniMaxOfChild(){
         NodeMM start = new NodeMM(new GridGraphImp(2));
-        abMiniMax agent = new abMiniMax(Color.BLUE);
+        MiniMaxAB agent = new MiniMaxAB(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         int evaluation = agent.minimax(start,4,-1000000,1000000,false);
         int nodeEval = start.getChildren().get(0).getValue();
@@ -39,7 +37,7 @@ public class sortedABMiniMaxTest {
 
     @Test void miniMaxCorrectMoveReturned(){
         NodeMM start = new NodeMM(new GridGraphImp(2));
-        abMiniMax agent = new abMiniMax(Color.BLUE);
+        MiniMaxAB agent = new MiniMaxAB(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         Vector returnedMove = agent.minimaxMove(start,3,Color.BLUE);
         Vector bestMove = new Vector(0,0,0);
@@ -55,7 +53,7 @@ public class sortedABMiniMaxTest {
 
     @Test void minimaxCallsGrid3(){
         NodeMM start = new NodeMM(new GridGraphImp(3));
-        sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
+        MiniMaxSortedAB agent = new MiniMaxSortedAB(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent.minimax(start,3,-1000000,1000000,true);
         System.out.println("Calls: " + agent.getCalls());
@@ -64,7 +62,7 @@ public class sortedABMiniMaxTest {
 
     @Test void minimaxCallsGrid4(){
         NodeMM start = new NodeMM(new GridGraphImp(4));
-        sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
+        MiniMaxSortedAB agent = new MiniMaxSortedAB(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent.minimax(start,3,-1000000,1000000,true);
         System.out.println("Calls: " + agent.getCalls());
@@ -81,7 +79,7 @@ public class sortedABMiniMaxTest {
 
     @Test void sortNodes(){
         NodeMM start = new NodeMM(new GridGraphImp(5));
-        sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
+        MiniMaxSortedAB agent = new MiniMaxSortedAB(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent.addLegalChildren(start,Color.BLUE);
         int before = start.getChildren().size();
@@ -92,7 +90,7 @@ public class sortedABMiniMaxTest {
 
     @Test void sortedNodesGuesses(){
         NodeMM start = new NodeMM(new GridGraphImp(5));
-        sortedABMiniMax agent = new sortedABMiniMax(Color.BLUE);
+        MiniMaxSortedAB agent = new MiniMaxSortedAB(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent.addLegalChildren(start,Color.BLUE);
         for(NodeMM child : start.getChildren()){

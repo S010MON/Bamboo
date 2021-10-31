@@ -2,8 +2,7 @@ package Bamboo;
 
 import Bamboo.controller.MiniMax.MiniMax;
 import Bamboo.controller.MiniMax.NodeMM;
-import Bamboo.controller.MiniMax.abMiniMax;
-import Bamboo.controller.MiniMax.sortedABMiniMax;
+import Bamboo.controller.MiniMax.MiniMaxAB;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ public class allImpMiniMaxTest {
     @Test void regularEqualsPruning(){
         NodeMM start = new NodeMM(new GridGraphImp(2));
         MiniMax agent = new MiniMax(Color.BLUE);
-        abMiniMax agent2 = new abMiniMax(Color.BLUE);
+        MiniMaxAB agent2 = new MiniMaxAB(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent2.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         Vector move1 = agent.minimaxMove(start,3,Color.BLUE);

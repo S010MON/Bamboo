@@ -9,13 +9,13 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class sortedABMiniMax implements Agent {
+public class MiniMaxSortedAB implements Agent {
     String name = "Steven";
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
     int totalEvaluations;
 
-    public sortedABMiniMax(Color color){
+    public MiniMaxSortedAB(Color color){
         this.color = color;
     }
 
