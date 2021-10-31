@@ -18,26 +18,46 @@ public class NodeMCTS
     private int wins;
     private int visits;
     private Grid grid;
+    private Vector move;
+    private NodeMCTS parent;
     private ArrayList<NodeMCTS> children;
     private Stack<Vector> unexplored;
 
-    // Some code
-
-    public NodeMCTS(Grid grid, Color colour)
+    public NodeMCTS(Grid grid, Vector move, Color colour, NodeMCTS parent)
     {
         plays = 0;
         wins = 0;
         visits = 1;
         unexplored = collectRemainingMoves(grid);
         children =  new ArrayList<>();
+        this.parent = parent;
+        this.move = move;
         this.grid = grid;
         this.colour = colour;
     }
 
     /**
-     * Select the next node to be expanded
+     * Select the next node from those explored
      */
     public NodeMCTS select()
+    {
+        NodeMCTS best = children.get(0);
+        double bestUCB = best.getUCBscore(visits);
+        for(NodeMCTS n: children)
+        {
+            if(n.getUCBscore(visits) > bestUCB)
+            {
+                best = n;
+                bestUCB = n.getUCBscore(visits);
+            }
+        }
+        return best;
+    }
+
+    /**
+     * Select the next node and expand it
+     */
+    public NodeMCTS selectAndExpand()
     {
         /* children not fully explored? -> select randomly */
         if(!unexplored.isEmpty())
@@ -45,7 +65,7 @@ public class NodeMCTS
             Vector v = selectNextLegalMove();
             Grid gridCopy = grid.copy();
             grid.setTile(v, colour);
-            return new NodeMCTS(gridCopy, toggleColour(colour));
+            return new NodeMCTS(gridCopy, v, toggleColour(colour), this);
         }
 
         /* children explored? -> select by UCB */
@@ -93,6 +113,35 @@ public class NodeMCTS
     }
 
     /**
+     * Feeds back all results to the root node
+     * @param result - {0, 1} the result of the playout
+     */
+    public void backProp(int result)
+    {
+        if(parent != null)
+        {
+            parent.addResult(result);
+            parent.incrementPlays();
+            parent.incrementVisits();
+        }
+    }
+
+    public void addResult(int result)
+    {
+        wins += result;
+    }
+
+    public void incrementVisits()
+    {
+        visits++;
+    }
+
+    public void incrementPlays()
+    {
+        plays++;
+    }
+
+    /**
      * Calculate the Upper Confidence Bound for the current node
      * @param parent_visits
      * @return
@@ -103,6 +152,11 @@ public class NodeMCTS
         double C = UCB_CONST;
         double frac = Math.log(parent_visits) / visits;
         return x_bar + (C * Math.sqrt(frac));
+    }
+
+    public Vector getMove()
+    {
+        return move;
     }
 
     public boolean isLeaf()
