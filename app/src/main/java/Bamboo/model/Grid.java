@@ -16,6 +16,8 @@ public interface Grid
 
     List<Tile> getAllTiles();
 
+    List<Vector> getAllRemainingMoves();
+
     List<Vector> getAllVectors();
 
     boolean isLegalMove(Vector vector, Color color);

@@ -126,6 +126,13 @@ public class GridGraphImp implements Grid
     }
 
     @Override
+    public List<Vector> getAllRemainingMoves() {
+        List<Vector> list = new ArrayList<Vector>();
+        list.addAll(remainingTiles.keySet());
+        return list;
+    }
+
+    @Override
     public List<Vector> getAllVectors()
     {
         return tiles.keySet().stream().toList();

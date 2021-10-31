@@ -1,5 +1,6 @@
 package Bamboo.controller;
 
+import Bamboo.controller.MCTS.MCTS;
 import Bamboo.controller.MiniMax.*;
 
 import java.awt.*;
@@ -13,7 +14,7 @@ public class AgentFactory
             case MINIMAX -> new MiniMax(color);
             case MINIMAX_SORTED -> new MiniMaxSortedAB(color);
             case MINIMAX_AB -> new MiniMaxAB(color);
-            case MCTS -> new Random(color);                // TODO Replace with MCTS implementation
+            case MCTS -> new MCTS(color);
             case NEURAL_NET -> new Random(color);          // TODO Replace with NNet implementation
         };
     }
