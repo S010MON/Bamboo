@@ -13,7 +13,6 @@ public class NodeMCTS
 {
     private Color colour;
 
-    private final double UCB_CONST = 1;
     private int plays;
     private int wins;
     private int visits;
@@ -32,14 +31,14 @@ public class NodeMCTS
         children =  new ArrayList<>();
         this.parent = parent;
         this.move = move;
-        this.grid = grid;
+        this.grid = grid.copy();
         this.colour = colour;
     }
 
     /**
      * Select the next node from those explored
      */
-    public NodeMCTS select()
+    public NodeMCTS selectBest()
     {
         NodeMCTS best = children.get(0);
         double bestUCB = best.getUCBscore(visits);
@@ -57,14 +56,14 @@ public class NodeMCTS
     /**
      * Select the next node and expand it
      */
-    public NodeMCTS selectAndExpand()
+    public NodeMCTS select()
     {
         /* children not fully explored? -> select randomly */
         if(!unexplored.isEmpty())
         {
             Vector v = selectNextLegalMove();
             Grid gridCopy = grid.copy();
-            grid.setTile(v, colour);
+            gridCopy.setTile(v, colour);
             return new NodeMCTS(gridCopy, v, toggleColour(colour), this);
         }
 
@@ -82,6 +81,11 @@ public class NodeMCTS
         return best;
     }
 
+    public void expand(NodeMCTS node)
+    {
+        children.add(node);
+    }
+
     /**
      * Plays the game randomly until termination
      * @return  if win -> 1,
@@ -92,22 +96,22 @@ public class NodeMCTS
         Color startingColour = colour;
         Stack<Vector> moves = collectRemainingMoves(grid);
 
-        boolean keepGoing = true;
-        while (keepGoing)
+        while (!moves.isEmpty())
         {
             if(grid.isLegalMove(moves.peek(), colour))
             {
                 grid.setTile(moves.pop(), colour);
+                if(grid.isFinished(colour))
+                {
+                    if (colour == startingColour)
+                        return 1;
+                    else
+                        return 0;
+                }
                 colour = toggleColour(colour);
             }
             else
-            {
-                keepGoing = false;
-                if(colour == startingColour)
-                    return 0;
-                else
-                    return 1;
-            }
+                moves.pop();
         }
         return 0;
     }
@@ -148,10 +152,7 @@ public class NodeMCTS
      */
     public double getUCBscore(int parent_visits)
     {
-        double x_bar = wins/plays;
-        double C = UCB_CONST;
-        double frac = Math.log(parent_visits) / visits;
-        return x_bar + (C * Math.sqrt(frac));
+        return UCB.calculate(wins, plays, parent_visits, visits);
     }
 
     public Vector getMove()

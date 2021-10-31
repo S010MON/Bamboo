@@ -33,11 +33,11 @@ public class MCTS implements Agent
         root = new NodeMCTS(game.getGrid(), null, game.getCurrentPlayer().getColor(), null);
         for(int i = 0; i < iterations; i++)
         {
-            NodeMCTS next = root.selectAndExpand();
-            int result = next.playout();
-            next.backProp(result);
+            NodeMCTS next = root.select();
+            root.expand(next);
+            next.backProp(next.playout());
         }
-        NodeMCTS bestMove = root.select();
+        NodeMCTS bestMove = root.selectBest();
         return bestMove.getMove();
     }
 
