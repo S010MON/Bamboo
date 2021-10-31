@@ -3,7 +3,7 @@ package Bamboo.controller.MCTS;
 public class UCB
 {
 
-    public static final double C = 1;
+    public static final double C = 0.5;
     public static double calculate(int wins, int plays, int n_p, int n_c)
     {
         double x_bar;

@@ -62,9 +62,12 @@ public class NodeMCTS
         if(!unexplored.isEmpty())
         {
             Vector v = selectNextLegalMove();
-            Grid gridCopy = grid.copy();
-            gridCopy.setTile(v, colour);
-            return new NodeMCTS(gridCopy, v, toggleColour(colour), this);
+            if(v != null)
+            {
+                Grid gridCopy = grid.copy();
+                gridCopy.setTile(v, colour);
+                return new NodeMCTS(gridCopy, v, toggleColour(colour), this);
+            }
         }
 
         /* children explored? -> select by UCB */
@@ -187,10 +190,12 @@ public class NodeMCTS
 
     private Vector selectNextLegalMove()
     {
-        Vector selected = unexplored.pop();
-        while(!grid.isLegalMove(selected, colour))
+        Vector selected = null;
+        while(!unexplored.isEmpty())
         {
             selected = unexplored.pop();
+            if(grid.isLegalMove(selected, colour))
+                return selected;
         }
         return selected;
     }
