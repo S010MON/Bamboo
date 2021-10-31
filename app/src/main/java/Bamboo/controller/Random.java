@@ -32,6 +32,9 @@ public class Random implements Agent
     @Override
     public Vector getNextMove(Game game)
     {
+        // Add a delay to the random algorithm
+        try {Thread.sleep(1000); } catch (Exception exception){}
+
         Stack<Vector> stack = new Stack<>();
         for(Tile t: game.getAllTiles())
         {

@@ -1,5 +1,6 @@
 package Bamboo.view.startup;
 
+import Bamboo.controller.AgentType;
 import Bamboo.view.resources.Button;
 import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.ResourceLoader;
@@ -112,7 +113,6 @@ public class SettingsPanel extends JPanel
         return panel;
     }
 
-
     private Hashtable buildHashtableOfPositions()
     {
         Hashtable position = new Hashtable();
@@ -136,15 +136,49 @@ public class SettingsPanel extends JPanel
         labelImage[size].setVisible(true);
     }
 
-    public MultiConfigurationPanel getMultiConfigurationPanel() {
-        return multiConfigurationPanel;
-    }
-
     public int getBoardSize() {
         return boardSize;
     }
 
-    public void selectMulti()
+    public Mode getMode()
+    {
+        return mode;
+    }
+
+    public Color getPlayer1Colour()
+    {
+        if(getMode() == Mode.SINGLE)
+            return singleConfigurationPanel.getPlayer1Color();
+        return multiConfigurationPanel.getPlayer1Color();
+    }
+
+    public Color getPlayer2Colour()
+    {
+        if(getMode() == Mode.SINGLE)
+            return singleConfigurationPanel.getAIcolor();
+        return multiConfigurationPanel.getPlayer2Color();
+    }
+
+    public String getPlayer1Name()
+    {
+        if(getMode() == Mode.SINGLE)
+            return singleConfigurationPanel.getNamePlayer1();
+        return multiConfigurationPanel.getNamePlayer1();
+    }
+
+    public String getPlayer2Name()
+    {
+        if(getMode() == Mode.MULTI)
+            return multiConfigurationPanel.getNamePlayer2();
+        return "Computer";
+    }
+
+    public AgentType getAgentType()
+    {
+        return singleConfigurationPanel.getAgentType();
+    }
+
+    private void selectMulti()
     {
         mode = Mode.MULTI;
         currentPanel.setVisible(false);
@@ -153,7 +187,7 @@ public class SettingsPanel extends JPanel
         currentPanel.setVisible(true);
     }
 
-    public void selectSingle()
+    private void selectSingle()
     {
         mode = Mode.SINGLE;
         currentPanel.setVisible(false);
@@ -162,18 +196,13 @@ public class SettingsPanel extends JPanel
         currentPanel.setVisible(true);
     }
 
-    public void selectDemo()
+    private void selectDemo()
     {
         mode = Mode.DEMO;
         currentPanel.setVisible(false);
         currentPanel.remove(multiConfigurationPanel);
         currentPanel.remove(singleConfigurationPanel);
         currentPanel.setVisible(true);
-    }
-
-    public Mode getMode()
-    {
-        return mode;
     }
 
     private static class CustomSliderUI extends BasicSliderUI {

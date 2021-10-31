@@ -47,7 +47,8 @@ public class Game
         }
         if(grid.isFinished(currentPlayer.getColor()))
         {
-            view.endGame(currentPlayer);
+            try {Thread.sleep(2000); } catch (Exception exception){}
+            view.endGame(getNonCurrentPlayer());
         }
     }
 
@@ -64,6 +65,13 @@ public class Game
     public Agent getCurrentPlayer()
     {
         return currentPlayer;
+    }
+
+    private Agent getNonCurrentPlayer()
+    {
+        if(currentPlayer == player1)
+            return player2;
+        return player1;
     }
 
     public boolean currentPlayerHuman()
