@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class MiniMax implements Agent {
-    String name = "Max";
+
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
     int totalEvaluations = 0;
@@ -20,13 +20,19 @@ public class MiniMax implements Agent {
     @Override
     public String getName()
     {
-        return name;
+        return "Max";
     }
 
     @Override
     public String getType()
     {
         return "minimax";
+    }
+
+    @Override
+    public boolean isHuman()
+    {
+        return false;
     }
 
     @Override

@@ -2,8 +2,10 @@ package Bamboo.model;
 
 import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
+import Bamboo.view.game.TimerListener;
 
 import java.util.List;
+import java.util.Timer;
 
 public class Game
 {
@@ -33,7 +35,7 @@ public class Game
             }
         }
 
-        //if()
+
     }
 
     public void placeNextAt(Vector v)
@@ -101,9 +103,9 @@ public class Game
         return settings;
     }
 
-    public int getBoardSize()
+    public boolean isAgentVsAgent()
     {
-        return settings.boardSize;
+        return (!player1.isHuman() && !player2.isHuman());
     }
 
     private void toggleTurn()
