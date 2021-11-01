@@ -30,6 +30,12 @@ public class MiniMaxAB implements Agent {
     }
 
     @Override
+    public boolean isHuman()
+    {
+        return false;
+    }
+
+    @Override
     public Vector getNextMove(Game game)
     {
         if(uncolored_vectors.size() == 0){

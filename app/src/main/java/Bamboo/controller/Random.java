@@ -30,6 +30,12 @@ public class Random implements Agent
     }
 
     @Override
+    public boolean isHuman()
+    {
+        return false;
+    }
+
+    @Override
     public Vector getNextMove(Game game)
     {
         // Add a delay to the random algorithm

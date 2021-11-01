@@ -32,6 +32,8 @@ public class Game
                 grid.setTile(v, settings.tiles.get(v));
             }
         }
+
+        //if()
     }
 
     public void placeNextAt(Vector v)
