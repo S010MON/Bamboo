@@ -15,6 +15,7 @@ public class SettingsPanel extends JPanel
 {
     private MultiConfigurationPanel multiConfigurationPanel;
     private SingleConfigurationPanel singleConfigurationPanel;
+    private DemoConfigurationPanel demoConfigurationPanel ;
     private JPanel currentPanel;
 
     private JSlider slider;
@@ -31,6 +32,8 @@ public class SettingsPanel extends JPanel
 
         multiConfigurationPanel = new MultiConfigurationPanel();
         singleConfigurationPanel = new SingleConfigurationPanel();
+        demoConfigurationPanel = new DemoConfigurationPanel() ;
+
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
@@ -183,6 +186,7 @@ public class SettingsPanel extends JPanel
         mode = Mode.MULTI;
         currentPanel.setVisible(false);
         currentPanel.remove(singleConfigurationPanel);
+        currentPanel.remove(demoConfigurationPanel);
         currentPanel.add(multiConfigurationPanel, BorderLayout.CENTER);
         currentPanel.setVisible(true);
     }
@@ -192,6 +196,7 @@ public class SettingsPanel extends JPanel
         mode = Mode.SINGLE;
         currentPanel.setVisible(false);
         currentPanel.remove(multiConfigurationPanel);
+        currentPanel.remove(demoConfigurationPanel);
         currentPanel.add(singleConfigurationPanel, BorderLayout.CENTER);
         currentPanel.setVisible(true);
     }
@@ -202,6 +207,7 @@ public class SettingsPanel extends JPanel
         currentPanel.setVisible(false);
         currentPanel.remove(multiConfigurationPanel);
         currentPanel.remove(singleConfigurationPanel);
+        currentPanel.add(demoConfigurationPanel) ;
         currentPanel.setVisible(true);
     }
 
