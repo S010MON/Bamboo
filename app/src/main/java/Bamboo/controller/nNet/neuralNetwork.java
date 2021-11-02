@@ -60,6 +60,8 @@ public class neuralNetwork implements Agent
             FeedForwardNetwork neuralNet = FeedForwardNetwork.builder()
                     .addInputLayer(inputsNum)
                     .addFullyConnectedLayer(90, ActivationType.RELU)
+                    .addFullyConnectedLayer(120, ActivationType.RELU)
+                    .addFullyConnectedLayer(90, ActivationType.RELU)
                     .addOutputLayer(outputsNum, ActivationType.SIGMOID)
                     .lossFunction(LossType.CROSS_ENTROPY)
                     .build();
