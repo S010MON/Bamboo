@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class MiniMaxSortedAB implements Agent {
-    String name = "Steven";
+    String name = "MinMaxSorted";
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
     int totalEvaluations;
