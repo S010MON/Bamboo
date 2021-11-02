@@ -152,14 +152,20 @@ public class SettingsPanel extends JPanel
     {
         if(getMode() == Mode.SINGLE)
             return singleConfigurationPanel.getPlayer1Color();
+        if(getMode()== Mode.MULTI)
         return multiConfigurationPanel.getPlayer1Color();
+
+        return demoConfigurationPanel.getAI1color() ;
     }
 
     public Color getPlayer2Colour()
     {
         if(getMode() == Mode.SINGLE)
             return singleConfigurationPanel.getAIcolor();
+        if(getMode()==Mode.MULTI)
         return multiConfigurationPanel.getPlayer2Color();
+
+        return demoConfigurationPanel.getAI2color() ;
     }
 
     public String getPlayer1Name()
@@ -180,6 +186,15 @@ public class SettingsPanel extends JPanel
     {
         return singleConfigurationPanel.getAgentType();
     }
+
+    public AgentType getAgentType1(){
+        return demoConfigurationPanel.getAgentType1() ;
+    }
+
+    public AgentType getAgentType2(){
+        return demoConfigurationPanel.getAgentType2() ;
+    }
+
 
     private void selectMulti()
     {
