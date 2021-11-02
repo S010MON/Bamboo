@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class MiniMaxAB implements Agent {
-    String name = "Anton";
+    String name = "MiniMaxAB";
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
     int totalEvaluations;

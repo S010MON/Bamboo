@@ -20,7 +20,7 @@ public class MiniMax implements Agent {
     @Override
     public String getName()
     {
-        return "Max";
+        return "MiniMax";
     }
 
     @Override

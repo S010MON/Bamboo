@@ -2,14 +2,13 @@ package Bamboo.model;
 
 import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
-import Bamboo.view.game.TimerListener;
 
+import javax.xml.crypto.Data;
 import java.util.List;
-import java.util.Timer;
 
 public class Game
 {
-    private static final boolean LOG_MOVES = false;
+    private boolean LOG_MOVES = false;
 
     private Grid grid;
     private Agent player1;
@@ -27,6 +26,9 @@ public class Game
         this.currentPlayer = settings.getCurrentPlayer();
         this.settings = settings;
 
+        if(grid.getSize() == 5)
+            LOG_MOVES = true;
+
         if(settings.tiles != null)
         {
             for(Vector v: settings.tiles.keySet())
@@ -34,8 +36,6 @@ public class Game
                 grid.setTile(v, settings.tiles.get(v));
             }
         }
-
-
     }
 
     public void placeNextAt(Vector v)
@@ -44,8 +44,13 @@ public class Game
         {
             grid.setTile(v, currentPlayer.getColor());
 
-            if(LOG_MOVES) 
-              Logger.logMove(v, currentPlayer.getColor());
+            if(LOG_MOVES)
+            {
+                int[] X = DataManager.flatten(grid, currentPlayer.getColor());
+                int[] Y = DataManager.oneHotEncode(grid.getSize(), v);
+                String data = DataManager.concatToCSV(X, Y);
+                Logger.logCSV("data", data);
+            }
             
             toggleTurn();
         }

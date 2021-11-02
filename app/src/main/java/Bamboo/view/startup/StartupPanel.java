@@ -50,8 +50,8 @@ public class StartupPanel extends JPanel
                     new Human(settingsPanel.getPlayer2Name(), settingsPanel.getPlayer2Colour()),
                     settingsPanel.getBoardSize());
             case DEMO -> new Settings(
-                    AgentFactory.makeAgent(AgentType.MINIMAX_SORTED, settingsPanel.getPlayer1Colour()),
-                    AgentFactory.makeAgent(AgentType.MINIMAX_SORTED, settingsPanel.getPlayer2Colour()),
+                    AgentFactory.makeAgent(settingsPanel.getAgentType1(), settingsPanel.getPlayer1Colour()),
+                    AgentFactory.makeAgent(settingsPanel.getAgentType2(), settingsPanel.getPlayer2Colour()),
                     settingsPanel.getBoardSize());
         };
     }

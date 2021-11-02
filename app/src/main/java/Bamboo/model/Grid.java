@@ -33,4 +33,6 @@ public interface Grid
     boolean isFinished(Color currentColour);
 
     Grid copy();
+
+    int getSize();
 }

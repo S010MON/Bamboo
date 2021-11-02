@@ -222,6 +222,12 @@ public class GridGraphImp implements Grid
         return temp;
     }
 
+    @Override
+    public int getSize()
+    {
+        return radius;
+    }
+
     int evaluateGameForColor(Color color){
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
         int legalMoves = 0;
