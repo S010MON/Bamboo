@@ -153,8 +153,7 @@ public class SettingsPanel extends JPanel
         if(getMode() == Mode.SINGLE)
             return singleConfigurationPanel.getPlayer1Color();
         if(getMode()== Mode.MULTI)
-        return multiConfigurationPanel.getPlayer1Color();
-
+            return multiConfigurationPanel.getPlayer1Color();
         return demoConfigurationPanel.getAI1color() ;
     }
 
@@ -163,8 +162,7 @@ public class SettingsPanel extends JPanel
         if(getMode() == Mode.SINGLE)
             return singleConfigurationPanel.getAIcolor();
         if(getMode()==Mode.MULTI)
-        return multiConfigurationPanel.getPlayer2Color();
-
+            return multiConfigurationPanel.getPlayer2Color();
         return demoConfigurationPanel.getAI2color() ;
     }
 
