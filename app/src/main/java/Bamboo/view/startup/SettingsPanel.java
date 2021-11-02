@@ -15,6 +15,7 @@ public class SettingsPanel extends JPanel
 {
     private MultiConfigurationPanel multiConfigurationPanel;
     private SingleConfigurationPanel singleConfigurationPanel;
+    private DemoConfigurationPanel demoConfigurationPanel ;
     private JPanel currentPanel;
 
     private JSlider slider;
@@ -31,6 +32,8 @@ public class SettingsPanel extends JPanel
 
         multiConfigurationPanel = new MultiConfigurationPanel();
         singleConfigurationPanel = new SingleConfigurationPanel();
+        demoConfigurationPanel = new DemoConfigurationPanel() ;
+
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
@@ -149,14 +152,20 @@ public class SettingsPanel extends JPanel
     {
         if(getMode() == Mode.SINGLE)
             return singleConfigurationPanel.getPlayer1Color();
+        if(getMode()== Mode.MULTI)
         return multiConfigurationPanel.getPlayer1Color();
+
+        return demoConfigurationPanel.getAI1color() ;
     }
 
     public Color getPlayer2Colour()
     {
         if(getMode() == Mode.SINGLE)
             return singleConfigurationPanel.getAIcolor();
+        if(getMode()==Mode.MULTI)
         return multiConfigurationPanel.getPlayer2Color();
+
+        return demoConfigurationPanel.getAI2color() ;
     }
 
     public String getPlayer1Name()
@@ -178,11 +187,21 @@ public class SettingsPanel extends JPanel
         return singleConfigurationPanel.getAgentType();
     }
 
+    public AgentType getAgentType1(){
+        return demoConfigurationPanel.getAgentType1() ;
+    }
+
+    public AgentType getAgentType2(){
+        return demoConfigurationPanel.getAgentType2() ;
+    }
+
+
     private void selectMulti()
     {
         mode = Mode.MULTI;
         currentPanel.setVisible(false);
         currentPanel.remove(singleConfigurationPanel);
+        currentPanel.remove(demoConfigurationPanel);
         currentPanel.add(multiConfigurationPanel, BorderLayout.CENTER);
         currentPanel.setVisible(true);
     }
@@ -192,6 +211,7 @@ public class SettingsPanel extends JPanel
         mode = Mode.SINGLE;
         currentPanel.setVisible(false);
         currentPanel.remove(multiConfigurationPanel);
+        currentPanel.remove(demoConfigurationPanel);
         currentPanel.add(singleConfigurationPanel, BorderLayout.CENTER);
         currentPanel.setVisible(true);
     }
@@ -202,6 +222,7 @@ public class SettingsPanel extends JPanel
         currentPanel.setVisible(false);
         currentPanel.remove(multiConfigurationPanel);
         currentPanel.remove(singleConfigurationPanel);
+        currentPanel.add(demoConfigurationPanel) ;
         currentPanel.setVisible(true);
     }
 
