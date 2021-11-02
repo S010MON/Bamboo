@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Game
 {
-    private boolean LOG_MOVES = true;
+    private boolean LOG_MOVES = false;
 
     private Grid grid;
     private Agent player1;
@@ -25,6 +25,9 @@ public class Game
         this.view = view;
         this.currentPlayer = settings.getCurrentPlayer();
         this.settings = settings;
+
+        if(grid.getSize() == 5)
+            LOG_MOVES = true;
 
         if(settings.tiles != null)
         {
