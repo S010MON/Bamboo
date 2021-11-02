@@ -1,9 +1,7 @@
 package Bamboo.view.startup;
 
 import Bamboo.controller.AgentFactory;
-import Bamboo.controller.AgentType;
 import Bamboo.controller.Human;
-import Bamboo.controller.MiniMax.MiniMax;
 import Bamboo.controller.Settings;
 import Bamboo.view.MainFrame;
 
