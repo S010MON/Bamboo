@@ -2,14 +2,33 @@ package Bamboo.controller;
 
 import Bamboo.model.Grid;
 
+import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
 
 public class DataManager
 {
-    public static String flatten(Grid grid)
+    public static int[] flatten(Grid grid, Color currentPlayer)
     {
-        return null;
+        ArrayList<Vector> V = (ArrayList<Vector>) enumerateTiles(grid.getSize());
+        int[] encoding = new int[V.size()];
+        for (int i = 0; i < encoding.length; i++)
+        {
+            Vector v = V.get(i);
+            Color thisColour = grid.getTile(v).getColour();
+            if(thisColour != Color.WHITE)
+            {
+                if(thisColour == currentPlayer)
+                    encoding[i] = 1;
+                else
+                    encoding[i] = -1;
+            }
+            else
+            {
+                encoding[i] = 0;
+            }
+        }
+        return encoding;
     }
 
     public static int[] oneHotEncode(int grid_size, Vector vector)
