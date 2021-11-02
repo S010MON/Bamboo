@@ -35,7 +35,7 @@ public class Logger
             return 'w';
     }
 
-    public static void logToCSV(String fileName, String data)
+    public static void logCSV(String fileName, String data)
     {
         try {
 

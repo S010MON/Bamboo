@@ -6,7 +6,6 @@ import Bamboo.model.Grid;
 import Bamboo.model.GridArrayImp;
 import Bamboo.model.GridGraphImp;
 
-import org.junit.jupiter.api.Test;
 import java.awt.*;
 import java.util.HashMap;
 
@@ -17,20 +16,20 @@ public class TimeTest
         int iterations = 100;
 
         Data graphData = new Data();
-        Logger.logToCSV("graphData.csv", Data.getCSVHeader());
+        Logger.logCSV("graphData.csv", Data.getCSVHeader());
         for(int i = 0; i < iterations; i++)
         {
             graphData = graphData.add(testGraphImp());
-            Logger.logToCSV("graphData.csv", graphData.toCSV());
+            Logger.logCSV("graphData.csv", graphData.toCSV());
         }
         System.out.println(iterations + " iteration Graph implementation: \n" + graphData.toString());
 
         Data arrayData = new Data();
-        Logger.logToCSV("arrayData.csv", Data.getCSVHeader());
+        Logger.logCSV("arrayData.csv", Data.getCSVHeader());
         for(int i = 0; i < iterations; i++)
         {
             arrayData = arrayData.add(testArrayImp());
-            Logger.logToCSV("arrayData.csv", arrayData.toCSV());
+            Logger.logCSV("arrayData.csv", arrayData.toCSV());
         }
         System.out.println(iterations + " iterations of Array implementation: \n" + arrayData.toString());
     }

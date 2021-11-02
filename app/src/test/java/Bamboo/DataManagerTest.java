@@ -105,4 +105,13 @@ public class DataManagerTest
             assertEquals(exp[i], act[i]);
         }
     }
+
+    @Test void testConcatToCSV()
+    {
+        int[] X = {1,2,3,4,5};
+        int[] Y = {6,7,8,9,10};
+        String exp = "1,2,3,4,5;6,7,8,9,10;";
+        String act = DataManager.concatToCSV(X,Y);
+        assertEquals(exp, act);
+    }
 }

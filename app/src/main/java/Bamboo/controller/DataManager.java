@@ -5,6 +5,7 @@ import Bamboo.model.Grid;
 import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class DataManager
 {
@@ -65,5 +66,29 @@ public class DataManager
             }
         }
         return V;
+    }
+
+    public static String concatToCSV(int[] X, int[] Y)
+    {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < X.length; i++)
+        {
+            sb.append(X[i]);
+            if(i < X.length-1)
+                sb.append(",");
+            else
+                sb.append(";");
+        }
+
+        for(int j = 0; j < Y.length; j++)
+        {
+            sb.append(Y[j]);
+            if(j < Y.length-1)
+                sb.append(",");
+            else
+                sb.append(";");
+        }
+
+        return sb.toString();
     }
 }
