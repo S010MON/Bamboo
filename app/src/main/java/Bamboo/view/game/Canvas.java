@@ -8,6 +8,7 @@ import Bamboo.model.Tile;
 import Bamboo.view.resources.Colour;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,9 +26,9 @@ public class Canvas extends JPanel
     private int offsetX = 90;
     private int offsetY = 0;
     private boolean hint ;
+    private int demoDelay = 1000;
 
-    Tile previous_rollover = new Tile(new Vector(0,0,0));
-
+    public Tile previous_rollover = new Tile(new Vector(0,0,0));
     private Color background = Colour.background();
     private RollOverListener rollOverListener;
 
@@ -41,6 +42,12 @@ public class Canvas extends JPanel
         addMouseListener(new TileClickListener(game, this));
         rollOverListener = new RollOverListener(game, this);
         addMouseMotionListener(rollOverListener);
+
+        if(game.isAgentVsAgent())
+        {
+            Timer timer = new Timer(demoDelay, new TimerListener(game, this));
+            timer.start();
+        }
     }
 
     @Override

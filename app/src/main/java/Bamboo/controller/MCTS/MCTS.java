@@ -28,6 +28,12 @@ public class MCTS implements Agent
     }
 
     @Override
+    public boolean isHuman()
+    {
+        return false;
+    }
+
+    @Override
     public Vector getNextMove(Game game)
     {
         root = new NodeMCTS(game.getGrid(), null, game.getCurrentPlayer().getColor(), null);

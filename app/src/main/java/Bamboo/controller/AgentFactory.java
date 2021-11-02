@@ -2,6 +2,7 @@ package Bamboo.controller;
 
 import Bamboo.controller.MCTS.MCTS;
 import Bamboo.controller.MiniMax.*;
+import Bamboo.controller.random.Random;
 
 import java.awt.*;
 

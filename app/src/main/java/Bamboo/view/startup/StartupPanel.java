@@ -1,6 +1,7 @@
 package Bamboo.view.startup;
 
 import Bamboo.controller.AgentFactory;
+import Bamboo.controller.AgentType;
 import Bamboo.controller.Human;
 import Bamboo.controller.MiniMax.MiniMax;
 import Bamboo.controller.Settings;
@@ -49,8 +50,8 @@ public class StartupPanel extends JPanel
                     new Human(settingsPanel.getPlayer2Name(), settingsPanel.getPlayer2Colour()),
                     settingsPanel.getBoardSize());
             case DEMO -> new Settings(
-                    AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer1Colour()),
-                    AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
+                    AgentFactory.makeAgent(AgentType.MINIMAX_SORTED, settingsPanel.getPlayer1Colour()),
+                    AgentFactory.makeAgent(AgentType.MINIMAX_SORTED, settingsPanel.getPlayer2Colour()),
                     settingsPanel.getBoardSize());
         };
     }

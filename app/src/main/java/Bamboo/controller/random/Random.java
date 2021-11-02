@@ -1,5 +1,7 @@
-package Bamboo.controller;
+package Bamboo.controller.random;
 
+import Bamboo.controller.Agent;
+import Bamboo.controller.Vector;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
 
@@ -27,6 +29,12 @@ public class Random implements Agent
     public String getType()
     {
         return "random";
+    }
+
+    @Override
+    public boolean isHuman()
+    {
+        return false;
     }
 
     @Override
