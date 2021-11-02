@@ -201,6 +201,12 @@ public class GridArrayImp implements Grid
         return temp;
     }
 
+    @Override
+    public int getSize()
+    {
+        return width;
+    }
+
     int evaluateGameForColor(Color color){
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
         int group_count = groups.size();
