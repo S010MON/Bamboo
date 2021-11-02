@@ -66,6 +66,9 @@ public class neuralNetwork implements Agent
 
             // Train network
             neuralNet.train(trainingSet);
+
+            // Save?
+            // neuralNet.save("weights");
         }
         catch (IOException e) { e.printStackTrace();}
 
