@@ -4,16 +4,23 @@ import Bamboo.controller.Agent;
 import Bamboo.controller.Vector;
 import Bamboo.model.Game;
 import deepnetts.data.DataSets;
+import deepnetts.data.MLDataItem;
+import deepnetts.data.TabularDataSet;
+import deepnetts.eval.Evaluators;
 import deepnetts.net.FeedForwardNetwork;
 import deepnetts.net.layers.activation.ActivationType;
 import deepnetts.net.loss.LossType;
 import deepnetts.net.train.BackpropagationTrainer;
 import deepnetts.util.FileIO;
 
+import javax.visrec.ml.data.BasicDataSet;
+import javax.visrec.ml.data.Column;
 import javax.visrec.ml.data.DataSet;
+import javax.visrec.ml.eval.EvaluationMetrics;
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class NeuralNetwork implements Agent
 {
@@ -58,36 +65,59 @@ public class NeuralNetwork implements Agent
     {
 
         // Load data.csv from CSV file
-        int inputsNum = 91;
-        int outputsNum = 91;
+        int inputsNum = 4;
+        int outputsNum = 3;
 
         System.out.println("Test");
 
-        DataSet trainingSet;
+        //DataSet<MLDataItem> trainingSet;
         try {
 
-            String filePath = "/home/leon/IdeaProjects/Bamboo/app/src/main/java/Bamboo/controller/nNet/data.csv";
-            trainingSet = DataSets.readCsv(filePath, inputsNum, outputsNum);
+            String filePath = "C:\\Users\\Alex\\IdeaProjects\\Bamboo\\app\\src\\main\\java\\saved\\data.csv";
+            TabularDataSet trainingSet = DataSets.readCsv(filePath, inputsNum, outputsNum,true);
+            trainingSet.setColumnNames(new String[]{"a","b","c","d","o1","o2","o3"});
+            Column c1 = new Column("a", Column.Type.DECIMAL,false);
+            Column c2 = new Column("b", Column.Type.DECIMAL,false);
+            Column c3 = new Column("c", Column.Type.DECIMAL,false);
+            Column c4 = new Column("d", Column.Type.DECIMAL,false);
 
-            // Create a feed forward neural network using builder
+            Column o1 = new Column("o1", Column.Type.BINARY,true);
+            Column o2 = new Column("o2", Column.Type.BINARY,true);
+            Column o3 = new Column("o3", Column.Type.BINARY,true);
+            ArrayList cols = new ArrayList<Column>();
+            cols.add(c1);
+            cols.add(c2);
+            cols.add(c3);
+            cols.add(c4);
+            cols.add(o1);
+            cols.add(o2);
+            cols.add(o3);
+            trainingSet.setColumns(cols);
+            System.out.println(trainingSet.getItems());
+            System.out.println(trainingSet.getColumns());
+            trainingSet.setAsTargetColumns(new int[]{4, 5, 6});
+            // Create an instance of the Feed Forward Neural Network using builder.
+            // To understand structure and components of the neural network see http://www.deepnetts.com/blog/terms#feed-forward-net
             FeedForwardNetwork neuralNet = FeedForwardNetwork.builder()
                     .addInputLayer(inputsNum)
-                    .addFullyConnectedLayer(180, ActivationType.RELU)
-                    .addOutputLayer(outputsNum, ActivationType.SIGMOID)
+                    .addFullyConnectedLayer(8,ActivationType.RELU)
+                    .addOutputLayer(outputsNum, ActivationType.SOFTMAX)
                     .lossFunction(LossType.CROSS_ENTROPY)
+                    .randomSeed(123)
                     .build();
 
-            System.out.println("TRAINING CONFIGURATIONS.");
-            neuralNet.setLabel("TRAINING DATA");
-            BackpropagationTrainer trainer = neuralNet.getTrainer();
-            trainer.setTrainingSnapshots(true);
-
-            // Train network
+            // TRAIN: Start training. To understand training output see link
             neuralNet.train(trainingSet);
 
-            // Save?
-            //String neuralNetFile = "neuralNetwork_" + LocalDateTime.now().toString() + ".dnet";
-            //FileIO.writeToFile(neuralNet, neuralNetFile);
+            // TEST: test network /  evaluate classifier.
+            // To understand classifier evaluation see http://www.deepnetts.com/blog/terms#evaluation
+            EvaluationMetrics em = Evaluators.evaluateClassifier(neuralNet, trainingSet);
+            System.out.println(em);
+
+            FileIO.writeToFile(neuralNet,"networkSave.dnet");
+
+            //FeedForwardNetwork newNet = FileIO.createFromFile("networkSave.dnet");
+
         }
         catch (IOException e) { e.printStackTrace();}
 
