@@ -12,4 +12,9 @@ public class Button extends JButton
         this.setBackground(new Color(158, 208, 239));
         this.setIcon(ResourceLoader.getIcon(iconName));
     }
+
+    public void changeIcon(String iconName)
+    {
+        this.setIcon(ResourceLoader.getIcon(iconName));
+    }
 }

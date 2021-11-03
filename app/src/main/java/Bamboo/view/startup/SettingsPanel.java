@@ -27,7 +27,7 @@ public class SettingsPanel extends JPanel
     public SettingsPanel()
     {
         setBackground(Colour.background());
-        setLayout(new GridLayout(4, 3));
+        setLayout(new GridLayout(4, 6));
         setVisible(true);
 
         multiConfigurationPanel = new MultiConfigurationPanel();
