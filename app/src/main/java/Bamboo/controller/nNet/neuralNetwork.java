@@ -7,10 +7,13 @@ import deepnetts.data.DataSets;
 import deepnetts.net.FeedForwardNetwork;
 import deepnetts.net.layers.activation.ActivationType;
 import deepnetts.net.loss.LossType;
+import deepnetts.util.FileIO;
 
 import javax.visrec.ml.data.DataSet;
 import java.awt.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Locale;
 
 public class neuralNetwork implements Agent
 {
@@ -59,9 +62,7 @@ public class neuralNetwork implements Agent
             // Create a feed forward neural network using builder
             FeedForwardNetwork neuralNet = FeedForwardNetwork.builder()
                     .addInputLayer(inputsNum)
-                    .addFullyConnectedLayer(90, ActivationType.RELU)
-                    .addFullyConnectedLayer(120, ActivationType.RELU)
-                    .addFullyConnectedLayer(90, ActivationType.RELU)
+                    .addFullyConnectedLayer(180, ActivationType.RELU)
                     .addOutputLayer(outputsNum, ActivationType.SIGMOID)
                     .lossFunction(LossType.CROSS_ENTROPY)
                     .build();
@@ -70,7 +71,8 @@ public class neuralNetwork implements Agent
             neuralNet.train(trainingSet);
 
             // Save?
-            // neuralNet.save("weights");
+            String neuralNetFile = "neuralNetwork_" + LocalDateTime.now().toString() + ".dnet";
+            FileIO.writeToFile(neuralNet, neuralNetFile);
         }
         catch (IOException e) { e.printStackTrace();}
 
