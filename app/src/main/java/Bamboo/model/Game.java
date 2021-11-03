@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Game
 {
-    private static final boolean LOG_MOVES = false;
+    private boolean LOG_MOVES = false;
 
     private Grid grid;
     private Agent player1;
@@ -111,6 +111,14 @@ public class Game
         else
             currentPlayer = player1;
         view.nextTurn();
+    }
+
+    public void toggleLogging(){
+        LOG_MOVES = !LOG_MOVES;
+    }
+
+    public boolean getLogMoves(){
+        return LOG_MOVES;
     }
 }
 

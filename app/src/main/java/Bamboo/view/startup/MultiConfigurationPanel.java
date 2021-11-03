@@ -88,13 +88,6 @@ public class MultiConfigurationPanel extends JPanel
         toggleButton.setBounds(50,50,145,55);
         toggleButton.addActionListener(e -> {buttonPanel1.changeColor();buttonPanel2.changeColor();});
         panel3.add(toggleButton);
-
-       /*
-        toggleButton = new Button("btnToggle.png");
-        toggleButton.setBounds(1,10,30,20);
-        panel1.add(toggleButton);
-
-        */
     }
 
     public String getNamePlayer1(){ return player1textField.getText();}
