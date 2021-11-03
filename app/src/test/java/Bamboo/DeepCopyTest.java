@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.awt.*;
 
-class CopyGridTest
+class DeepCopyTest
  {
     @Test void testArrayGrid()
     {
