@@ -52,6 +52,7 @@ public class MainFrame extends JFrame
     public void gameOverOption(Game game)
     {
         Object[] options = {"Yes","No"};
+
         int response = JOptionPane.showOptionDialog(this, "Do you want to go back to the game? ",
                 "END GAME", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
                 options[1]);
