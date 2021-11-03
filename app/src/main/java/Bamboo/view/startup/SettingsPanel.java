@@ -26,7 +26,7 @@ public class SettingsPanel extends JPanel
     public SettingsPanel()
     {
         setBackground(Colour.background());
-        setLayout(new GridLayout(4, 3));
+        setLayout(new GridLayout(4, 5));
         setVisible(true);
 
         multiConfigurationPanel = new MultiConfigurationPanel();
@@ -65,9 +65,17 @@ public class SettingsPanel extends JPanel
         demoBtn.setBounds(400, 50, 145, 55);
         demoBtn.addActionListener(e -> selectDemo());
 
+        ///
+
+        Button toggleButton = new Button("btnToggle.png");
+        toggleButton.setBounds(20,150,71,55);
+
+        ///
+
         buttonPanel.add(multiBtn);
         buttonPanel.add(singleBtn);
         buttonPanel.add(demoBtn);
+       // buttonPanel.add(toggleButton);
         add(buttonPanel);
 
         JPanel sliderPanel = new JPanel() ;
