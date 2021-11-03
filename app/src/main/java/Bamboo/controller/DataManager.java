@@ -81,10 +81,7 @@ public class DataManager
             sb.append(Y[j]);
             if(j < Y.length-1)
                 sb.append(",");
-            else
-                sb.append("\n");
         }
-
         return sb.toString();
     }
 }

@@ -49,7 +49,7 @@ public class Game
                 int[] X = DataManager.flatten(grid, currentPlayer.getColor());
                 int[] Y = DataManager.oneHotEncode(grid.getSize(), v);
                 String data = DataManager.concatToCSV(X, Y);
-                Logger.logCSV("data", data);
+                Logger.logCSV("data.csv", data);
             }
             
             toggleTurn();

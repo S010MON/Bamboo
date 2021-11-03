@@ -7,15 +7,15 @@ import deepnetts.data.DataSets;
 import deepnetts.net.FeedForwardNetwork;
 import deepnetts.net.layers.activation.ActivationType;
 import deepnetts.net.loss.LossType;
+import deepnetts.net.train.BackpropagationTrainer;
 import deepnetts.util.FileIO;
 
 import javax.visrec.ml.data.DataSet;
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Locale;
 
-public class neuralNetwork implements Agent
+public class NeuralNetwork implements Agent
 {
 
     @Override
@@ -48,16 +48,26 @@ public class neuralNetwork implements Agent
         return null;
     }
 
+    public static void main(String[] args)
+    {
+        NeuralNetwork neuralNetwork = new NeuralNetwork();
+        neuralNetwork.train();
+    }
+
     public void train()
     {
 
-        // Load data from CSV file
+        // Load data.csv from CSV file
         int inputsNum = 91;
         int outputsNum = 91;
 
+        System.out.println("Test");
+
         DataSet trainingSet;
         try {
-            trainingSet = DataSets.readCsv("data", inputsNum, outputsNum);
+
+            String filePath = "/home/leon/IdeaProjects/Bamboo/app/src/main/java/Bamboo/controller/nNet/data.csv";
+            trainingSet = DataSets.readCsv(filePath, inputsNum, outputsNum);
 
             // Create a feed forward neural network using builder
             FeedForwardNetwork neuralNet = FeedForwardNetwork.builder()
@@ -67,12 +77,17 @@ public class neuralNetwork implements Agent
                     .lossFunction(LossType.CROSS_ENTROPY)
                     .build();
 
+            System.out.println("TRAINING CONFIGURATIONS.");
+            neuralNet.setLabel("TRAINING DATA");
+            BackpropagationTrainer trainer = neuralNet.getTrainer();
+            trainer.setTrainingSnapshots(true);
+
             // Train network
             neuralNet.train(trainingSet);
 
             // Save?
-            String neuralNetFile = "neuralNetwork_" + LocalDateTime.now().toString() + ".dnet";
-            FileIO.writeToFile(neuralNet, neuralNetFile);
+            //String neuralNetFile = "neuralNetwork_" + LocalDateTime.now().toString() + ".dnet";
+            //FileIO.writeToFile(neuralNet, neuralNetFile);
         }
         catch (IOException e) { e.printStackTrace();}
 
