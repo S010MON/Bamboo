@@ -7,6 +7,7 @@ import Bamboo.view.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class StartupPanel extends JPanel
 {
@@ -31,13 +32,11 @@ public class StartupPanel extends JPanel
         setVisible(true);
     }
 
-    public void startGame()
-    {
+    public void startGame() throws IOException {
         view.runGame(getSettings());
     }
 
-    public Settings getSettings()
-    {
+    public Settings getSettings() throws IOException {
         return switch (settingsPanel.getMode()) {
             case SINGLE -> new Settings(
                     new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),

@@ -4,6 +4,7 @@ import Bamboo.view.resources.Button;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class ButtonPanel extends JPanel
 {
@@ -36,7 +37,13 @@ public class ButtonPanel extends JPanel
 
         /* Start Button */
         Button startBtn = new Button("btnStart.png");
-        startBtn.addActionListener(e -> startupPanel.startGame());
+        startBtn.addActionListener(e -> {
+            try {
+                startupPanel.startGame();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
         add(startBtn);
 
         /* Quit Button */
