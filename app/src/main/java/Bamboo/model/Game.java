@@ -56,8 +56,8 @@ public class Game
         }
         if(grid.isFinished(currentPlayer.getColor()))
         {
-            try {Thread.sleep(2000); } catch (Exception exception){}
-            view.endGame(getNonCurrentPlayer());
+            try {Thread.sleep(2000); } catch (Exception ignored){}
+            view.gameOverOption(this);
         }
     }
 
@@ -76,7 +76,7 @@ public class Game
         return currentPlayer;
     }
 
-    private Agent getNonCurrentPlayer()
+    public Agent getNonCurrentPlayer()
     {
         if(currentPlayer == player1)
             return player2;
