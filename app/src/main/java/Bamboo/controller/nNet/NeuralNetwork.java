@@ -8,20 +8,25 @@ import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import Bamboo.model.GridGraphImp;
 import deepnetts.data.DataSets;
+import deepnetts.data.MLDataItem;
 import deepnetts.data.TabularDataSet;
 import deepnetts.eval.Evaluators;
 import deepnetts.net.FeedForwardNetwork;
 import deepnetts.net.layers.activation.ActivationType;
 import deepnetts.net.loss.LossType;
 import deepnetts.net.train.BackpropagationTrainer;
+import deepnetts.net.train.opt.OptimizerType;
 import deepnetts.util.FileIO;
 
 import javax.visrec.ml.data.Column;
+import javax.visrec.ml.data.DataSet;
 import javax.visrec.ml.eval.EvaluationMetrics;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class NeuralNetwork implements Agent
 {
@@ -81,54 +86,47 @@ public class NeuralNetwork implements Agent
         return color;
     }
 
-    public static void main(String[] args) throws IOException {
-        NeuralNetwork neuralNetwork = new NeuralNetwork(Color.RED);
-        //float [] predictions = neuralNetwork.neuralNet.predict(new float[]{-1,1,-1,1,-1,-1,1,-1,1,0,-1,1,1,-1,1,-1,0,0,0,-1,-1,1,0,-1,1,-1,1,-1,1,-1,1,-1,1,0,1,0,1,1,-1,1,-1,0,1,-1,-1,1,-1,1,0,0,-1,1,-1,0,1,1,1,0,-1,0,1,-1,1,-1,0,-1,1,0,1,-1,-1,0,-1,1,0,-1,1,1,1,-1,0,-1,1,0,-1,-1,1,-1,1,-1,1});
-        //System.out.println(neuralNetwork.getMoveFromPrediction(predictions));
-        neuralNetwork.train();
-    }
-
     public void train()
     {
-
-        // Load data.csv from CSV file
         int inputsNum = 91;
         int outputsNum = 91;
 
-        System.out.println("Test");
-
-        //DataSet<MLDataItem> trainingSet;
         try {
-
-            String filePath = "C:\\Users\\Alex\\IdeaProjects\\Bamboo\\app\\src\\main\\java\\saved\\data.csv";
-            filePath = "C:\\Users\\Alex\\IdeaProjects\\Bamboo\\app\\src\\main\\java\\Bamboo\\Controller\\nNet\\data.csv";
-            TabularDataSet trainingSet = DataSets.readCsv(filePath, inputsNum, outputsNum,true);
-            buildColumns(trainingSet,91,91);
+            String filePath = "app\\src\\main\\java\\Bamboo\\Controller\\nNet\\TrainingData\\data.csv";
+            TabularDataSet<MLDataItem> data = DataSets.readCsv(filePath, inputsNum, outputsNum,true);
+            data.shuffle();
+            DataSet<MLDataItem>[] dataSplit = data.split(0.7,0.3);
+            TabularDataSet<MLDataItem> trainData = (TabularDataSet) dataSplit[0];
+            TabularDataSet<MLDataItem> testData = (TabularDataSet) dataSplit[1];
+            buildColumns(trainData,inputsNum,outputsNum);
+            buildColumns(testData,inputsNum,outputsNum);
+            int hiddenSize = (int) Math.round(Math.sqrt(inputsNum*outputsNum));
             neuralNet = FeedForwardNetwork.builder()
                     .addInputLayer(inputsNum)
-                    .addFullyConnectedLayer(120,ActivationType.RELU)
-                    .addFullyConnectedLayer(120,ActivationType.RELU)
+                    .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
+                    .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
+                    .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
                     .addOutputLayer(outputsNum, ActivationType.SOFTMAX)
                     .lossFunction(LossType.CROSS_ENTROPY)
                     .randomSeed(123)
                     .build();
 
-
             BackpropagationTrainer trainer = neuralNet.getTrainer();
+            trainer.setOptimizer(OptimizerType.SGD);
+            trainer.setTestSet(testData);
             trainer.setMaxEpochs(500);
-            neuralNet.train(trainingSet);
+            neuralNet.train(trainData);
 
-            EvaluationMetrics em = Evaluators.evaluateClassifier(neuralNet, trainingSet);
+            System.out.println("---------TRAIN DATA--------");
+            System.out.println("Accuracy: " + getAccuracy(trainData));
+            EvaluationMetrics em = Evaluators.evaluateClassifier(neuralNet,trainData);
             System.out.println(em);
+            System.out.println("---------TEST DATA--------");
+            System.out.println("Accuracy: " + getAccuracy(testData));
+            EvaluationMetrics em2 = Evaluators.evaluateClassifier(neuralNet,testData);
+            System.out.println(em2);
 
             FileIO.writeToFileAsJson(neuralNet,"networkSave.json");
-
-            float [] predictions = neuralNet.predict(new float[]{-1,1,-1,1,-1,-1,1,-1,1,0,-1,1,1,-1,1,-1,0,0,0,-1,-1,1,0,-1,1,-1,1,-1,1,-1,1,-1,1,0,1,0,1,1,-1,1,-1,0,1,-1,-1,1,-1,1,0,0,-1,1,-1,0,1,1,1,0,-1,0,1,-1,1,-1,0,-1,1,0,1,-1,-1,0,-1,1,0,-1,1,1,1,-1,0,-1,1,0,-1,-1,1,-1,1,-1,1});
-            for(float pred : predictions)
-                System.out.println(pred);
-
-            //FeedForwardNetwork newNet = FileIO.createFromFile("networkSave.dnet");
-
         }
         catch (IOException e) { e.printStackTrace();}
 
@@ -177,5 +175,47 @@ public class NeuralNetwork implements Agent
             iterator++;
         }
         return vectors.get(bestID);
+    }
+
+    float getAccuracy(DataSet<MLDataItem> testSet){
+        float corrects = 0;
+        float totals = 0;
+        for (MLDataItem item : testSet) {
+            float[] trues = item.getTargetOutput().getValues();
+            /*System.out.println("Length: " + trues.length);
+            for(float f : trues)
+                System.out.println(f);
+            neuralNet.setInput(item.getInput());*/
+            float[] predictions = neuralNet.getOutput();
+            /*System.out.println("Length: " + predictions.length);
+            for(float p : predictions)
+                System.out.println(p);
+            System.out.println("------------------");*/
+            for(int i = 0; i < trues.length; i++){
+                if(approx(predictions[i],max(predictions),0.00001f)){
+                    if(trues[i] == 1){
+                        corrects++;
+                    }
+                }
+            }
+            totals++;
+        }
+        return(corrects/totals);
+    }
+
+    float max(float[] array){
+        int maxID = 0;
+        float max = -1000000000;
+        for(int i = 0; i < array.length; i++){
+            if(array[i] > max){
+                max = array[i];
+                maxID = i;
+            }
+        }
+        return array[maxID];
+    }
+
+    boolean approx(float x1, float x2, float tolerance){
+        return x1 + tolerance >= x2 && x2 + tolerance >= x1;
     }
 }
