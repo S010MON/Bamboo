@@ -124,7 +124,7 @@ public class NeuralNetwork implements Agent
             EvaluationMetrics em2 = Evaluators.evaluateClassifier(neuralNet,testData);
             System.out.println(em2);
 
-            FileIO.writeToFileAsJson(neuralNet,"app\\src\\main\\java\\Bamboo\\Controller\\nNet\\networkSave.json");
+            FileIO.writeToFileAsJson(neuralNet,FilePath.getTrainingPath("networkSave.json"));
         }
         catch (IOException e) { e.printStackTrace();}
 
