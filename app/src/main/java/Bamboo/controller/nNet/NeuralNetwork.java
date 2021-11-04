@@ -33,7 +33,7 @@ public class NeuralNetwork implements Agent
 
     private FeedForwardNetwork neuralNet;
     private Color color;
-    private String nNetSavePath = "networkSave.json";
+    private String nNetSavePath = "app\\src\\main\\java\\Bamboo\\Controller\\nNet\\networkSave.json";
 
     public NeuralNetwork(Color color) throws IOException {
         this.color = color;
@@ -113,6 +113,7 @@ public class NeuralNetwork implements Agent
 
             BackpropagationTrainer trainer = neuralNet.getTrainer();
             trainer.setOptimizer(OptimizerType.SGD);
+            trainer.setShuffle(true);
             trainer.setTestSet(testData);
             trainer.setMaxEpochs(500);
             neuralNet.train(trainData);
@@ -126,7 +127,7 @@ public class NeuralNetwork implements Agent
             EvaluationMetrics em2 = Evaluators.evaluateClassifier(neuralNet,testData);
             System.out.println(em2);
 
-            FileIO.writeToFileAsJson(neuralNet,"networkSave.json");
+            FileIO.writeToFileAsJson(neuralNet,"app\\src\\main\\java\\Bamboo\\Controller\\nNet\\networkSave.json");
         }
         catch (IOException e) { e.printStackTrace();}
 
