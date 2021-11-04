@@ -14,6 +14,22 @@ public class TensorLoader
         return new Tensor(readTensor(file));
     }
 
+    private static int getCols(File file) throws IOException
+    {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        int cols = Integer.parseInt(reader.readLine());
+        int rows = Integer.parseInt(reader.readLine());
+        return cols;
+    }
+
+    private static int getRows(File file) throws IOException
+    {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        int cols = Integer.parseInt(reader.readLine());
+        int rows = Integer.parseInt(reader.readLine());
+        return rows;
+    }
+
     private static float[][] readTensor(File file) throws IOException
     {
         BufferedReader reader = new BufferedReader(new FileReader(file));
