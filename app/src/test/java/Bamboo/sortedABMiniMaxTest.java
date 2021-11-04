@@ -5,11 +5,11 @@ import Bamboo.controller.miniMax.MiniMaxAB;
 import Bamboo.controller.miniMax.MiniMaxSortedAB;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
-import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class sortedABMiniMaxTest {

@@ -30,11 +30,11 @@ public class FilePath
     /**
      * Creates a file path to saved games with the correct file name appended
      */
-    public static String getTrainingPath(String fileName)
+    public static String getNNetPath(String fileName)
     {
-        String internalPathUnix = "/app/src/main/java/Bamboo/controller/nNet/TrainingData/";
-        String internalPathWin = "/app/src/main/java/Bamboo/controller/nNet/TrainingData/";
-        String internalPathMac = "/app/src/main/java/Bamboo/controller/nNet/TrainingData/";
+        String internalPathUnix = "/src/main/java/Bamboo/controller/nNet/TrainingData/";
+        String internalPathWin = "/src/main/java/Bamboo/controller/nNet/TrainingData/";
+        String internalPathMac = "/src/main/java/Bamboo/controller/nNet/TrainingData/";
 
         FileSystem fileSystem = FileSystems.getDefault();
         String path = fileSystem.getPath("").toAbsolutePath().toString();

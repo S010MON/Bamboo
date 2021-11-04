@@ -14,7 +14,6 @@ import deepnetts.net.loss.LossType;
 import deepnetts.net.train.BackpropagationTrainer;
 import deepnetts.net.train.opt.OptimizerType;
 import deepnetts.util.FileIO;
-import deepnetts.util.Tensor;
 
 import javax.visrec.ml.data.Column;
 import javax.visrec.ml.data.DataSet;
@@ -23,15 +22,13 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 
 public class NeuralNetwork implements Agent
 {
 
     private FeedForwardNetwork neuralNet;
     private Color color;
-    private String nNetSavePath = "app\\src\\main\\java\\Bamboo\\Controller\\nNet\\networkSave.json";
+    private String nNetSavePath = FilePath.getNNetPath("networkSave.json");
 
     public NeuralNetwork(Color color) throws IOException {
         this.color = color;
@@ -90,7 +87,7 @@ public class NeuralNetwork implements Agent
         int outputsNum = 91;
 
         try {
-            String filePath = FilePath.getTrainingPath("data.csv");
+            String filePath = FilePath.getNNetPath("data.csv");
             TabularDataSet<MLDataItem> data = DataSets.readCsv(filePath, inputsNum, outputsNum,true);
             data.shuffle();
             DataSet<MLDataItem>[] dataSplit = data.split(0.7,0.3);
@@ -126,7 +123,7 @@ public class NeuralNetwork implements Agent
             EvaluationMetrics em2 = Evaluators.evaluateClassifier(neuralNet,testData);
             System.out.println(em2);
 
-            FileIO.writeToFileAsJson(neuralNet,FilePath.getTrainingPath("networkSave.json"));
+            FileIO.writeToFileAsJson(neuralNet,FilePath.getNNetPath("networkSave.json"));
         }
         catch (IOException e) { e.printStackTrace();}
 
