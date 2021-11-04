@@ -86,6 +86,16 @@ public class GridArrayImp implements Grid
     }
 
     @Override
+    public List<Vector> getAllRemainingMoves() {
+        List<Vector> list = new ArrayList<>();
+        for(Tile t: emptyList)
+        {
+            list.add(t.getVector());
+        }
+        return list;
+    }
+
+    @Override
     public List<Vector> getAllVectors()
     {
         return vectors;
@@ -173,7 +183,7 @@ public class GridArrayImp implements Grid
     }
 
     @Override
-    public int evaluateGame(){
+    public int evaluateGame(Color color){
         if(isFinished(Color.RED))
             return -1000000;
         if(isFinished(Color.BLUE))
@@ -189,6 +199,12 @@ public class GridArrayImp implements Grid
             temp.setTile(tile.getVector(), tile.getColour());
         }
         return temp;
+    }
+
+    @Override
+    public int getSize()
+    {
+        return width;
     }
 
     int evaluateGameForColor(Color color){

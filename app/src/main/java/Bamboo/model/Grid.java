@@ -16,6 +16,8 @@ public interface Grid
 
     List<Tile> getAllTiles();
 
+    List<Vector> getAllRemainingMoves();
+
     List<Vector> getAllVectors();
 
     boolean isLegalMove(Vector vector, Color color);
@@ -26,9 +28,11 @@ public interface Grid
 
     int getMaxGroupSize(Color colour);
 
-    int evaluateGame();
+    int evaluateGame(Color color);
 
     boolean isFinished(Color currentColour);
 
     Grid copy();
+
+    int getSize();
 }

@@ -9,6 +9,7 @@ import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.ResourceLoader;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,13 +29,12 @@ public class Canvas extends JPanel
     private int offsetX = 90;
     private int offsetY = 0;
     private boolean hint ;
+    private int demoDelay = 1000;
 
-    Tile previous_rollover = new Tile(new Vector(0,0,0));
-
+    public Tile previous_rollover = new Tile(new Vector(0,0,0));
     private Color background = Colour.background();
     private RollOverListener rollOverListener;
     private HashMap<Color, BufferedImage> images = new HashMap<>();
-
 
     public Canvas(Dimension screenSize, Game game)
     {
@@ -46,11 +46,16 @@ public class Canvas extends JPanel
         addMouseListener(new TileClickListener(game, this));
         rollOverListener = new RollOverListener(game, this);
         addMouseMotionListener(rollOverListener);
-
+        
         images.put(Color.RED, ResourceLoader.getImage("red_circle.png"));
         images.put(Color.BLUE, ResourceLoader.getImage("blue_circle.png"));
         images.put(Color.WHITE,ResourceLoader.getImage("white_circle.png"));
-
+        
+        if(game.isAgentVsAgent())
+        {
+            Timer timer = new Timer(demoDelay, new TimerListener(game, this));
+            timer.start();
+        }
     }
 
     @Override

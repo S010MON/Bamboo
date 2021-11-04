@@ -9,7 +9,7 @@ two players, Red and Blue, place their own stones onto unoccupied cells on the
 board, one stone per turn.  Players are not allowed to pass.
 
 ### Placements 
-A group is comprised of one or more interconnected, like colored stones.  
+A group is comprised of one or more interconnected, like colored, stones.  
 A player’s group can’t contain more stones than the number of groups he has.
 
 ### Objective

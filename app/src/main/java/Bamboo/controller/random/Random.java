@@ -1,5 +1,7 @@
-package Bamboo.controller;
+package Bamboo.controller.random;
 
+import Bamboo.controller.Agent;
+import Bamboo.controller.Vector;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
 
@@ -30,8 +32,17 @@ public class Random implements Agent
     }
 
     @Override
+    public boolean isHuman()
+    {
+        return false;
+    }
+
+    @Override
     public Vector getNextMove(Game game)
     {
+        // Add a delay to the random algorithm
+        try {Thread.sleep(1000); } catch (Exception exception){}
+
         Stack<Vector> stack = new Stack<>();
         for(Tile t: game.getAllTiles())
         {

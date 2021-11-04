@@ -3,11 +3,12 @@ package Bamboo.model;
 import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 public class Game
 {
-    private static final boolean LOG_MOVES = false;
+    private boolean LOG_MOVES = false;
 
     private Grid grid;
     private Agent player1;
@@ -25,6 +26,9 @@ public class Game
         this.currentPlayer = settings.getCurrentPlayer();
         this.settings = settings;
 
+        if(grid.getSize() == 5)
+            LOG_MOVES = true;
+
         if(settings.tiles != null)
         {
             for(Vector v: settings.tiles.keySet())
@@ -40,14 +44,20 @@ public class Game
         {
             grid.setTile(v, currentPlayer.getColor());
 
-            if(LOG_MOVES) 
-              Logger.logMove(v, currentPlayer.getColor());
+            if(LOG_MOVES)
+            {
+                int[] X = DataManager.flatten(grid, currentPlayer.getColor());
+                int[] Y = DataManager.oneHotEncode(grid.getSize(), v);
+                String data = DataManager.concatToCSV(X, Y);
+                Logger.logCSV("data", data);
+            }
             
             toggleTurn();
         }
         if(grid.isFinished(currentPlayer.getColor()))
         {
-            view.endGame(currentPlayer);
+            try {Thread.sleep(2000); } catch (Exception ignored){}
+            view.gameOverOption(this);
         }
     }
 
@@ -64,6 +74,13 @@ public class Game
     public Agent getCurrentPlayer()
     {
         return currentPlayer;
+    }
+
+    public Agent getNonCurrentPlayer()
+    {
+        if(currentPlayer == player1)
+            return player2;
+        return player1;
     }
 
     public boolean currentPlayerHuman()
@@ -91,9 +108,9 @@ public class Game
         return settings;
     }
 
-    public int getBoardSize()
+    public boolean isAgentVsAgent()
     {
-        return settings.boardSize;
+        return (!player1.isHuman() && !player2.isHuman());
     }
 
     private void toggleTurn()
@@ -103,6 +120,14 @@ public class Game
         else
             currentPlayer = player1;
         view.nextTurn();
+    }
+
+    public void toggleLogging(){
+        LOG_MOVES = !LOG_MOVES;
+    }
+
+    public boolean getLogMoves(){
+        return LOG_MOVES;
     }
 }
 

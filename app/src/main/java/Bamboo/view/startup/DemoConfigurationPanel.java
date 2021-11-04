@@ -7,7 +7,7 @@ import Bamboo.view.resources.Colour;
 import javax.swing.*;
 import java.awt.*;
 
-public class SingleConfigurationPanel extends JPanel
+public class DemoConfigurationPanel extends JPanel
 {
     private JPanel textLabelPanel;
     private JPanel textFieldPanel;
@@ -18,11 +18,11 @@ public class SingleConfigurationPanel extends JPanel
     private JButton toggleButton;
     private JLabel player1label;
     private JLabel AIlabel;
-    private JTextField player1textField;
-    private JComboBox AIcombobox;
+    private JComboBox AIcombobox1;
+    private JComboBox AIcombobox2 ;
     private String[] AIstring ;
 
-    public SingleConfigurationPanel()
+    public DemoConfigurationPanel()
     {
         setLayout(new GridLayout(4, 1));
         setVisible(true);
@@ -50,7 +50,7 @@ public class SingleConfigurationPanel extends JPanel
         textLabelPanel = new JPanel();
         textLabelPanel.setBackground(Colour.background());
         textLabelPanel.setLayout(new BorderLayout());
-        player1label = new JLabel("PLAYER NAME : ");
+        player1label = new JLabel("SELECT AI 1 : ");
         player1label.setFont(new Font("SansSerif", Font.PLAIN,20));
         textLabelPanel.add(player1label,BorderLayout.EAST);
         panel1.add(textLabelPanel);
@@ -58,9 +58,10 @@ public class SingleConfigurationPanel extends JPanel
         textFieldPanel = new JPanel();
         textFieldPanel.setLayout(null);
         textFieldPanel.setBackground(Colour.background());
-        player1textField = new JTextField();
-        player1textField.setBounds(20,8,200,30);
-        textFieldPanel.add(player1textField);
+        AIstring = AgentType.getNames(AgentType.class);
+        AIcombobox1 = new JComboBox(AgentType.values());
+        AIcombobox1.setBounds(20,8,200,30);
+        textFieldPanel.add(AIcombobox1);
         panel1.add(textFieldPanel);
 
         buttonPanel1 = new SingleButtonPanel(Color.red);
@@ -69,7 +70,7 @@ public class SingleConfigurationPanel extends JPanel
         textLabelPanel2 = new JPanel();
         textLabelPanel2.setBackground(Colour.background());
         textLabelPanel2.setLayout(new BorderLayout());
-        AIlabel = new JLabel("SELECT AI : ");
+        AIlabel = new JLabel("SELECT AI 2 : ");
         AIlabel.setFont(new Font("SansSerif", Font.PLAIN,20));
         textLabelPanel2.add(AIlabel,BorderLayout.EAST);
         panel2.add(textLabelPanel2);
@@ -77,10 +78,9 @@ public class SingleConfigurationPanel extends JPanel
         textFieldPanel2 = new JPanel();
         textFieldPanel2.setLayout(null);
         textFieldPanel2.setBackground(Colour.background());
-        AIstring = AgentType.getNames(AgentType.class);
-        AIcombobox = new JComboBox(AgentType.values());
-        AIcombobox.setBounds(20,8,200,30);
-        textFieldPanel2.add(AIcombobox);
+        AIcombobox2 = new JComboBox(AgentType.values());
+        AIcombobox2.setBounds(20,8,200,30);
+        textFieldPanel2.add(AIcombobox2);
         panel2.add(textFieldPanel2);
 
         buttonPanel2 = new SingleButtonPanel(Color.blue);
@@ -92,16 +92,19 @@ public class SingleConfigurationPanel extends JPanel
         panel3.add(toggleButton);
     }
 
-    public String getNamePlayer1(){ return player1textField.getText();}
-
-    public AgentType getAgentType()
+    public AgentType getAgentType1()
     {
-        return  (AgentType) AIcombobox.getSelectedItem();
+        return  (AgentType) AIcombobox1.getSelectedItem();
     }
 
-    public Color getPlayer1Color(){return buttonPanel1.getPlayerColor();}
+    public AgentType getAgentType2()
+    {
+        return  (AgentType) AIcombobox2.getSelectedItem();
+    }
 
-    public  Color getAIcolor(){return buttonPanel2.getPlayerColor() ; }
+    public Color getAI1color(){return buttonPanel1.getPlayerColor();}
+
+    public  Color getAI2color(){return buttonPanel2.getPlayerColor() ; }
 
     class SingleButtonPanel extends JPanel
     {
@@ -137,4 +140,3 @@ public class SingleConfigurationPanel extends JPanel
         }
     }
 }
-
