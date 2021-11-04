@@ -19,6 +19,7 @@ public class TensorLoader
         BufferedReader reader = new BufferedReader(new FileReader(file));
         int cols = Integer.parseInt(reader.readLine());
         int rows = Integer.parseInt(reader.readLine());
+        reader.close();
         return cols;
     }
 
@@ -27,6 +28,7 @@ public class TensorLoader
         BufferedReader reader = new BufferedReader(new FileReader(file));
         int cols = Integer.parseInt(reader.readLine());
         int rows = Integer.parseInt(reader.readLine());
+        reader.close();
         return rows;
     }
 
