@@ -1,9 +1,6 @@
 package Bamboo.controller.nNet;
 
-import Bamboo.controller.Agent;
-import Bamboo.controller.DataManager;
-import Bamboo.controller.Vector;
-import Bamboo.controller.VectorConverter;
+import Bamboo.controller.*;
 import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import Bamboo.model.GridGraphImp;
@@ -92,7 +89,7 @@ public class NeuralNetwork implements Agent
         int outputsNum = 91;
 
         try {
-            String filePath = "app\\src\\main\\java\\Bamboo\\Controller\\nNet\\TrainingData\\data.csv";
+            String filePath = FilePath.getTrainingPath("data.csv");
             TabularDataSet<MLDataItem> data = DataSets.readCsv(filePath, inputsNum, outputsNum,true);
             data.shuffle();
             DataSet<MLDataItem>[] dataSplit = data.split(0.7,0.3);
