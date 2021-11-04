@@ -14,6 +14,7 @@ import deepnetts.net.loss.LossType;
 import deepnetts.net.train.BackpropagationTrainer;
 import deepnetts.net.train.opt.OptimizerType;
 import deepnetts.util.FileIO;
+import deepnetts.util.Tensor;
 
 import javax.visrec.ml.data.Column;
 import javax.visrec.ml.data.DataSet;
@@ -97,10 +98,10 @@ public class NeuralNetwork implements Agent
             TabularDataSet<MLDataItem> testData = (TabularDataSet) dataSplit[1];
             buildColumns(trainData,inputsNum,outputsNum);
             buildColumns(testData,inputsNum,outputsNum);
-            int hiddenSize = (int) Math.round(Math.sqrt(inputsNum*outputsNum));
+            int hiddenSize = 4 * (int) Math.round(Math.sqrt(inputsNum*outputsNum));
             neuralNet = FeedForwardNetwork.builder()
                     .addInputLayer(inputsNum)
-                    .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
+                    .addFullyConnectedLayer(hiddenSize,ActivationType.SIGMOID)
                     .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
                     .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
                     .addOutputLayer(outputsNum, ActivationType.SOFTMAX)
@@ -112,7 +113,8 @@ public class NeuralNetwork implements Agent
             trainer.setOptimizer(OptimizerType.SGD);
             trainer.setShuffle(true);
             trainer.setTestSet(testData);
-            trainer.setMaxEpochs(500);
+            trainer.setMaxEpochs(1);
+            trainer.setEarlyStopping(true);
             neuralNet.train(trainData);
 
             System.out.println("---------TRAIN DATA--------");
@@ -123,6 +125,26 @@ public class NeuralNetwork implements Agent
             System.out.println("Accuracy: " + getAccuracy(testData));
             EvaluationMetrics em2 = Evaluators.evaluateClassifier(neuralNet,testData);
             System.out.println(em2);
+
+            for(int i = 0; i < neuralNet.getLayers().get(1).getWeights().getValues().length; i++)
+                System.out.println(neuralNet.getLayers().get(1).getWeights().getValues()[i]);
+            System.out.println("Layer 1 has " + neuralNet.getLayers().get(1).getWeights().getValues().length + " weights");
+
+            Tensor weights = neuralNet.getLayers().get(1).getWeights();
+            String tensorString = weights.toString();
+            float[][] copy = new float[weights.getRows()][weights.getCols()];
+            for(int i = 0; i < weights.getRows(); i++){
+                for(int j = 0; j < weights.getCols(); j++){
+                    copy[i][j] = weights.get(i,j);
+                }
+            }
+
+            Tensor weightCopy = new Tensor(copy);
+            Tensor nt = new Tensor(weights.getRows(),weights.getCols());
+            nt.setValues(weights.getValues());
+            System.out.println("Equals values: " + (weights.getValues() == nt.getValues()));
+            System.out.println("Equals rows: " + (weights.getRows() == nt.getRows()));
+            System.out.println("Equals values: " + (weights.getCols() == nt.getCols()));
 
             FileIO.writeToFileAsJson(neuralNet,FilePath.getTrainingPath("networkSave.json"));
         }
