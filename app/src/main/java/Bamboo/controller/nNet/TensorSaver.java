@@ -1,44 +1,36 @@
 package Bamboo.controller.nNet;
 
 import Bamboo.controller.FilePath;
-import deepnetts.net.FeedForwardNetwork;
+import deepnetts.util.Tensor;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 
 public class TensorSaver
 {
-    //rows and columns of weight tensor
-    public int rows(FeedForwardNetwork n, int layerID)
+    public static void save(String fileName, Tensor tensor) throws IOException
     {
-        return n.getLayers().get(layerID).getWeights().getRows();
-    }
+        Integer col = tensor.getCols();
+        Integer row = tensor.getRows();
+        write(fileName, col.toString());
+        write(fileName, row.toString());
 
-    public int cols(FeedForwardNetwork n, int layerID)
-    {
-        return n.getLayers().get(layerID).getWeights().getCols();
+        for(int r = 0; r < row; r++)
+        {
+            StringBuilder sb = new StringBuilder();
+            for(int c = 0; c < col; c++)
+            {
+                sb.append(tensor.get(r,c) + ",");
+            }
+            write(fileName, sb.toString());
+        }
     }
-    public float[] weights(FeedForwardNetwork n, int layerID)
-    {
-        return n.getLayers().get(layerID).getWeights().getValues();
-    }
-
-    /**
-     * @return an array of floats
-     */
-    public float[] biases(FeedForwardNetwork n, int layerID)
-    {
-        return n.getLayers().get(layerID).getBiases();
-    }
-    //If I get all of this per layer (layerID), I can construct tensors and set the weights and baises in loaded models
-    //For the input layer, weights are of course null, so I dont know whether that is something you need to take into account
-
-
 
     private static void write(String fileName, String data)
     {
         try {
-            String filePath = FilePath.getFilePath(fileName);
+            String filePath = FilePath.getNNetPath(fileName);
 
             File file = new File(filePath);
             if (!file.exists())
