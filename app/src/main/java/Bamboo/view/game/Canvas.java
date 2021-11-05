@@ -43,11 +43,13 @@ public class Canvas extends JPanel
         rollOverListener = new RollOverListener(game, this);
         addMouseMotionListener(rollOverListener);
 
-        if(game.isAgentVsAgent())
+      /*  if(game.isAgentVsAgent())
         {
             Timer timer = new Timer(demoDelay, new TimerListener(game, this));
             timer.start();
-        }
+        }*/
+              Timer timer2 = new Timer(demoDelay, new TimerListener(game, this));
+              timer2.start();
     }
 
     @Override
