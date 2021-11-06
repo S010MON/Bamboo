@@ -12,10 +12,10 @@ public class Settings
     private Agent currentPlayer;
 
     public Settings(Agent player1, Agent player2, int boardSize){
+
         this.player1 = player1;
         this.player2 = player2;
         this.boardSize = boardSize;
-        this.currentPlayer = player1;
     }
 
     public void addTiles(HashMap<Vector, Color> tiles)
@@ -23,9 +23,13 @@ public class Settings
         this.tiles = tiles;
     }
 
-    public void setCurrentPlayer(Agent currentPlayer)
+    public void setCurrentPlayer(int tossCoin)
     {
-        this.currentPlayer = currentPlayer;
+        tossCoin = (int) ( Math.random() * 2 + 1);
+        if(tossCoin==1)
+            this.currentPlayer = player1;
+        if(tossCoin==2)
+            this.currentPlayer = player2;
     }
 
     public Agent getCurrentPlayer()
