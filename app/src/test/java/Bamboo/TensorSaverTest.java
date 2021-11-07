@@ -10,8 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TensorSaverTest
 {
-    @Test
-    void save()
+    @Test void testSave()
     {
         float[][] t = {
                 {0.0f,0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f},
@@ -29,7 +28,7 @@ public class TensorSaverTest
         Tensor exp = new Tensor(t);
         Tensor act = null;
         try{
-            TensorSaver.save("testWeights", exp);
+            TensorSaver.save("testBiases", exp);
         } catch (IOException e)
         {
             System.out.println("Failed to save tensor");

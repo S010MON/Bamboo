@@ -11,7 +11,10 @@ public class TensorLoader
     {
         String path = FilePath.getNNetPath(fileName);
         File file = new File(path);
-        return new Tensor(readTensor(file));
+        int cols = getCols(file);
+        int rows = getRows(file);
+        float[] data = readTensor(file);
+        return new Tensor(cols, rows, data);
     }
 
     private static int getCols(File file) throws IOException
@@ -32,28 +35,18 @@ public class TensorLoader
         return rows;
     }
 
-    private static float[][] readTensor(File file) throws IOException
+    private static float[] readTensor(File file) throws IOException
     {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         int cols = Integer.parseInt(reader.readLine());
         int rows = Integer.parseInt(reader.readLine());
-        float[][] tensor = new float[cols][rows];
+        float[] tensor = new float[cols*rows];
 
-        String[] data = new String[rows];
-        for(int i = 0; i < data.length; i++)
+        for(int i = 0; i < tensor.length; i++)
         {
-            data[i] = reader.readLine();
+            tensor[i] = Float.parseFloat(reader.readLine());
         }
         reader.close();
-
-        for(int i = 0; i < data.length; i++)
-        {
-            String[] subString = data[i].split(",");
-            for(int j = 0; j < subString.length; j++)
-            {
-                tensor[i][j] = Float.parseFloat(subString[j]);
-            }
-        }
         return tensor;
     }
 }

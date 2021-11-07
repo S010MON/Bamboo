@@ -18,12 +18,10 @@ public class TensorSaver
 
         for(int r = 0; r < row; r++)
         {
-            StringBuilder sb = new StringBuilder();
             for(int c = 0; c < col; c++)
             {
-                sb.append(tensor.get(r,c) + ",");
+                write(fileName, Float.toString(tensor.get(r,c)));
             }
-            write(fileName, sb.toString());
         }
     }
 
