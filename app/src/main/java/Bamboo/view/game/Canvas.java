@@ -9,7 +9,6 @@ import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.ResourceLoader;
 
 import javax.swing.JPanel;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
