@@ -60,7 +60,8 @@ public class GridGraphImp implements Grid
             }
         }
         tiles.get(v).setColour(c);
-        remainingTiles.remove(v);
+        if(c != Color.white)
+            remainingTiles.remove(v);
     }
 
     public void unSetTile(Vector v)
@@ -122,6 +123,13 @@ public class GridGraphImp implements Grid
     public List<Tile> getAllTiles()
     {
         return Collections.list(Collections.enumeration(tiles.values()));
+    }
+
+    @Override
+    public List<Vector> getAllRemainingMoves() {
+        List<Vector> list = new ArrayList<Vector>();
+        list.addAll(remainingTiles.keySet());
+        return list;
     }
 
     @Override
@@ -193,7 +201,11 @@ public class GridGraphImp implements Grid
     }
 
     @Override
-    public int evaluateGame(){
+    public int evaluateGame(Color color){
+        if(color == Color.RED && isFinished(Color.RED))
+            return -1000000;
+        if(color == Color.BLUE && isFinished(Color.BLUE))
+            return 1000000;
         if(isFinished(Color.RED))
             return -1000000;
         if(isFinished(Color.BLUE))
@@ -210,14 +222,22 @@ public class GridGraphImp implements Grid
         return temp;
     }
 
+    @Override
+    public int getSize()
+    {
+        return radius;
+    }
+
     int evaluateGameForColor(Color color){
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
-        int group_count = groups.size();
-        int value = group_count * group_count;
-        for(ArrayList<Vector> group : groups){
-            value -= group.size();
+        int legalMoves = 0;
+        for(Vector move : this.getAllVectors()){
+            if(isLegalMove(move,color)){
+                legalMoves ++;
+            }
         }
-        return value;
+        int group_count = groups.size();
+        return legalMoves + group_count;
     }
 
     private int getLargestSize(ArrayList<ArrayList<Vector>> groups)

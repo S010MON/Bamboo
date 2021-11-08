@@ -21,7 +21,7 @@ public class SidePanel extends JPanel
         this.game = game;
         setBackground(background);
         setLayout(new BorderLayout());
-        infoPanel = new InfoPanel(game.getCurrentPlayer().getName());
+        infoPanel = new InfoPanel(game);
         add(infoPanel, BorderLayout.NORTH);
         Button quitButton = new Button("btnQuit.png");
 

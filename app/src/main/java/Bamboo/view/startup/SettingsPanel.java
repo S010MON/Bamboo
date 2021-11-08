@@ -1,5 +1,6 @@
 package Bamboo.view.startup;
 
+import Bamboo.controller.AgentType;
 import Bamboo.view.resources.Button;
 import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.ResourceLoader;
@@ -14,6 +15,7 @@ public class SettingsPanel extends JPanel
 {
     private MultiConfigurationPanel multiConfigurationPanel;
     private SingleConfigurationPanel singleConfigurationPanel;
+    private DemoConfigurationPanel demoConfigurationPanel ;
     private JPanel currentPanel;
 
     private JSlider slider;
@@ -25,11 +27,13 @@ public class SettingsPanel extends JPanel
     public SettingsPanel()
     {
         setBackground(Colour.background());
-        setLayout(new GridLayout(4, 3));
+        setLayout(new GridLayout(4, 6));
         setVisible(true);
 
         multiConfigurationPanel = new MultiConfigurationPanel();
         singleConfigurationPanel = new SingleConfigurationPanel();
+        demoConfigurationPanel = new DemoConfigurationPanel() ;
+
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
@@ -112,7 +116,6 @@ public class SettingsPanel extends JPanel
         return panel;
     }
 
-
     private Hashtable buildHashtableOfPositions()
     {
         Hashtable position = new Hashtable();
@@ -136,44 +139,89 @@ public class SettingsPanel extends JPanel
         labelImage[size].setVisible(true);
     }
 
-    public MultiConfigurationPanel getMultiConfigurationPanel() {
-        return multiConfigurationPanel;
-    }
-
     public int getBoardSize() {
         return boardSize;
-    }
-
-    public void selectMulti()
-    {
-        mode = Mode.MULTI;
-        currentPanel.setVisible(false);
-        currentPanel.remove(singleConfigurationPanel);
-        currentPanel.add(multiConfigurationPanel, BorderLayout.CENTER);
-        currentPanel.setVisible(true);
-    }
-
-    public void selectSingle()
-    {
-        mode = Mode.SINGLE;
-        currentPanel.setVisible(false);
-        currentPanel.remove(multiConfigurationPanel);
-        currentPanel.add(singleConfigurationPanel, BorderLayout.CENTER);
-        currentPanel.setVisible(true);
-    }
-
-    public void selectDemo()
-    {
-        mode = Mode.DEMO;
-        currentPanel.setVisible(false);
-        currentPanel.remove(multiConfigurationPanel);
-        currentPanel.remove(singleConfigurationPanel);
-        currentPanel.setVisible(true);
     }
 
     public Mode getMode()
     {
         return mode;
+    }
+
+    public Color getPlayer1Colour()
+    {
+        if(getMode() == Mode.SINGLE)
+            return singleConfigurationPanel.getPlayer1Color();
+        if(getMode()== Mode.MULTI)
+            return multiConfigurationPanel.getPlayer1Color();
+        return demoConfigurationPanel.getAI1color() ;
+    }
+
+    public Color getPlayer2Colour()
+    {
+        if(getMode() == Mode.SINGLE)
+            return singleConfigurationPanel.getAIcolor();
+        if(getMode()==Mode.MULTI)
+            return multiConfigurationPanel.getPlayer2Color();
+        return demoConfigurationPanel.getAI2color() ;
+    }
+
+    public String getPlayer1Name()
+    {
+        if(getMode() == Mode.SINGLE)
+            return singleConfigurationPanel.getNamePlayer1();
+        return multiConfigurationPanel.getNamePlayer1();
+    }
+
+    public String getPlayer2Name()
+    {
+        if(getMode() == Mode.MULTI)
+            return multiConfigurationPanel.getNamePlayer2();
+        return "Computer";
+    }
+
+    public AgentType getAgentType()
+    {
+        return singleConfigurationPanel.getAgentType();
+    }
+
+    public AgentType getAgentType1(){
+        return demoConfigurationPanel.getAgentType1() ;
+    }
+
+    public AgentType getAgentType2(){
+        return demoConfigurationPanel.getAgentType2() ;
+    }
+
+
+    private void selectMulti()
+    {
+        mode = Mode.MULTI;
+        currentPanel.setVisible(false);
+        currentPanel.remove(singleConfigurationPanel);
+        currentPanel.remove(demoConfigurationPanel);
+        currentPanel.add(multiConfigurationPanel, BorderLayout.CENTER);
+        currentPanel.setVisible(true);
+    }
+
+    private void selectSingle()
+    {
+        mode = Mode.SINGLE;
+        currentPanel.setVisible(false);
+        currentPanel.remove(multiConfigurationPanel);
+        currentPanel.remove(demoConfigurationPanel);
+        currentPanel.add(singleConfigurationPanel, BorderLayout.CENTER);
+        currentPanel.setVisible(true);
+    }
+
+    private void selectDemo()
+    {
+        mode = Mode.DEMO;
+        currentPanel.setVisible(false);
+        currentPanel.remove(multiConfigurationPanel);
+        currentPanel.remove(singleConfigurationPanel);
+        currentPanel.add(demoConfigurationPanel) ;
+        currentPanel.setVisible(true);
     }
 
     private static class CustomSliderUI extends BasicSliderUI {

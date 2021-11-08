@@ -27,6 +27,12 @@ public class Human implements Agent
     }
 
     @Override
+    public boolean isHuman()
+    {
+        return true;
+    }
+
+    @Override
     public Vector getNextMove(Game game) {
         return null;
     }
