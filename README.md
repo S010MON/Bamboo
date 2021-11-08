@@ -1,4 +1,4 @@
-![workflow](https://github.com/S010MON/Bamboo/actions/workflows/gradle_build.yml/badge.svg)
+![workflow](https://github.com/S010MON/Bamboo/actions/workflows/linux_build.yml/badge.svg)
 ![workflow](https://github.com/S010MON/Bamboo/actions/workflows/windows_build.yml/badge.svg)
 
 # Bamboo
