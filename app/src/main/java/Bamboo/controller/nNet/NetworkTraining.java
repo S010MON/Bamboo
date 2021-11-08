@@ -1,5 +1,7 @@
 package Bamboo.controller.nNet;
 
+import deepnetts.util.Tensor;
+
 import java.awt.*;
 import java.io.IOException;
 

@@ -14,7 +14,9 @@ public class TensorLoader
         int cols = getCols(file);
         int rows = getRows(file);
         float[] data = readTensor(file);
-        return new Tensor(cols, rows, data);
+        Tensor ret = new Tensor(rows,cols);
+        ret.setValues(data);
+        return ret;
     }
 
     private static int getCols(File file) throws IOException

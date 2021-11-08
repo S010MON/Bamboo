@@ -33,7 +33,7 @@ public class FilePath
     public static String getNNetPath(String fileName)
     {
         String internalPathUnix = "/src/main/java/Bamboo/controller/nNet/TrainingData/";
-        String internalPathWin = "/src/main/java/Bamboo/controller/nNet/TrainingData/";
+        String internalPathWin = "/app/src/main/java/Bamboo/controller/nNet/TrainingData/";
         String internalPathMac = "/src/main/java/Bamboo/controller/nNet/TrainingData/";
 
         FileSystem fileSystem = FileSystems.getDefault();

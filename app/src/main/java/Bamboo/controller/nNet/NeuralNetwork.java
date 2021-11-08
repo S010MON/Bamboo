@@ -14,6 +14,7 @@ import deepnetts.net.loss.LossType;
 import deepnetts.net.train.BackpropagationTrainer;
 import deepnetts.net.train.opt.OptimizerType;
 import deepnetts.util.FileIO;
+import org.apache.logging.log4j.core.appender.SyslogAppender;
 
 import javax.visrec.ml.data.Column;
 import javax.visrec.ml.data.DataSet;
@@ -34,6 +35,7 @@ public class NeuralNetwork implements Agent
         this.color = color;
         try{
             this.neuralNet = (FeedForwardNetwork) FileIO.createFromJson(new File(nNetSavePath));
+            NetworkManager.fillNN(neuralNet);
         }
         catch(IOException exception){
             exception.printStackTrace();
@@ -96,34 +98,37 @@ public class NeuralNetwork implements Agent
             buildColumns(trainData,inputsNum,outputsNum);
             buildColumns(testData,inputsNum,outputsNum);
             int hiddenSize = (int) Math.round(Math.sqrt(inputsNum*outputsNum));
-            neuralNet = FeedForwardNetwork.builder()
-                    .addInputLayer(inputsNum)
-                    .addFullyConnectedLayer(hiddenSize,ActivationType.SIGMOID)
-                    .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
-                    .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
-                    .addOutputLayer(outputsNum, ActivationType.SOFTMAX)
-                    .lossFunction(LossType.CROSS_ENTROPY)
-                    .randomSeed(123)
-                    .build();
+            if(neuralNet == null){
+                neuralNet = FeedForwardNetwork.builder()
+                        .addInputLayer(inputsNum)
+                        .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
+                        .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
+                        .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
+                        .addOutputLayer(outputsNum, ActivationType.SOFTMAX)
+                        .lossFunction(LossType.CROSS_ENTROPY)
+                        .randomSeed(123)
+                        .build();
+            }
 
             BackpropagationTrainer trainer = neuralNet.getTrainer();
-            trainer.setOptimizer(OptimizerType.SGD);
+            trainer.setOptimizer(OptimizerType.MOMENTUM);
             trainer.setShuffle(true);
             trainer.setTestSet(testData);
             trainer.setMaxEpochs(100);
             trainer.setEarlyStopping(true);
+            trainer.setEarlyStoppingPatience(15);
             neuralNet.train(trainData);
 
             System.out.println("---------TRAIN DATA--------");
-            System.out.println("Accuracy: " + getAccuracy(trainData));
             EvaluationMetrics em = Evaluators.evaluateClassifier(neuralNet,trainData);
             System.out.println(em);
             System.out.println("---------TEST DATA--------");
-            System.out.println("Accuracy: " + getAccuracy(testData));
             EvaluationMetrics em2 = Evaluators.evaluateClassifier(neuralNet,testData);
             System.out.println(em2);
 
             FileIO.writeToFileAsJson(neuralNet,FilePath.getNNetPath("networkSave.json"));
+            NetworkManager manager = new NetworkManager();
+            manager.save(neuralNet,"");
         }
         catch (IOException e) { e.printStackTrace();}
 
@@ -172,47 +177,5 @@ public class NeuralNetwork implements Agent
             iterator++;
         }
         return vectors.get(bestID);
-    }
-
-    float getAccuracy(DataSet<MLDataItem> testSet){
-        float corrects = 0;
-        float totals = 0;
-        for (MLDataItem item : testSet) {
-            float[] trues = item.getTargetOutput().getValues();
-            /*System.out.println("Length: " + trues.length);
-            for(float f : trues)
-                System.out.println(f);
-            neuralNet.setInput(item.getInput());*/
-            float[] predictions = neuralNet.getOutput();
-            /*System.out.println("Length: " + predictions.length);
-            for(float p : predictions)
-                System.out.println(p);
-            System.out.println("------------------");*/
-            for(int i = 0; i < trues.length; i++){
-                if(approx(predictions[i],max(predictions),0.00001f)){
-                    if(trues[i] == 1){
-                        corrects++;
-                    }
-                }
-            }
-            totals++;
-        }
-        return(corrects/totals);
-    }
-
-    float max(float[] array){
-        int maxID = 0;
-        float max = -1000000000;
-        for(int i = 0; i < array.length; i++){
-            if(array[i] > max){
-                max = array[i];
-                maxID = i;
-            }
-        }
-        return array[maxID];
-    }
-
-    boolean approx(float x1, float x2, float tolerance){
-        return x1 + tolerance >= x2 && x2 + tolerance >= x1;
     }
 }

@@ -1,6 +1,7 @@
 package Bamboo.controller.nNet;
 
 import Bamboo.controller.FilePath;
+import Bamboo.controller.Logger;
 import deepnetts.util.Tensor;
 
 import java.io.File;
@@ -16,16 +17,12 @@ public class TensorSaver
         write(fileName, col.toString());
         write(fileName, row.toString());
 
-        for(int r = 0; r < row; r++)
-        {
-            for(int c = 0; c < col; c++)
-            {
-                write(fileName, Float.toString(tensor.get(r,c)));
-            }
+        for(float entry : tensor.getValues()){
+            write(fileName,Float.toString(entry));
         }
     }
 
-    private static void write(String fileName, String data)
+    public static void write(String fileName, String data)
     {
         try {
             String filePath = FilePath.getNNetPath(fileName);
@@ -35,6 +32,7 @@ public class TensorSaver
                 file.createNewFile();
 
             FileWriter writer = new FileWriter(file,true);
+            writer.write(data + "\n");
             writer.close();
         } catch (Exception e) {
             e.printStackTrace();
