@@ -15,7 +15,7 @@ import java.util.List;
 
 public class NetworkManager
 {
-    public void save(FeedForwardNetwork n, String filePath) throws IOException {
+    public static void save(FeedForwardNetwork n, String filePath) throws IOException {
         System.out.println("Writing NN to file...");
         int layerID = 0;
         for(AbstractLayer layer : n.getLayers()){

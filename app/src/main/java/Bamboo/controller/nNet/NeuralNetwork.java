@@ -127,8 +127,7 @@ public class NeuralNetwork implements Agent
             System.out.println(em2);
 
             FileIO.writeToFileAsJson(neuralNet,FilePath.getNNetPath("networkSave.json"));
-            NetworkManager manager = new NetworkManager();
-            manager.save(neuralNet,"");
+            NetworkManager.save(neuralNet,"");
         }
         catch (IOException e) { e.printStackTrace();}
 
