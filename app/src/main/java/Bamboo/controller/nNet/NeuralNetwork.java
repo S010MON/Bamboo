@@ -23,6 +23,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class NeuralNetwork implements Agent
 {
@@ -71,9 +72,7 @@ public class NeuralNetwork implements Agent
         float[] output = neuralNet.predict(floatInputs);
         Vector move = getMoveFromPrediction(output,game);
         if(grid.isLegalMove(move,color))
-            System.out.println("NNet chooses move " + move);
-        else
-            System.out.println("At " + move + " NNet tried to break rules");
+            System.out.println("NNet chooses move " + move + " at probability " + maximum(output));
         return move;
     }
 
@@ -87,50 +86,23 @@ public class NeuralNetwork implements Agent
     {
         int inputsNum = 91;
         int outputsNum = 91;
-
         try {
             String filePath = FilePath.getNNetPath("data.csv");
             TabularDataSet<MLDataItem> data = DataSets.readCsv(filePath, inputsNum, outputsNum,true);
             data.shuffle();
-            DataSet<MLDataItem>[] dataSplit = data.split(0.7,0.3);
-            TabularDataSet<MLDataItem> trainData = (TabularDataSet) dataSplit[0];
-            TabularDataSet<MLDataItem> testData = (TabularDataSet) dataSplit[1];
-            buildColumns(trainData,inputsNum,outputsNum);
-            buildColumns(testData,inputsNum,outputsNum);
-            int hiddenSize = (int) Math.round(Math.sqrt(inputsNum*outputsNum));
-            if(neuralNet == null){
-                neuralNet = FeedForwardNetwork.builder()
-                        .addInputLayer(inputsNum)
-                        .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
-                        .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
-                        .addFullyConnectedLayer(hiddenSize,ActivationType.RELU)
-                        .addOutputLayer(outputsNum, ActivationType.SOFTMAX)
-                        .lossFunction(LossType.CROSS_ENTROPY)
-                        .randomSeed(123)
-                        .build();
-            }
-
-            BackpropagationTrainer trainer = neuralNet.getTrainer();
-            trainer.setOptimizer(OptimizerType.MOMENTUM);
-            trainer.setShuffle(true);
-            trainer.setTestSet(testData);
-            trainer.setMaxEpochs(100);
-            trainer.setEarlyStopping(true);
-            trainer.setEarlyStoppingPatience(15);
+            TabularDataSet[] split = trainTestSplit(data,0.3f,inputsNum,outputsNum);
+            TabularDataSet trainData = split[0];
+            TabularDataSet testData = split[1];
+            int hiddenSize = 2 * (int) Math.round(Math.sqrt(inputsNum*outputsNum));
+            if(neuralNet == null)
+                buildNN(inputsNum,hiddenSize,outputsNum);
+            optimizeTrainer(neuralNet,testData);
             neuralNet.train(trainData);
-
-            System.out.println("---------TRAIN DATA--------");
-            EvaluationMetrics em = Evaluators.evaluateClassifier(neuralNet,trainData);
-            System.out.println(em);
-            System.out.println("---------TEST DATA--------");
-            EvaluationMetrics em2 = Evaluators.evaluateClassifier(neuralNet,testData);
-            System.out.println(em2);
-
+            printMetrics(trainData,testData);
             FileIO.writeToFileAsJson(neuralNet,FilePath.getNNetPath("networkSave.json"));
-            NetworkManager.save(neuralNet,"");
+            NetworkManager.save(neuralNet);
         }
         catch (IOException e) { e.printStackTrace();}
-
     }
 
     void buildColumns(TabularDataSet dataSet, int numInputs, int numOutputs){
@@ -144,22 +116,6 @@ public class NeuralNetwork implements Agent
             cols.add(temp);
         }
         dataSet.setColumns(cols);
-    }
-
-    Vector getMoveFromPrediction(float[] prediction){
-        Grid grid = new GridGraphImp(5);
-        ArrayList<Vector> vectors = new ArrayList<Vector>(grid.getAllVectors());
-        int iterator = 0;
-        int bestID = 0;
-        float bestPred = 0;
-        for(float pred : prediction){
-            if(pred > bestPred){
-                bestPred = pred;
-                bestID = iterator;
-            }
-            iterator++;
-        }
-        return vectors.get(bestID);
     }
 
     Vector getMoveFromPrediction(float[] prediction,Game game){
@@ -176,5 +132,55 @@ public class NeuralNetwork implements Agent
             iterator++;
         }
         return vectors.get(bestID);
+    }
+
+    float maximum(float[] array) {
+        if (array.length <= 0)
+            throw new IllegalArgumentException("The array is empty");
+        float max = array[0];
+        for (int i = 1; i < array.length; i++)
+            if (array[i] > max)
+                max = array[i];
+        return max;
+    }
+
+    private void buildNN(int inputs, int hiddensize, int outputs){
+        this.neuralNet = FeedForwardNetwork.builder()
+                .addInputLayer(inputs)
+                .addFullyConnectedLayer(hiddensize,ActivationType.RELU)
+                .addFullyConnectedLayer(hiddensize,ActivationType.RELU)
+                .addFullyConnectedLayer(hiddensize,ActivationType.RELU)
+                .addOutputLayer(outputs, ActivationType.SOFTMAX)
+                .lossFunction(LossType.CROSS_ENTROPY)
+                .randomSeed(123)
+                .build();
+    }
+
+    private TabularDataSet[] trainTestSplit(TabularDataSet dataSet,float testSize,int inputs, int outputs){
+        DataSet<MLDataItem>[] dataSplit = dataSet.split(1.0-testSize,testSize);
+        TabularDataSet<MLDataItem> trainData = (TabularDataSet) dataSplit[0];
+        TabularDataSet<MLDataItem> testData = (TabularDataSet) dataSplit[1];
+        buildColumns(trainData,inputs,outputs);
+        buildColumns(testData,inputs,outputs);
+        return new TabularDataSet[]{trainData,testData};
+    }
+
+    private void optimizeTrainer(FeedForwardNetwork n, TabularDataSet testDataSet){
+        BackpropagationTrainer trainer = n.getTrainer();
+        trainer.setOptimizer(OptimizerType.MOMENTUM);
+        trainer.setShuffle(true);
+        trainer.setTestSet(testDataSet);
+        trainer.setMaxEpochs(100);
+        trainer.setEarlyStopping(true);
+        trainer.setEarlyStoppingPatience(15);
+    }
+
+    private void printMetrics(TabularDataSet trainData, TabularDataSet testData){
+        System.out.println("---------TRAIN DATA--------");
+        EvaluationMetrics em = Evaluators.evaluateClassifier(neuralNet,trainData);
+        System.out.println(em);
+        System.out.println("---------TEST DATA--------");
+        EvaluationMetrics em2 = Evaluators.evaluateClassifier(neuralNet,testData);
+        System.out.println(em2);
     }
 }

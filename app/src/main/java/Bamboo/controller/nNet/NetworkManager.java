@@ -15,8 +15,7 @@ import java.util.List;
 
 public class NetworkManager
 {
-    public static void save(FeedForwardNetwork n, String filePath) throws IOException {
-        System.out.println("Writing NN to file...");
+    public static void save(FeedForwardNetwork n) throws IOException {
         int layerID = 0;
         for(AbstractLayer layer : n.getLayers()){
             float[] biases = layer.getBiases();
@@ -30,18 +29,15 @@ public class NetworkManager
                 }
             }
             TensorSaver.write("biases_layer_"+layerID,biasString);
-            System.out.println("Done writing layer " + layerID + ".");
             layerID++;
         }
     }
 
     public static void fillNN(FeedForwardNetwork n) throws IOException {
-        System.out.println("Filling...");
         int layerID = 0;
         List<AbstractLayer> layers = n.getLayers();
         for(AbstractLayer layer : layers){
             if(layerID != 0){
-                System.out.println("Layer "+layerID);
                 Tensor weights = TensorLoader.load("weights_layer_"+layerID);
                 layer.setWeights(weights);
                 BufferedReader reader = new BufferedReader(new FileReader(FilePath.getNNetPath("biases_layer_"+layerID)));
@@ -55,6 +51,5 @@ public class NetworkManager
             }
             layerID++;
         }
-        System.out.println("Done filling!");
     }
 }
