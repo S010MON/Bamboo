@@ -6,6 +6,8 @@ import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
 import Bamboo.view.resources.Colour;
+import Bamboo.view.resources.ResourceLoader;
+
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -14,6 +16,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 public class Canvas extends JPanel
 {
@@ -31,6 +35,7 @@ public class Canvas extends JPanel
     public Tile previous_rollover = new Tile(new Vector(0,0,0));
     private Color background = Colour.background();
     private RollOverListener rollOverListener;
+    private HashMap<Color, BufferedImage> images = new HashMap<>();
 
     public Canvas(Dimension screenSize, Game game)
     {
@@ -42,9 +47,11 @@ public class Canvas extends JPanel
         addMouseListener(new TileClickListener(game, this));
         rollOverListener = new RollOverListener(game, this);
         addMouseMotionListener(rollOverListener);
-
-              Timer timer2 = new Timer(demoDelay, new TimerListener(game, this));
-              timer2.start();
+        images.put(Color.RED, ResourceLoader.getImage("red_circle.png"));
+        images.put(Color.BLUE, ResourceLoader.getImage("blue_circle.png"));
+        images.put(Color.WHITE,ResourceLoader.getImage("white_circle.png"));
+        Timer timer2 = new Timer(demoDelay, new TimerListener(game, this));
+        timer2.start();
     }
 
     @Override
@@ -96,12 +103,14 @@ public class Canvas extends JPanel
         v = VectorConverter.doubleAndOffsetOddRows(v);
         int x = centreX + (v.getQ() * circle_radius/2) ;
         int y = centreY + (v.getR() * circle_radius/2) ;
-
-        g2d.setStroke(tile.getCircle_thickness());
-        g2d.setColor(color);
-        g2d.fillOval(x,y,circle_radius,circle_radius);
-        g2d.setColor(tile.getOutline());
-        g2d.drawOval(x, y, circle_radius, circle_radius);
+        if(images != null){
+            g2d.drawImage(images.get(color), x, y, circle_radius, circle_radius, null);
+        }else{
+            g2d.setStroke(tile.getCircle_thickness());
+            g2d.fillOval(x,y,circle_radius,circle_radius);
+            g2d.setColor(tile.getOutline());
+            g2d.drawOval(x, y, circle_radius, circle_radius);
+        }
     }
 
     public static int getCircle_radius() {
@@ -122,7 +131,6 @@ public class Canvas extends JPanel
         v = VectorConverter.doubleAndOffsetOddRows(v);
         int x = centreX + (v.getQ() * circle_radius/2) ;
         int y = centreY + (v.getR() * circle_radius/2) ;
-
         if(game.getGrid().isLegalMove(tile.getVector(), game.getCurrentPlayer().getColor()))
         {
             g2d.setStroke(tile.getCircle_thickness());
