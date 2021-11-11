@@ -1,15 +1,15 @@
 package Bamboo;
 
-import Bamboo.controller.MiniMax.NodeMM;
-import Bamboo.controller.MiniMax.MiniMaxAB;
-import Bamboo.controller.MiniMax.MiniMaxSortedAB;
+import Bamboo.controller.miniMax.NodeMM;
+import Bamboo.controller.miniMax.MiniMaxAB;
+import Bamboo.controller.miniMax.MiniMaxSortedAB;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
-import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class sortedABMiniMaxTest {

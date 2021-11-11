@@ -1,23 +1,20 @@
 package Bamboo.view.startup;
 
 import Bamboo.controller.AgentFactory;
-import Bamboo.controller.AgentType;
 import Bamboo.controller.Human;
-import Bamboo.controller.MiniMax.MiniMax;
 import Bamboo.controller.Settings;
 import Bamboo.view.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class StartupPanel extends JPanel
 {
     private SettingsPanel settingsPanel;
     private HelpPanel helpPanel;
     private MainFrame view;
-    private int tossCoin ;
     private int size = 5;
-    private Settings set ;
 
     public StartupPanel(MainFrame view)
     {
@@ -35,57 +32,25 @@ public class StartupPanel extends JPanel
         setVisible(true);
     }
 
-    public void startGame()
-    {
+    public void startGame() throws IOException {
         view.runGame(getSettings());
     }
 
-   /* public Settings getSettings()
-    {
+    public Settings getSettings() throws IOException {
         return switch (settingsPanel.getMode()) {
             case SINGLE -> new Settings(
                     new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
                     AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
                     settingsPanel.getBoardSize());
-
             case MULTI -> new Settings(
                     new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
                     new Human(settingsPanel.getPlayer2Name(), settingsPanel.getPlayer2Colour()),
                     settingsPanel.getBoardSize());
-            case DEMO ->new Settings(
+            case DEMO -> new Settings(
                     AgentFactory.makeAgent(settingsPanel.getAgentType1(), settingsPanel.getPlayer1Colour()),
                     AgentFactory.makeAgent(settingsPanel.getAgentType2(), settingsPanel.getPlayer2Colour()),
                     settingsPanel.getBoardSize());
         };
-    }*/
-
-    public Settings getSettings(){
-        int tossCoin = (int) ( Math.random() * 2 + 1);
-        if(settingsPanel.getMode()== Mode.SINGLE){
-            set = new Settings(
-                    new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
-                    AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
-                    settingsPanel.getBoardSize());
-                    set.setCurrentPlayer(tossCoin);
-                    return set ;
-        }
-        if(settingsPanel.getMode()== Mode.MULTI){
-            set = new Settings(
-                    new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
-                    new Human(settingsPanel.getPlayer2Name(), settingsPanel.getPlayer2Colour()),
-                    settingsPanel.getBoardSize());
-                    set.setCurrentPlayer(tossCoin);
-                    return set ;
-        }
-        if(settingsPanel.getMode()== Mode.DEMO){
-            set = new Settings(
-                    AgentFactory.makeAgent(settingsPanel.getAgentType1(), settingsPanel.getPlayer1Colour()),
-                    AgentFactory.makeAgent(settingsPanel.getAgentType2(), settingsPanel.getPlayer2Colour()),
-                    settingsPanel.getBoardSize());
-                    set.setCurrentPlayer(tossCoin);
-                    return set ;
-        }
-        return set ;
     }
 
     private  void removeComponentCenter(){
@@ -113,10 +78,4 @@ public class StartupPanel extends JPanel
     {
         return view;
     }
-
-    public int getTossCoin() {
-        return tossCoin;
-    }
 }
-
-

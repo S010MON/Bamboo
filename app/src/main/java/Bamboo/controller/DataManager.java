@@ -73,11 +73,7 @@ public class DataManager
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < X.length; i++)
         {
-            sb.append(X[i]);
-            if(i < X.length-1)
-                sb.append(",");
-            else
-                sb.append(";");
+            sb.append(X[i] + ",");
         }
 
         for(int j = 0; j < Y.length; j++)
@@ -85,10 +81,7 @@ public class DataManager
             sb.append(Y[j]);
             if(j < Y.length-1)
                 sb.append(",");
-            else
-                sb.append(";");
         }
-
         return sb.toString();
     }
 }
