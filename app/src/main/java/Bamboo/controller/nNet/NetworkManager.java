@@ -43,7 +43,7 @@ public class NetworkManager
             if(layerID != 0){
                 Tensor weights = TensorLoader.load(folder+"weights_layer_"+layerID);
                 layer.setWeights(weights);
-                BufferedReader reader = new BufferedReader(new FileReader(FilePath.getNNetPath("biases_layer_"+layerID)));
+                BufferedReader reader = new BufferedReader(new FileReader(FilePath.getNNetPath(folder+"biases_layer_"+layerID)));
                 float[] biases = new float[layer.getBiases().length];
                 for(int i = 0; i < biases.length; i++)
                 {
