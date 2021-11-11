@@ -28,9 +28,9 @@ public class TensorSaver
             String filePath = FilePath.getNNetPath(fileName);
 
             File file = new File(filePath);
-            if (!file.exists())
-                file.createNewFile();
-
+            if (file.exists())
+                file.delete();
+            file.createNewFile();
             FileWriter writer = new FileWriter(file,true);
             writer.write(data + "\n");
             writer.close();
