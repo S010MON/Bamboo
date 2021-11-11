@@ -53,9 +53,10 @@ public class MCTS_experiment
                     Agent winner = game.turnLogic();//make this return winning agent in the end
                     if (winner == agent1)
                         wins[k-1][j-1] = wins[k-1][j-1] + 1;
+                    num_game++ ;  //just to see at which number of game you are while running
+                    System.out.println(num_game);
                 }
-                num_game++ ;  //just to see at which number of game you are while running
-                System.out.println(num_game);
+
             }
 
             // winRates.add(mean(wins));
