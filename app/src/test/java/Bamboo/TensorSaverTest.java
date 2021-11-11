@@ -1,5 +1,6 @@
 package Bamboo;
 
+import Bamboo.controller.nNet.TensorLoader;
 import Bamboo.controller.nNet.TensorSaver;
 import deepnetts.util.Tensor;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ public class TensorSaverTest
         Tensor exp = new Tensor(t);
         Tensor act = null;
         try{
+            TensorSaver.clear("testBiases");
             TensorSaver.save("testBiases", exp);
         } catch (IOException e)
         {
