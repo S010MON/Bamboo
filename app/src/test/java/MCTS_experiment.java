@@ -21,7 +21,7 @@ public class MCTS_experiment
         int iterrationStep = 50;
         int num_game = 0 ;
 
-        int[][] wins = new int[20][20];
+        double[][] wins = new double[20][20];
 
         int boardSize = 5;
         ArrayList<Double> winRates = new ArrayList<>();
@@ -30,6 +30,9 @@ public class MCTS_experiment
         // MCTS iterations <= 1000
         // iterations here >= 100
         // C in (0,1)
+
+        //The loops are bases on the indexes of the arry and not on the values of C and iterration
+        // step are increased manually in the loop
 
         for (int k = 1; k <= 20; k++ ) {                       //Loop to change C value
             //int[][] wins = new int[replications];
@@ -49,9 +52,9 @@ public class MCTS_experiment
                     GameWithoutGUI game = new GameWithoutGUI(settings);
                     Agent winner = game.turnLogic();//make this return winning agent in the end
                     if (winner == agent1)
-                        wins[k][j] = wins[k][j] + 1;
+                        wins[k-1][j-1] = wins[k-1][j-1] + 1;
                 }
-                num_game++ ;
+                num_game++ ;  //just to see at which number of game you are while running
                 System.out.println(num_game);
             }
 
@@ -65,10 +68,10 @@ public class MCTS_experiment
         System.out.println(Arrays.deepToString(wins));
     }
 
-    private static void mean(int[][] wins) {
+    private static void mean(double[][] wins) {
 
         for (int i = 0; i<wins.length; i++) {
-            for(int j = 0; j< wins.length; j++) {
+            for(int j = 0; j< wins[i].length; j++) {
                 wins[i][j] = wins[i][j] / 100;
             }
         }
