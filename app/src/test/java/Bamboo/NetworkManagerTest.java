@@ -22,6 +22,7 @@ public class NetworkManagerTest {
         float[] inputs = {3,4,1};
         float prediction = n.predict(inputs)[0];
         NetworkManager.save(n);
+        NetworkManager.fillNN(n);
 
         FeedForwardNetwork n2 = new FeedForwardNetwork.Builder()
                 .addInputLayer(3)
