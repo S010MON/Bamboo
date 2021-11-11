@@ -42,7 +42,21 @@ public class MiniMaxAB implements Agent {
             uncolored_vectors = new ArrayList<>(game.getGrid().getAllVectors());
         }
         else{
-            updateUncoloredVectors(game);
+            updateUncoloredVectors(game.getGrid());
+        }
+        int depth = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
+        NodeMM start = new NodeMM(game.getGrid());
+        return minimaxMove(start, depth, this.color);
+    }
+
+    @Override
+    public Vector getNextMove(GameWithoutGUI game)
+    {
+        if(uncolored_vectors.size() == 0){
+            uncolored_vectors = new ArrayList<>(game.getGrid().getAllVectors());
+        }
+        else{
+            updateUncoloredVectors(game.getGrid());
         }
         int depth = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
         NodeMM start = new NodeMM(game.getGrid());
@@ -60,8 +74,8 @@ public class MiniMaxAB implements Agent {
         return grid;
     }
 
-    void updateUncoloredVectors(Game game){
-        uncolored_vectors.removeIf(vec -> game.getGrid().getTile(vec).getColour() != Color.WHITE);
+    void updateUncoloredVectors(Grid grid){
+        uncolored_vectors.removeIf(vec -> grid.getTile(vec).getColour() != Color.WHITE);
     }
 
     public void setGame(ArrayList<Vector> vectors){
