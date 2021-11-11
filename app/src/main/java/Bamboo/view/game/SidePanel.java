@@ -5,6 +5,8 @@ import Bamboo.model.Game;
 import Bamboo.view.MainFrame;
 import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.Button;
+import Bamboo.view.resources.Label;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -29,6 +31,11 @@ public class SidePanel extends JPanel
         panelHint.setBackground(Colour.background());
         panelHint.setLayout(new BorderLayout());
         add(panelHint,BorderLayout.SOUTH) ;
+        JPanel panel = new JPanel();
+        panel.setBackground(Colour.background());
+        panel.setLayout(new BorderLayout());
+        add(panel, BorderLayout.CENTER);
+        Label toggleLabel = new Label("toggleLabel.png");
         Button quitButton = new Button("btnQuit.png");
         Button hintButton = new Button("btnHint.png") ;
         hintButton.addActionListener(e -> {
@@ -37,6 +44,8 @@ public class SidePanel extends JPanel
         });
         snaphotToggle = new Button(toggleButtonLabel(game.getLogMoves()));
         snaphotToggle.addActionListener(e -> toggle());
+        panel.add(toggleLabel, BorderLayout.SOUTH);
+
         panelHint.add(snaphotToggle, BorderLayout.NORTH);
         panelHint.add(hintButton, BorderLayout.CENTER) ;
         panelHint.add(quitButton, BorderLayout.SOUTH);
