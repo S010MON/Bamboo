@@ -58,11 +58,11 @@ public class InfoPanel extends JPanel
         playerDisplay.setFont(new Font("Monospaced", Font.PLAIN, 22));
         add(playerDisplay);
 
-        snaphotToggle = new Button(toggleButtonLabel(game.getLogMoves()));
-        snaphotToggle.setAlignmentX(0.5f);
-        snaphotToggle.setFont(new Font("Monospaced", Font.PLAIN, 22));
-        add(snaphotToggle);
-        snaphotToggle.addActionListener(e -> toggle());
+        //snaphotToggle = new Button(toggleButtonLabel(game.getLogMoves()));
+        //snaphotToggle.setAlignmentX(0.5f);
+        //snaphotToggle.setFont(new Font("Monospaced", Font.PLAIN, 22));
+        //add(snaphotToggle);
+        //snaphotToggle.addActionListener(e -> toggle());
 
         setVisible(true);
     }
@@ -74,18 +74,5 @@ public class InfoPanel extends JPanel
         playerDisplay.setText(name);
     }
 
-    private void toggle()
-    {
-        game.toggleLogging();
-        if(game.getLogMoves())
-            snaphotToggle.changeIcon("btnON.png");
-        else
-            snaphotToggle.changeIcon("btnOFF.png");
-    }
 
-    private String toggleButtonLabel(boolean on){
-        if(on)
-            return "btnON.png";
-        return "btnOFF.png";
-    }
 }
