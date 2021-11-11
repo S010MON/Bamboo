@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NetworkManagerTest {
     @Test void fillTest() throws IOException {
-        //C:\Users\Alex\IdeaProjects\Bamboo\app\src\main\java\Bamboo\controller\nNet\TrainingData\biases_layer_0
         FeedForwardNetwork n = new FeedForwardNetwork.Builder()
                 .addInputLayer(3)
                 .addFullyConnectedLayer(50, ActivationType.RELU)

@@ -6,11 +6,10 @@ public enum NetworkArchitecture {
     TEST,
     BASIC;
 
-    public static String getFilePath(NetworkArchitecture na){
-        String path = FilePath.getNNetPath("");
+    public static String getFolder(NetworkArchitecture na){
         return switch (na) {
-            case TEST -> path.concat("test/");
-            case BASIC -> path.concat("basic/");
+            case TEST -> "test/";
+            case BASIC -> "basic/";
         };
     }
 }

@@ -1,5 +1,7 @@
 package Bamboo.controller;
 
+import Bamboo.controller.nNet.NetworkArchitecture;
+
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.util.Locale;
@@ -35,7 +37,6 @@ public class FilePath
         String internalPathUnix = "/app/src/main/java/Bamboo/controller/nNet/TrainingData/";
         String internalPathWin = "/app/src/main/java/Bamboo/controller/nNet/TrainingData/";
         String internalPathMac = "/app/src/main/java/Bamboo/controller/nNet/TrainingData/";
-
 
         FileSystem fileSystem = FileSystems.getDefault();
         String path = fileSystem.getPath("").toAbsolutePath().toString();
