@@ -14,7 +14,6 @@ import deepnetts.net.loss.LossType;
 import deepnetts.net.train.BackpropagationTrainer;
 import deepnetts.net.train.opt.OptimizerType;
 import deepnetts.util.FileIO;
-import org.apache.logging.log4j.core.appender.SyslogAppender;
 
 import javax.visrec.ml.data.Column;
 import javax.visrec.ml.data.DataSet;
@@ -170,7 +169,7 @@ public class NeuralNetwork implements Agent
         trainer.setOptimizer(OptimizerType.MOMENTUM);
         trainer.setShuffle(true);
         trainer.setTestSet(testDataSet);
-        trainer.setMaxEpochs(100);
+        trainer.setMaxEpochs(1);
         trainer.setEarlyStopping(true);
         trainer.setEarlyStoppingPatience(15);
     }
