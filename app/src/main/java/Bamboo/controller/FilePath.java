@@ -42,6 +42,8 @@ public class FilePath
 
         if(path.endsWith("/app"))
             path = path.replace("/app", "");
+        if(path.endsWith("\\app"))
+            path = path.replace("\\app", "");
 
         String os = System.getProperty("os.name").toLowerCase();
         if(os.contains("nix") || os.contains("nux") || os.contains("aix"))
