@@ -3,7 +3,6 @@ package Bamboo.view.game;
 import Bamboo.model.Game;
 import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.Label;
-import Bamboo.view.resources.Button;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -20,7 +19,6 @@ public class InfoPanel extends JPanel
 
     private Label playerLabel;
     private JLabel playerDisplay;
-    private Button snaphotToggle;
 
     private Game game;
 
