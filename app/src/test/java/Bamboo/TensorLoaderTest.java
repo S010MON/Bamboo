@@ -23,7 +23,7 @@ public class TensorLoaderTest
                     0.0f,0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f,
                     0.0f,0.1f,0.2f,0.3f,0.4f,0.5f,0.6f,0.7f,0.8f,0.9f};
 
-        Tensor exp = new Tensor(t);
+        Tensor exp = new Tensor(10, 10, t);
         Tensor act = null;
         try{
             act = TensorLoader.load("testBiases");
