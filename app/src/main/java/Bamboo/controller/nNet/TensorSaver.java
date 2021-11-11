@@ -28,15 +28,28 @@ public class TensorSaver
             String filePath = FilePath.getNNetPath(fileName);
 
             File file = new File(filePath);
-            if (file.exists())
-                file.delete();
-            file.createNewFile();
+            if (!file.exists())
+                file.createNewFile();
             FileWriter writer = new FileWriter(file,true);
             writer.write(data + "\n");
             writer.close();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Unable to save file");
+        }
+    }
+
+    private static void clear(String fileName)
+    {
+        try {
+            String filePath = FilePath.getNNetPath(fileName);
+            File file = new File(filePath);
+            if (file.exists())
+                file.delete();
+        }
+        catch (Exception e) {
+        e.printStackTrace();
+        System.out.println("Unable to clear file");
         }
     }
 }
