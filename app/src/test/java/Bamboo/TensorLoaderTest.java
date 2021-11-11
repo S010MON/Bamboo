@@ -26,7 +26,7 @@ public class TensorLoaderTest
         Tensor exp = new Tensor(10, 10, t);
         Tensor act = null;
         try{
-            act = TensorLoader.load("testBiases");
+            act = TensorLoader.load("test/testWeights");
         } catch (IOException e)
         {
             System.out.println("Failed to load tensor");

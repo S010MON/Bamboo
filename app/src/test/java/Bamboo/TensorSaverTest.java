@@ -29,8 +29,8 @@ public class TensorSaverTest
         Tensor exp = new Tensor(t);
         Tensor act = null;
         try{
-            TensorSaver.clear("testBiases");
-            TensorSaver.save("testBiases", exp);
+            TensorSaver.clear("test/testBiases");
+            TensorSaver.save("test/testBiases", exp);
         } catch (IOException e)
         {
             System.out.println("Failed to save tensor");
