@@ -1,21 +1,19 @@
-package Bamboo.controller.MiniMax;
+package Bamboo.controller.miniMax;
 
 import Bamboo.controller.Agent;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 
-public class MiniMaxSortedAB implements Agent {
-    String name = "MM Sorted";
+public class MiniMaxAB implements Agent {
+    String name = "MiniMaxAB";
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
     int totalEvaluations;
 
-    public MiniMaxSortedAB(Color color){
+    public MiniMaxAB(Color color){
         this.color = color;
     }
 
@@ -91,9 +89,8 @@ public class MiniMaxSortedAB implements Agent {
         Color current_color;
         if(maximizingPlayer)
             current_color = Color.RED;
-        else{
+        else
             current_color = Color.BLUE;
-        }
         Grid grid = node.getGrid();
         if(depth == 0 || grid.isFinished(current_color)){
             node.setValue(grid.evaluateGame(current_color));
@@ -140,7 +137,6 @@ public class MiniMaxSortedAB implements Agent {
                 node.addChild(copy,v);
             }
         }
-        node.sortChildren();
     }
 
     public int getCalls(){

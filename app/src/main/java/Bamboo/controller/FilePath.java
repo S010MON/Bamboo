@@ -26,4 +26,30 @@ public class FilePath
             return path.concat(internalPathWin + fileName);
         else throw new RuntimeException();
     }
+
+    /**
+     * Creates a file path to saved games with the correct file name appended
+     */
+    public static String getNNetPath(String fileName)
+    {
+        String internalPathUnix = "/src/main/java/Bamboo/controller/nNet/TrainingData/";
+        String internalPathWin = "/src/main/java/Bamboo/controller/nNet/TrainingData/";
+        String internalPathMac = "/src/main/java/Bamboo/controller/nNet/TrainingData/";
+
+
+        FileSystem fileSystem = FileSystems.getDefault();
+        String path = fileSystem.getPath("").toAbsolutePath().toString();
+
+        if(path.endsWith("/app/app"))
+            path = path.replace("/app/app", "/app");
+
+        String os = System.getProperty("os.name").toLowerCase();
+        if(os.contains("nix") || os.contains("nux") || os.contains("aix"))
+            return path.concat(internalPathUnix + fileName);
+        if(os.contains("mac"))
+            return path.concat(internalPathMac + fileName);
+        if(os.contains("win"))
+            return path.concat(internalPathWin + fileName);
+        else throw new RuntimeException();
+    }
 }

@@ -3,12 +3,11 @@ package Bamboo.model;
 import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 
 public class Game
 {
-    private boolean LOG_MOVES = false;
+    private boolean LOG_MOVES = true;
 
     private Grid grid;
     private Agent player1;
@@ -49,7 +48,7 @@ public class Game
                 int[] X = DataManager.flatten(grid, currentPlayer.getColor());
                 int[] Y = DataManager.oneHotEncode(grid.getSize(), v);
                 String data = DataManager.concatToCSV(X, Y);
-                Logger.logCSV("data", data);
+                Logger.logCSV("data.csv", data);
             }
             
             toggleTurn();
