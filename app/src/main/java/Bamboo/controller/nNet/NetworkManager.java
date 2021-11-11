@@ -22,13 +22,15 @@ public class NetworkManager
             Tensor weights = layer.getWeights();
             if(weights != null)
                 TensorSaver.save("weights_layer_"+layerID,weights);
-            String biasString = "";
+            StringBuilder biasString = new StringBuilder();
             if(biases != null){
                 for(float bias : biases){
-                    biasString += bias + "\n";
+                    biasString.append(bias).append("\n");
                 }
             }
-            TensorSaver.write("biases_layer_"+layerID,biasString);
+            String fileNameBias = "biases_layer_"+layerID;
+            TensorSaver.clear(fileNameBias);
+            TensorSaver.write(fileNameBias, biasString.toString());
             layerID++;
         }
     }
