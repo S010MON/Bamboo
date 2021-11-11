@@ -36,8 +36,13 @@ public class FilePath
         String internalPathWin = "/src/main/java/Bamboo/controller/nNet/TrainingData/";
         String internalPathMac = "/src/main/java/Bamboo/controller/nNet/TrainingData/";
 
+
         FileSystem fileSystem = FileSystems.getDefault();
         String path = fileSystem.getPath("").toAbsolutePath().toString();
+
+        if(path.endsWith("/app/app"))
+            path = path.replace("/app/app", "/app");
+
         String os = System.getProperty("os.name").toLowerCase();
         if(os.contains("nix") || os.contains("nux") || os.contains("aix"))
             return path.concat(internalPathUnix + fileName);
