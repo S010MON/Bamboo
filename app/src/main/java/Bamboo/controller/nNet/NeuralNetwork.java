@@ -28,18 +28,27 @@ public class NeuralNetwork implements Agent
 {
 
     private FeedForwardNetwork neuralNet;
+    private NetworkArchitecture architecture;
     private Color color;
-    private String nNetSavePath = FilePath.getNNetPath("networkSave.json");
+    private String nNetSaveName = "networkSave.json";
 
     public NeuralNetwork(Color color) throws IOException {
         this.color = color;
+        this.architecture = NetworkArchitecture.BASIC;
         try{
-            this.neuralNet = (FeedForwardNetwork) FileIO.createFromJson(new File(nNetSavePath));
-            NetworkManager.fillNN(neuralNet);
+            String path = FilePath.getNNetPath("");
+            path = path.concat(NetworkArchitecture.getFolder(architecture)).concat(nNetSaveName);
+            this.neuralNet = (FeedForwardNetwork) FileIO.createFromJson(new File(path));
+            NetworkManager.fillNN(this);
         }
         catch(IOException exception){
             exception.printStackTrace();
         }
+    }
+
+    public NeuralNetwork(FeedForwardNetwork n,NetworkArchitecture na){
+        this.architecture = na;
+        this.neuralNet = n;
     }
 
     @Override
@@ -81,6 +90,10 @@ public class NeuralNetwork implements Agent
         return color;
     }
 
+    public NetworkArchitecture getArchitecture(){return this.architecture;}
+
+    public FeedForwardNetwork getNeuralNet(){return this.neuralNet;}
+
     public void train()
     {
         int inputsNum = 91;
@@ -99,7 +112,7 @@ public class NeuralNetwork implements Agent
             neuralNet.train(trainData);
             printMetrics(trainData,testData);
             FileIO.writeToFileAsJson(neuralNet,FilePath.getNNetPath("networkSave.json"));
-            NetworkManager.save(neuralNet);
+            NetworkManager.save(this);
         }
         catch (IOException e) { e.printStackTrace();}
     }

@@ -1,6 +1,8 @@
 package Bamboo;
 
+import Bamboo.controller.nNet.NetworkArchitecture;
 import Bamboo.controller.nNet.NetworkManager;
+import Bamboo.controller.nNet.NeuralNetwork;
 import deepnetts.net.FeedForwardNetwork;
 import deepnetts.net.layers.activation.ActivationType;
 import org.junit.jupiter.api.Test;
@@ -17,11 +19,12 @@ public class NetworkManagerTest {
                 .addOutputLayer(1,ActivationType.SIGMOID)
                 .randomSeed(111)
                 .build();
+        NeuralNetwork net1 = new NeuralNetwork(n, NetworkArchitecture.TEST);
 
         float[] inputs = {3,4,1};
         float prediction = n.predict(inputs)[0];
-        NetworkManager.save(n);
-        NetworkManager.fillNN(n);
+        NetworkManager.save(net1);
+        NetworkManager.fillNN(net1);
 
         FeedForwardNetwork n2 = new FeedForwardNetwork.Builder()
                 .addInputLayer(3)
@@ -29,7 +32,9 @@ public class NetworkManagerTest {
                 .addOutputLayer(1,ActivationType.SIGMOID)
                 .randomSeed(999)
                 .build();
-        NetworkManager.fillNN(n2);
+        NeuralNetwork net2 = new NeuralNetwork(n2,NetworkArchitecture.TEST);
+        NetworkManager.fillNN(net2);
+        n2 = net2.getNeuralNet();
         float prediction2 = n2.predict(inputs)[0];
         assertEquals(prediction,prediction2);
     }
