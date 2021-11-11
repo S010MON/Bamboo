@@ -18,7 +18,7 @@ public class MCTS_experiment
         double stepSize = 0.05;
         double maxC = 1;
         int replications = 100;
-        int iterrationStep = 50;
+        int iterationStep = 50;
         int num_game = 0 ;
 
         double[][] wins = new double[20][20];
@@ -31,8 +31,8 @@ public class MCTS_experiment
         // iterations here >= 100
         // C in (0,1)
 
-        //The loops are bases on the indexes of the arry and not on the values of C and iterration
-        // step are increased manually in the loop
+        //The loops are bases on the indexes of the array and not on the values of C and iteration
+        // steps are increased manually in the loop
 
         for (int k = 1; k <= 20; k++ ) {                       //Loop to change C value
             //int[][] wins = new int[replications];
@@ -43,8 +43,8 @@ public class MCTS_experiment
             for (int j = 1; j <= 20; j++) {                  //inner loop to change num itterartion
                 for (int i = 0; i < replications; i++) {    //inner-inner loop to play n games (n=replications)
 
-                    GameWithoutGUI.MCTSiterations = j +iterrationStep;
-                    iterrationStep=iterrationStep+iterrationStep;
+                    GameWithoutGUI.MCTSiterations = j +iterationStep;
+                    iterationStep=iterationStep+iterationStep;
 
                     Agent agent1 = AgentFactory.makeAgent(AgentType.MCTS, Color.RED);
                     Agent agent2 = AgentFactory.makeAgent(AgentType.RANDOM, Color.BLUE);
@@ -68,13 +68,14 @@ public class MCTS_experiment
         System.out.println(Arrays.deepToString(wins));
     }
 
-    private static void mean(double[][] wins) {
-
-        for (int i = 0; i<wins.length; i++) {
-            for(int j = 0; j< wins[i].length; j++) {
+    private static void mean(double[][] wins)
+    {
+        for (int i = 0; i<wins.length; i++)
+        {
+            for(int j = 0; j< wins[i].length; j++)
+            {
                 wins[i][j] = wins[i][j] / 100;
             }
         }
     }//return mean of array
-    int[] runLoop(){return new int[]{1};}
 }
