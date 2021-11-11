@@ -1,14 +1,11 @@
 package Bamboo.controller.nNet;
 
-import Bamboo.controller.FileManager;
 import Bamboo.controller.FilePath;
-import Bamboo.controller.Logger;
 import deepnetts.net.FeedForwardNetwork;
 import deepnetts.net.layers.AbstractLayer;
 import deepnetts.util.Tensor;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
