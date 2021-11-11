@@ -54,13 +54,13 @@ public class MCTS_experiment
         System.out.println(Arrays.deepToString(wins));
     }
 
-    private static double mean(int[] wins) {
-        double total = 0;
-        for (int i = 0; i<wins.length; i++) {
-            total += wins[i];
-        }
-        return total;
-    }//return mean of array
+    private static void mean(int[][] wins) {
 
+        for (int i = 0; i<wins.length; i++) {
+            for(int j = 0; j< wins.length; j++) {
+                wins[i][j] = wins[i][j] / 100;
+            }
+        }
+    }//return mean of array
     int[] runLoop(){return new int[]{1};}
 }
