@@ -17,7 +17,7 @@ public class MCTS_experiment
         double startC = 0.05;
         double stepSize = 0.05;
         double maxC = 1;
-        int replications = 1;
+        int replications = 100;
         int iterrationStep = 50;
         int num_game = 0 ;
 
