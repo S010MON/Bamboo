@@ -14,6 +14,7 @@ public class TensorSaver
     {
         Integer col = tensor.getCols();
         Integer row = tensor.getRows();
+        clear(fileName);
         write(fileName, col.toString());
         write(fileName, row.toString());
 
@@ -39,7 +40,7 @@ public class TensorSaver
         }
     }
 
-    private static void clear(String fileName)
+    public static void clear(String fileName)
     {
         try {
             String filePath = FilePath.getNNetPath(fileName);
