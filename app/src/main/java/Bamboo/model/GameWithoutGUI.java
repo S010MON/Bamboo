@@ -30,7 +30,7 @@ public class GameWithoutGUI {
             currentPlayer = a1;
     }
 
-    public Agent playout(){
+    public Agent turnLogic(){
         while(!remainingTiles.isEmpty() && !grid.isFinished(currentPlayer.getColor())){
             makeTurn();
         }

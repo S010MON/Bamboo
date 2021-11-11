@@ -33,7 +33,7 @@ public class MCTS_experiment
                 Agent agent2 = AgentFactory.makeAgent(AgentType.RANDOM, Color.BLUE);
                 Settings settings = new Settings(agent1, agent2, boardSize);
                 GameWithoutGUI game = new GameWithoutGUI(settings);
-                Agent winner = game.playout();//make this return winning agent in the end
+                Agent winner = game.turnLogic();//make this return winning agent in the end
                 if(winner == agent1)
                     wins[i] = 1;
                 else
@@ -46,7 +46,13 @@ public class MCTS_experiment
         //todo complete setup and write to file
     }
 
-    private static double mean(int[] wins){return 0;}//return mean of array
+    private static double mean(int[] wins) {
+        double total = 0;
+        for (int i = 0; i<wins.length; i++) {
+            total += wins[i];
+        }
+        return total;
+    }//return mean of array
 
     int[] runLoop(){return new int[]{1};}
 }
