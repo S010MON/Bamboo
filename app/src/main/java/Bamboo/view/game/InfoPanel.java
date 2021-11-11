@@ -78,14 +78,14 @@ public class InfoPanel extends JPanel
     {
         game.toggleLogging();
         if(game.getLogMoves())
-            snaphotToggle.changeIcon("btnStart.png");
+            snaphotToggle.changeIcon("btnON.png");
         else
-            snaphotToggle.changeIcon("btn.png");
+            snaphotToggle.changeIcon("btnOFF.png");
     }
 
     private String toggleButtonLabel(boolean on){
         if(on)
-            return "btnStart.png";
-        return "btn.png";
+            return "btnON.png";
+        return "btnOFF.png";
     }
 }
