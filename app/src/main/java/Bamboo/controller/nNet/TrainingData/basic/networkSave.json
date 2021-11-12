@@ -1,0 +1,1 @@
+{"layers":[{"layerType":"INPUT","width":91},{"layerType":"FULLY_CONNECTED","width":182,"activation":"RELU"},{"layerType":"FULLY_CONNECTED","width":182,"activation":"RELU"},{"layerType":"FULLY_CONNECTED","width":182,"activation":"RELU"},{"layerType":"OUTPUT","width":91,"activation":"SOFTMAX"}],"lossFunction":"CROSS_ENTROPY","networkType":"FEEDFORWARD"}
