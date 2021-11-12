@@ -25,9 +25,6 @@ public class Game
         this.currentPlayer = settings.getCurrentPlayer();
         this.settings = settings;
 
-        if(grid.getSize() == 5)
-            LOG_MOVES = true;
-
         if(settings.tiles != null)
         {
             for(Vector v: settings.tiles.keySet())
@@ -125,7 +122,7 @@ public class Game
         LOG_MOVES = !LOG_MOVES;
     }
 
-    public boolean getLogMoves(){
+    public boolean loggingEnabled(){
         return LOG_MOVES;
     }
 }
