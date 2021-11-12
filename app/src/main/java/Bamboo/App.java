@@ -8,7 +8,7 @@ import java.io.IOException;
 public class App {
     // Test for CI/CD
     public static void main(String[] args) throws IOException {
-        if(true)
+        if(false)
             NetworkTraining.train();
         MainFrame frame = new MainFrame() ;
         frame.setVisible(true);

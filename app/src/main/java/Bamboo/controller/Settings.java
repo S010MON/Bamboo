@@ -23,17 +23,15 @@ public class Settings
         this.tiles = tiles;
     }
 
-    public void setCurrentPlayer(int tossCoin)
-    {
-        tossCoin = (int) ( Math.random() * 2 + 1);
-        if(tossCoin==1)
-            this.currentPlayer = player1;
-        if(tossCoin==2)
-            this.currentPlayer = player2;
-    }
-
     public Agent getCurrentPlayer()
     {
+        if(currentPlayer == null)
+        {
+            if (Math.random() > 0.5)
+                currentPlayer = player1;
+            else
+                currentPlayer = player2;
+        }
         return currentPlayer;
     }
 

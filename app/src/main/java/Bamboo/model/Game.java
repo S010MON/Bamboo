@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Game
 {
-    private boolean LOG_MOVES = true;
+    private boolean LOG_MOVES = false;
 
     private Grid grid;
     private Agent player1;
