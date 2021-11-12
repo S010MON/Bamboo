@@ -3,3 +3,10 @@
 
 # Ignore Gradle build output directory
 build
+
+# Ignore saved data
+app/src/main/java/saved/data.csv
+app/src/main/java/saved/data
+app/src/main/java/saved/moves
+
+
