@@ -36,14 +36,16 @@ public class NeuralNetwork implements Agent
     public NeuralNetwork(Color color) throws IOException {
         this.color = color;
         this.architecture = NetworkArchitecture.BASIC;
+        nNetSavePath = FilePath.getNNetPath("");
+        nNetSavePath = nNetSavePath.concat(NetworkArchitecture.getFolder(architecture)).concat(nNetSaveName);
         try{
-            nNetSavePath = FilePath.getNNetPath("");
-            nNetSavePath = nNetSavePath.concat(NetworkArchitecture.getFolder(architecture)).concat(nNetSaveName);
             this.neuralNet = (FeedForwardNetwork) FileIO.createFromJson(new File(nNetSavePath));
             NetworkManager.fillNN(this);
         }
         catch(IOException exception){
             exception.printStackTrace();
+            this.train();
+            NetworkManager.fillNN(this);
         }
     }
 
