@@ -31,18 +31,21 @@ public class NeuralNetwork implements Agent
     private NetworkArchitecture architecture;
     private Color color;
     private String nNetSaveName = "networkSave.json";
+    private String nNetSavePath = "";
 
     public NeuralNetwork(Color color) throws IOException {
         this.color = color;
         this.architecture = NetworkArchitecture.BASIC;
+        nNetSavePath = FilePath.getNNetPath("");
+        nNetSavePath = nNetSavePath.concat(NetworkArchitecture.getFolder(architecture)).concat(nNetSaveName);
         try{
-            String path = FilePath.getNNetPath("");
-            path = path.concat(NetworkArchitecture.getFolder(architecture)).concat(nNetSaveName);
-            this.neuralNet = (FeedForwardNetwork) FileIO.createFromJson(new File(path));
+            this.neuralNet = (FeedForwardNetwork) FileIO.createFromJson(new File(nNetSavePath));
             NetworkManager.fillNN(this);
         }
         catch(IOException exception){
             exception.printStackTrace();
+            this.train();
+            NetworkManager.fillNN(this);
         }
     }
 
@@ -111,7 +114,7 @@ public class NeuralNetwork implements Agent
             optimizeTrainer(neuralNet,testData);
             neuralNet.train(trainData);
             printMetrics(trainData,testData);
-            FileIO.writeToFileAsJson(neuralNet,FilePath.getNNetPath("networkSave.json"));
+            FileIO.writeToFileAsJson(neuralNet,nNetSavePath);
             NetworkManager.save(this);
         }
         catch (IOException e) { e.printStackTrace();}
@@ -182,9 +185,9 @@ public class NeuralNetwork implements Agent
         trainer.setOptimizer(OptimizerType.MOMENTUM);
         trainer.setShuffle(true);
         trainer.setTestSet(testDataSet);
-        trainer.setMaxEpochs(1);
+        trainer.setMaxEpochs(500);
         trainer.setEarlyStopping(true);
-        trainer.setEarlyStoppingPatience(15);
+        trainer.setEarlyStoppingPatience(10);
     }
 
     private void printMetrics(TabularDataSet trainData, TabularDataSet testData){

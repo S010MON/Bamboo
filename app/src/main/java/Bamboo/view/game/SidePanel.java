@@ -35,14 +35,16 @@ public class SidePanel extends JPanel
         panel.setBackground(Colour.background());
         panel.setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
-        Label toggleLabel = new Label("toggleLabel.png");
+
         Button quitButton = new Button("btnQuit.png");
         Button hintButton = new Button("btnHint.png") ;
         hintButton.addActionListener(e -> {
             canvas.changeHint();
             canvas.repaint();
         });
-        snaphotToggle = new Button(toggleButtonLabel(game.getLogMoves()));
+
+        Label toggleLabel = new Label("toggleLabel.png");
+        snaphotToggle = new Button(toggleButtonLabel(game.loggingEnabled()));
         snaphotToggle.addActionListener(e -> toggle());
         panel.add(toggleLabel, BorderLayout.SOUTH);
 
@@ -64,11 +66,12 @@ public class SidePanel extends JPanel
     private void toggle()
     {
         game.toggleLogging();
-        if(game.getLogMoves())
+        if(game.loggingEnabled())
             snaphotToggle.changeIcon("btnON.png");
         else
             snaphotToggle.changeIcon("btnOFF.png");
     }
+
     private String toggleButtonLabel(boolean on){
         if(on)
             return "btnON.png";
