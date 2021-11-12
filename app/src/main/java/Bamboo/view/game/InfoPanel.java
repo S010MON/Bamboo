@@ -56,12 +56,6 @@ public class InfoPanel extends JPanel
         playerDisplay.setFont(new Font("Monospaced", Font.PLAIN, 22));
         add(playerDisplay);
 
-        //snaphotToggle = new Button(toggleButtonLabel(game.getLogMoves()));
-        //snaphotToggle.setAlignmentX(0.5f);
-        //snaphotToggle.setFont(new Font("Monospaced", Font.PLAIN, 22));
-        //add(snaphotToggle);
-        //snaphotToggle.addActionListener(e -> toggle());
-
         setVisible(true);
     }
 
