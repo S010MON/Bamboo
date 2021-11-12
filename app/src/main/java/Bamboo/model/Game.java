@@ -38,8 +38,6 @@ public class Game
     {
         if(grid.isLegalMove(v, currentPlayer.getColor()))
         {
-            grid.setTile(v, currentPlayer.getColor());
-
             if(LOG_MOVES)
             {
                 int[] X = DataManager.flatten(grid, currentPlayer.getColor());
@@ -47,7 +45,9 @@ public class Game
                 String data = DataManager.concatToCSV(X, Y);
                 Logger.logCSV("data.csv", data);
             }
-            
+
+            grid.setTile(v, currentPlayer.getColor());
+
             toggleTurn();
         }
         if(grid.isFinished(currentPlayer.getColor()))
