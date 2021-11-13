@@ -12,7 +12,7 @@ import java.awt.event.MouseMotionListener;
 
 public class RollOverListener implements MouseMotionListener
 {
-    private Tile rolledOverTile = null;
+    private Tile rolledOverTile = null ;
 
     private Game game;
     private Canvas canvas;
@@ -40,14 +40,13 @@ public class RollOverListener implements MouseMotionListener
                     && Y > (y - r / 2)
                     && Y < (y + r / 2)) {
 
+                if(tile.getVector().getX()!=0||tile.getVector().getY()!=0||tile.getVector().getZ()!=0)
                 rolledOverTile = tile;
+
                 canvas.repaint();
                 break ;
             } else {
-                tile.setOutline(Color.black);
-                tile.setCircle_thickness(new BasicStroke(3));
                 rolledOverTile = null ;
-
                 canvas.repaint();
             }
         }

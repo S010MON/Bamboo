@@ -48,6 +48,7 @@ public class TileClickListener implements MouseListener
                         tile.color();
                     }
                 }
+
             }
 
             if(game.nextPlayerAI())
