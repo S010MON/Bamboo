@@ -1,4 +1,4 @@
-package Bamboo.controller.MiniMax;
+package Bamboo.controller.miniMax;
 
 import Bamboo.controller.Agent;
 import Bamboo.controller.Vector;

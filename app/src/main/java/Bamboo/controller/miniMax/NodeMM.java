@@ -1,4 +1,4 @@
-package Bamboo.controller.MiniMax;
+package Bamboo.controller.miniMax;
 
 import java.util.ArrayList;
 import Bamboo.controller.*;

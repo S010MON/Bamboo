@@ -25,6 +25,10 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.0-jre'
+
+    // https://mvnrepository.com/artifact/com.deepnetts/deepnetts-core
+    implementation group: 'com.deepnetts', name: 'deepnetts-core', version: '1.13.0'
+
 }
 
 application {

@@ -3,7 +3,6 @@ package Bamboo.view.game;
 import Bamboo.model.Game;
 import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.Label;
-import Bamboo.view.resources.Button;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -20,7 +19,6 @@ public class InfoPanel extends JPanel
 
     private Label playerLabel;
     private JLabel playerDisplay;
-    private Button snaphotToggle;
 
     private Game game;
 
@@ -58,12 +56,6 @@ public class InfoPanel extends JPanel
         playerDisplay.setFont(new Font("Monospaced", Font.PLAIN, 22));
         add(playerDisplay);
 
-        snaphotToggle = new Button(toggleButtonLabel(game.getLogMoves()));
-        snaphotToggle.setAlignmentX(0.5f);
-        snaphotToggle.setFont(new Font("Monospaced", Font.PLAIN, 22));
-        add(snaphotToggle);
-        snaphotToggle.addActionListener(e -> toggle());
-
         setVisible(true);
     }
 
@@ -74,18 +66,5 @@ public class InfoPanel extends JPanel
         playerDisplay.setText(name);
     }
 
-    private void toggle()
-    {
-        game.toggleLogging();
-        if(game.getLogMoves())
-            snaphotToggle.changeIcon("btnStart.png");
-        else
-            snaphotToggle.changeIcon("btn.png");
-    }
 
-    private String toggleButtonLabel(boolean on){
-        if(on)
-            return "btnStart.png";
-        return "btn.png";
-    }
 }

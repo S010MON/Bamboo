@@ -8,6 +8,7 @@ import Bamboo.model.Tile;
 import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.ResourceLoader;
 
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.*;
@@ -40,7 +41,6 @@ public class Canvas extends JPanel
         addMouseListener(new TileClickListener(game, this));
         rollOverListener = new RollOverListener(game, this);
         addMouseMotionListener(rollOverListener);
-        
         images.put(Color.RED, ResourceLoader.getImage("red_circle.png"));
         images.put(Color.BLUE, ResourceLoader.getImage("blue_circle.png"));
         images.put(Color.WHITE,ResourceLoader.getImage("white_circle.png"));
@@ -63,13 +63,14 @@ public class Canvas extends JPanel
         setBackground(background);
     }
 
-    private void paintGrid(Graphics2D g2d) {
-        for (Tile tile : game.getAllTiles()) {
-
+    private void paintGrid(Graphics2D g2d) 
+    {
+        for (Tile tile : game.getAllTiles()) 
+        {
             colorTile(tile, tile.getColour(), g2d);
 
-            if (hint) {
-
+            if (hint) 
+            {
                 colorLegalTiles(tile, g2d);
             }
         }

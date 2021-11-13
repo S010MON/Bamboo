@@ -1,5 +1,6 @@
 package Bamboo.view.game;
 
+import Bamboo.controller.Agent;
 import Bamboo.model.Game;
 
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ public class TimerListener implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        if(!game.getCurrentPlayer().isHuman())
         game.placeNextAt(game.getCurrentPlayer().getNextMove(game));
         canvas.repaint();
     }

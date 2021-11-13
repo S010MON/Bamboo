@@ -1,7 +1,7 @@
 package Bamboo;
 
-import Bamboo.controller.MiniMax.MiniMax;
-import Bamboo.controller.MiniMax.NodeMM;
+import Bamboo.controller.miniMax.MiniMax;
+import Bamboo.controller.miniMax.NodeMM;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 import org.junit.jupiter.api.Test;

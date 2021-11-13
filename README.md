@@ -1,4 +1,6 @@
-![workflow](https://github.com/S010MON/Bamboo/actions/workflows/gradle_build.yml/badge.svg)
+![workflow](https://github.com/S010MON/Bamboo/actions/workflows/linux.yml/badge.svg)
+![workflow](https://github.com/S010MON/Bamboo/actions/workflows/windows.yml/badge.svg)
+![workflow](https://github.com/S010MON/Bamboo/actions/workflows/mac.yml/badge.svg)
 
 # Bamboo
 An implementation of the game originally desgined by Mark Steere in March 21

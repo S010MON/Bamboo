@@ -3,7 +3,6 @@ package Bamboo.model;
 import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 
 public class Game
@@ -26,9 +25,6 @@ public class Game
         this.currentPlayer = settings.getCurrentPlayer();
         this.settings = settings;
 
-        if(grid.getSize() == 5)
-            LOG_MOVES = true;
-
         if(settings.tiles != null)
         {
             for(Vector v: settings.tiles.keySet())
@@ -49,7 +45,7 @@ public class Game
                 int[] X = DataManager.flatten(grid, currentPlayer.getColor());
                 int[] Y = DataManager.oneHotEncode(grid.getSize(), v);
                 String data = DataManager.concatToCSV(X, Y);
-                Logger.logCSV("data", data);
+                Logger.logCSV("data.csv", data);
             }
             
             toggleTurn();
@@ -126,7 +122,7 @@ public class Game
         LOG_MOVES = !LOG_MOVES;
     }
 
-    public boolean getLogMoves(){
+    public boolean loggingEnabled(){
         return LOG_MOVES;
     }
 }
