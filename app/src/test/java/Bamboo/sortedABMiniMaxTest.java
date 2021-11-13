@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class sortedABMiniMaxTest {
     @Test void legalChildGeneration(){
@@ -82,10 +83,12 @@ public class sortedABMiniMaxTest {
         MiniMaxSortedAB agent = new MiniMaxSortedAB(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent.addLegalChildren(start,Color.BLUE);
-        int before = start.getChildren().size();
-        int after = start.getChildren().size();
-        System.out.println(before);
-        assertEquals(before,after);
+        NodeMM previuosChild = start.getChildren().get(0);
+        for(NodeMM child : start.getChildren()){
+            assertTrue(child.getGuess() <= previuosChild.getGuess());
+            previuosChild = child;
+        }
+
     }
 
     @Test void sortedNodesGuesses(){
