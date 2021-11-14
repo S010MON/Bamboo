@@ -79,6 +79,7 @@ public class Canvas extends JPanel
             if(!game.getGrid().isLegalMove(rollover.getVector(), color))
                 color = Color.GRAY;
 
+            colorTile(rollover, Color.WHITE, g2d);
             colorTile(rollover, color, g2d);
         }
     }
