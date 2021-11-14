@@ -58,7 +58,7 @@ public class MainFrame extends JFrame
                 "END GAME", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
                 options[1]);
         if (response == JOptionPane.NO_OPTION) {
-            endGame(currentGame.getCurrentPlayer());
+            endGame(currentGame.getNonCurrentPlayer());
         }
     }
 
