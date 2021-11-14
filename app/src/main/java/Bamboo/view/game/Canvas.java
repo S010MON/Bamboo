@@ -94,6 +94,7 @@ public class Canvas extends JPanel
                 }
             }
 
+            colorTile(rollover, Color.WHITE, g2d);
             colorTile(rollover, color, g2d);
         }
     }
