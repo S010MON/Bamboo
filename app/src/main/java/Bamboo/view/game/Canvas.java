@@ -18,16 +18,15 @@ import java.util.HashMap;
 
 public class Canvas extends JPanel
 {
-    private Game game;
-
-    private static int circle_radius = 50;
+    private static int circle_radius = 60;
     private static int centreX;
     private static int centreY;
     private int offsetX = 90;
     private int offsetY = 0;
-    private boolean hint ;
+    private boolean hint;
     private int demoDelay = 500;
 
+    private Game game;
     private Color background = Colour.background();
     private RollOverListener rollOverListener;
     private HashMap<Color, BufferedImage> images = new HashMap<>();
@@ -39,18 +38,19 @@ public class Canvas extends JPanel
         centreX = (screenSize.width/2) - circle_radius - offsetX;
         centreY = (screenSize.height/2) - circle_radius - offsetY;
         setSize(screenSize.width, screenSize.height);
+
         addMouseListener(new TileClickListener(game, this));
         rollOverListener = new RollOverListener(game, this);
         addMouseMotionListener(rollOverListener);
 
-        images.put(Color.RED, ResourceLoader.getImage("red_circle.png"));
-        images.put(Color.BLUE, ResourceLoader.getImage("blue_circle.png"));
+        images.put(Color.RED, ResourceLoader.getImage("red.png"));
+        images.put(Color.BLUE, ResourceLoader.getImage("blue.png"));
         images.put(Color.WHITE,ResourceLoader.getImage("white_circle.png"));
         images.put(Color.GREEN,ResourceLoader.getImage("green_circle.png"));
         images.put(Color.GRAY,ResourceLoader.getImage("gray_circle.png"));
 
-        Timer timer2 = new Timer(demoDelay, new TimerListener(game, this));
-        timer2.start();
+        Timer timer = new Timer(demoDelay, new TimerListener(game, this));
+        timer.start();
     }
 
     @Override
@@ -79,7 +79,6 @@ public class Canvas extends JPanel
             if(!game.getGrid().isLegalMove(rollover.getVector(), color))
                 color = Color.GRAY;
 
-            colorTile(rollover, Color.WHITE, g2d);
             colorTile(rollover, color, g2d);
         }
     }
@@ -127,7 +126,7 @@ public class Canvas extends JPanel
         hint = !hint;
     }
 
-    public void changeHintToFalse()
+    public void setHintFalse()
     {
         hint = false;
     }
