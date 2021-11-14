@@ -73,7 +73,7 @@ public class MainFrame extends JFrame
     /** All frame settings detailed here */
     private void buildFrame()
     {
-        screenSize = new Dimension(1000, 900);
+        screenSize = new Dimension(800, 700);
         setTitle("Bamboo");
         setSize(screenSize);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -56,15 +56,15 @@ public class SettingsPanel extends JPanel
         slider.setLabelTable(buildHashtableOfPositions());
 
         Button multiBtn = new Button("btnMulti.png");
-        multiBtn.setBounds(150, 50, 145, 55);
+        multiBtn.setBounds(100, 50, 145, 55);
         multiBtn.addActionListener(e -> selectMulti());
 
         Button singleBtn = new Button("btnSingle.png");
-        singleBtn.setBounds(300, 50, 145, 55);
+        singleBtn.setBounds(250, 50, 145, 55);
         singleBtn.addActionListener(e -> selectSingle());
 
         Button demoBtn = new Button("btnDemo.png");
-        demoBtn.setBounds(450, 50, 145, 55);
+        demoBtn.setBounds(400, 50, 145, 55);
         demoBtn.addActionListener(e -> selectDemo());
 
         buttonPanel.add(multiBtn);

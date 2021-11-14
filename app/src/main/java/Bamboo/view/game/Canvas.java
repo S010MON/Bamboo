@@ -18,10 +18,10 @@ import java.util.HashMap;
 
 public class Canvas extends JPanel
 {
-    private static int circle_radius = 70;
+    private static int circle_radius = 55;
     private static int centreX;
     private static int centreY;
-    private int offsetX = 80;
+    private int offsetX = 70;
     private int offsetY = 0;
     private boolean hint;
     private int demoDelay = 500;
