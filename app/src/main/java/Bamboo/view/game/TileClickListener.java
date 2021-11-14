@@ -4,9 +4,7 @@ import Bamboo.controller.AxialVector;
 import Bamboo.controller.VectorConverter;
 import Bamboo.model.Game;
 import Bamboo.model.Tile;
-import Bamboo.view.game.Canvas;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -39,7 +37,7 @@ public class TileClickListener implements MouseListener
                         && e.getY() > (y - r / 2)
                         && e.getY() < (y + r / 2)) {
                     if (game.getGrid().isLegalMove(tile.getVector(),game.getCurrentPlayer().getColor())) {
-                        canvas.changeHintToFalse();
+                        canvas.setHintFalse();
                     }
                     game.placeNextAt(tile.getVector());
                     canvas.repaint();
