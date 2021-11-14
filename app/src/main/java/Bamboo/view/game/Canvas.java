@@ -18,10 +18,10 @@ import java.util.HashMap;
 
 public class Canvas extends JPanel
 {
-    private static int circle_radius = 60;
+    private static int circle_radius = 70;
     private static int centreX;
     private static int centreY;
-    private int offsetX = 90;
+    private int offsetX = 80;
     private int offsetY = 0;
     private boolean hint;
     private int demoDelay = 500;
@@ -45,9 +45,9 @@ public class Canvas extends JPanel
 
         images.put(Color.RED, ResourceLoader.getImage("red.png"));
         images.put(Color.BLUE, ResourceLoader.getImage("blue.png"));
-        images.put(Color.WHITE,ResourceLoader.getImage("white_circle.png"));
-        images.put(Color.GREEN,ResourceLoader.getImage("green_circle.png"));
-        images.put(Color.GRAY,ResourceLoader.getImage("gray_circle.png"));
+        images.put(Color.WHITE,ResourceLoader.getImage("white.png"));
+        images.put(Color.GREEN,ResourceLoader.getImage("green.png"));
+        images.put(Color.GRAY,ResourceLoader.getImage("grey.png"));
 
         Timer timer = new Timer(demoDelay, new TimerListener(game, this));
         timer.start();
@@ -91,9 +91,7 @@ public class Canvas extends JPanel
         int y = centreY + (v.getR() * circle_radius/2);
 
         if(game.getGrid().isLegalMove(tile.getVector(), game.getCurrentPlayer().getColor()))
-            g2d.drawImage(images.get(Color.GREEN),x+3,y+3,circle_radius-6,circle_radius-6,null);
-        else if(tile.getColour() == Color.WHITE)
-            g2d.drawImage(images.get(Color.GRAY), x, y, circle_radius, circle_radius, null);
+            g2d.drawImage(images.get(Color.GREEN),x,y,circle_radius,circle_radius,null);
     }
 
     private void colorTile(Tile tile, Color color, Graphics2D g2d)
