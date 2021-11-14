@@ -16,6 +16,7 @@ public class MainFrame extends JFrame
     private Component currentPanel = null;
     private Dimension screenSize;
     private Game currentGame;
+    private Component gamePanel ;
 
     public MainFrame()
     {
@@ -36,7 +37,7 @@ public class MainFrame extends JFrame
     {
         removeCurrentPanel();
         currentGame = new Game(settings, this);
-        Component gamePanel = new GamePanel(screenSize, currentGame, this);
+        gamePanel = new GamePanel(screenSize, currentGame, this);
         add(gamePanel);
         currentPanel = gamePanel;
     }
@@ -124,4 +125,7 @@ public class MainFrame extends JFrame
             panel.updateSidePanel();
         }
     }
+    public GamePanel getgamePanel(){
+        return (GamePanel) gamePanel ;
+}
 }

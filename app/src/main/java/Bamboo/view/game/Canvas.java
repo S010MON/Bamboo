@@ -31,6 +31,7 @@ public class Canvas extends JPanel
     private int offsetY = 0;
     private boolean hint ;
     private int demoDelay = 1000;
+    private Timer timer2 ;
 
     public Tile previous_rollover = new Tile(new Vector(0,0,0));
     private Color background = Colour.background();
@@ -50,8 +51,8 @@ public class Canvas extends JPanel
         images.put(Color.RED, ResourceLoader.getImage("red_circle.png"));
         images.put(Color.BLUE, ResourceLoader.getImage("blue_circle.png"));
         images.put(Color.WHITE,ResourceLoader.getImage("white_circle.png"));
-        Timer timer2 = new Timer(demoDelay, new TimerListener(game, this));
-        timer2.start();
+        timer2 = new Timer(demoDelay, new TimerListener(game, this));
+        timer2.restart();
     }
 
     @Override
@@ -111,6 +112,7 @@ public class Canvas extends JPanel
             g2d.setColor(tile.getOutline());
             g2d.drawOval(x, y, circle_radius, circle_radius);
         }
+
     }
 
     public static int getCircle_radius() {
@@ -147,6 +149,7 @@ public class Canvas extends JPanel
         else
             hint = false;
     }
+    public Timer getTimer2(){ return timer2 ; }
 
     public void changeHintToFalse(){
         hint = false ;
