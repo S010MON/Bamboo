@@ -18,7 +18,7 @@ public class Game
     private Agent currentPlayer;
     private MainFrame view;
     private Settings settings;
-    private boolean checkFinished;
+    private boolean checkFinish=false;
 
     public Game(Settings settings, MainFrame view)
     {
@@ -28,7 +28,7 @@ public class Game
         this.view = view;
         this.currentPlayer = settings.getCurrentPlayer();
         this.settings = settings;
-        checkFinished=false ;
+
 
 
         if(settings.tiles != null)
@@ -57,31 +57,27 @@ public class Game
             toggleTurn();
         }
         if(grid.isFinished(getCurrentPlayer().getColor())) {
-            if (isAgentVsAgent()) {
-                {
 
+            if (checkFinish) {
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception ignored) {
+                }
+                view.getgamePanel().getCanvas().getTimer().stop();
+                view.gameOverOption(this);
+            }
+            checkFinish = true;
 
-                    if (checkFinished) {
-                        view.getgamePanel().getCanvas().getTimer().stop();
-                        try {
-                            Thread.sleep(2000);
-                        } catch (Exception ignored) {
-                        }
-                        view.gameOverOption(this);
-                    }
-                    checkFinished = true;
+            if (!isAgentVsAgent()) {
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception ignored) {
 
                 }
-
+                view.gameOverOption(this);
             }
-            try {
-                Thread.sleep(2000);
-            } catch (Exception ignored) {
-            }
-            view.gameOverOption(this);
         }
     }
-
     public int getNumberOfGroupsForPlayer(Agent player)
     {
             return grid.getAllGroupsOfColour(player.getColor()).size();
