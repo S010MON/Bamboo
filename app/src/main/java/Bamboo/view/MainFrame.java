@@ -16,6 +16,7 @@ public class MainFrame extends JFrame
     private Component currentPanel = null;
     private Dimension screenSize;
     private Game currentGame;
+    private Component gamePanel ;
 
     public MainFrame()
     {
@@ -36,7 +37,7 @@ public class MainFrame extends JFrame
     {
         removeCurrentPanel();
         currentGame = new Game(settings, this);
-        Component gamePanel = new GamePanel(screenSize, currentGame, this);
+        gamePanel = new GamePanel(screenSize, currentGame, this);
         add(gamePanel);
         currentPanel = gamePanel;
     }
@@ -53,11 +54,11 @@ public class MainFrame extends JFrame
     {
         Object[] options = {"Yes","No"};
 
-        int response = JOptionPane.showOptionDialog(this, "Do you want to go back to the game? ",
+        int response = JOptionPane.showOptionDialog(this, game.getNonCurrentPlayer().getName() + " won. Do you want to go back to the game?",
                 "END GAME", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
                 options[1]);
         if (response == JOptionPane.NO_OPTION) {
-            endGame(currentGame.getCurrentPlayer());
+            endGame(game.getNonCurrentPlayer());
         }
     }
 
@@ -124,4 +125,7 @@ public class MainFrame extends JFrame
             panel.updateSidePanel();
         }
     }
+    public GamePanel getgamePanel(){
+        return (GamePanel) gamePanel ;
+}
 }

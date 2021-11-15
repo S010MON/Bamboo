@@ -42,15 +42,11 @@ public class Canvas extends JPanel
         addMouseListener(new TileClickListener(game, this));
         rollOverListener = new RollOverListener(game, this);
         addMouseMotionListener(rollOverListener);
-
         images.put(Color.RED, ResourceLoader.getImage("red.png"));
         images.put(Color.BLUE, ResourceLoader.getImage("blue.png"));
         images.put(Color.WHITE,ResourceLoader.getImage("white.png"));
         images.put(Color.GREEN,ResourceLoader.getImage("green.png"));
         images.put(Color.GRAY,ResourceLoader.getImage("grey.png"));
-
-        Timer timer = new Timer(demoDelay, new TimerListener(game, this));
-        timer.start();
     }
 
     @Override
@@ -89,7 +85,6 @@ public class Canvas extends JPanel
         v = VectorConverter.doubleAndOffsetOddRows(v);
         int x = centreX + (v.getQ() * circle_radius/2);
         int y = centreY + (v.getR() * circle_radius/2);
-
         if(game.getGrid().isLegalMove(tile.getVector(), game.getCurrentPlayer().getColor()))
             g2d.drawImage(images.get(Color.GREEN),x,y,circle_radius,circle_radius,null);
     }

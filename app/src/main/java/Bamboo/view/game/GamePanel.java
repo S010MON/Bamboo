@@ -29,6 +29,8 @@ public class GamePanel extends JPanel
         setVisible(true);
     }
 
+    public Canvas getCanvas(){ return canvas ; }
+
     public void updateSidePanel()
     {
         sidePanel.updateInfo();
