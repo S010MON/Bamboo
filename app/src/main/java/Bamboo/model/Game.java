@@ -57,7 +57,6 @@ public class Game
         if(grid.isFinished(getCurrentPlayer().getColor()))
         {
             try {Thread.sleep(2000); } catch (Exception ignored){}
-            view.getgamePanel().getCanvas().getTimer2().stop();
             view.gameOverOption(this);
         }
     }
