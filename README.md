@@ -23,7 +23,7 @@ A copy of the rules, with figures can be found here: http://www.marksteeregames.
 <br/>
 
 ## Installation Instructions
-Clone the source code repository and navigate to /Bamboo then run:
+Clone the source code repository and navigate to `/Bamboo` then run:
 
     $ gradle build
     
