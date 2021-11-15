@@ -47,6 +47,9 @@ public class Canvas extends JPanel
         images.put(Color.WHITE,ResourceLoader.getImage("white.png"));
         images.put(Color.GREEN,ResourceLoader.getImage("green.png"));
         images.put(Color.GRAY,ResourceLoader.getImage("grey.png"));
+
+        Timer timer = new Timer(demoDelay, new TimerListener(game,this));
+        timer.start();
     }
 
     @Override

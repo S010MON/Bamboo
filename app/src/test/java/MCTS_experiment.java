@@ -3,18 +3,19 @@ import Bamboo.controller.MCTS.UCB;
 import Bamboo.model.GameWithoutGUI;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MCTS_experiment
 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // I think these are the good values you just have to run it, the n*n matrix will contains average of the wins
         // Maybe check the code before to see if there is no error left :)
         double startC = 0.2;
         double stepSize = 0.05;
         double maxC = 0.8;
-        int replications = 100;
+        int replications = 1;
         int startIterations = 1;
         int iterationStep = 250;
         int maxIterations = 1001;
