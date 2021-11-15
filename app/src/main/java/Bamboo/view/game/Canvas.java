@@ -24,6 +24,7 @@ public class Canvas extends JPanel
     private int offsetX = 70;
     private int offsetY = 0;
     private boolean hint;
+    private Timer timer;
     private int demoDelay = 500;
 
     private Game game;
@@ -48,7 +49,7 @@ public class Canvas extends JPanel
         images.put(Color.GREEN,ResourceLoader.getImage("green.png"));
         images.put(Color.GRAY,ResourceLoader.getImage("grey.png"));
 
-        Timer timer = new Timer(demoDelay, new TimerListener(game,this));
+        timer = new Timer(demoDelay, new TimerListener(game,this));
         timer.start();
     }
 
@@ -126,5 +127,7 @@ public class Canvas extends JPanel
     {
         hint = false;
     }
+
+    public Timer getTimer(){return timer ; }
 }
 

@@ -2,6 +2,7 @@ package Bamboo.model;
 
 import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
+import Bamboo.view.game.GamePanel;
 import Bamboo.view.game.TimerListener;
 
 import javax.swing.*;
@@ -17,7 +18,7 @@ public class Game
     private Agent currentPlayer;
     private MainFrame view;
     private Settings settings;
-    private Timer timer ;
+    private boolean checkFinished;
 
     public Game(Settings settings, MainFrame view)
     {
@@ -27,6 +28,7 @@ public class Game
         this.view = view;
         this.currentPlayer = settings.getCurrentPlayer();
         this.settings = settings;
+        checkFinished=false ;
 
 
         if(settings.tiles != null)
@@ -54,9 +56,28 @@ public class Game
 
             toggleTurn();
         }
-        if(grid.isFinished(getCurrentPlayer().getColor()))
-        {
-            try {Thread.sleep(2000); } catch (Exception ignored){}
+        if(grid.isFinished(getCurrentPlayer().getColor())) {
+            if (isAgentVsAgent()) {
+                {
+
+
+                    if (checkFinished) {
+                        view.getgamePanel().getCanvas().getTimer().stop();
+                        try {
+                            Thread.sleep(2000);
+                        } catch (Exception ignored) {
+                        }
+                        view.gameOverOption(this);
+                    }
+                    checkFinished = true;
+
+                }
+
+            }
+            try {
+                Thread.sleep(2000);
+            } catch (Exception ignored) {
+            }
             view.gameOverOption(this);
         }
     }
@@ -130,6 +151,5 @@ public class Game
         return LOG_MOVES;
     }
 
-    public Timer getTimer(){return timer ; }
 }
 
