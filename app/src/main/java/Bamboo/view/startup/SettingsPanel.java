@@ -32,8 +32,7 @@ public class SettingsPanel extends JPanel
 
         multiConfigurationPanel = new MultiConfigurationPanel();
         singleConfigurationPanel = new SingleConfigurationPanel();
-        demoConfigurationPanel = new DemoConfigurationPanel() ;
-
+        demoConfigurationPanel = new DemoConfigurationPanel();
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
