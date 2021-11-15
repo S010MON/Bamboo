@@ -2,6 +2,7 @@ package Bamboo.controller.nNet;
 
 import Bamboo.controller.*;
 import Bamboo.model.Game;
+import Bamboo.model.GameWithoutGUI;
 import Bamboo.model.Grid;
 import Bamboo.model.GridGraphImp;
 import deepnetts.data.DataSets;
@@ -81,7 +82,22 @@ public class NeuralNetwork implements Agent
         for(int i = 0; i < input.length; i++)
             floatInputs[i] = (float)input[i];
         float[] output = neuralNet.predict(floatInputs);
-        Vector move = getMoveFromPrediction(output,game);
+        Vector move = getMoveFromPrediction(output,game.getGrid());
+        if(grid.isLegalMove(move,color))
+            System.out.println("NNet chooses move " + move + " at probability " + maximum(output));
+        return move;
+    }
+
+    @Override
+    public Vector getNextMove(GameWithoutGUI game)
+    {
+        Grid grid = game.getGrid();
+        int[] input = DataManager.flatten(grid,color);
+        float[] floatInputs = new float[input.length];
+        for(int i = 0; i < input.length; i++)
+            floatInputs[i] = (float)input[i];
+        float[] output = neuralNet.predict(floatInputs);
+        Vector move = getMoveFromPrediction(output,game.getGrid());
         if(grid.isLegalMove(move,color))
             System.out.println("NNet chooses move " + move + " at probability " + maximum(output));
         return move;
@@ -133,8 +149,7 @@ public class NeuralNetwork implements Agent
         dataSet.setColumns(cols);
     }
 
-    Vector getMoveFromPrediction(float[] prediction,Game game){
-        Grid grid = game.getGrid();
+    Vector getMoveFromPrediction(float[] prediction,Grid grid){
         ArrayList<Vector> vectors = new ArrayList<Vector>(grid.getAllVectors());
         int iterator = 0;
         int bestID = 0;

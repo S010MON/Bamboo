@@ -3,6 +3,7 @@ package Bamboo.controller.random;
 import Bamboo.controller.Agent;
 import Bamboo.controller.Vector;
 import Bamboo.model.Game;
+import Bamboo.model.GameWithoutGUI;
 import Bamboo.model.Tile;
 
 import java.awt.*;
@@ -42,6 +43,31 @@ public class Random implements Agent
     {
         // Add a delay to the random algorithm
         try {Thread.sleep(100); } catch (Exception exception){}
+
+        Stack<Vector> stack = new Stack<>();
+        for(Tile t: game.getAllTiles())
+        {
+            if(!t.isCouloured())
+                stack.add(t.getVector());
+        }
+        Collections.shuffle(stack);
+
+        boolean found = false;
+        Vector v = null;
+        while(!found)
+        {
+            v = stack.pop();
+            if(game.getGrid().isLegalMove(v, game.getCurrentPlayer().getColor()))
+                found = true;
+        }
+        return v;
+    }
+
+    @Override
+    public Vector getNextMove(GameWithoutGUI game)
+    {
+        // Add a delay to the random algorithm
+        try {Thread.sleep(10); } catch (Exception exception){}
 
         Stack<Vector> stack = new Stack<>();
         for(Tile t: game.getAllTiles())
