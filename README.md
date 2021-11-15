@@ -22,6 +22,13 @@ A copy of the rules, with figures can be found here: http://www.marksteeregames.
 
 <br/>
 
+## Dependencies
+Ensure the following are installed before running:
+- Java 16 or later
+- Gradle 7.1
+
+<br/>
+
 ## Installation Instructions
 Clone the source code repository and navigate to `/Bamboo` then run:
 
@@ -29,10 +36,5 @@ Clone the source code repository and navigate to `/Bamboo` then run:
     
     $ gradle run
 
-<br/>
 
-## Dependencies
-Ensure the following are installed before running:
-- Java 16 or later
-- Gradle 7.1
 
