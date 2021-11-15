@@ -17,7 +17,6 @@ public class Game
     private Agent currentPlayer;
     private MainFrame view;
     private Settings settings;
-    private boolean checkFinish=false ;
     private Timer timer ;
 
     public Game(Settings settings, MainFrame view)
@@ -57,12 +56,9 @@ public class Game
         }
         if(grid.isFinished(getCurrentPlayer().getColor()))
         {
-            if(checkFinish){
             try {Thread.sleep(2000); } catch (Exception ignored){}
             view.getgamePanel().getCanvas().getTimer2().stop();
             view.gameOverOption(this);
-            }
-            checkFinish=true ;
         }
     }
 
@@ -135,14 +131,6 @@ public class Game
         return LOG_MOVES;
     }
 
-    public boolean getCheckIsFinished(){
-        return checkFinish ;
-}
-
-    public void setCheckIsFinished(boolean a) {
-        checkFinish = a;
-    }
-
-public Timer getTimer(){return timer ; }
+    public Timer getTimer(){return timer ; }
 }
 

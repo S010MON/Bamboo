@@ -54,11 +54,11 @@ public class MainFrame extends JFrame
     {
         Object[] options = {"Yes","No"};
 
-        int response = JOptionPane.showOptionDialog(this, "Do you want to go back to the game? ",
+        int response = JOptionPane.showOptionDialog(this, game.getNonCurrentPlayer().getName() + "won. Do you want to go back to the game?",
                 "END GAME", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
                 options[1]);
         if (response == JOptionPane.NO_OPTION) {
-            endGame(currentGame.getNonCurrentPlayer());
+            endGame(game.getNonCurrentPlayer());
         }
     }
 
