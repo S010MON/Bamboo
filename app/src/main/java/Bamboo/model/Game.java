@@ -18,7 +18,6 @@ public class Game
     private Agent currentPlayer;
     private MainFrame view;
     private Settings settings;
-    private boolean checkFinish=false;
     private boolean alreadypopup=false ;
 
     public Game(Settings settings, MainFrame view)
@@ -58,58 +57,7 @@ public class Game
             toggleTurn();
         }
         if(grid.isFinished(getCurrentPlayer().getColor())) {
-
-            if (isAgentVsAgent()) {
-                if (checkFinish) {
-
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception ignored) {
-                    }
-                    view.getgamePanel().getCanvas().getTimer().stop();
-                    view.gameOverOption(this);
-                }
-                checkFinish = true;
-
-            }
-
-            if (isAgentvsHuman()) {
-                if (currentPlayer.isHuman()) {
-                    try {
-                        Thread.sleep(2000);
-                    } catch (Exception ignored) {
-
-                    }
-                    if(!alreadypopup)
-                        view.gameOverOption(this);
-                    alreadypopup=true ;
-                }
-
-                if (!currentPlayer.isHuman()) {
-                    if (checkFinish) {
-
-                        try {
-                            Thread.sleep(2000);
-                        } catch (Exception ignored) {
-                        }
-                    }
-                    view.getgamePanel().getCanvas().getTimer().stop();
-                    if(!alreadypopup)
-                        view.gameOverOption(this);
-                    alreadypopup=true ;
-                }
-
-                checkFinish = true;
-            }
-
-            if(isHumanvsHuman()){
-
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception ignored) {
-                }
-                view.gameOverOption(this);
-            }
+            showGameOverDialog();
         }
 
     }
@@ -161,14 +109,15 @@ public class Game
         return settings;
     }
 
-    public boolean isAgentVsAgent()
-    {
-        return (!player1.isHuman() && !player2.isHuman());
+    private void showGameOverDialog(){
+        try {
+            Thread.sleep(1000);
+        } catch (Exception ignored) {
+        }
+        if(!alreadypopup)
+            view.gameOverOption(this);
+        alreadypopup=true ;
     }
-
-    public boolean isAgentvsHuman(){return ((!player1.isHuman()&&player2.isHuman())||(player1.isHuman()&&!player2.isHuman()));}
-
-    public boolean isHumanvsHuman(){return (player1.isHuman()&&player2.isHuman());}
 
     private void toggleTurn()
     {
