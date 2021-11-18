@@ -11,7 +11,8 @@ public class MCTS implements Agent
 {
     private Color colour;
     private NodeMCTS root;
-    private int iterations = 10000;
+    public static int iterations = 10000;
+    public static float c = 0.5f;
 
     public MCTS(Color colour)
     {

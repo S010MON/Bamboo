@@ -4,6 +4,7 @@ import Bamboo.controller.Agent;
 import Bamboo.controller.Settings;
 import Bamboo.controller.Vector;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,18 @@ public class GameWithoutGUI {
     public GameWithoutGUI(Settings settings){
         a1 = settings.player1;
         a2 = settings.player2;
-        currentPlayer = a1;
+        currentPlayer = settings.getCurrentPlayer();
+        grid = new GridGraphImp(settings.boardSize);
+        remainingTiles = new ArrayList<>(grid.getAllTiles());
+    }
+
+    public GameWithoutGUI(Settings settings, Color startingPlayer){
+        a1 = settings.player1;
+        a2 = settings.player2;
+        if(a1.getColor() == startingPlayer)
+            currentPlayer = a1;
+        else
+            currentPlayer = a2;
         grid = new GridGraphImp(settings.boardSize);
         remainingTiles = new ArrayList<>(grid.getAllTiles());
     }

@@ -13,4 +13,6 @@ public interface Agent
     Vector getNextMove(Game game);
     Vector getNextMove(GameWithoutGUI game) ;
     Color getColor();
+    float variable1 = 0;
+    float variable2 = 0;
 }
