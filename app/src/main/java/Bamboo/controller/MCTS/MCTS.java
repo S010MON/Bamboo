@@ -1,6 +1,7 @@
 package Bamboo.controller.MCTS;
 
 import Bamboo.controller.Agent;
+import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
 import Bamboo.model.Game;
 import Bamboo.model.GameWithoutGUI;
@@ -11,8 +12,8 @@ public class MCTS implements Agent
 {
     private Color colour;
     private NodeMCTS root;
-    public static int iterations = 10000;
-    public static float c = 0.5f;
+    public static Mutable<Integer> iterations = new Mutable<>(10000);
+    public static Mutable<Float> c = new Mutable<>(0.5f);
 
     public MCTS(Color colour)
     {
@@ -39,7 +40,7 @@ public class MCTS implements Agent
     public Vector getNextMove(Game game)
     {
         root = new NodeMCTS(game.getGrid(), null, game.getCurrentPlayer().getColor(), null);
-        for(int i = 0; i < iterations; i++)
+        for(int i = 0; i < iterations.get(); i++)
         {
             NodeMCTS next = root.select();
             root.expand(next);

@@ -1,6 +1,7 @@
 package Bamboo.controller.miniMax;
 
 import Bamboo.controller.Agent;
+import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 
@@ -12,7 +13,7 @@ public class MiniMaxSortedAB implements Agent {
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
     int totalEvaluations;
-    public static int depth;
+    public static Mutable<Integer> depth = new Mutable<>(1);
 
 
     public MiniMaxSortedAB(Color color){
@@ -46,9 +47,9 @@ public class MiniMaxSortedAB implements Agent {
         else{
             updateUncoloredVectors(game.getGrid());
         }
-        depth = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
+        depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
         NodeMM start = new NodeMM(game.getGrid());
-        return minimaxMove(start, depth, this.color);
+        return minimaxMove(start, depth.get(), this.color);
     }
 
     @Override

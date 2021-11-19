@@ -1,12 +1,14 @@
 package Bamboo.controller.MCTS;
 
+import Bamboo.controller.Mutable;
+
 public class UCB
 {
 
     public static double C = 0.5;
     public static double calculate(int wins, int plays, int n_p, int n_c)
     {
-        C = MCTS.c;
+        C = MCTS.c.get();
         double x_bar;
         if(plays == 0)
             x_bar = 1;

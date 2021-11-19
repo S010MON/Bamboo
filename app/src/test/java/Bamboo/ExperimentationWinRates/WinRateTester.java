@@ -28,6 +28,7 @@ public class WinRateTester {
     public WinRateTester(AgentType agent, int size) throws IOException {
         player1 = AgentFactory.makeAgent(agent,Color.RED);
         assignIterators(agent);
+        System.out.println(variable1.getReference() + " is reference on construction");
         player2 = AgentFactory.makeAgent(RANDOM, Color.BLUE);
         boardSize = size;
     }
@@ -41,18 +42,26 @@ public class WinRateTester {
     public void resetStartingColor(){startingColor = Color.WHITE;}
 
     public float[][] runExperiment(){
-        float[][] array;
+        float[][] array = new float[variable1.getArrayBounds()][variable2.getArrayBounds()];
+        System.out.println("Array Rows: " + variable1.getArrayBounds());
+        System.out.println("Array cols: " + variable2.getArrayBounds());
         if(!variable1.isEmpty()){
             int rowID = 0;
-            if(!variable2.isEmpty()){
-
-            }
-            else{
-                for(float i = variable1.getStart(); i < variable1.getEnd(); i += variable1.getStep()){
-                    variable1.setReference();
-                    array[rowID][0] =
-                    rowID++;
+            System.out.println("Reference of v1: " + variable1.getReference());
+            for(float i = variable1.getStart(); i < variable1.getEnd(); i += variable1.getStep()){
+                variable1.set(i);
+                if(!variable2.isEmpty()){
+                    int colID = 0;
+                    for(float j = variable1.getStart(); i < variable2.getEnd(); i += variable2.getEnd()){
+                        variable2.set(j);
+                        array[rowID][colID] = getWinPercentage();
+                        colID ++;
+                    }
                 }
+                else{
+                    array[rowID][0] = getWinPercentage();
+                }
+                rowID++;
             }
         }
         else{
@@ -60,6 +69,7 @@ public class WinRateTester {
             ret[0][0] = getWinPercentage();
             return ret;
         }
+        return array;
     }
 
     //Gets winner from one game
@@ -108,4 +118,6 @@ public class WinRateTester {
         }
     }
 
+    public void setVariable1(Iterator i){this.variable1 = i;}
+    public void setVariable2(Iterator i){this.variable1 = i;}
 }
