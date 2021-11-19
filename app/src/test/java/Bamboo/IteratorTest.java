@@ -30,12 +30,24 @@ public class IteratorTest {
     }
 
     @Test void testTester() throws IOException {
+        //instantiate Tester which runs experiments for you
+        //Requires agent type and grid size
         WinRateTester tester = new WinRateTester(AgentType.MCTS,2);
-        tester.setReplications(15);
-        tester.setVariable1(new Iterator<>(MCTS.c,0,1.01f,0.5f));
-        tester.setVariable2(new Iterator<>(MCTS.iterations,1,1001,450));
+        //Set the number of games you want the agent to play against random (for each unique combination of variable values)
+        tester.setReplications(5);
+        //Specify references to the variables you want to iterate over. These must be of the Mutable class
+        Mutable<Float> reference_to_variable_1 = MCTS.c;
+        Mutable<Integer> reference_to_variable_2 = MCTS.iterations;
+        //Instantiate an iterator over those references. Pass it the reference itself, as well as min, max and step size
+        Iterator<Float> iterator_for_variable_1 = new Iterator<>(reference_to_variable_1,0,1.01f,0.5f);
+        Iterator<Integer> iterator_for_variable_2 = new Iterator<>(reference_to_variable_2,1,1001,450);
+        //Set the (up to) two variables the tester should iterate over (pass it the iterator you just created)
+        tester.setVariable1(iterator_for_variable_1);
+        tester.setVariable2(iterator_for_variable_2);
+        //Set file name if you want to, else it will be named after the agent type you chose
+        tester.setFileName("mytest.csv");
+        //run the experiment and print results to console
         float[][] result = tester.runExperiment();
-
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){
                 System.out.print(result[i][j]+ ", ");
