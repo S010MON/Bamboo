@@ -36,14 +36,16 @@ public class GameWithoutGUI {
 
     private void toggleTurn()
     {
-        if(currentPlayer == a1)
+        if(currentPlayer == a1){
             currentPlayer = a2;
-        else
+        }
+        else{
             currentPlayer = a1;
+        }
     }
 
     public Agent turnLogic(){
-        while(!remainingTiles.isEmpty() && !grid.isFinished(currentPlayer.getColor())){
+        while(!grid.isFinished(currentPlayer.getColor())){
             makeTurn();
         }
         return otherPlayer();
@@ -51,9 +53,9 @@ public class GameWithoutGUI {
 
     private void makeTurn(){
         Vector move = currentPlayer.getNextMove(this);
-        remainingTiles.remove(grid.getTile(move));
+        //remainingTiles.remove(grid.getTile(move));
         this.grid.setTile(move,currentPlayer.getColor());
-        //System.out.println("Agent " + currentPlayer.getName() + " placed color " + currentPlayer.getColor() + " at " + move.toString());
+        System.out.println("Agent " + currentPlayer.getName() + " placed color " + currentPlayer.getColor() + " at " + move.toString());
         toggleTurn();
     }
 

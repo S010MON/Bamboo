@@ -18,7 +18,8 @@ import static Bamboo.controller.AgentType.MINIMAX;
 import static Bamboo.controller.AgentType.RANDOM;
 
 public class WinRateTester {
-    private Agent player1, player2;
+    private AgentType player1, player2;
+    private Agent agent1, agent2;
     private Color startingColor = Color.WHITE;
     private int boardSize = 5;
     private Iterator variable1;
@@ -26,10 +27,10 @@ public class WinRateTester {
     private int replications;
 
     public WinRateTester(AgentType agent, int size) throws IOException {
-        player1 = AgentFactory.makeAgent(agent,Color.RED);
+        player1 = agent;
         assignIterators(agent);
         System.out.println(variable1.getReference() + " is reference on construction");
-        player2 = AgentFactory.makeAgent(RANDOM, Color.BLUE);
+        player2 = AgentType.RANDOM;
         boardSize = size;
     }
 
@@ -41,7 +42,7 @@ public class WinRateTester {
     public void setStartingColor(Color color){startingColor = color;}
     public void resetStartingColor(){startingColor = Color.WHITE;}
 
-    public float[][] runExperiment(){
+    public float[][] runExperiment() throws IOException {
         float[][] array = new float[variable1.getArrayBounds()][variable2.getArrayBounds()];
         System.out.println("Array Rows: " + variable1.getArrayBounds());
         System.out.println("Array cols: " + variable2.getArrayBounds());
@@ -73,21 +74,26 @@ public class WinRateTester {
     }
 
     //Gets winner from one game
-    private Agent getWinner(){
-        Settings settings = new Settings(player1, player2, boardSize);
+    private Agent getWinner() throws IOException {
+        agent1 = AgentFactory.makeAgent(player1,Color.RED);
+        agent2 = AgentFactory.makeAgent(player2,Color.BLUE);
+        Settings settings = new Settings(agent1, agent2, boardSize);
+        System.out.println("Making game " + agent1.getName() + " vs. " + agent2.getName());
         GameWithoutGUI game;
         if(startingColor == Color.WHITE)
             game = new GameWithoutGUI(settings);
         else
             game = new GameWithoutGUI(settings,startingColor);
-        return game.turnLogic();
+        Agent winner = game.turnLogic();
+        System.out.println(winner.getName());
+        return winner;
     }
 
     //returns player 1s win rate over <replications> games
-    private float getWinPercentage(){
+    private float getWinPercentage() throws IOException {
         int sum = 0;
         for(int i = 0; i < replications; i++){
-            if(getWinner() == player1)
+            if(getWinner() == agent1)
                 sum++;
         }
         return sum/(float)replications;
