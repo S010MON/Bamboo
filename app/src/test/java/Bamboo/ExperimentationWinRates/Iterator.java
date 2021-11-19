@@ -11,12 +11,20 @@ public class Iterator<T> {
     private int iterations;
     private Mutable<T> reference;
     private boolean empty = false;
+    private float[] values;
 
     public Iterator(float min, float max, float step){
         this.min = min;
         this.max = max;
         this.step = step;
         this.iterations = (int)Math.ceil((max-min)/step);
+        buildArray();
+    }
+
+    public Iterator(Mutable<T> ref,float[] array){
+        this.reference = ref;
+        this.iterations = array.length;
+        this.values = array;
     }
 
     public Iterator(String command){
@@ -38,6 +46,7 @@ public class Iterator<T> {
         this.step = step;
         this.reference = reference;
         this.iterations = (int)Math.ceil((max-min)/step);
+        buildArray();
         System.out.println(this.reference + " is reference on Iterator construction");
         System.out.println("Iterations: " + this.iterations);
     }
@@ -48,7 +57,7 @@ public class Iterator<T> {
     public int getArrayBounds(){
         return this.iterations;
     }
-
+    public float[] getValues(){return values;}
     public boolean isEmpty(){return empty;}
     public Mutable<T> getReference(){return this.reference;}
     public void setReference(Mutable<T> ref){
@@ -56,5 +65,14 @@ public class Iterator<T> {
     }
     public void set(T val){
         this.reference.set(val);
+    }
+
+    private void buildArray(){
+        this.values = new float[iterations];
+        int id = 0;
+        for(float i = this.min; i < max; i += step){
+            this.values[id] = i;
+            id++;
+        }
     }
 }

@@ -14,6 +14,7 @@ public class MiniMaxSortedAB implements Agent {
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
     int totalEvaluations;
     public static Mutable<Float> depth = new Mutable<>(1f);
+    public static boolean testing = false;
 
     public MiniMaxSortedAB(Color color){
         this.color = color;
@@ -46,9 +47,10 @@ public class MiniMaxSortedAB implements Agent {
         else{
             updateUncoloredVectors(game.getGrid());
         }
-        //depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
+        if(!testing)
+            depth.set((float)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
         NodeMM start = new NodeMM(game.getGrid());
-        return minimaxMove(start, Math.round(depth.get().floatValue()), this.color);
+        return minimaxMove(start, Math.round(depth.get()), this.color);
     }
 
     @Override

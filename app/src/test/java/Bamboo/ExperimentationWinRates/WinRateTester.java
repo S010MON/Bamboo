@@ -18,7 +18,9 @@ public class WinRateTester {
     private AgentType player1, player2;
     private Agent agent1, agent2;
     private Color startingColor = Color.WHITE;
-    private int boardSize = 5;
+    private boolean printResult = true;
+    private boolean writeResult = true;
+    public Mutable<Integer> boardSize;
     private String fileName;
     private Iterator variable1;
     private Iterator variable2;
@@ -31,13 +33,12 @@ public class WinRateTester {
         assignIterators(agent);
         System.out.println(variable1.getReference() + " is reference on construction");
         player2 = AgentType.RANDOM;
-        boardSize = size;
+        boardSize.set(size);
     }
 
     //set the amount of replications to do
     public void setReplications(int rep){this.replications = rep;}
 
-    //use these if you want to change starting player
     public Color getStartingColor(){return startingColor;}
     public void setStartingColor(Color color){startingColor = color;}
     public void resetStartingColor(){startingColor = Color.WHITE;}
@@ -49,11 +50,11 @@ public class WinRateTester {
         if(!variable1.isEmpty()){
             int rowID = 0;
             System.out.println("Reference of v1: " + variable1.getReference());
-            for(float i = variable1.getStart(); i < variable1.getEnd(); i += variable1.getStep()){
+            for(float i : variable1.getValues()){
                 variable1.set(i);
                 if(!variable2.isEmpty()){
                     int colID = 0;
-                    for(float j = variable1.getStart(); i < variable2.getEnd(); i += variable2.getEnd()){
+                    for(float j : variable2.getValues()){
                         variable2.set(j);
                         array[rowID][colID] = getWinPercentage();
                         colID ++;
@@ -68,7 +69,10 @@ public class WinRateTester {
         else{
             array[0][0] = getWinPercentage();
         }
-        writeToCSV(array);
+        if(writeResult)
+            writeToCSV(array);
+        if(printResult)
+            printToConsole(array);
         return array;
     }
 
@@ -76,7 +80,7 @@ public class WinRateTester {
     private Agent getWinner() throws IOException {
         agent1 = AgentFactory.makeAgent(player1,Color.RED);
         agent2 = AgentFactory.makeAgent(player2,Color.BLUE);
-        Settings settings = new Settings(agent1, agent2, boardSize);
+        Settings settings = new Settings(agent1, agent2, boardSize.get());
         System.out.println("Making game " + agent1.getName() + " vs. " + agent2.getName());
         GameWithoutGUI game;
         if(startingColor == Color.WHITE)
@@ -105,14 +109,17 @@ public class WinRateTester {
                 variable2 = new Iterator<>("empty");
             }
             case MINIMAX -> {
+                MiniMax.testing = true;
                 variable1 = new Iterator<>(MiniMax.depth,1,5,1);
                 variable2 = new Iterator<>("empty");
             }
             case MINIMAX_AB -> {
+                MiniMaxAB.testing = true;
                 variable1 = new Iterator<>(MiniMaxAB.depth,1,5,1);
                 variable2 = new Iterator<>("empty");
             }
             case MINIMAX_SORTED -> {
+                MiniMaxSortedAB.testing = true;
                 variable1 = new Iterator<>(MiniMaxSortedAB.depth,1,5,1);
                 variable2 = new Iterator<>("empty");
             }
@@ -130,13 +137,27 @@ public class WinRateTester {
                 row += data[i][j];
             }
             System.out.println(FilePath.getNNetPath(fileName));
-            Logger.logCSV(FilePath.getFilePath(fileName),row);
+            Logger.logCSV(FilePath.getNNetPath(fileName),row);
         }
     }
 
     public void setFileName(String fileName){this.fileName = fileName;}
     public String getFileName(){return this.fileName;}
 
+    private void printToConsole(float[][] result){
+        for(int i = 0; i < variable1.getArrayBounds(); i++){
+            for(int j = 0; j < variable2.getArrayBounds(); j++){
+                System.out.print(result[i][j]+ ", ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void setOpponent(AgentType opponent) {this.player2 = opponent;}
     public void setVariable1(Iterator i){this.variable1 = i;}
     public void setVariable2(Iterator i){this.variable1 = i;}
+    public Iterator getVariable1(){return this.variable1;}
+    public Iterator getVariable2(){return this.variable2;}
+    public void setWriting(boolean argument){this.writeResult = argument;}
+    public void setPrinting(boolean argument){this.printResult = argument;}
 }
