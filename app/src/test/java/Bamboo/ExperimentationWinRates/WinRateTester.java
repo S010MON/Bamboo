@@ -121,8 +121,8 @@ public class WinRateTester {
                 variable2 = new Iterator<>("empty");
             }
             case MCTS -> {
-                variable1 = new Iterator<>(agent1.getDepth(),0.0f,1.0f,0.2f);
-                variable2 = new Iterator<>(agent1.getDepth(), 1000,30000,10000);
+                variable1 = new Iterator<>(agent1.getC(),0.0f,1.0f,0.2f);
+                variable2 = new Iterator<>(agent1.getIterations(), 1000,30000,10000);
             }
         }
     }

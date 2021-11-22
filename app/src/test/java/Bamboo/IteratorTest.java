@@ -35,8 +35,10 @@ public class IteratorTest {
     @Test void tutorialTester() throws IOException {
         //instantiate Tester which runs experiments for you and returns a matrix with win rates by variable values
         //Requires agent type and grid size
-        WinRateTester tester = new WinRateTester(AgentType.MCTS,2);
-        //Set the number of games you want the agent to play against random (for each unique combination of variable values)
+        AgentType type = AgentType.MCTS;
+        int boardSize = 2;
+        WinRateTester tester = new WinRateTester(type, boardSize);
+        //Set the number of games you want the agent to play against the other agent (random?) (for each unique combination of variable values)
         tester.setReplications(15);
         //If you want to let the agent play against something else than random, pass an agent type to
         tester.setOpponent(AgentType.RANDOM);//Random is default, so if you dont want to change it, you dont need to call this method
@@ -59,7 +61,8 @@ public class IteratorTest {
         //MCTS: .getC, .getIterations
         tester.setVariable1(iterator_for_variable_1);
         tester.setVariable2(iterator_for_variable_2);
-        //----------You can also set an iterator from a float array.
+        //----------You can also set an iterator from a float array (Must be float array, even if you iterate over integers).
+        //For MCTS iterations:
         Mutable<Integer> reference = tester.getAgent1().getIterations();
         float[] values = new float[]{1,1000};
         Iterator<Integer> iterator_from_array = new Iterator<>(reference,values);
@@ -85,16 +88,18 @@ public class IteratorTest {
     }
 
     @Test void minimalExample() throws IOException {
+        //Lets MCTS play random twice for each combination of C and iterations
         WinRateTester tester = new WinRateTester(AgentType.MCTS,3);
         tester.setVariable1(new Iterator<>(tester.getAgent1().getIterations(),1,1000,250));
-        tester.setVariable2(new Iterator<>(tester.getAgent1().getIterations(), 0, 1.2f, 0.2f));
-        tester.setReplications(1);
+        tester.setVariable2(new Iterator<>(tester.getAgent1().getC(), 0, 1.2f, 0.2f));
+        tester.setReplications(2);
         tester.setProgressPrinting(true);
         tester.setFileName("MCTS_experiment_C_iterations.csv");
         tester.runExperiment();
     }
 
     @Test void miniMaxComparison() throws IOException{
+        //Compares minimax win percentages against random over search depth and grid size
         WinRateTester tester = new WinRateTester(AgentType.MINIMAX_SORTED,2);
         tester.setOpponent(AgentType.RANDOM);
         tester.setVariable1(new Iterator<>(tester.getAgent1().getDepth(), 1,4,1));
