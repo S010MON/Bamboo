@@ -45,10 +45,8 @@ public class Iterator<T> {
         this.max = max;
         this.step = step;
         this.reference = reference;
-        this.iterations = (int)Math.ceil((max-min)/step);
+        this.iterations = (int)Math.ceil((max-min)/step) + 1;
         buildArray();
-        System.out.println(this.reference + " is reference on Iterator construction");
-        System.out.println("Iterations: " + this.iterations);
     }
 
     public float getStart(){return min;}
@@ -70,7 +68,7 @@ public class Iterator<T> {
     private void buildArray(){
         this.values = new float[iterations];
         int id = 0;
-        for(float i = this.min; i < max; i += step){
+        for(float i = this.min; i <= max; i += step){
             this.values[id] = i;
             id++;
         }

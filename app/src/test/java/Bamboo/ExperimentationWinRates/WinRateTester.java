@@ -5,6 +5,8 @@ import Bamboo.controller.MCTS.MCTS;
 import Bamboo.controller.miniMax.MiniMax;
 import Bamboo.controller.miniMax.MiniMaxAB;
 import Bamboo.controller.miniMax.MiniMaxSortedAB;
+import Bamboo.controller.nNet.TensorSaver;
+import Bamboo.controller.random.Random;
 import Bamboo.model.GameWithoutGUI;
 
 import java.awt.Color;
@@ -20,19 +22,22 @@ public class WinRateTester {
     private Color startingColor = Color.WHITE;
     private boolean printResult = true;
     private boolean writeResult = true;
-    public Mutable<Integer> boardSize;
+    private boolean writeProgress = true;
+    public Mutable<Integer> boardSize = new Mutable<>(3);
+    private int replications;
     private String fileName;
     private Iterator variable1;
     private Iterator variable2;
-    private int replications;
 
     public WinRateTester(AgentType agent, int size) throws IOException {
         fileName = agent.toString() + ".csv";
-        System.out.println(fileName);
         player1 = agent;
-        assignIterators(agent);
-        System.out.println(variable1.getReference() + " is reference on construction");
         player2 = AgentType.RANDOM;
+        agent1 = AgentFactory.makeAgent(player1,Color.RED);
+        System.out.println("Original: " + agent1.getDepth());
+        agent2 = AgentFactory.makeAgent(player2,Color.BLUE);
+        assignIterators(player1);
+        System.out.println("Reference: " + agent1.getDepth());
         boardSize.set(size);
     }
 
@@ -45,12 +50,11 @@ public class WinRateTester {
 
     public float[][] runExperiment() throws IOException {
         float[][] array = new float[variable1.getArrayBounds()][variable2.getArrayBounds()];
-        System.out.println("Array Rows: " + variable1.getArrayBounds());
-        System.out.println("Array cols: " + variable2.getArrayBounds());
         if(!variable1.isEmpty()){
+            int v1Progress = 0;
             int rowID = 0;
-            System.out.println("Reference of v1: " + variable1.getReference());
             for(float i : variable1.getValues()){
+                int v2Progress = 0;
                 variable1.set(i);
                 if(!variable2.isEmpty()){
                     int colID = 0;
@@ -58,10 +62,18 @@ public class WinRateTester {
                         variable2.set(j);
                         array[rowID][colID] = getWinPercentage();
                         colID ++;
+                        if(writeProgress){
+                            v2Progress ++;
+                            System.out.println(100*v2Progress/ (float)variable2.getArrayBounds() + "% of v2, " + 100*v1Progress/ (float)variable1.getArrayBounds() + "% of v1.");
+                        }
                     }
+                    v1Progress++;
                 }
                 else{
                     array[rowID][0] = getWinPercentage();
+                    v1Progress++;
+                    if(writeProgress)
+                        System.out.println(100*v1Progress/(float)variable1.getArrayBounds() + "% progress.");
                 }
                 rowID++;
             }
@@ -78,17 +90,13 @@ public class WinRateTester {
 
     //Gets winner from one game
     private Agent getWinner() throws IOException {
-        agent1 = AgentFactory.makeAgent(player1,Color.RED);
-        agent2 = AgentFactory.makeAgent(player2,Color.BLUE);
-        Settings settings = new Settings(agent1, agent2, boardSize.get());
-        System.out.println("Making game " + agent1.getName() + " vs. " + agent2.getName());
+        Settings settings = new Settings(agent1, agent2, ((Number)boardSize.get()).intValue());
         GameWithoutGUI game;
         if(startingColor == Color.WHITE)
             game = new GameWithoutGUI(settings);
         else
             game = new GameWithoutGUI(settings,startingColor);
         Agent winner = game.turnLogic();
-        System.out.println(winner.getName());
         return winner;
     }
 
@@ -108,24 +116,13 @@ public class WinRateTester {
                 variable1 = new Iterator<>("empty");
                 variable2 = new Iterator<>("empty");
             }
-            case MINIMAX -> {
-                MiniMax.testing = true;
-                variable1 = new Iterator<>(MiniMax.depth,1,5,1);
-                variable2 = new Iterator<>("empty");
-            }
-            case MINIMAX_AB -> {
-                MiniMaxAB.testing = true;
-                variable1 = new Iterator<>(MiniMaxAB.depth,1,5,1);
-                variable2 = new Iterator<>("empty");
-            }
-            case MINIMAX_SORTED -> {
-                MiniMaxSortedAB.testing = true;
-                variable1 = new Iterator<>(MiniMaxSortedAB.depth,1,5,1);
+            case MINIMAX, MINIMAX_SORTED, MINIMAX_AB -> {
+                variable1 = new Iterator<>(agent1.getDepth(),1,5,1);
                 variable2 = new Iterator<>("empty");
             }
             case MCTS -> {
-                variable1 = new Iterator<>(MCTS.c,0.0f,1.0f,0.2f);
-                variable2 = new Iterator<>(MCTS.iterations, 1000,30000,10000);
+                variable1 = new Iterator<>(agent1.getDepth(),0.0f,1.0f,0.2f);
+                variable2 = new Iterator<>(agent1.getDepth(), 1000,30000,10000);
             }
         }
     }
@@ -137,7 +134,7 @@ public class WinRateTester {
                 row += data[i][j];
             }
             System.out.println(FilePath.getNNetPath(fileName));
-            Logger.logCSV(FilePath.getNNetPath(fileName),row);
+            Logger.logCSV(fileName,row);
         }
     }
 
@@ -153,11 +150,17 @@ public class WinRateTester {
         }
     }
 
-    public void setOpponent(AgentType opponent) {this.player2 = opponent;}
+    public Agent getAgent1() {return agent1;}
+    public Agent getAgent2() {return agent2;}
+    public void setOpponent(AgentType opponent) throws IOException {
+        this.player2 = opponent;
+        this.agent2 = AgentFactory.makeAgent(player2,Color.BLUE);
+    }
     public void setVariable1(Iterator i){this.variable1 = i;}
-    public void setVariable2(Iterator i){this.variable1 = i;}
+    public void setVariable2(Iterator i){this.variable2 = i;}
     public Iterator getVariable1(){return this.variable1;}
     public Iterator getVariable2(){return this.variable2;}
     public void setWriting(boolean argument){this.writeResult = argument;}
+    public void setProgressPrinting(boolean argument){this.writeProgress = argument;}
     public void setPrinting(boolean argument){this.printResult = argument;}
 }

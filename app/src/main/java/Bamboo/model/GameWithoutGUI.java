@@ -55,7 +55,7 @@ public class GameWithoutGUI {
         Vector move = currentPlayer.getNextMove(this);
         //remainingTiles.remove(grid.getTile(move));
         this.grid.setTile(move,currentPlayer.getColor());
-        System.out.println("Agent " + currentPlayer.getName() + " placed color " + currentPlayer.getColor() + " at " + move.toString());
+        //System.out.println("Agent " + currentPlayer.getName() + " placed color " + currentPlayer.getColor() + " at " + move.toString());
         toggleTurn();
     }
 

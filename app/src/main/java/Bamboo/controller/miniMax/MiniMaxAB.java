@@ -13,8 +13,8 @@ public class MiniMaxAB implements Agent {
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
     int totalEvaluations;
-    public static Mutable<Float> depth = new Mutable<>(1f);
-    public static boolean testing = false;
+    public Mutable<Integer> depth = new Mutable<>(1);
+    public boolean testing = false;
 
 
     public MiniMaxAB(Color color){
@@ -49,7 +49,7 @@ public class MiniMaxAB implements Agent {
             updateUncoloredVectors(game.getGrid());
         }
         if(!testing)
-            depth.set((float)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
+            depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
         NodeMM start = new NodeMM(game.getGrid());
         return minimaxMove(start, Math.round(depth.get()), this.color);
     }
@@ -63,15 +63,33 @@ public class MiniMaxAB implements Agent {
         else{
             updateUncoloredVectors(game.getGrid());
         }
-        int depth = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
+        if(!testing)
+            depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
         NodeMM start = new NodeMM(game.getGrid());
-        return minimaxMove(start, depth, this.color);
+        return minimaxMove(start, Math.round((float)(Number)depth.get()), this.color);
     }
 
     @Override
     public Color getColor()
     {
         return color;
+    }
+
+    @Override
+    public Mutable<Integer> getDepth() {
+        testing = true;
+        uncolored_vectors = new ArrayList<>();
+        return this.depth;
+    }
+
+    @Override
+    public Mutable<Integer> getIterations() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Float> getC() {
+        return null;
     }
 
     Grid makeMove(Grid grid, Vector move, Color player_color){

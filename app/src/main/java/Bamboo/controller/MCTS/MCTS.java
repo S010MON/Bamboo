@@ -12,8 +12,8 @@ public class MCTS implements Agent
 {
     private Color colour;
     private NodeMCTS root;
-    public static Mutable<Integer> iterations = new Mutable<>(10000);
-    public static Mutable<Float> c = new Mutable<>(0.5f);
+    public Mutable<Integer> iterations = new Mutable<>(10000);
+    public Mutable<Float> c = new Mutable<>(0.5f);
 
     public MCTS(Color colour)
     {
@@ -39,6 +39,7 @@ public class MCTS implements Agent
     @Override
     public Vector getNextMove(Game game)
     {
+        UCB.C = this.c.get();
         root = new NodeMCTS(game.getGrid(), null, game.getCurrentPlayer().getColor(), null);
         for(int i = 0; i < iterations.get(); i++)
         {
@@ -67,5 +68,20 @@ public class MCTS implements Agent
     @Override
     public Color getColor() {
         return colour;
+    }
+
+    @Override
+    public Mutable<Integer> getDepth() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Integer> getIterations() {
+        return this.iterations;
+    }
+
+    @Override
+    public Mutable<Float> getC() {
+        return this.c;
     }
 }
