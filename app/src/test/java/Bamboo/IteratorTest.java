@@ -48,7 +48,7 @@ public class IteratorTest {
         //Specify references to the variables you want to iterate over. These must be of the Mutable class
         Mutable<Float> reference_to_variable_1 = tester.getAgent1().getC();
         Mutable<Integer> reference_to_variable_2 = tester.getAgent1().getIterations();
-        //For Minimax: Mutable<Float> ... = MiniMax.depth; Replace "MiniMax" with the actual class name of the one youre using
+        //For Minimax: Mutable<Float> ... = agent.depth; Replace "agent" with the actual name of the instance youre using
         //Instantiate an iterator over those references. Pass it the reference itself, as well as min, max and step size
         Iterator<Float> iterator_for_variable_1 = new Iterator<>(reference_to_variable_1,0,1.01f,0.5f);
         Iterator<Integer> iterator_for_variable_2 = new Iterator<>(reference_to_variable_2,1,1001,450);
