@@ -38,3 +38,4 @@ Clone the source code repository and navigate to `/Bamboo` then run:
 
 
 
+![Screenshot.png](https://github.com/S010MON/Bamboo/blob/main/app/src/main/java/Bamboo/view/resources/Screenshot.png)
