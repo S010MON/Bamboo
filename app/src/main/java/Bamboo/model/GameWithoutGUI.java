@@ -1,16 +1,17 @@
 package Bamboo.model;
 
-import Bamboo.controller.Agent;
-import Bamboo.controller.Settings;
-import Bamboo.controller.Vector;
+import Bamboo.controller.*;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameWithoutGUI {
+    private int size;
     public static int MCTSiterations = 1000;
-
+    private boolean LOG_MOVES = false;
+    private String logFileName = "log.csv";
+    private Color logColor;
     private Grid grid;
     private ArrayList<Tile> remainingTiles = new ArrayList<>();
     Agent a1, a2, currentPlayer;
@@ -19,6 +20,7 @@ public class GameWithoutGUI {
         a1 = settings.player1;
         a2 = settings.player2;
         currentPlayer = settings.getCurrentPlayer();
+        size = settings.boardSize;
         grid = new GridGraphImp(settings.boardSize);
         remainingTiles = new ArrayList<>(grid.getAllTiles());
     }
@@ -30,6 +32,7 @@ public class GameWithoutGUI {
             currentPlayer = a1;
         else
             currentPlayer = a2;
+        size = settings.boardSize;
         grid = new GridGraphImp(settings.boardSize);
         remainingTiles = new ArrayList<>(grid.getAllTiles());
     }
@@ -53,6 +56,7 @@ public class GameWithoutGUI {
 
     private void makeTurn(){
         Vector move = currentPlayer.getNextMove(this);
+        logMove(move);
         //remainingTiles.remove(grid.getTile(move));
         this.grid.setTile(move,currentPlayer.getColor());
         //System.out.println("Agent " + currentPlayer.getName() + " placed color " + currentPlayer.getColor() + " at " + move.toString());
@@ -76,5 +80,21 @@ public class GameWithoutGUI {
 
     public List<Tile> getAllTiles() {
         return grid.getAllTiles();
+    }
+
+    public void setLogFileName(String fileName){this.logFileName = fileName;}
+
+    public void setLOG_MOVES(boolean argument){this.LOG_MOVES = argument;}
+
+    public void setLogColor(Color color){this.logColor = color;}
+
+    private void logMove(Vector move){
+        int[] igrid = DataManager.flatten(this.grid,currentPlayer.getColor());
+        int[] imove = DataManager.oneHotEncode(this.size,move);
+        String data = DataManager.concatToCSV(igrid,imove);
+        if(LOG_MOVES){
+            if(logColor == null || logColor == currentPlayer.getColor())
+                Logger.logCSV(logFileName,data);
+        }
     }
 }

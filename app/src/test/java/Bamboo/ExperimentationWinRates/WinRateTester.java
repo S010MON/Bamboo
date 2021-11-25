@@ -28,6 +28,11 @@ public class WinRateTester {
     private String fileName;
     private Iterator variable1;
     private Iterator variable2;
+    private float redPercentage = 0.5f;
+    private int gamesPlayed = 0;
+    private String loggingFile = "log.csv";
+    private Color loggedColor = Color.WHITE;
+    private boolean LOG_MOVES = false;
 
     public WinRateTester(AgentType agent, int size) throws IOException {
         fileName = agent.toString() + ".csv";
@@ -50,6 +55,7 @@ public class WinRateTester {
 
     public float[][] runExperiment() throws IOException {
         float[][] array = new float[variable1.getArrayBounds()][variable2.getArrayBounds()];
+        int totalGames = variable1.getArrayBounds() * variable2.getArrayBounds();
         if(!variable1.isEmpty()){
             int v1Progress = 0;
             int rowID = 0;
@@ -90,12 +96,17 @@ public class WinRateTester {
 
     //Gets winner from one game
     private Agent getWinner() throws IOException {
+        this.gamesPlayed ++;
         Settings settings = new Settings(agent1, agent2, ((Number)boardSize.get()).intValue());
         GameWithoutGUI game;
         if(startingColor == Color.WHITE)
-            game = new GameWithoutGUI(settings);
+            if(gamesPlayed /(float)this.replications < this.redPercentage)
+                game = new GameWithoutGUI(settings, Color.RED);
+            else
+                game = new GameWithoutGUI(settings, Color.BLUE);
         else
             game = new GameWithoutGUI(settings,startingColor);
+        setLoggingSettings(game);
         Agent winner = game.turnLogic();
         return winner;
     }
@@ -150,6 +161,12 @@ public class WinRateTester {
         }
     }
 
+    private void setLoggingSettings(GameWithoutGUI game){
+        game.setLogFileName(this.loggingFile);
+        game.setLogColor(this.loggedColor);
+        game.setLOG_MOVES(this.LOG_MOVES);
+    }
+
     public Agent getAgent1() {return agent1;}
     public Agent getAgent2() {return agent2;}
     public void setOpponent(AgentType opponent) throws IOException {
@@ -163,4 +180,8 @@ public class WinRateTester {
     public void setWriting(boolean argument){this.writeResult = argument;}
     public void setProgressPrinting(boolean argument){this.writeProgress = argument;}
     public void setPrinting(boolean argument){this.printResult = argument;}
+    public void setRedStartingPercentage(float percentage){this.redPercentage = percentage;}
+    public void setMoveLogging(boolean arg){this.LOG_MOVES = arg;}
+    public void setLogFileName(String name){this.loggingFile = name;}
+    public void setLoggedColor(Color color){this.loggedColor = color;}
 }

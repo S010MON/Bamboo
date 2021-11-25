@@ -76,6 +76,12 @@ public class IteratorTest {
         tester.setStartingColor(Color.RED);//if the agent you chose should start
         tester.setStartingColor(Color.BLUE);//if the other (Random) one should start
         tester.resetStartingColor();//If you want to reset to coin toss
+        //If you want the red agent to start x% of the time, do:
+        tester.setRedStartingPercentage(0.6f);//Red will start roughly 60% of the time
+        //----------If you want to log moves:
+        tester.setMoveLogging(true);//will log moves for both agents in file "log.csv"
+        tester.setLoggedColor(Color.RED);//will log moves for red (first) agent
+        tester.setLogFileName("logTutorialTest.csv");//saves logged moves in different file
         //----------Set file name if you want to, else it will be named after the agent type you chose
         tester.setFileName("mytest.csv");
         //set printing flag if you dont want the result also output to console
@@ -106,6 +112,19 @@ public class IteratorTest {
         tester.setVariable2(new Iterator<>(tester.boardSize, 0, 3, 1));
         tester.setReplications(1);
         tester.setFileName("MiniMaxComparisons.csv");
+        tester.setProgressPrinting(true);
+        tester.runExperiment();
+    }
+
+    @Test void startingWinPercentage() throws IOException {
+        WinRateTester tester = new WinRateTester(AgentType.RANDOM,4);
+        tester.setVariable1(new Iterator(tester.boardSize, 1,5,1));
+        tester.setReplications(100);
+        tester.setStartingColor(Color.RED);
+        tester.setMoveLogging(true);
+        tester.setLogFileName("RandomTestLog.csv");
+        tester.setLoggedColor(Color.RED);
+        tester.setWriting(false);
         tester.setProgressPrinting(true);
         tester.runExperiment();
     }
