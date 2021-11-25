@@ -2,10 +2,6 @@ package Bamboo.model;
 
 import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
-import Bamboo.view.game.GamePanel;
-import Bamboo.view.game.TimerListener;
-
-import javax.swing.*;
 import java.util.List;
 
 public class Game
