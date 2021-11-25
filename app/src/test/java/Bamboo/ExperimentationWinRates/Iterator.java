@@ -27,6 +27,12 @@ public class Iterator<T> {
         this.values = array;
     }
 
+    public Iterator(Mutable<T> ref,float constant){
+        this.reference = ref;
+        this.iterations = 1;
+        this.values = new float[]{constant};
+    }
+
     public Iterator(String command){
         if(Objects.equals(command, "empty")){
             this.empty = true;

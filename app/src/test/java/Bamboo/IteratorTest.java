@@ -68,6 +68,8 @@ public class IteratorTest {
         Iterator<Integer> iterator_from_array = new Iterator<>(reference,values);
         //Then set that iterator for the tester
         tester.setVariable1(iterator_from_array);
+        //You can also make a constant Iterator by running:
+        Iterator<Float> constant = new Iterator<>(tester.getAgent1().getC(), 0.4f);
         //----------You can also iterate over grid sizes, if you have an iterator to spare
         Mutable<Integer> reference_to_grid_size = tester.boardSize;
         Iterator<Integer> iterator_over_grid_size = new Iterator<>(reference_to_grid_size,1,6,1);
@@ -119,13 +121,23 @@ public class IteratorTest {
     @Test void startingWinPercentage() throws IOException {
         WinRateTester tester = new WinRateTester(AgentType.RANDOM,4);
         tester.setVariable1(new Iterator(tester.boardSize, 1,5,1));
-        tester.setReplications(100);
+        tester.setReplications(50);
         tester.setStartingColor(Color.RED);
-        tester.setMoveLogging(true);
-        tester.setLogFileName("RandomTestLog.csv");
+        tester.setMoveLogging(false);
+        tester.setLogFileName("RandomTestLogWF.csv");
         tester.setLoggedColor(Color.RED);
         tester.setWriting(false);
         tester.setProgressPrinting(true);
+        tester.runExperiment();
+    }
+
+    @Test void C02MCTSTest() throws IOException {
+        WinRateTester tester = new WinRateTester(AgentType.MCTS,5);
+        tester.setVariable1(new Iterator<>(tester.getAgent1().getIterations(),new float[]{1,100,1000,10000,50000}));
+        tester.setVariable2(new Iterator<>(tester.getAgent1().getC(),0.2f));
+        tester.setProgressPrinting(true);
+        tester.setReplications(100);
+        tester.setRedStartingPercentage(0.5f);
         tester.runExperiment();
     }
 
