@@ -2,11 +2,14 @@ package Bamboo.model;
 
 import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
+
+import java.awt.*;
 import java.util.List;
 
 public class Game
 {
-    private boolean LOG_MOVES = false;
+    private boolean LOG_MOVES_RED = false;
+    private boolean LOG_MOVES_BLUE = false;
 
     private Grid grid;
     private Agent player1;
@@ -40,7 +43,15 @@ public class Game
     {
         if(grid.isLegalMove(v, currentPlayer.getColor()))
         {
-            if(LOG_MOVES)
+            if(LOG_MOVES_RED && currentPlayer.getColor().equals(Color.RED))
+            {
+                int[] X = DataManager.flatten(grid, currentPlayer.getColor());
+                int[] Y = DataManager.oneHotEncode(grid.getSize(), v);
+                String data = DataManager.concatToCSV(X, Y);
+                Logger.logCSV("data.csv", data);
+            }
+
+            if(LOG_MOVES_BLUE && currentPlayer.getColor().equals(Color.BLUE))
             {
                 int[] X = DataManager.flatten(grid, currentPlayer.getColor());
                 int[] Y = DataManager.oneHotEncode(grid.getSize(), v);
@@ -135,13 +146,16 @@ public class Game
         view.nextTurn();
     }
 
-    public void toggleLogging(){
-        LOG_MOVES = !LOG_MOVES;
-    }
-
     public boolean loggingEnabled(){
-        return LOG_MOVES;
+        return LOG_MOVES_RED || LOG_MOVES_BLUE;
     }
 
+    public void setLoggingRed(boolean b){
+        LOG_MOVES_RED = b;
+    }
+
+    public void setLoggingBlue(boolean b){
+        LOG_MOVES_BLUE = b;
+    }
 }
 

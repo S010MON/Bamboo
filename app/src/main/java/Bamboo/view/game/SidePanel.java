@@ -15,6 +15,7 @@ public class SidePanel extends JPanel
 {
     private Color background = Colour.background() ;
     private Game game;
+    private MainFrame mainFrame;
     private InfoPanel infoPanel;
     private Canvas canvas ;
     private Button snaphotToggle;
@@ -23,6 +24,7 @@ public class SidePanel extends JPanel
     public SidePanel(Game game, MainFrame mainFrame, Canvas canvas) {
         this.canvas = canvas ;
         this.game = game;
+        this.mainFrame = mainFrame;
         setBackground(background);
         setLayout(new BorderLayout());
         infoPanel = new InfoPanel(game);
@@ -63,13 +65,37 @@ public class SidePanel extends JPanel
         int maxGroupSize = game.getSizeOfMaxOfGroups(currentPlayer);
         infoPanel.update(name,maxGroupSize,numberOfGroups);
     }
+
     private void toggle()
     {
-        game.toggleLogging();
+        // If no logging is happening, turn off logging
         if(game.loggingEnabled())
-            snaphotToggle.changeIcon("btnON.png");
-        else
+        {
+            game.setLoggingRed(false);
+            game.setLoggingBlue(false);
             snaphotToggle.changeIcon("btnOFF.png");
+        }
+        else // Prompt the user to chose what they want to log
+        {
+            Object[] options = {"Blue","Red","Both"};
+            int n = JOptionPane.showOptionDialog(mainFrame,
+                    "Which player would you like to record?",
+                    "Data Saving",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]);
+
+            switch (n)
+            {
+                case 0 -> game.setLoggingBlue(true);
+                case 1 -> game.setLoggingRed(true);
+                case 2 -> { game.setLoggingRed(true);
+                            game.setLoggingBlue(true);}
+            }
+            snaphotToggle.changeIcon("btnON.png");
+        }
     }
 
     private String toggleButtonLabel(boolean on){
