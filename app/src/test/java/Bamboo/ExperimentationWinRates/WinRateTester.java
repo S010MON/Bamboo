@@ -62,6 +62,7 @@ public class WinRateTester {
             int v1Progress = 0;
             int rowID = 0;
             for(float i : variable1.getValues()){
+                float[][] currentRow = new float[1][variable2.getArrayBounds()];
                 int v2Progress = 0;
                 variable1.set(i);
                 if(!variable2.isEmpty()){
@@ -69,6 +70,7 @@ public class WinRateTester {
                     for(float j : variable2.getValues()){
                         variable2.set(j);
                         array[rowID][colID] = getWinPercentage();
+                        currentRow[0][colID] = array[rowID][colID];
                         colID ++;
                         if(writeProgress){
                             v2Progress ++;
@@ -84,13 +86,12 @@ public class WinRateTester {
                         System.out.println(100*v1Progress/(float)variable1.getArrayBounds() + "% progress.");
                 }
                 rowID++;
+                writeToCSV(currentRow);
             }
         }
-        else{
+        else {
             array[0][0] = getWinPercentage();
         }
-        if(writeResult)
-            writeToCSV(array);
         if(printResult)
             printToConsole(array);
         return array;
@@ -143,13 +144,15 @@ public class WinRateTester {
     }
 
     private void writeToCSV(float[][] data){
-        for(int i = 0; i < variable1.getArrayBounds(); i++){
-            String row = "";
-            for(int j = 0; j < variable2.getArrayBounds(); j++){
-                row += data[i][j];
+        if(writeResult){
+            for(int i = 0; i < data.length; i++){
+                String row = "";
+                for(int j = 0; j < data[0].length; j++){
+                    row += data[i][j] + ",";
+                }
+                System.out.println(FilePath.getNNetPath(fileName));
+                Logger.logCSV(fileName,row);
             }
-            System.out.println(FilePath.getNNetPath(fileName));
-            Logger.logCSV(fileName,row);
         }
     }
 
