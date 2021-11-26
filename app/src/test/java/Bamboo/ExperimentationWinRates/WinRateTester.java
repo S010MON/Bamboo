@@ -34,6 +34,7 @@ public class WinRateTester {
     private String loggingFile = "log.csv";
     private Color loggedColor = Color.WHITE;
     private boolean LOG_MOVES = false;
+    private int total;
 
     public WinRateTester(AgentType agent, int size) throws IOException {
         fileName = agent.toString() + ".csv";
@@ -56,7 +57,7 @@ public class WinRateTester {
 
     public float[][] runExperiment() throws IOException {
         float[][] array = new float[variable1.getArrayBounds()][variable2.getArrayBounds()];
-        int totalGames = variable1.getArrayBounds() * variable2.getArrayBounds();
+        total = variable1.getArrayBounds() * variable2.getArrayBounds() * this.replications;
         if(!variable1.isEmpty()){
             int v1Progress = 0;
             int rowID = 0;
@@ -109,6 +110,8 @@ public class WinRateTester {
             game = new GameWithoutGUI(settings,startingColor);
         setLoggingSettings(game);
         Agent winner = game.turnLogic();
+        if(writeProgress)
+            System.out.println("Game " + gamesPlayed + "out of " + total+ " processed, " + 100*(float)gamesPlayed/total + "%.");
         return winner;
     }
 
