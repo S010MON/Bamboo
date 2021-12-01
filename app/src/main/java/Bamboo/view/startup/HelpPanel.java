@@ -30,7 +30,7 @@ public class HelpPanel extends JPanel
         int imgWidth = 680;
         int imgHeight = 880;
 
-        BufferedImage img = ResourceLoader.getImage("rules.png");
+        BufferedImage img = new ResourceLoader().getImage("rules.png");
         g2d.drawImage(img, x, y, imgWidth, imgHeight,null);
     }
 }

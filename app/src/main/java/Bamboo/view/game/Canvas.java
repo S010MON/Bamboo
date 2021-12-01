@@ -43,11 +43,11 @@ public class Canvas extends JPanel
         addMouseListener(new TileClickListener(game, this));
         rollOverListener = new RollOverListener(game, this);
         addMouseMotionListener(rollOverListener);
-        images.put(Color.RED, ResourceLoader.getImage("red.png"));
-        images.put(Color.BLUE, ResourceLoader.getImage("blue.png"));
-        images.put(Color.WHITE,ResourceLoader.getImage("white.png"));
-        images.put(Color.GREEN,ResourceLoader.getImage("green.png"));
-        images.put(Color.GRAY,ResourceLoader.getImage("grey.png"));
+        images.put(Color.RED,  new ResourceLoader().getImage("red.png"));
+        images.put(Color.BLUE, new ResourceLoader().getImage("blue.png"));
+        images.put(Color.WHITE,new ResourceLoader().getImage("white.png"));
+        images.put(Color.GREEN,new ResourceLoader().getImage("green.png"));
+        images.put(Color.GRAY, new ResourceLoader().getImage("grey.png"));
 
         timer = new Timer(demoDelay, new TimerListener(game,this));
         timer.start();

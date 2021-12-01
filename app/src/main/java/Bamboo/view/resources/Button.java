@@ -10,11 +10,11 @@ public class Button extends JButton
     {
         this.setBorder(BorderFactory.createEmptyBorder());
         this.setBackground(new Color(158, 208, 239));
-        this.setIcon(ResourceLoader.getIcon(iconName));
+        this.setIcon(new ResourceLoader().getIcon(iconName));
     }
 
     public void changeIcon(String iconName)
     {
-        this.setIcon(ResourceLoader.getIcon(iconName));
+        this.setIcon(new ResourceLoader().getIcon(iconName));
     }
 }

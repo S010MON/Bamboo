@@ -9,6 +9,13 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'java'
+}
+
+jar{
+    manifest{
+        attributes 'Main-Class': 'Bamboo.App'
+    }
 }
 
 repositories {
@@ -28,7 +35,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.deepnetts/deepnetts-core
     implementation group: 'com.deepnetts', name: 'deepnetts-core', version: '1.13.0'
-
 }
 
 application {
@@ -40,3 +46,5 @@ tasks.named('test') {
     // Use junit platform for unit tests.
     useJUnitPlatform()
 }
+
+

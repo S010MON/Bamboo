@@ -100,13 +100,13 @@ public class SettingsPanel extends JPanel
         JPanel panel = new JPanel();
         panel.setBackground(Colour.background());
 
-        labelImage[0] = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim2.png")));
+        labelImage[0] = new JLabel(new ImageIcon(new ResourceLoader().getImage("BoardSizeDim2.png")));
         labelImage[0].setVisible(false);
-        labelImage[1] = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim3.png")));
+        labelImage[1] = new JLabel(new ImageIcon(new ResourceLoader().getImage("BoardSizeDim3.png")));
         labelImage[1].setVisible(false);
-        labelImage[2] = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim4.png")));
+        labelImage[2] = new JLabel(new ImageIcon(new ResourceLoader().getImage("BoardSizeDim4.png")));
         labelImage[2].setVisible(false);
-        labelImage[3] = new JLabel(new ImageIcon(ResourceLoader.getImage("BoardSizeDim5.png")));
+        labelImage[3] = new JLabel(new ImageIcon(new ResourceLoader().getImage("BoardSizeDim5.png")));
 
         panel.add(labelImage[0]);
         panel.add(labelImage[1]);
