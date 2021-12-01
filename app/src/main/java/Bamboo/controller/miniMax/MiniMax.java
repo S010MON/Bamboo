@@ -47,7 +47,8 @@ public class MiniMax implements Agent {
             updateUncoloredVectors(game.getGrid());
 
         if(!testing)
-            depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));        NodeMM start = new NodeMM(game.getGrid());
+            depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
+        NodeMM start = new NodeMM(game.getGrid());
         return minimaxMove(start, Math.round(depth.get()), this.color);
     }
 

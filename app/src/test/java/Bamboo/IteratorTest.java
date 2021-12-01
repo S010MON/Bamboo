@@ -141,6 +141,16 @@ public class IteratorTest {
         tester.runExperiment();
     }
 
+    @Test void miniMaxSortedTest() throws IOException{
+        WinRateTester tester = new WinRateTester(AgentType.MINIMAX_AB,5);
+        tester.setVariable1(new Iterator(tester.boardSize, 1,5,1));
+        tester.setVariable2(new Iterator(tester.getAgent1().getDepth(),3,4,1));
+        tester.setProgressPrinting(true);
+        tester.setFileName("MiniMaxSortedAnalysis.csv");
+        tester.setReplications(100);
+        tester.runExperiment();
+    }
+
     @Test void gameWithOutGUITest() throws IOException {
         int wins = 0;
         for(int i = 0; i < 100; i++){
