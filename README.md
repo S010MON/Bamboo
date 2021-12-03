@@ -31,7 +31,7 @@ Ensure the following are installed before running:
 
 ## Installation Instructions
 
-### Executeable .jar
+### Executable .jar
 An executeable jar file of the latest release is available ![here](https://github.com/S010MON/Bamboo/releases) or can be found by downloading the repository as a .zip and navigating to `/app/build/libs`.  Run the jar using the command `java -jar Bamboo-main/app/build/libs/app.jar` from the extracted repository. (In case of issues, check the java version used is 17 and that the app.jar file path is correct)
 
 ### Source
