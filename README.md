@@ -5,10 +5,16 @@
 # Bamboo
 An implementation of the game originally desgined by Mark Steere in March 21
 
-### Gameplay
-Bamboo is a two player game played on an initially empty hexagonal grid.  The 
-two players, Red and Blue, place their own stones onto unoccupied cells on the 
-board, one stone per turn.  Players are not allowed to pass.
+## Contents
+- ![Gameplay](https://github.com/S010MON/Bamboo#gameplay)
+- ![Dependencies](https://github.com/S010MON/Bamboo#dependencies)
+- ![Installation](https://github.com/S010MON/Bamboo#installation-instructions)
+- ![Preview](https://github.com/S010MON/Bamboo#preview)
+
+<br/>
+
+## Gameplay
+Bamboo is a two player game played on an initially empty hexagonal grid.  The two players, Red and Blue, place their own stones onto unoccupied cells on the board, one stone per turn.  Players are not allowed to pass.
 
 ### Placements 
 A group is comprised of one or more interconnected, like colored, stones.  
@@ -16,7 +22,6 @@ A player’s group can’t contain more stones than the number of groups he has.
 
 ### Objective
 The last player to place a stone wins.
-
 
 A copy of the rules, with figures can be found here: http://www.marksteeregames.com/Bamboo_rules.pdf
 
@@ -42,5 +47,5 @@ To compile the game from source clone the repository and navigate to `/Bamboo` t
     $ gradle run
 
 
-
+## Preview
 ![Screenshot.png](https://github.com/S010MON/Bamboo/blob/main/app/src/main/java/Bamboo/view/resources/Screenshot.png)
