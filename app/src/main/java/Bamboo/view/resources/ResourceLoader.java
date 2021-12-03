@@ -1,26 +1,21 @@
 package Bamboo.view.resources;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-public abstract class ResourceLoader
+public class ResourceLoader
 {
-    public static Icon getIcon(String name)
+    public Icon getIcon(String name)
     {
-        FileSystem fileSystem = FileSystems.getDefault();
-        String systemPath = fileSystem.getPath("").toAbsolutePath().toString();
-        String appPath = "/app/src/main/java/Bamboo/view/resources/";
-        String path = systemPath + appPath + name;
+        URL url = getClass().getClassLoader().getResource(name);
         BufferedImage image;
         try {
-            image = ImageIO.read(new File(path));
+            image = ImageIO.read(url);
         } catch (IOException e) {
             image = null;
             System.out.println(name + " not found");
@@ -29,15 +24,12 @@ public abstract class ResourceLoader
         return new ImageIcon(image);
     }
 
-    public static BufferedImage getImage(String name)
+    public BufferedImage getImage(String name)
     {
-        FileSystem fileSystem = FileSystems.getDefault();
-        String systemPath = fileSystem.getPath("").toAbsolutePath().toString();
-        String appPath = "/app/src/main/java/Bamboo/view/resources/";
-        String path = systemPath + appPath + name;
+        URL url = getClass().getClassLoader().getResource(name);
         BufferedImage image;
         try {
-            image = ImageIO.read(new File(path));
+            image = ImageIO.read(url);
         } catch (IOException e) {
             image = null;
             System.out.println(name + " not found");

@@ -49,7 +49,7 @@ public class EndGame extends JPanel
         int x = (int) screenSize.getWidth()/2 - imgWidth/2;
         int y = (int) screenSize.getHeight()/2 - imgHeight/2;
 
-        BufferedImage img = ResourceLoader.getImage("gameOver.jpeg");
+        BufferedImage img = new ResourceLoader().getImage("gameOver.jpeg");
         g2d.drawImage(img, x, y, imgWidth, imgHeight,null);
 
         g2d.setColor(Color.WHITE);

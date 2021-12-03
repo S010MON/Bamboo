@@ -10,6 +10,6 @@ public class Label extends JLabel
     {
         this.setBorder(BorderFactory.createEmptyBorder());
         this.setBackground(Colour.background());
-        this.setIcon(ResourceLoader.getIcon(iconName));
+        this.setIcon(new ResourceLoader().getIcon(iconName));
     }
 }
