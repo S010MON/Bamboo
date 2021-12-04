@@ -10,7 +10,7 @@ An implementation of the game originally desgined by Mark Steere in March 21
 - ![Dependencies](https://github.com/S010MON/Bamboo#dependencies)
 - ![Installation](https://github.com/S010MON/Bamboo#installation-instructions)
 - ![Preview](https://github.com/S010MON/Bamboo#preview)
-- ![Notes]()
+- ![Notes](https://github.com/S010MON/Bamboo/blob/main/README.md#notes)
 
 <br/>
 
