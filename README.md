@@ -10,6 +10,7 @@ An implementation of the game originally desgined by Mark Steere in March 21
 - ![Dependencies](https://github.com/S010MON/Bamboo#dependencies)
 - ![Installation](https://github.com/S010MON/Bamboo#installation-instructions)
 - ![Preview](https://github.com/S010MON/Bamboo#preview)
+- ![Notes]()
 
 <br/>
 
@@ -46,6 +47,8 @@ To compile the game from source clone the repository and navigate to `/Bamboo` t
     
     $ gradle run
 
+## Notes
+Temporarily, the Neural Network only works on the size 5 grid, an out of bounds error will be thrown for any other size used.  This is a known issue that will be patched in due course.
 
 ## Preview
 ![Screenshot.png](https://github.com/S010MON/Bamboo/blob/main/app/src/main/java/Bamboo/view/resources/Screenshot.png)
