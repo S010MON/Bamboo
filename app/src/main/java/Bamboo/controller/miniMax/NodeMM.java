@@ -1,10 +1,14 @@
 package Bamboo.controller.miniMax;
 
-import java.util.ArrayList;
+import java.util.*;
+
 import Bamboo.controller.*;
+import Bamboo.controller.Vector;
 import Bamboo.model.Grid;
+import com.google.common.collect.Lists;
 
 public class NodeMM {
+    private final int[] POWERS_OF_10 = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
     private NodeMM parent;
     private ArrayList<NodeMM> children;
     private Grid grid;
@@ -12,6 +16,8 @@ public class NodeMM {
     private int value;
     private int guess;
     private Vector move;
+    private int comparisons = 0;
+    private int maxGuess = 0;
 
     public NodeMM(Grid new_grid){
         this.children = new ArrayList<>();
@@ -36,6 +42,7 @@ public class NodeMM {
         temp.setParent(this);
         temp.setMove(move);
         temp.setGuess(move.getX()*move.getX() + move.getY()*move.getY() + move.getZ()*move.getZ());
+        if(temp.getGuess() > maxGuess){maxGuess = temp.getGuess();}
         children.add(temp);
     }
 
@@ -85,9 +92,10 @@ public class NodeMM {
         return "node at lv " + level;
     }
 
-    public void sortChildren(){
+    public int sortChildren(){
         for(int i = 0; i < children.size(); i++){
             for(int j = children.size() - 1; j >= 0; j--){
+                comparisons ++;
                 if(i >= j){
                     break;
                 }
@@ -98,5 +106,44 @@ public class NodeMM {
                 }
             }
         }
+        return comparisons;
+    }
+
+    public int sortChildrenRadix(){
+        int maxDigits = getDigits(maxGuess);
+        ArrayList<Deque<NodeMM>> buckets = new ArrayList<>();
+        for(int ii = 0; ii < 10; ii++){
+            buckets.add(new ArrayDeque<>());
+        }
+        for(int i = 0; i < maxDigits; i++){
+            for(NodeMM node : children){
+                comparisons ++;
+                int dig = getDigit(node.getGuess(), i);
+                buckets.get(9-dig).addLast(node);
+            }
+            children.clear();
+            for(int ii = 0; ii < 10; ii++){
+                while(!buckets.get(ii).isEmpty()){
+                    comparisons++;
+                    children.add(buckets.get(ii).removeFirst());
+                }
+            }
+        }
+        return comparisons;
+    }
+
+    private int getDigits(int x){
+        int digits = 1;
+        int tmp = 10;
+        while(x >= tmp){
+            digits ++;
+            tmp*=10;
+        }
+        return digits;
+    }
+
+    private int getDigit(int x, int pos){
+        int divisor = POWERS_OF_10[pos];
+        return x/divisor % 10;
     }
 }
