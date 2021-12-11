@@ -48,10 +48,16 @@ public class MiniMaxAB implements Agent {
         else{
             updateUncoloredVectors(game.getGrid());
         }
-        if(!testing)
+        int d = 1;
+        if(!testing){
             depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
+            d = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
+        }
+        else{
+            d = Math.round((float)(Number)(depth.get()));
+        }
         NodeMM start = new NodeMM(game.getGrid());
-        return minimaxMove(start, Math.round(depth.get()), this.color);
+        return minimaxMove(start, d, this.color);
     }
 
     @Override
@@ -63,10 +69,16 @@ public class MiniMaxAB implements Agent {
         else{
             updateUncoloredVectors(game.getGrid());
         }
-        if(!testing)
+        int d = 1;
+        if(!testing){
             depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
+            d = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
+        }
+        else{
+            d = Math.round((float)(Number)(depth.get()));
+        }
         NodeMM start = new NodeMM(game.getGrid());
-        return minimaxMove(start, Math.round((float)(Number)depth.get()), this.color);
+        return minimaxMove(start, d, this.color);
     }
 
     @Override

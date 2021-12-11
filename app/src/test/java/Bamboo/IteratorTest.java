@@ -1,23 +1,18 @@
 package Bamboo;
 
 import Bamboo.ExperimentationWinRates.Iterator;
-import Bamboo.ExperimentationWinRates.WinRateTester;
+import Bamboo.ExperimentationWinRates.Tester;
+import Bamboo.ExperimentationWinRates.TesterAgent;
+import Bamboo.ExperimentationWinRates.Variable;
 import Bamboo.controller.*;
-import Bamboo.controller.MCTS.MCTS;
-import Bamboo.*;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-import Bamboo.controller.miniMax.MiniMax;
-import Bamboo.controller.miniMax.MiniMaxAB;
 import Bamboo.controller.miniMax.MiniMaxSortedAB;
 import Bamboo.model.GameWithoutGUI;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 
 public class IteratorTest {
@@ -32,12 +27,22 @@ public class IteratorTest {
         }
     }
 
+    @Test void newAPI() throws IOException{
+        Tester tester = new Tester(AgentType.MCTS,1);
+        //tester.addVariable(TesterAgent.AGENT_1,Variable.C,0.5f,2,0.5f);
+        //tester.addVariable(TesterAgent.AGENT_1,Variable.ITERATIONS,new float[]{10,200});
+        //tester.addVariable(Variable.GRID_SIZE,1,4,1);
+        tester.setReplications(5);
+        tester.makePlan();
+        tester.run();
+    }
+
     @Test void tutorialTester() throws IOException {
         //instantiate Tester which runs experiments for you and returns a matrix with win rates by variable values
         //Requires agent type and grid size
         AgentType type = AgentType.MCTS;
         int boardSize = 2;
-        WinRateTester tester = new WinRateTester(type, boardSize);
+        Tester tester = new Tester(type, boardSize);
         //Set the number of games you want the agent to play against the other agent (random?) (for each unique combination of variable values)
         tester.setReplications(15);
         //If you want to let the agent play against something else than random, pass an agent type to
@@ -92,34 +97,34 @@ public class IteratorTest {
         //If youre just testing something and dont want to append to your file maybe?
         tester.setWriting(false);
         //run the experiment
-        float[][] result = tester.runExperiment();//returns a float array, should you want to call this multiple times in a loop or something?
+        float[][] result = tester.run();//returns a float array, should you want to call this multiple times in a loop or something?
     }
 
     @Test void minimalExample() throws IOException {
         //Lets MCTS play random twice for each combination of C and iterations
-        WinRateTester tester = new WinRateTester(AgentType.MCTS,3);
+        Tester tester = new Tester(AgentType.MCTS,3);
         tester.setVariable1(new Iterator<>(tester.getAgent1().getIterations(),1,1000,250));
         tester.setVariable2(new Iterator<>(tester.getAgent1().getC(), 0, 1.2f, 0.2f));
         tester.setReplications(2);
         tester.setProgressPrinting(true);
         tester.setFileName("MCTS_experiment_C_iterations.csv");
-        tester.runExperiment();
+        tester.run();
     }
 
     @Test void miniMaxComparison() throws IOException{
         //Compares minimax win percentages against random over search depth and grid size
-        WinRateTester tester = new WinRateTester(AgentType.MINIMAX_SORTED,2);
+        Tester tester = new Tester(AgentType.MINIMAX_SORTED,2);
         tester.setOpponent(AgentType.RANDOM);
         tester.setVariable1(new Iterator<>(tester.getAgent1().getDepth(), 1,4,1));
         tester.setVariable2(new Iterator<>(tester.boardSize, 0, 3, 1));
         tester.setReplications(1);
         tester.setFileName("MiniMaxComparisons.csv");
         tester.setProgressPrinting(true);
-        tester.runExperiment();
+        tester.run();
     }
 
     @Test void startingWinPercentage() throws IOException {
-        WinRateTester tester = new WinRateTester(AgentType.RANDOM,4);
+        Tester tester = new Tester(AgentType.RANDOM,4);
         tester.setVariable1(new Iterator(tester.boardSize, 1,5,1));
         tester.setReplications(50);
         tester.setStartingColor(Color.RED);
@@ -128,27 +133,27 @@ public class IteratorTest {
         tester.setLoggedColor(Color.RED);
         tester.setWriting(false);
         tester.setProgressPrinting(true);
-        tester.runExperiment();
+        tester.run();
     }
 
     @Test void C02MCTSTest() throws IOException {
-        WinRateTester tester = new WinRateTester(AgentType.MCTS,5);
+        Tester tester = new Tester(AgentType.MCTS,5);
         tester.setVariable1(new Iterator<>(tester.getAgent1().getIterations(),new float[]{1,100,1000,10000,50000}));
         tester.setVariable2(new Iterator<>(tester.getAgent1().getC(),0.2f));
         tester.setProgressPrinting(true);
         tester.setReplications(100);
         tester.setRedStartingPercentage(0.5f);
-        tester.runExperiment();
+        tester.run();
     }
 
     @Test void miniMaxSortedTest() throws IOException{
-        WinRateTester tester = new WinRateTester(AgentType.MINIMAX_AB,5);
+        Tester tester = new Tester(AgentType.MINIMAX_AB,5);
         tester.setVariable1(new Iterator(tester.boardSize, 1,5,1));
         tester.setVariable2(new Iterator(tester.getAgent1().getDepth(),3,4,1));
         tester.setProgressPrinting(true);
         tester.setFileName("MiniMaxSortedAnalysis.csv");
         tester.setReplications(100);
-        tester.runExperiment();
+        tester.run();
     }
 
     @Test void gameWithOutGUITest() throws IOException {

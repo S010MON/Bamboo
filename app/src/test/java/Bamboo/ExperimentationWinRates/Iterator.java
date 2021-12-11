@@ -22,12 +22,14 @@ public class Iterator<T> {
     }
 
     public Iterator(Mutable<T> ref,float[] array){
+        if(ref == null)this.empty = true;
         this.reference = ref;
         this.iterations = array.length;
         this.values = array;
     }
 
     public Iterator(Mutable<T> ref,float constant){
+        if(ref == null)this.empty = true;
         this.reference = ref;
         this.iterations = 1;
         this.values = new float[]{constant};
@@ -47,6 +49,7 @@ public class Iterator<T> {
     }
 
     public Iterator(Mutable<T> reference, float min, float max, float step){
+        if(reference == null)this.empty = true;
         this.min = min;
         this.max = max;
         this.step = step;
