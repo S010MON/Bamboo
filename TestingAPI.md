@@ -8,7 +8,7 @@ You can either pass it an agent type and a grid size
 
     Tester tester = new Tester(AgentType.MCTS,4);
 
-Or use the default constructor and assign these things later
+Or use the default constructor and assign these things later. The grid size defaults to 5, while both agents become random.
 
     Tester tester = new Tester();
 

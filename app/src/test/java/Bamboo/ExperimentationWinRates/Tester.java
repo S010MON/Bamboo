@@ -62,7 +62,6 @@ public class Tester {
             }
             results[i] = getWinPercentage();
             table[i][plan[0].length] = results[i];
-            System.out.println(count);
             count++;
         }
         colnames.add("Result");
