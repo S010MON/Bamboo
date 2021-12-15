@@ -55,6 +55,8 @@ You can change this by using
 
     tester.setFileName("MyFile.csv");
 
+The tester also sets "checkpoints" and writes the results of each experiment as soon as it is completed. So, it writes a line whenever replications games are processed.
+
 ##Move Logging
 
 If you want to log moves (for Nnet training data), activate logging using
@@ -110,3 +112,12 @@ Results are in the form of
     x,y,...,z,win percentage,
     x,y,...,z,win percentage,
 
+##Metrics
+
+As of now, you can either record win rates over replications or time spent for completing a game.
+Choose this from the Metrics enum.
+
+    Metrics.WIN_RATE || Metrics.ELAPSED_TIME
+
+Win Rate is always measured by default, you can add other metrics though.
+This will create a new column in the output, storing time elapsed per game in ms.

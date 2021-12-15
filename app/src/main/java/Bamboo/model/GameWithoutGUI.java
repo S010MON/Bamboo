@@ -13,7 +13,7 @@ public class GameWithoutGUI {
     private String logFileName = "log.csv";
     private Color logColor;
     private Grid grid;
-    private ArrayList<Tile> remainingTiles = new ArrayList<>();
+    private ArrayList<Vector> remainingTiles = new ArrayList<>();
     Agent a1, a2, currentPlayer;
 
     public GameWithoutGUI(Settings settings){
@@ -22,7 +22,7 @@ public class GameWithoutGUI {
         currentPlayer = settings.getCurrentPlayer();
         size = settings.boardSize;
         grid = new GridGraphImp(settings.boardSize);
-        remainingTiles = new ArrayList<>(grid.getAllTiles());
+        remainingTiles = new ArrayList<>(grid.getAllVectors());
     }
 
     public GameWithoutGUI(Settings settings, Color startingPlayer){
@@ -34,7 +34,7 @@ public class GameWithoutGUI {
             currentPlayer = a2;
         size = settings.boardSize;
         grid = new GridGraphImp(settings.boardSize);
-        remainingTiles = new ArrayList<>(grid.getAllTiles());
+        remainingTiles = new ArrayList<>(grid.getAllVectors());
     }
 
     private void toggleTurn()
@@ -57,7 +57,7 @@ public class GameWithoutGUI {
     private void makeTurn(){
         Vector move = currentPlayer.getNextMove(this);
         logMove(move);
-        //remainingTiles.remove(grid.getTile(move));
+        remainingTiles.remove(move);
         this.grid.setTile(move,currentPlayer.getColor());
         //System.out.println("Agent " + currentPlayer.getName() + " placed color " + currentPlayer.getColor() + " at " + move.toString());
         toggleTurn();
@@ -81,6 +81,8 @@ public class GameWithoutGUI {
     public List<Tile> getAllTiles() {
         return grid.getAllTiles();
     }
+
+    public List<Vector> getRemainingVectors(){return this.remainingTiles;}
 
     public void setLogFileName(String fileName){this.logFileName = fileName;}
 

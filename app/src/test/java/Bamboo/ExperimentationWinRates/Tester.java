@@ -16,15 +16,16 @@ public class Tester {
     private boolean writeProgress = true;
     public Mutable<Integer> boardSize = new Mutable<>(3);
     private int replications;
-    private String fileName;
+    private String fileName = "experiment.csv";
     private ArrayList<Iterator> variables = new ArrayList<>();
-    private Iterator variable1;
-    private Iterator variable2;
     private float redPercentage = 0.5f;
     private int gamesPlayed = 0;
+    private int localGameCounter = 0;
     private String loggingFile = "log.csv";
     private Color loggedColor = Color.WHITE;
     private boolean LOG_MOVES = false;
+    private boolean TRACK_TIME = false;
+    private float elapsed = 0f;
     private int total;
     private ArrayList<String> colnames = new ArrayList<>();
 
@@ -38,6 +39,8 @@ public class Tester {
     }
 
     public Tester() throws IOException{
+        agent1 = AgentFactory.makeAgent(AgentType.RANDOM,Color.RED);
+        agent2 = AgentFactory.makeAgent(AgentType.RANDOM,Color.BLUE);
         boardSize.set(5);
     }
 
@@ -48,11 +51,16 @@ public class Tester {
     public void setStartingColor(Color color){startingColor = color;}
     public void resetStartingColor(){startingColor = Color.WHITE;}
 
-    public float[][] run() throws IOException{
+    public float[][] run(){
+        colnames.add("WinRate");
+        if(TRACK_TIME)colnames.add("ms");
         int count = 0;
         float[][] plan = makePlan();
+        int cols = plan[0].length + 1;
         float[] results = new float[plan.length];
-        float[][] table = new float[plan.length][plan[0].length + 1];
+        if(TRACK_TIME)cols += 1;
+        float[][] table = new float[plan.length][cols];
+        writeHeader();
         for(int i = 0; i < plan.length; i++){
             for(int var = 0; var < plan[0].length; var++){
                 if(!this.variables.get(var).isEmpty()){
@@ -62,21 +70,22 @@ public class Tester {
             }
             results[i] = getWinPercentage();
             table[i][plan[0].length] = results[i];
+            if(TRACK_TIME)table[i][cols-1] = elapsed;
             count++;
+            writeRow(table[i]);
         }
-        colnames.add("Result");
         if(writeResult)writeToCSV(table);
         if(printResult)printToConsole(table);
         return table;
     }
 
     //Gets winner from one game
-    private Agent getWinner() throws IOException {
+    private Agent getWinner(){
         this.gamesPlayed ++;
         Settings settings = new Settings(agent1, agent2, ((Number)boardSize.get()).intValue());
         GameWithoutGUI game;
         if(startingColor == Color.WHITE)
-            if(gamesPlayed /(float)this.replications < this.redPercentage)
+            if(localGameCounter /(float)this.replications < this.redPercentage)
                 game = new GameWithoutGUI(settings, Color.RED);
             else
                 game = new GameWithoutGUI(settings, Color.BLUE);
@@ -89,21 +98,37 @@ public class Tester {
         return winner;
     }
 
-    //returns player 1s win rate over <replications> games
-    private float getWinPercentage() throws IOException {
+    private float getWinPercentage(){
         int sum = 0;
+        long before = System.nanoTime();
         for(int i = 0; i < replications; i++){
             if(getWinner() == agent1)
                 sum++;
         }
+        long after = System.nanoTime();
+        this.elapsed = nanoToMilli((after-before)/(float)replications);
+        localGameCounter = 0;
         return sum/(float)replications;
+    }
+
+    private float nanoToMilli(float nano){return nano * 0.001f;}
+
+    private void writeHeader(){
+        Logger.logCSV(fileName,headerString());
+    }
+
+    private void writeRow(float[] row){
+        String dstr = "";
+        for(float i : row){
+            dstr += i + ",";
+        }
+        Logger.logCSV(fileName,dstr);
     }
 
     private void writeToCSV(float[][] data){
         if(writeResult){
-            for(int i = 0; i < data[0].length; i++) {
-                Logger.logCSV(fileName, colnames.get(i));
-            }
+            String names = headerString();
+            Logger.logCSV(fileName,names);
             for(int i = 0; i < data.length; i++){
                 String row = "";
                 for(int j = 0; j < data[0].length; j++){
@@ -112,6 +137,14 @@ public class Tester {
                 Logger.logCSV(fileName,row);
             }
         }
+    }
+
+    private String headerString(){
+        String names = "";
+        for (String colname : colnames) {
+            names += colname + ", ";
+        }
+        return names;
     }
 
     public void setFileName(String fileName){this.fileName = fileName;}
@@ -191,11 +224,11 @@ public class Tester {
         pushVariable(variable);
     }
 
-
-    public void setVariable1(Iterator i){this.variable1 = i;}
-    public void setVariable2(Iterator i){this.variable2 = i;}
-    public Iterator getVariable1(){return this.variable1;}
-    public Iterator getVariable2(){return this.variable2;}
+    public void addMetric(Metrics m){
+        switch(m){
+            case ELAPSED_TIME -> this.TRACK_TIME = true;
+        }
+    }
     public void setWriting(boolean argument){this.writeResult = argument;}
     public void setProgressPrinting(boolean argument){this.writeProgress = argument;}
     public void setPrinting(boolean argument){this.printResult = argument;}
@@ -206,8 +239,6 @@ public class Tester {
 
     private void pushVariable(Iterator i){
         this.variables.add(i);
-        if(this.getVariable1() == null)this.variable1 = i;
-        else this.variable2 = i;
     }
 
     public float[][] makePlan(){
