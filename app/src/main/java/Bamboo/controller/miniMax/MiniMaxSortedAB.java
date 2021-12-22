@@ -151,7 +151,7 @@ public class MiniMaxSortedAB implements Agent {
                 node.addChild(copy,v);
             }
         }
-        node.sortChildren();
+        node.sortChildrenRadix();
     }
 
     public int getCalls(){

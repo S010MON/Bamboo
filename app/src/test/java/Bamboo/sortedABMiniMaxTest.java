@@ -9,6 +9,7 @@ import Bamboo.model.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.core.util.NanoClock;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -93,11 +94,35 @@ public class sortedABMiniMaxTest {
 
     @Test void sortedNodesGuesses(){
         NodeMM start = new NodeMM(new GridGraphImp(5));
-        MiniMaxSortedAB agent = new MiniMaxSortedAB(Color.BLUE);
+        MiniMaxAB agent = new MiniMaxAB(Color.BLUE);
         agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
         agent.addLegalChildren(start,Color.BLUE);
+        long before = System.nanoTime();
+        int comps = start.sortChildren();
+        long after = System.nanoTime();
+        float elapsed = (after-before)/(float)1000000;
+        System.out.println("Elapsed ms: " + elapsed);
         for(NodeMM child : start.getChildren()){
             System.out.println(child.getGuess());
+        }
+        System.out.println("Comparisons: " + comps);
+    }
+
+    @Test void RadixTest(){
+        NodeMM start = new NodeMM(new GridGraphImp(5));
+        MiniMaxAB agent = new MiniMaxAB(Color.RED);
+        agent.setGame(new ArrayList<>(start.getGrid().getAllVectors()));
+        agent.addLegalChildren(start,Color.RED);
+        long before = System.nanoTime();
+        int comps = start.sortChildrenRadix();
+        long after = System.nanoTime();
+        float elapsed = (after-before)/(float)1000000;
+        System.out.println("Elapsed ms: " + elapsed);
+        System.out.println("Comparisons/ Actions: " + comps);
+        NodeMM previuosChild = start.getChildren().get(0);
+        for(NodeMM child : start.getChildren()){
+            assertTrue(child.getGuess() <= previuosChild.getGuess());
+            previuosChild = child;
         }
     }
 }
