@@ -40,16 +40,11 @@ public class StartupPanel extends JPanel
         view.runGame(getSettings());
     }
 
-    public Settings getSettings() throws IOException {
+  /*  public Settings getSettings() throws IOException {
 
-        demoConfigurationPanel = settingsPanel.getDemoConfigurationPanel();
-        singleConfigurationPanel = settingsPanel.getSingleConfigurationPanel();
-
-        if (demoConfigurationPanel.getAgentType1() != AgentType.NEURAL_NET &&
-                demoConfigurationPanel.getAgentType2() != AgentType.NEURAL_NET &&
-                singleConfigurationPanel.getAgentType() != AgentType.NEURAL_NET) {
 
             return switch (settingsPanel.getMode()) {
+
                 case SINGLE -> new Settings(
                         new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
                         AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
@@ -63,21 +58,51 @@ public class StartupPanel extends JPanel
                         AgentFactory.makeAgent(settingsPanel.getAgentType2(), settingsPanel.getPlayer2Colour()),
                         settingsPanel.getBoardSize());
             };
+    }*/
+
+    public Settings getSettings() throws IOException {
+
+        demoConfigurationPanel = settingsPanel.getDemoConfigurationPanel();
+        singleConfigurationPanel = settingsPanel.getSingleConfigurationPanel();
+
+        if(settingsPanel.getMode().equals(Mode.SINGLE)){
+            if(singleConfigurationPanel.getAgentType()==AgentType.NEURAL_NET){
+                return new Settings(
+                        new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
+                        AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
+                        5);
+            }
+            else{
+                return new Settings(
+                        new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
+                        AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
+                        settingsPanel.getBoardSize());
+            }
         }
-        return switch (settingsPanel.getMode()) {
-            case SINGLE -> new Settings(
-                    new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
-                    AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
-                    5);
-            case MULTI -> new Settings(
-                    new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
-                    new Human(settingsPanel.getPlayer2Name(), settingsPanel.getPlayer2Colour()),
-                    settingsPanel.getBoardSize());
-            case DEMO -> new Settings(
-                    AgentFactory.makeAgent(settingsPanel.getAgentType1(), settingsPanel.getPlayer1Colour()),
-                    AgentFactory.makeAgent(settingsPanel.getAgentType2(), settingsPanel.getPlayer2Colour()),
-                    5);
-        };
+
+       if(settingsPanel.getMode().equals(Mode.DEMO)){
+           if(settingsPanel.getDemoConfigurationPanel().getAgentType1()==(AgentType.NEURAL_NET)||
+               settingsPanel.getDemoConfigurationPanel().getAgentType2()==(AgentType.NEURAL_NET)){
+
+               return new Settings(
+                       AgentFactory.makeAgent(settingsPanel.getAgentType1(), settingsPanel.getPlayer1Colour()),
+                       AgentFactory.makeAgent(settingsPanel.getAgentType2(), settingsPanel.getPlayer2Colour()),
+                       5);
+           }
+           else{
+               return new Settings(
+                       AgentFactory.makeAgent(settingsPanel.getAgentType1(), settingsPanel.getPlayer1Colour()),
+                       AgentFactory.makeAgent(settingsPanel.getAgentType2(), settingsPanel.getPlayer2Colour()),
+                       settingsPanel.getBoardSize());
+           }
+        }
+
+       return new Settings(
+                new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
+                new Human(settingsPanel.getPlayer2Name(), settingsPanel.getPlayer2Colour()),
+                settingsPanel.getBoardSize());
+
+
     }
 
 

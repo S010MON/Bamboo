@@ -21,6 +21,7 @@ public class SingleConfigurationPanel extends JPanel
     private JTextField player1textField;
     private JComboBox AIcombobox;
     private String[] AIstring ;
+    private AgentType AT ;
 
     public SingleConfigurationPanel()
     {
@@ -96,7 +97,8 @@ public class SingleConfigurationPanel extends JPanel
 
     public AgentType getAgentType()
     {
-        return  (AgentType) AIcombobox.getSelectedItem();
+        return (AgentType) AIcombobox.getSelectedItem();
+
     }
 
     public Color getPlayer1Color(){return buttonPanel1.getPlayerColor();}

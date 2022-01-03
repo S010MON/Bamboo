@@ -34,6 +34,7 @@ public class SettingsPanel extends JPanel
         singleConfigurationPanel = new SingleConfigurationPanel();
         demoConfigurationPanel = new DemoConfigurationPanel();
 
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
         buttonPanel.setLayout(null);
@@ -201,6 +202,7 @@ public class SettingsPanel extends JPanel
         currentPanel.remove(demoConfigurationPanel);
         currentPanel.add(multiConfigurationPanel, BorderLayout.CENTER);
         currentPanel.setVisible(true);
+
     }
 
     private void selectSingle()
@@ -211,6 +213,7 @@ public class SettingsPanel extends JPanel
         currentPanel.remove(demoConfigurationPanel);
         currentPanel.add(singleConfigurationPanel, BorderLayout.CENTER);
         currentPanel.setVisible(true);
+
     }
 
     private void selectDemo()
