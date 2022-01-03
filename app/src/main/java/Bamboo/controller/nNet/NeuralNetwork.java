@@ -1,8 +1,7 @@
 package Bamboo.controller.nNet;
 
 import Bamboo.controller.*;
-import Bamboo.model.GameWithGUI;
-import Bamboo.model.GameWithoutGUI;
+import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import deepnetts.data.DataSets;
 import deepnetts.data.MLDataItem;
@@ -72,22 +71,7 @@ public class NeuralNetwork implements Agent
     }
 
     @Override
-    public Vector getNextMove(GameWithGUI game)
-    {
-        Grid grid = game.getGrid();
-        int[] input = DataManager.flatten(grid,color);
-        float[] floatInputs = new float[input.length];
-        for(int i = 0; i < input.length; i++)
-            floatInputs[i] = (float)input[i];
-        float[] output = neuralNet.predict(floatInputs);
-        Vector move = getMoveFromPrediction(output,game.getGrid());
-        if(grid.isLegalMove(move,color))
-            System.out.println("NNet chooses move " + move + " at probability " + maximum(output));
-        return move;
-    }
-
-    @Override
-    public Vector getNextMove(GameWithoutGUI game)
+    public Vector getNextMove(Game game)
     {
         Grid grid = game.getGrid();
         int[] input = DataManager.flatten(grid,color);

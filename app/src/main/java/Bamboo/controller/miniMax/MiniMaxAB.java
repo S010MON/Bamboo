@@ -36,21 +36,7 @@ public class MiniMaxAB implements Agent {
     }
 
     @Override
-    public Vector getNextMove(GameWithGUI game)
-    {
-        if(uncolored_vectors.size() == 0){
-            uncolored_vectors = new ArrayList<>(game.getGrid().getAllVectors());
-        }
-        else{
-            updateUncoloredVectors(game.getGrid());
-        }
-        int depth = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
-        NodeMM start = new NodeMM(game.getGrid());
-        return minimaxMove(start, depth, this.color);
-    }
-
-    @Override
-    public Vector getNextMove(GameWithoutGUI game)
+    public Vector getNextMove(Game game)
     {
         if(uncolored_vectors.size() == 0){
             uncolored_vectors = new ArrayList<>(game.getGrid().getAllVectors());
