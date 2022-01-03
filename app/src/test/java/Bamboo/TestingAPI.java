@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import Bamboo.controller.miniMax.MiniMaxSortedAB;
 import Bamboo.model.GameWithoutGUI;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 
@@ -24,6 +25,7 @@ public class TestingAPI {
         }
     }
 
+    @Ignore
     @Test void newAPI() throws IOException{
         Tester tester = new Tester();
         tester.setAgent1(AgentType.MINIMAX_SORTED);
@@ -33,6 +35,7 @@ public class TestingAPI {
         tester.addVariable(Variable.GRID_SIZE,1,5,1);
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.setReplications(2);
+        tester.setFileName("testerTest.csv");
         tester.run();
     }
 
