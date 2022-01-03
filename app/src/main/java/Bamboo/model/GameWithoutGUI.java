@@ -5,30 +5,17 @@ import Bamboo.controller.Settings;
 import Bamboo.controller.Vector;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class GameWithoutGUI implements Game
+public class GameWithoutGUI extends GameImp implements Game
 {
     public static int MCTSiterations = 1000;
 
-    private Grid grid;
-    private ArrayList<Tile> remainingTiles = new ArrayList<>();
-    Agent a1, a2, currentPlayer;
+    private ArrayList<Tile> remainingTiles;
 
-    public GameWithoutGUI(Settings settings){
-        a1 = settings.player1;
-        a2 = settings.player2;
-        currentPlayer = a1;
-        grid = new GridGraphImp(settings.boardSize);
-        remainingTiles = new ArrayList<>(grid.getAllTiles());
-    }
-
-    private void toggleTurn()
+    public GameWithoutGUI(Settings settings)
     {
-        if(currentPlayer == a1)
-            currentPlayer = a2;
-        else
-            currentPlayer = a1;
+        super(settings);
+        remainingTiles = new ArrayList<>(grid.getAllTiles());
     }
 
     public Agent turnLogic(){
@@ -46,25 +33,10 @@ public class GameWithoutGUI implements Game
         toggleTurn();
     }
 
-    @Override
-    public Grid getGrid() {
-        return this.grid;
-    }
-
-    @Override
-    public Agent getCurrentPlayer() {
-        return currentPlayer;
-    }
-
     private Agent otherPlayer(){
-        if(currentPlayer == a1)
-            return a2;
+        if(currentPlayer == player1)
+            return player2;
         else
-            return a1;
-    }
-
-    @Override
-    public List<Tile> getAllTiles() {
-        return grid.getAllTiles();
+            return player1;
     }
 }

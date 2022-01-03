@@ -4,30 +4,20 @@ import Bamboo.controller.*;
 import Bamboo.view.MainFrame;
 
 import java.awt.*;
-import java.util.List;
 
-public class GameWithGUI implements Game
+public class GameWithGUI extends GameImp implements Game
 {
     private boolean LOG_MOVES_RED = false;
     private boolean LOG_MOVES_BLUE = false;
-
-    private Grid grid;
-    private Agent player1;
-    private Agent player2;
-    private Agent currentPlayer;
+    private boolean alreadypopup = false;
     private MainFrame view;
-    private Settings settings;
-    private boolean alreadypopup=false ;
 
     public GameWithGUI(Settings settings, MainFrame view)
     {
-        this.grid = new GridGraphImp(settings.boardSize);
-        this.player1 = settings.player1;
-        this.player2 = settings.player2;
+        super(settings);
         this.view = view;
-        this.currentPlayer = settings.getCurrentPlayer();
-        this.settings = settings;
 
+        // This loads a new game from the tiles in the settings
         if(settings.tiles != null)
         {
             for(Vector v: settings.tiles.keySet())
@@ -77,21 +67,6 @@ public class GameWithGUI implements Game
         return grid.getMaxGroupSize(player.getColor());
     }
 
-    @Override
-    public List<Tile> getAllTiles()
-    {
-        return grid.getAllTiles();
-    }
-
-    @Override
-    public Grid getGrid(){return grid;}
-
-    @Override
-    public Agent getCurrentPlayer()
-    {
-        return currentPlayer;
-    }
-
     public Agent getNonCurrentPlayer()
     {
         if(currentPlayer == player1)
@@ -139,7 +114,8 @@ public class GameWithGUI implements Game
         alreadypopup=true ;
     }
 
-    private void toggleTurn()
+    @Override
+    protected void toggleTurn()
     {
         if(currentPlayer == player1)
             currentPlayer = player2;
