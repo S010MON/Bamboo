@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import Bamboo.controller.miniMax.MiniMaxSortedAB;
 import Bamboo.model.GameWithoutGUI;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class TestingAPITest {
@@ -23,7 +23,8 @@ public class TestingAPITest {
         }
     }
 
-    @Ignore void newAPI() throws IOException{
+    @Disabled
+    @Test void newAPI() throws IOException{
         Tester tester = new Tester();
         tester.setAgent1(AgentType.MINIMAX_SORTED);
         tester.setAgent2(AgentType.MINIMAX_AB);
