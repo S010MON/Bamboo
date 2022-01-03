@@ -13,6 +13,7 @@ public class DemoConfigurationPanel extends JPanel
     private JPanel textFieldPanel;
     private JPanel textLabelPanel2;
     private JPanel textFieldPanel2;
+    private Button button;
     private SingleButtonPanel buttonPanel1;
     private SingleButtonPanel buttonPanel2;
     private JButton toggleButton;
@@ -22,7 +23,7 @@ public class DemoConfigurationPanel extends JPanel
     private JComboBox AIcombobox2 ;
     private String[] AIstring ;
 
-    public DemoConfigurationPanel()
+    public DemoConfigurationPanel(StartupPanel startupPanel)
     {
         setLayout(new GridLayout(4, 1));
         setVisible(true);
@@ -86,10 +87,16 @@ public class DemoConfigurationPanel extends JPanel
         buttonPanel2 = new SingleButtonPanel(Color.blue);
         panel2.add(buttonPanel2);
 
-        toggleButton = new Button("btnToggle.png");
-        toggleButton.setBounds(50,50,145,55);
-        toggleButton.addActionListener(e -> {buttonPanel1.changeColor();buttonPanel2.changeColor();});
-        panel3.add(toggleButton);
+        Button startBtn = new Button("btnStart.png");
+        startBtn.addActionListener(e -> {
+            try {
+                startupPanel.startGame();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        panel3.add(startBtn);
+
     }
 
     public AgentType getAgentType1()
@@ -116,6 +123,9 @@ public class DemoConfigurationPanel extends JPanel
             setLayout(null);
             setBackground(Colour.background());
             setVisible(true);
+        }
+        public void swapColor(){
+            button.addActionListener(e -> {buttonPanel1.changeColor();buttonPanel2.changeColor();});
         }
 
         public void paint(Graphics g)
