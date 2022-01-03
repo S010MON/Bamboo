@@ -27,6 +27,19 @@ public class Vector
         return new Vector((x + other.getX()), (y + other.getY()), (z + other.getZ()));
     }
 
+    public int distance(Vector other)
+    {
+        int dx = Math.abs(this.x - other.getX());
+        int dy = Math.abs(this.y - other.getY());
+        int dz = Math.abs(this.z - other.getZ());
+        return Math.max(dz, Math.max(dx, dy));
+    }
+
+    public int distFromZero()
+    {
+        return distance(new Vector(0,0,0));
+    }
+
     @Override
     public boolean equals(Object other)
     {
