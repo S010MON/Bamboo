@@ -30,7 +30,7 @@ public class SettingsPanel extends JPanel
         setLayout(new GridLayout(4, 6));
         setVisible(true);
 
-        multiConfigurationPanel = new MultiConfigurationPanel();
+        multiConfigurationPanel = new MultiConfigurationPanel(p);
         singleConfigurationPanel = new SingleConfigurationPanel(p);
         demoConfigurationPanel = new DemoConfigurationPanel(p);
 
