@@ -44,7 +44,6 @@ public class Tester {
         boardSize.set(5);
     }
 
-    //set the amount of replications to do
     public void setReplications(int rep){this.replications = rep;}
 
     public Color getStartingColor(){return startingColor;}

@@ -25,8 +25,7 @@ public class TestingAPI {
         }
     }
 
-    @Ignore
-    @Test void newAPI() throws IOException{
+    @Ignore void newAPI() throws IOException{
         Tester tester = new Tester();
         tester.setAgent1(AgentType.MINIMAX_SORTED);
         tester.setAgent2(AgentType.MINIMAX_AB);
