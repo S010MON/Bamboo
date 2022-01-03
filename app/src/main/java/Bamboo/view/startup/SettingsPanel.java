@@ -24,15 +24,15 @@ public class SettingsPanel extends JPanel
     private int labelImagesOffset = 2;
     private int boardSize = 5;
 
-    public SettingsPanel()
+    public SettingsPanel(StartupPanel p)
     {
         setBackground(Colour.background());
         setLayout(new GridLayout(4, 6));
         setVisible(true);
 
         multiConfigurationPanel = new MultiConfigurationPanel();
-        singleConfigurationPanel = new SingleConfigurationPanel();
-        demoConfigurationPanel = new DemoConfigurationPanel();
+        singleConfigurationPanel = new SingleConfigurationPanel(p);
+        demoConfigurationPanel = new DemoConfigurationPanel(p);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
@@ -221,6 +221,12 @@ public class SettingsPanel extends JPanel
         currentPanel.remove(singleConfigurationPanel);
         currentPanel.add(demoConfigurationPanel) ;
         currentPanel.setVisible(true);
+    }
+
+    public void swapToggleColor() {
+        singleConfigurationPanel.swapColor();
+        multiConfigurationPanel.swapColor();
+        demoConfigurationPanel.swapColor();
     }
 
     private static class CustomSliderUI extends BasicSliderUI {

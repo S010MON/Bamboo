@@ -98,6 +98,10 @@ public class MultiConfigurationPanel extends JPanel
 
     public Color getPlayer2Color(){return buttonPanel2.getPlayerColor();}
 
+    public void swapColor(){
+        buttonPanel1.changeColor();buttonPanel2.changeColor();
+    }
+
     class ColourButtonPanel extends JPanel
     {
         private Color color;

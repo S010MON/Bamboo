@@ -14,7 +14,7 @@ public class ButtonPanel extends JPanel
     private JButton helpBtn;
     private JButton settingsBtn;
 
-    public ButtonPanel(StartupPanel startupPanel)
+    public ButtonPanel(StartupPanel startupPanel, SettingsPanel settingsPanel)
     {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setBackground(new Color(158, 208, 239));
@@ -36,7 +36,7 @@ public class ButtonPanel extends JPanel
         add(loadBtn);
 
         Button toggleButton = new Button("btnToggle.png");
-        toggleButton.addActionListener(e ->toggleButton.swapColor());
+        toggleButton.addActionListener(e -> settingsPanel.swapToggleColor());
         add(toggleButton);
         //toggleButton.setBounds(50,50,145,55);
 

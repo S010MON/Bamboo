@@ -6,6 +6,7 @@ import Bamboo.view.resources.Colour;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class SingleConfigurationPanel extends JPanel
 {
@@ -111,6 +112,10 @@ public class SingleConfigurationPanel extends JPanel
 
     public  Color getAIcolor(){return buttonPanel2.getPlayerColor() ; }
 
+    public void swapColor(){
+        buttonPanel1.changeColor();buttonPanel2.changeColor();
+    }
+
     class SingleButtonPanel extends JPanel
     {
         private Color color;
@@ -121,9 +126,6 @@ public class SingleConfigurationPanel extends JPanel
             setLayout(null);
             setBackground(Colour.background());
             setVisible(true);
-        }
-        public void swapColor(){
-            button.addActionListener(e -> {buttonPanel1.changeColor();buttonPanel2.changeColor();});
         }
 
         public void paint(Graphics g)
