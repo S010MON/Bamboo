@@ -5,13 +5,8 @@ import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.controller.heuristics.Uniform;
 import Bamboo.model.Game;
-import Bamboo.model.GameWithGUI;
-import Bamboo.model.GameWithoutGUI;
-import Bamboo.model.Tile;
 
 import java.awt.*;
-import java.util.Collections;
-import java.util.Stack;
 
 public class Random implements Agent
 {
@@ -46,7 +41,7 @@ public class Random implements Agent
     public Vector getNextMove(Game game)
     {
         // Add a delay to the random algorithm
-        try {Thread.sleep(100); } catch (Exception exception){}
+        try {Thread.sleep(10); } catch (Exception exception){}
         return heuristic.getNextMove(game);
     }
 
