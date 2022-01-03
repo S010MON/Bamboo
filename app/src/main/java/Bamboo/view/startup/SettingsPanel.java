@@ -223,6 +223,19 @@ public class SettingsPanel extends JPanel
         currentPanel.setVisible(true);
     }
 
+    public DemoConfigurationPanel getDemoConfigurationPanel() {
+        return demoConfigurationPanel;
+    }
+
+    public SingleConfigurationPanel getSingleConfigurationPanel() {
+        return singleConfigurationPanel;
+    }
+
+    public MultiConfigurationPanel getMultiConfigurationPanel() {
+        return multiConfigurationPanel;
+    }
+
+
     private static class CustomSliderUI extends BasicSliderUI {
 
         private static final int TRACK_HEIGHT = 8;

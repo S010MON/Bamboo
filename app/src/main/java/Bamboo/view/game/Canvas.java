@@ -25,7 +25,7 @@ public class Canvas extends JPanel
     private int offsetY = 0;
     private boolean hint;
     private Timer timer;
-    private int demoDelay = 500;
+    private int demoDelay = 50;
 
     private Game game;
     private Color background = Colour.background();
