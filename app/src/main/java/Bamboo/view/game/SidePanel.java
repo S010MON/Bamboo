@@ -1,7 +1,7 @@
 package Bamboo.view.game;
 
 import Bamboo.controller.Agent;
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 import Bamboo.view.MainFrame;
 import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.Button;
@@ -14,14 +14,14 @@ import java.awt.*;
 public class SidePanel extends JPanel
 {
     private Color background = Colour.background() ;
-    private Game game;
+    private GameWithGUI game;
     private MainFrame mainFrame;
     private InfoPanel infoPanel;
     private Canvas canvas ;
     private Button snaphotToggle;
 
 
-    public SidePanel(Game game, MainFrame mainFrame, Canvas canvas) {
+    public SidePanel(GameWithGUI game, MainFrame mainFrame, Canvas canvas) {
         this.canvas = canvas ;
         this.game = game;
         this.mainFrame = mainFrame;

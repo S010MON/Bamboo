@@ -2,7 +2,7 @@ package Bamboo.controller.random;
 
 import Bamboo.controller.Agent;
 import Bamboo.controller.Vector;
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 import Bamboo.model.GameWithoutGUI;
 import Bamboo.model.Tile;
 
@@ -39,7 +39,7 @@ public class Random implements Agent
     }
 
     @Override
-    public Vector getNextMove(Game game)
+    public Vector getNextMove(GameWithGUI game)
     {
         // Add a delay to the random algorithm
         try {Thread.sleep(100); } catch (Exception exception){}

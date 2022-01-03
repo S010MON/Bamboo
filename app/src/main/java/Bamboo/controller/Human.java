@@ -1,6 +1,6 @@
 package Bamboo.controller;
 
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 import Bamboo.model.GameWithoutGUI;
 
 import java.awt.Color;
@@ -34,7 +34,7 @@ public class Human implements Agent
     }
 
     @Override
-    public Vector getNextMove(Game game) {
+    public Vector getNextMove(GameWithGUI game) {
         return null;
     }
 

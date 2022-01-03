@@ -1,6 +1,6 @@
 package Bamboo.controller;
 
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 import Bamboo.model.Tile;
 
 import javax.swing.*;
@@ -29,7 +29,7 @@ public class FileManager
         return null;
     }
 
-    public static void save(Game game)
+    public static void save(GameWithGUI game)
     {
         try {
             String filePath = FilePath.getFilePath(createFileName());
@@ -129,7 +129,7 @@ public class FileManager
         return tiles;
     }
 
-    private static void writeToFile(File file, Game game) throws IOException
+    private static void writeToFile(File file, GameWithGUI game) throws IOException
     {
         FileWriter writer = new FileWriter(file,false);
         writer.write(fileHeader + "\n");

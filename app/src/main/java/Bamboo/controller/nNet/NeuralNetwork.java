@@ -1,10 +1,9 @@
 package Bamboo.controller.nNet;
 
 import Bamboo.controller.*;
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 import Bamboo.model.GameWithoutGUI;
 import Bamboo.model.Grid;
-import Bamboo.model.GridGraphImp;
 import deepnetts.data.DataSets;
 import deepnetts.data.MLDataItem;
 import deepnetts.data.TabularDataSet;
@@ -23,7 +22,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class NeuralNetwork implements Agent
 {
@@ -74,7 +72,7 @@ public class NeuralNetwork implements Agent
     }
 
     @Override
-    public Vector getNextMove(Game game)
+    public Vector getNextMove(GameWithGUI game)
     {
         Grid grid = game.getGrid();
         int[] input = DataManager.flatten(grid,color);

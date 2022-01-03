@@ -7,7 +7,8 @@ import Bamboo.controller.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameWithoutGUI {
+public class GameWithoutGUI implements Game
+{
     public static int MCTSiterations = 1000;
 
     private Grid grid;
@@ -45,10 +46,12 @@ public class GameWithoutGUI {
         toggleTurn();
     }
 
+    @Override
     public Grid getGrid() {
         return this.grid;
     }
 
+    @Override
     public Agent getCurrentPlayer() {
         return currentPlayer;
     }
@@ -60,6 +63,7 @@ public class GameWithoutGUI {
             return a1;
     }
 
+    @Override
     public List<Tile> getAllTiles() {
         return grid.getAllTiles();
     }

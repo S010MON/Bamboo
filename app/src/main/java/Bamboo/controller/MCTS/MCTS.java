@@ -2,7 +2,7 @@ package Bamboo.controller.MCTS;
 
 import Bamboo.controller.Agent;
 import Bamboo.controller.Vector;
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 import Bamboo.model.GameWithoutGUI;
 
 import java.awt.Color;
@@ -35,7 +35,7 @@ public class MCTS implements Agent
     }
 
     @Override
-    public Vector getNextMove(Game game)
+    public Vector getNextMove(GameWithGUI game)
     {
         root = new NodeMCTS(game.getGrid(), null, game.getCurrentPlayer().getColor(), null);
         for(int i = 0; i < iterations; i++)

@@ -36,7 +36,7 @@ public class MiniMaxAB implements Agent {
     }
 
     @Override
-    public Vector getNextMove(Game game)
+    public Vector getNextMove(GameWithGUI game)
     {
         if(uncolored_vectors.size() == 0){
             uncolored_vectors = new ArrayList<>(game.getGrid().getAllVectors());
