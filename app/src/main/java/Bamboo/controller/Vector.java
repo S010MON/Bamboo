@@ -1,6 +1,6 @@
 package Bamboo.controller;
 
-public class Vector
+public class Vector implements Comparable<Vector>
 {
     private int x, y, z;
 
@@ -92,5 +92,11 @@ public class Vector
     public String toCSV()
     {
         return x + "," + y + "," + z;
+    }
+
+    @Override
+    public int compareTo(Vector v)
+    {
+        return this.distFromZero() < v.distFromZero() ? 1 : -1;
     }
 }
