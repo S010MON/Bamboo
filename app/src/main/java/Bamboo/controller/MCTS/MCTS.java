@@ -3,7 +3,6 @@ package Bamboo.controller.MCTS;
 import Bamboo.controller.Agent;
 import Bamboo.controller.Vector;
 import Bamboo.model.Game;
-import Bamboo.model.GameWithGUI;
 import Bamboo.model.GameWithoutGUI;
 
 import java.awt.Color;
