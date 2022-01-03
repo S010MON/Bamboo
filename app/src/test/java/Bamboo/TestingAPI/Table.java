@@ -1,4 +1,4 @@
-package Bamboo.ExperimentationWinRates;
+package Bamboo.TestingAPI;
 
 public class Table {
     private int rows;

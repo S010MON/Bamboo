@@ -1,6 +1,5 @@
-package Bamboo;
+package Bamboo.TestingAPI;
 
-import Bamboo.ExperimentationWinRates.*;
 import Bamboo.controller.*;
 
 import java.awt.Color;
@@ -12,8 +11,7 @@ import Bamboo.model.GameWithoutGUI;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
-
-public class TestingAPI {
+public class TestingAPITest {
     Mutable<Integer> mutable = new Mutable<>(0);
     @Test void testMutable(){
         MiniMaxSortedAB agent = new MiniMaxSortedAB(Color.RED);

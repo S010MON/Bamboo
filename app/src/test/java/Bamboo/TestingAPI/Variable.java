@@ -1,4 +1,4 @@
-package Bamboo.ExperimentationWinRates;
+package Bamboo.TestingAPI;
 
 public enum Variable {
     GRID_SIZE,

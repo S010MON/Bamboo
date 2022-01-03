@@ -1,4 +1,4 @@
-package Bamboo.ExperimentationWinRates;
+package Bamboo.TestingAPI;
 
 import Bamboo.controller.*;
 import Bamboo.model.GameWithoutGUI;
