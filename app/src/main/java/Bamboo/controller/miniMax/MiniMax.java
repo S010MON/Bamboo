@@ -16,7 +16,6 @@ public class MiniMax implements Agent
     protected int totalEvaluations = 0;
     public Mutable<Integer> depth = new Mutable<>(1);
     public boolean testing = false;
-    int totalEvaluations = 0;
 
     public MiniMax(Color color)
     {
@@ -50,7 +49,7 @@ public class MiniMax implements Agent
         else
             updateUncoloredVectors(game.getGrid());
 
-        int d = 1;
+        int d;
         if(!testing){
             depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
             d = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
