@@ -22,11 +22,18 @@ public class DemoConfigurationPanel extends JPanel
     private JComboBox AIcombobox1;
     private JComboBox AIcombobox2 ;
     private String[] AIstring ;
+    private SliderListener sliderListener;
+    private SettingsPanel settingsPanel ;
 
-    public DemoConfigurationPanel(SliderListener sliderListener)
+
+    public DemoConfigurationPanel(SliderListener sliderListener,SettingsPanel settingsPanel)
     {
+        this.sliderListener=sliderListener;
+        this.settingsPanel=settingsPanel;
+
         setLayout(new GridLayout(4, 1));
         setVisible(true);
+
 
         JPanel panel1 = new JPanel();
         panel1.setBackground(Colour.background());
@@ -62,6 +69,8 @@ public class DemoConfigurationPanel extends JPanel
         AIstring = AgentType.getNames(AgentType.class);
         AIcombobox1 = new JComboBox(AgentType.values());
         AIcombobox1.setBounds(20,8,200,30);
+        ComboListener comboListener1=new ComboListener(this,AIcombobox1);
+        AIcombobox1.addActionListener(comboListener1);
         textFieldPanel.add(AIcombobox1);
         panel1.add(textFieldPanel);
 
@@ -81,6 +90,8 @@ public class DemoConfigurationPanel extends JPanel
         textFieldPanel2.setBackground(Colour.background());
         AIcombobox2 = new JComboBox(AgentType.values());
         AIcombobox2.setBounds(20,8,200,30);
+        ComboListener comboListener2 = new ComboListener(this,AIcombobox2);
+        AIcombobox2.addActionListener(comboListener2);
         //AIcombobox2.addActionListener(); // TODO add the action listener to the slider 1) Check what the AI is
         // 2) if it is NNet then modify the slider to block
         textFieldPanel2.add(AIcombobox2);
@@ -141,5 +152,13 @@ public class DemoConfigurationPanel extends JPanel
         {
             return color;
         }
+    }
+
+    public SliderListener getSliderListener() {
+        return sliderListener;
+    }
+
+    public SettingsPanel getSettingsPanel() {
+        return settingsPanel;
     }
 }

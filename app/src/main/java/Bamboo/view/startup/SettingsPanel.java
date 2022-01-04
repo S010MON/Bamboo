@@ -19,10 +19,18 @@ public class SettingsPanel extends JPanel
     private JPanel currentPanel;
 
     private JSlider slider;
+    private JSlider slider_NN;
     private JLabel[] labelImage = new JLabel[4];
     private Mode mode = Mode.MULTI;
     private int labelImagesOffset = 2;
     private int boardSize = 5;
+    private JPanel sliderPanel;
+    private JPanel sliderEmptyPanel1;
+    private JPanel sliderEmptyPanel2;
+    private JPanel sliderPanelNN;
+    private JPanel sliderEmptyPanel1NN;
+    private JPanel sliderEmptyPanel2NN;
+    private JPanel panel2slider;
 
     public SettingsPanel()
     {
@@ -30,13 +38,21 @@ public class SettingsPanel extends JPanel
         setLayout(new GridLayout(4, 6));
         setVisible(true);
 
+        slider_NN = new JSlider(JSlider.HORIZONTAL, 5, 5, boardSize) {
+            @Override
+            public void updateUI() {
+                setUI(new CustomSliderUI(this));
+            }
+        };
+        slider_NN.setInverted(true);
         slider = new JSlider(JSlider.HORIZONTAL, 2, 5, boardSize) {
             @Override
             public void updateUI() {
                 setUI(new CustomSliderUI(this));
             }
         };
-        SliderListener sliderListener = new SliderListener()
+        SliderListener sliderListener = new SliderListener(slider);
+        slider.addChangeListener(sliderListener);
         slider.addChangeListener(e -> {
             JSlider src = (JSlider) e.getSource();
             if (src.getValueIsAdjusting())
@@ -48,9 +64,13 @@ public class SettingsPanel extends JPanel
         slider.setBackground(Colour.background());
         slider.setLabelTable(buildHashtableOfPositions());
 
+
+        slider_NN.setPaintLabels(true);
+        slider_NN.setBackground(Colour.background());
+
         multiConfigurationPanel = new MultiConfigurationPanel();
         singleConfigurationPanel = new SingleConfigurationPanel(sliderListener);
-        demoConfigurationPanel = new DemoConfigurationPanel(sliderListener);
+        demoConfigurationPanel = new DemoConfigurationPanel(sliderListener,this);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
@@ -73,20 +93,44 @@ public class SettingsPanel extends JPanel
         buttonPanel.add(demoBtn);
         add(buttonPanel);
 
-        JPanel sliderPanel = new JPanel() ;
+        ////////slider panel
+        sliderPanel = new JPanel() ;
         sliderPanel.setBackground(Colour.background());
-        sliderPanel.setLayout(new GridLayout(1,3));
-        JPanel sliderEmptyPanel1 = new JPanel();
+        //sliderPanel.setLayout(new GridLayout(1,3));
+        sliderEmptyPanel1 = new JPanel();
         sliderEmptyPanel1.setBackground(Colour.background());
-        JPanel sliderEmptyPanel2 = new JPanel();
+        sliderEmptyPanel2 = new JPanel();
         sliderEmptyPanel2.setBackground(Colour.background());
 
-        sliderPanel.add(sliderEmptyPanel1);
+        //sliderPanel.add(sliderEmptyPanel1);
         sliderPanel.add(slider);
-        sliderPanel.add(sliderEmptyPanel2);
+       // sliderPanel.add(sliderEmptyPanel2);
+
+
+        ////////sliderPanelNN
+        sliderPanelNN = new JPanel() ;
+        sliderPanelNN.setBackground(Colour.background());
+        sliderPanelNN.setLayout(new GridLayout(1,3));
+        sliderEmptyPanel1NN = new JPanel();
+        sliderEmptyPanel1NN.setBackground(Colour.background());
+        sliderEmptyPanel2NN = new JPanel();
+        sliderEmptyPanel2NN.setBackground(Colour.background());
+
+        sliderPanelNN.add(sliderEmptyPanel1NN);
+        sliderPanelNN.add(slider_NN);
+        sliderPanelNN.add(sliderEmptyPanel2NN);
+        sliderPanelNN.setVisible(false);
+
+
+        panel2slider = new JPanel();
+        panel2slider.setLayout(new FlowLayout(1));
+        panel2slider.setBackground(Colour.background());
+        panel2slider.add(sliderPanel);
+        panel2slider.add(sliderPanelNN);
 
         add(buildImagePanel());
-        add(sliderPanel);
+        add(panel2slider);
+
 
         currentPanel = new JPanel();
         currentPanel.setLayout(new BorderLayout());
@@ -95,6 +139,32 @@ public class SettingsPanel extends JPanel
         add(currentPanel);
         selectMulti();
     }
+    public void removeSlider(){
+        sliderPanel.setVisible(false);
+        sliderPanelNN.setVisible(true);
+        repaint();
+
+    }
+    public void addSlider(){
+        sliderPanel.add(sliderEmptyPanel1);
+        sliderPanel.add(slider);
+        sliderPanel.add(sliderEmptyPanel2);
+    }
+
+    public void removeSliderNN(){
+       sliderPanelNN.setVisible(false);
+       sliderPanel.setVisible(true);
+       repaint();
+    }
+
+    public void addSliderNN(){
+        sliderPanel.add(sliderEmptyPanel1);
+        sliderPanel.add(slider_NN);
+        slider_NN.setVisible(true);
+        sliderPanel.add(sliderEmptyPanel2);
+        repaint();
+    }
+
 
     private JPanel buildImagePanel()
     {
@@ -243,7 +313,7 @@ public class SettingsPanel extends JPanel
         private static final int TRACK_HEIGHT = 8;
         private static final int TRACK_WIDTH = 8;
         private static final int TRACK_ARC = 5;
-        private static final Dimension THUMB_SIZE = new Dimension(20, 20);
+        private static final Dimension THUMB_SIZE = new Dimension(12, 12);
         private final RoundRectangle2D.Float trackShape = new RoundRectangle2D.Float();
 
         public CustomSliderUI( JSlider b) {
