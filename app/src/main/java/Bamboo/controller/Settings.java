@@ -28,7 +28,7 @@ public class Settings
 
     public void addTiles(List<Tile> tiles)
     {
-        this.tiles = new HashMap<Vector, Color>();
+        this.tiles = new HashMap<>();
         for(Tile t: tiles)
         {
             this.tiles.put(t.getVector(), t.getColour());
@@ -45,6 +45,11 @@ public class Settings
                 currentPlayer = player2;
         }
         return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Agent agent)
+    {
+        currentPlayer = agent;
     }
 
     public static Settings getDefaultSetting()

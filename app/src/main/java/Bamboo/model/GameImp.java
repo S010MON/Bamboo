@@ -67,6 +67,7 @@ public class GameImp implements Game
     public Game copy()
     {
         Settings copySettings = new Settings(player1, player2, settings.boardSize);
+        copySettings.setCurrentPlayer(currentPlayer);
         copySettings.addTiles(getAllTiles());
         return new GameImp(copySettings);
     }

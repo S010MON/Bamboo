@@ -32,16 +32,16 @@ public class GameTest
         Agent agent1 = new Random(Color.BLUE);
         Agent agent2 = new Random(Color.RED);
         Settings settings = new Settings(agent1, agent2, 5);
-        Game game = new GameWithoutGUI(settings);
-        game.getGrid().setTile(new Vector(0,0,0), Color.BLUE);
-        game.getGrid().setTile(new Vector(0,1,-1), Color.RED);
-        game.getGrid().setTile(new Vector(0,2,-2), Color.BLUE);
-        game.getGrid().setTile(new Vector(0,3,-3), Color.RED);
-        game.getGrid().setTile(new Vector(2,-1,-1), Color.BLUE);
+        Game g1 = new GameWithoutGUI(settings);
+        g1.getGrid().setTile(new Vector(0,0,0), Color.BLUE);
+        g1.getGrid().setTile(new Vector(0,1,-1), Color.RED);
+        g1.getGrid().setTile(new Vector(0,2,-2), Color.BLUE);
+        g1.getGrid().setTile(new Vector(0,3,-3), Color.RED);
+        g1.getGrid().setTile(new Vector(2,-1,-1), Color.BLUE);
 
-        Game gameCopy = game.copy();
+        Game g2 = g1.copy();
 
-        checkEquals(game, gameCopy);
+        checkEquals(g1, g2);
     }
 
     private void checkEquals(Game g1, Game g2)
