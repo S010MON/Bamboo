@@ -27,7 +27,7 @@ public class GameWithoutGUI extends GameImp implements Game
 
     private void makeTurn(){
         Vector move = currentPlayer.getNextMove(this);
-        logMove(move);
+        //logMove(move);                                         TODO (@AlexHartmann00) resolve issues with logging
         remainingTiles.remove(move);
         this.grid.setTile(move,currentPlayer.getColor());
         //System.out.println("Agent " + currentPlayer.getName() + " placed color " + currentPlayer.getColor() + " at " + move.toString());
