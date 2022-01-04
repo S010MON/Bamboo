@@ -16,15 +16,6 @@ public class GameWithGUI extends GameImp implements Game
     {
         super(settings);
         this.view = view;
-
-        // This loads a new game from the tiles in the settings
-        if(settings.tiles != null)
-        {
-            for(Vector v: settings.tiles.keySet())
-            {
-                grid.setTile(v, settings.tiles.get(v));
-            }
-        }
     }
 
     public void placeNextAt(Vector v)

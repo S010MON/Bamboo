@@ -13,4 +13,6 @@ public interface Game
     public List<Tile> getAllTiles();
 
     public Game copy();
+
+    public boolean isFinished();
 }

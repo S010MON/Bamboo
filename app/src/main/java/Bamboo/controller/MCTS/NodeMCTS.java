@@ -19,7 +19,6 @@ public class NodeMCTS
     private int plays;
     private int wins;
     private int visits;
-    private Grid grid;
     private Game game;
     private Vector move;
     private NodeMCTS parent;
@@ -33,13 +32,12 @@ public class NodeMCTS
         this.parent = parent;
         this.move = move;
         this.game = game.copy();
-        this.grid = game.getGrid().copy();
         this.colour = colour;
 
         plays = 0;
         wins = 0;
         visits = 1;
-        unexplored = collectRemainingMoves(grid);
+        unexplored = collectRemainingMoves(game.getGrid());
         children =  new ArrayList<>();
     }
 
@@ -72,9 +70,9 @@ public class NodeMCTS
             Vector v = selectNextLegalMove();
             if(v != null)
             {
-                Grid gridCopy = grid.copy();
-                gridCopy.setTile(v, colour);
-                return new NodeMCTS(gridCopy, v, toggleColour(colour), this);
+                Game gameCopy = game.copy();
+                gameCopy.getGrid().setTile(v, colour);
+                return new NodeMCTS(gameCopy, v, toggleColour(colour), this);
             }
         }
 
@@ -106,26 +104,15 @@ public class NodeMCTS
     {
         Color startingColour = colour;
         Color currentColor = colour;
-        Stack<Vector> moves = collectRemainingMoves(grid);
 
-        while (!moves.isEmpty())
+        while (!game.isFinished())
         {
-            if(grid.isLegalMove(moves.peek(), currentColor))
-            {
-                grid.setTile(moves.pop(), currentColor);
-                if(grid.isFinished(currentColor)){
-                    if(currentColor == startingColour)
-                        return 0;
-                    else
-                        return 1;
-                }
-                currentColor = toggleColour(currentColor);
-            }
-
-            else
-                moves.pop();
+            Vector v = heuristic.getNextMove(game);
+            game.getGrid().setTile(v, currentColor);
+            currentColor = toggleColour(currentColor);
         }
-        if (currentColor == startingColour)
+
+        if(currentColor == startingColour)
             return 0;
         else
             return 1;
@@ -202,7 +189,7 @@ public class NodeMCTS
         while(!unexplored.isEmpty())
         {
             selected = unexplored.pop();
-            if(grid.isLegalMove(selected, colour))
+            if(game.getGrid().isLegalMove(selected, colour))
                 return selected;
         }
         return selected;
