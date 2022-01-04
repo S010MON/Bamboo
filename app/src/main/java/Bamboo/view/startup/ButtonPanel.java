@@ -35,7 +35,7 @@ public class ButtonPanel extends JPanel
         loadBtn.addActionListener(e -> startupPanel.getMainFrame().load());
         add(loadBtn);
 
-        Button toggleButton = new Button("btnToggle.png");
+        Button toggleButton = new Button("btnColor.png");
         toggleButton.addActionListener(e -> settingsPanel.swapToggleColor());
         add(toggleButton);
         //toggleButton.setBounds(50,50,145,55);
