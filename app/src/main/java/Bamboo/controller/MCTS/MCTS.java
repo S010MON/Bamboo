@@ -43,7 +43,7 @@ public class MCTS implements Agent
         else
             iter = iterations;
 
-        root = new NodeMCTS(game.getGrid(), null, game.getCurrentPlayer().getColor(), null);
+        root = new NodeMCTS(game, null, game.getCurrentPlayer().getColor(), null);
         for(int i = 0; i < iter; i++)
         {
             NodeMCTS next = root.select();

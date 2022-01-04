@@ -11,4 +11,6 @@ public interface Game
     public Agent getCurrentPlayer();
 
     public List<Tile> getAllTiles();
+
+    public Game copy();
 }

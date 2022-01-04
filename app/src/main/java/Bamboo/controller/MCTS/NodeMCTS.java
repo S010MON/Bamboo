@@ -1,6 +1,9 @@
 package Bamboo.controller.MCTS;
 
 import Bamboo.controller.Vector;
+import Bamboo.controller.heuristics.Heuristic;
+import Bamboo.controller.heuristics.OuterWeighted;
+import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import Bamboo.model.Tile;
 
@@ -17,22 +20,27 @@ public class NodeMCTS
     private int wins;
     private int visits;
     private Grid grid;
+    private Game game;
     private Vector move;
     private NodeMCTS parent;
     private ArrayList<NodeMCTS> children;
     private Stack<Vector> unexplored;
 
-    public NodeMCTS(Grid grid, Vector move, Color colour, NodeMCTS parent)
+    private Heuristic heuristic = new OuterWeighted();
+
+    public NodeMCTS(Game game, Vector move, Color colour, NodeMCTS parent)
     {
+        this.parent = parent;
+        this.move = move;
+        this.game = game.copy();
+        this.grid = game.getGrid().copy();
+        this.colour = colour;
+
         plays = 0;
         wins = 0;
         visits = 1;
         unexplored = collectRemainingMoves(grid);
         children =  new ArrayList<>();
-        this.parent = parent;
-        this.move = move;
-        this.grid = grid.copy();
-        this.colour = colour;
     }
 
     /**

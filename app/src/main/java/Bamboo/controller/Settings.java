@@ -1,7 +1,10 @@
 package Bamboo.controller;
 
+import Bamboo.model.Tile;
+
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.List;
 
 public class Settings
 {
@@ -21,6 +24,15 @@ public class Settings
     public void addTiles(HashMap<Vector, Color> tiles)
     {
         this.tiles = tiles;
+    }
+
+    public void addTiles(List<Tile> tiles)
+    {
+        this.tiles = new HashMap<Vector, Color>();
+        for(Tile t: tiles)
+        {
+            this.tiles.put(t.getVector(), t.getColour());
+        }
     }
 
     public Agent getCurrentPlayer()
