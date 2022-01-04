@@ -21,14 +21,13 @@ public class Uniform implements Heuristic
         }
         Collections.shuffle(stack);
 
-        boolean found = false;
-        Vector v = null;
-        while(!found)
+        Vector v;
+        while(!stack.empty())
         {
             v = stack.pop();
             if(game.getGrid().isLegalMove(v, game.getCurrentPlayer().getColor()))
-                found = true;
+                return v;
         }
-        return v;
+        return null;
     }
 }
