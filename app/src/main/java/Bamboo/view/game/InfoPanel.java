@@ -1,6 +1,6 @@
 package Bamboo.view.game;
 
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.Label;
 
@@ -20,9 +20,9 @@ public class InfoPanel extends JPanel
     private Label playerLabel;
     private JLabel playerDisplay;
 
-    private Game game;
+    private GameWithGUI game;
 
-    public InfoPanel(Game game)
+    public InfoPanel(GameWithGUI game)
     {
         this.game = game;
         BoxLayout layout = new BoxLayout(this,BoxLayout.Y_AXIS);

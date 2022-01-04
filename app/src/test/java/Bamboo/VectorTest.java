@@ -47,4 +47,22 @@ public class VectorTest
         Vector v = new Vector(0,0,-6);
         assertEquals(exp, v.hashCode());
     }
+
+    @Test void dist_2d()
+    {
+        int exp = 1;
+        Vector v = new Vector(0,1,-1);
+        int act = v.distFromZero();
+
+        assertEquals(exp, act);
+    }
+
+    @Test void dist_3d()
+    {
+        int exp = 2;
+        Vector v = new Vector(2,-1,-1);
+        int act = v.distFromZero();
+
+        assertEquals(exp, act);
+    }
 }

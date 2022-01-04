@@ -1,17 +1,16 @@
 package Bamboo.view.game;
 
-import Bamboo.controller.Agent;
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TimerListener implements ActionListener
 {
-    private Game game;
+    private GameWithGUI game;
     private Canvas canvas;
 
-    public TimerListener(Game game, Canvas canvas)
+    public TimerListener(GameWithGUI game, Canvas canvas)
     {
         this.game = game;
         this.canvas = canvas;

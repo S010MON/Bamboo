@@ -4,99 +4,77 @@ import Bamboo.controller.*;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
-public class GameWithoutGUI {
-    private int size;
-    public static int MCTSiterations = 1000;
+public class GameWithoutGUI extends GameImp implements Game
+{
+    private ArrayList<Tile> remainingTiles;
     private boolean LOG_MOVES = false;
-    private String logFileName = "log.csv";
-    private Color logColor;
-    private Grid grid;
-    private ArrayList<Vector> remainingTiles = new ArrayList<>();
-    Agent a1, a2, currentPlayer;
+    private String loggingFile = "log.csv";
+    private Color loggingColor;
+    private String loggingData = "";
 
-    public GameWithoutGUI(Settings settings){
-        a1 = settings.player1;
-        a2 = settings.player2;
-        currentPlayer = settings.getCurrentPlayer();
-        size = settings.boardSize;
-        grid = new GridGraphImp(settings.boardSize);
-        remainingTiles = new ArrayList<>(grid.getAllVectors());
+    public GameWithoutGUI(Settings settings)
+    {
+        super(settings);
+        remainingTiles = new ArrayList<>(grid.getAllTiles());
     }
 
     public GameWithoutGUI(Settings settings, Color startingPlayer){
-        a1 = settings.player1;
-        a2 = settings.player2;
-        if(a1.getColor() == startingPlayer)
-            currentPlayer = a1;
+        super(settings);
+        if(player1.getColor() == startingPlayer)
+            currentPlayer = player1;
         else
-            currentPlayer = a2;
-        size = settings.boardSize;
-        grid = new GridGraphImp(settings.boardSize);
-        remainingTiles = new ArrayList<>(grid.getAllVectors());
-    }
-
-    private void toggleTurn()
-    {
-        if(currentPlayer == a1){
-            currentPlayer = a2;
-        }
-        else{
-            currentPlayer = a1;
-        }
+            currentPlayer = player2;
+        remainingTiles = new ArrayList<>(grid.getAllTiles());
     }
 
     public Agent turnLogic(){
         while(!grid.isFinished(currentPlayer.getColor())){
-            makeTurn();
+            takeTurn();
         }
+        Logger.logCSV(loggingFile, loggingData);
+        loggingData = "";
         return otherPlayer();
     }
 
-    private void makeTurn(){
+    private void takeTurn(){
         Vector move = currentPlayer.getNextMove(this);
-        logMove(move);
+        addMoveToLogString(move);
         remainingTiles.remove(move);
         this.grid.setTile(move,currentPlayer.getColor());
         //System.out.println("Agent " + currentPlayer.getName() + " placed color " + currentPlayer.getColor() + " at " + move.toString());
         toggleTurn();
     }
 
-    public Grid getGrid() {
-        return this.grid;
-    }
-
-    public Agent getCurrentPlayer() {
-        return currentPlayer;
+    private void addMoveToLogString(Vector move) {
+        if(LOG_MOVES){
+            if(loggingColor == null || loggingColor == Color.WHITE || loggingColor == currentPlayer.getColor()) {
+                int[] igrid = DataManager.flatten(this.grid, currentPlayer.getColor());
+                int[] imove = DataManager.oneHotEncode(grid.getSize(), move);
+                String data = DataManager.concatToCSV(igrid, imove);
+                loggingData += data;
+            }
+            if(!grid.isFinished(Color.RED) && !grid.isFinished(Color.BLUE))
+                loggingData += "\n";
+        }
     }
 
     private Agent otherPlayer(){
-        if(currentPlayer == a1)
-            return a2;
+        if(currentPlayer == player1)
+            return player2;
         else
-            return a1;
+            return player1;
     }
 
-    public List<Tile> getAllTiles() {
-        return grid.getAllTiles();
+    public void setLogFileName(String loggingFile) {
+        this.loggingFile = loggingFile;
     }
 
-    public List<Vector> getRemainingVectors(){return this.remainingTiles;}
+    public void setLogColor(Color loggedColor) {
+        this.loggingColor = loggedColor;
+    }
 
-    public void setLogFileName(String fileName){this.logFileName = fileName;}
-
-    public void setLOG_MOVES(boolean argument){this.LOG_MOVES = argument;}
-
-    public void setLogColor(Color color){this.logColor = color;}
-
-    private void logMove(Vector move){
-        int[] igrid = DataManager.flatten(this.grid,currentPlayer.getColor());
-        int[] imove = DataManager.oneHotEncode(this.size,move);
-        String data = DataManager.concatToCSV(igrid,imove);
-        if(LOG_MOVES){
-            if(logColor == null || logColor == currentPlayer.getColor())
-                Logger.logCSV(logFileName,data);
-        }
+    public void setLOG_MOVES(boolean argument) {
+        this.LOG_MOVES = argument;
     }
 }

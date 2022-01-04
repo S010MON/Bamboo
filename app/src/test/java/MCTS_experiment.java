@@ -47,7 +47,7 @@ public class MCTS_experiment
                 int[] records = new int[replications];
                 for (int i = 0; i < replications; i++) {    //inner-inner loop to play n games (n=replications)
 
-                    GameWithoutGUI.MCTSiterations = iter;
+                    //GameWithoutGUI.MCTSiterations = iter;
 
                     Agent agent1 = AgentFactory.makeAgent(AgentType.MCTS, Color.RED);
                     Agent agent2 = AgentFactory.makeAgent(AgentType.RANDOM, Color.BLUE);

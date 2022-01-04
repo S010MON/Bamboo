@@ -3,7 +3,7 @@ package Bamboo.view;
 import Bamboo.controller.Agent;
 import Bamboo.controller.FileManager;
 import Bamboo.controller.Settings;
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 import Bamboo.view.game.GamePanel;
 import Bamboo.view.startup.StartupPanel;
 
@@ -15,7 +15,7 @@ public class MainFrame extends JFrame
 {
     private Component currentPanel = null;
     private Dimension screenSize;
-    private Game currentGame;
+    private GameWithGUI currentGame;
     private Component gamePanel ;
 
     public MainFrame()
@@ -36,7 +36,7 @@ public class MainFrame extends JFrame
     public void runGame(Settings settings)
     {
         removeCurrentPanel();
-        currentGame = new Game(settings, this);
+        currentGame = new GameWithGUI(settings, this);
         gamePanel = new GamePanel(screenSize, currentGame, this);
         add(gamePanel);
         currentPanel = gamePanel;
@@ -50,7 +50,7 @@ public class MainFrame extends JFrame
         currentPanel = endGamePanel;
     }
 
-    public void gameOverOption(Game game)
+    public void gameOverOption(GameWithGUI game)
     {
         Object[] options = {"Yes","No"};
 

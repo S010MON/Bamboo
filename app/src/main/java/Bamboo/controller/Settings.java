@@ -1,7 +1,10 @@
 package Bamboo.controller;
 
+import Bamboo.model.Tile;
+
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.List;
 
 public class Settings
 {
@@ -23,6 +26,15 @@ public class Settings
         this.tiles = tiles;
     }
 
+    public void addTiles(List<Tile> tiles)
+    {
+        this.tiles = new HashMap<>();
+        for(Tile t: tiles)
+        {
+            this.tiles.put(t.getVector(), t.getColour());
+        }
+    }
+
     public Agent getCurrentPlayer()
     {
         if(currentPlayer == null)
@@ -33,6 +45,11 @@ public class Settings
                 currentPlayer = player2;
         }
         return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Agent agent)
+    {
+        currentPlayer = agent;
     }
 
     public static Settings getDefaultSetting()

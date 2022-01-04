@@ -1,6 +1,6 @@
 package Bamboo.controller;
 
-public class Vector
+public class Vector implements Comparable<Vector>
 {
     private int x, y, z;
 
@@ -25,6 +25,19 @@ public class Vector
     public Vector add(Vector other)
     {
         return new Vector((x + other.getX()), (y + other.getY()), (z + other.getZ()));
+    }
+
+    public int distance(Vector other)
+    {
+        int dx = Math.abs(this.x - other.getX());
+        int dy = Math.abs(this.y - other.getY());
+        int dz = Math.abs(this.z - other.getZ());
+        return Math.max(dz, Math.max(dx, dy));
+    }
+
+    public int distFromZero()
+    {
+        return distance(new Vector(0,0,0));
     }
 
     @Override
@@ -79,5 +92,11 @@ public class Vector
     public String toCSV()
     {
         return x + "," + y + "," + z;
+    }
+
+    @Override
+    public int compareTo(Vector v)
+    {
+        return this.distFromZero() < v.distFromZero() ? 1 : -1;
     }
 }
