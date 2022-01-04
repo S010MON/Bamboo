@@ -23,7 +23,7 @@ public class SingleConfigurationPanel extends JPanel
     private String[] AIstring ;
     private AgentType AT ;
 
-    public SingleConfigurationPanel()
+    public SingleConfigurationPanel(SliderListener sliderListener)
     {
         setLayout(new GridLayout(4, 1));
         setVisible(true);

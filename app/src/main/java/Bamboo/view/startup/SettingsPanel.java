@@ -30,21 +30,13 @@ public class SettingsPanel extends JPanel
         setLayout(new GridLayout(4, 6));
         setVisible(true);
 
-        multiConfigurationPanel = new MultiConfigurationPanel();
-        singleConfigurationPanel = new SingleConfigurationPanel();
-        demoConfigurationPanel = new DemoConfigurationPanel();
-
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(Colour.background());
-        buttonPanel.setLayout(null);
-
         slider = new JSlider(JSlider.HORIZONTAL, 2, 5, boardSize) {
             @Override
             public void updateUI() {
                 setUI(new CustomSliderUI(this));
             }
         };
+        SliderListener sliderListener = new SliderListener()
         slider.addChangeListener(e -> {
             JSlider src = (JSlider) e.getSource();
             if (src.getValueIsAdjusting())
@@ -55,6 +47,14 @@ public class SettingsPanel extends JPanel
         slider.setPaintLabels(true);
         slider.setBackground(Colour.background());
         slider.setLabelTable(buildHashtableOfPositions());
+
+        multiConfigurationPanel = new MultiConfigurationPanel();
+        singleConfigurationPanel = new SingleConfigurationPanel(sliderListener);
+        demoConfigurationPanel = new DemoConfigurationPanel(sliderListener);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Colour.background());
+        buttonPanel.setLayout(null);
 
         Button multiBtn = new Button("btnMulti.png");
         multiBtn.setBounds(100, 50, 145, 55);
@@ -237,7 +237,6 @@ public class SettingsPanel extends JPanel
     public MultiConfigurationPanel getMultiConfigurationPanel() {
         return multiConfigurationPanel;
     }
-
 
     private static class CustomSliderUI extends BasicSliderUI {
 

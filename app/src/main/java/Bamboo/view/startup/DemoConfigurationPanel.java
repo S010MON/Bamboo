@@ -5,6 +5,7 @@ import Bamboo.view.resources.Button;
 import Bamboo.view.resources.Colour;
 
 import javax.swing.*;
+import javax.swing.plaf.SliderUI;
 import java.awt.*;
 
 public class DemoConfigurationPanel extends JPanel
@@ -22,7 +23,7 @@ public class DemoConfigurationPanel extends JPanel
     private JComboBox AIcombobox2 ;
     private String[] AIstring ;
 
-    public DemoConfigurationPanel()
+    public DemoConfigurationPanel(SliderListener sliderListener)
     {
         setLayout(new GridLayout(4, 1));
         setVisible(true);
@@ -80,6 +81,8 @@ public class DemoConfigurationPanel extends JPanel
         textFieldPanel2.setBackground(Colour.background());
         AIcombobox2 = new JComboBox(AgentType.values());
         AIcombobox2.setBounds(20,8,200,30);
+        //AIcombobox2.addActionListener(); // TODO add the action listener to the slider 1) Check what the AI is
+        // 2) if it is NNet then modify the slider to block
         textFieldPanel2.add(AIcombobox2);
         panel2.add(textFieldPanel2);
 
