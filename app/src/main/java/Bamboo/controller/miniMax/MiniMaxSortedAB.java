@@ -1,6 +1,7 @@
 package Bamboo.controller.miniMax;
 
 import Bamboo.controller.Agent;
+import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 
@@ -12,6 +13,8 @@ public class MiniMaxSortedAB implements Agent {
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
     int totalEvaluations;
+    public Mutable<Integer> depth = new Mutable<>(1);
+    public boolean testing = false;
 
     public MiniMaxSortedAB(Color color){
         this.color = color;
@@ -44,28 +47,55 @@ public class MiniMaxSortedAB implements Agent {
         else{
             updateUncoloredVectors(game.getGrid());
         }
-        int depth = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
+        int d = 1;
+        if(!testing){
+            depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
+            d = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
+        }
+        else{
+            d = Math.round((float)(Number)(depth.get()));
+        }
         NodeMM start = new NodeMM(game.getGrid());
-        return minimaxMove(start, depth, this.color);
+        return minimaxMove(start, d, this.color);
     }
 
     @Override
     public Vector getNextMove(GameWithoutGUI game){
-        if(uncolored_vectors.size() == 0){
-            uncolored_vectors = new ArrayList<>(game.getGrid().getAllVectors());
+        uncolored_vectors = new ArrayList<>(game.getRemainingVectors());
+
+        int d = 1;
+        if(!testing){
+            depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
+            d = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
         }
         else{
-            updateUncoloredVectors(game.getGrid());
+            d = Math.round((float)(Number)(depth.get()));
         }
-        int depth = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
         NodeMM start = new NodeMM(game.getGrid());
-        return minimaxMove(start, depth, this.color);
+        return minimaxMove(start, d, this.color);
     }
 
     @Override
     public Color getColor()
     {
         return color;
+    }
+
+    @Override
+    public Mutable<Integer> getDepth() {
+        testing = true;
+        uncolored_vectors = new ArrayList<>();
+        return this.depth;
+    }
+
+    @Override
+    public Mutable<Integer> getIterations() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Float> getC() {
+        return null;
     }
 
     Grid makeMove(Grid grid, Vector move, Color player_color){

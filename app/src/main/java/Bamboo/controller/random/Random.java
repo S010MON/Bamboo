@@ -1,6 +1,7 @@
 package Bamboo.controller.random;
 
 import Bamboo.controller.Agent;
+import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
 import Bamboo.model.Game;
 import Bamboo.model.GameWithoutGUI;
@@ -92,5 +93,20 @@ public class Random implements Agent
     public Color getColor()
     {
         return colour;
+    }
+
+    @Override
+    public Mutable<Integer> getDepth() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Integer> getIterations() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Float> getC() {
+        return null;
     }
 }

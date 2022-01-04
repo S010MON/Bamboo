@@ -109,6 +109,21 @@ public class NeuralNetwork implements Agent
         return color;
     }
 
+    @Override
+    public Mutable<Integer> getDepth() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Integer> getIterations() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Float> getC() {
+        return null;
+    }
+
     public NetworkArchitecture getArchitecture(){return this.architecture;}
 
     public FeedForwardNetwork getNeuralNet(){return this.neuralNet;}
