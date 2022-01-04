@@ -96,8 +96,8 @@ public class MainFrame extends JFrame
                     options2[1]);
             if (response2 == JOptionPane.YES_OPTION) {
                 save();
-                showMenu();
             }
+            showMenu();
         }
     }
 
