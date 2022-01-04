@@ -41,27 +41,13 @@ public class MCTS implements Agent
     @Override
     public Vector getNextMove(Game game)
     {
-        UCB.C = this.c.get();
-        root = new NodeMCTS(game.getGrid(), null, game.getCurrentPlayer().getColor(), null);
-        if(!testing)iter = iterations.get();
-        else iter = Math.round((float)(Number)iterations.get());
-        for(int i = 0; i < iter; i++)
-        {
-            NodeMCTS next = root.select();
-            root.expand(next);
-            next.backProp(next.playout());
-        }
-        NodeMCTS bestMove = root.selectBest();
-        return bestMove.getMove();
-    }
+        int iter;
+        if(game instanceof GameWithoutGUI)
+            iter = ((GameWithoutGUI) game).MCTSiterations;
+        else
+            iter = iterations;
 
-    @Override
-    public Vector getNextMove(GameWithoutGUI game)
-    {
-        UCB.C = this.c.get();
-        root = new NodeMCTS(game.getGrid(), null, game.getCurrentPlayer().getColor(), null);
-        if(!testing)iter = iterations.get();
-        else iter = Math.round((float)(Number)iterations.get());
+        root = new NodeMCTS(game, null, game.getCurrentPlayer().getColor(), null);
         for(int i = 0; i < iter; i++)
         {
             NodeMCTS next = root.select();

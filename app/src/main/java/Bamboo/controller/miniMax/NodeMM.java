@@ -2,10 +2,8 @@ package Bamboo.controller.miniMax;
 
 import java.util.*;
 
-import Bamboo.controller.*;
 import Bamboo.controller.Vector;
 import Bamboo.model.Grid;
-import com.google.common.collect.Lists;
 
 public class NodeMM {
     private final int[] POWERS_OF_10 = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};

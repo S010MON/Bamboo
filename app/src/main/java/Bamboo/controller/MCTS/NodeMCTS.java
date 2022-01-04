@@ -1,6 +1,9 @@
 package Bamboo.controller.MCTS;
 
 import Bamboo.controller.Vector;
+import Bamboo.controller.heuristics.Heuristic;
+import Bamboo.controller.heuristics.OuterWeighted;
+import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import Bamboo.model.Tile;
 
@@ -16,23 +19,26 @@ public class NodeMCTS
     private int plays;
     private int wins;
     private int visits;
-    private Grid grid;
+    private Game game;
     private Vector move;
     private NodeMCTS parent;
     private ArrayList<NodeMCTS> children;
     private Stack<Vector> unexplored;
 
-    public NodeMCTS(Grid grid, Vector move, Color colour, NodeMCTS parent)
+    private Heuristic heuristic = new OuterWeighted();
+
+    public NodeMCTS(Game game, Vector move, Color colour, NodeMCTS parent)
     {
+        this.parent = parent;
+        this.move = move;
+        this.game = game.copy();
+        this.colour = colour;
+
         plays = 0;
         wins = 0;
         visits = 1;
-        unexplored = collectRemainingMoves(grid);
+        unexplored = collectRemainingMoves(game.getGrid());
         children =  new ArrayList<>();
-        this.parent = parent;
-        this.move = move;
-        this.grid = grid.copy();
-        this.colour = colour;
     }
 
     /**
@@ -64,9 +70,9 @@ public class NodeMCTS
             Vector v = selectNextLegalMove();
             if(v != null)
             {
-                Grid gridCopy = grid.copy();
-                gridCopy.setTile(v, colour);
-                return new NodeMCTS(gridCopy, v, toggleColour(colour), this);
+                Game gameCopy = game.copy();
+                gameCopy.getGrid().setTile(v, colour);
+                return new NodeMCTS(gameCopy, v, toggleColour(colour), this);
             }
         }
 
@@ -98,26 +104,15 @@ public class NodeMCTS
     {
         Color startingColour = colour;
         Color currentColor = colour;
-        Stack<Vector> moves = collectRemainingMoves(grid);
 
-        while (!moves.isEmpty())
+        while (!game.isFinished())
         {
-            if(grid.isLegalMove(moves.peek(), currentColor))
-            {
-                grid.setTile(moves.pop(), currentColor);
-                if(grid.isFinished(currentColor)){
-                    if(currentColor == startingColour)
-                        return 0;
-                    else
-                        return 1;
-                }
-                currentColor = toggleColour(currentColor);
-            }
-
-            else
-                moves.pop();
+            Vector v = heuristic.getNextMove(game);
+            game.getGrid().setTile(v, currentColor);
+            currentColor = toggleColour(currentColor);
         }
-        if (currentColor == startingColour)
+
+        if(currentColor == startingColour)
             return 0;
         else
             return 1;
@@ -194,7 +189,7 @@ public class NodeMCTS
         while(!unexplored.isEmpty())
         {
             selected = unexplored.pop();
-            if(grid.isLegalMove(selected, colour))
+            if(game.getGrid().isLegalMove(selected, colour))
                 return selected;
         }
         return selected;
