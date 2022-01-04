@@ -45,7 +45,7 @@ public class MCTS implements Agent
         if(game instanceof GameWithoutGUI)
             iter = ((GameWithoutGUI) game).MCTSiterations;
         else
-            iter = iterations;
+            iter = iterations.get();
 
         root = new NodeMCTS(game, null, game.getCurrentPlayer().getColor(), null);
         for(int i = 0; i < iter; i++)
