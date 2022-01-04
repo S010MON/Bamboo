@@ -26,9 +26,8 @@ public class DemoConfigurationPanel extends JPanel
     private SettingsPanel settingsPanel ;
 
 
-    public DemoConfigurationPanel(SliderListener sliderListener,SettingsPanel settingsPanel)
+    public DemoConfigurationPanel(SettingsPanel settingsPanel)
     {
-        this.sliderListener=sliderListener;
         this.settingsPanel=settingsPanel;
 
         setLayout(new GridLayout(4, 1));

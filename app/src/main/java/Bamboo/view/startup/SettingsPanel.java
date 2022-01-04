@@ -31,6 +31,7 @@ public class SettingsPanel extends JPanel
     private JPanel sliderEmptyPanel1NN;
     private JPanel sliderEmptyPanel2NN;
     private JPanel panel2slider;
+    private boolean checkNN=false;
 
     public SettingsPanel()
     {
@@ -51,8 +52,6 @@ public class SettingsPanel extends JPanel
                 setUI(new CustomSliderUI(this));
             }
         };
-        SliderListener sliderListener = new SliderListener(slider);
-        slider.addChangeListener(sliderListener);
         slider.addChangeListener(e -> {
             JSlider src = (JSlider) e.getSource();
             if (src.getValueIsAdjusting())
@@ -67,10 +66,11 @@ public class SettingsPanel extends JPanel
 
         slider_NN.setPaintLabels(true);
         slider_NN.setBackground(Colour.background());
+        slider_NN.setLabelTable(buildHashtableOfPositions());
 
         multiConfigurationPanel = new MultiConfigurationPanel();
-        singleConfigurationPanel = new SingleConfigurationPanel(sliderListener);
-        demoConfigurationPanel = new DemoConfigurationPanel(sliderListener,this);
+        singleConfigurationPanel = new SingleConfigurationPanel(this);
+        demoConfigurationPanel = new DemoConfigurationPanel(this);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
@@ -78,36 +78,46 @@ public class SettingsPanel extends JPanel
 
         Button multiBtn = new Button("btnMulti.png");
         multiBtn.setBounds(100, 50, 145, 55);
-        multiBtn.addActionListener(e -> selectMulti());
+        multiBtn.addActionListener(e -> {selectMulti();
+                removeSliderNN();
+                checkNNtoFalse();
+                changeBoardImage2(slider.getValue());});
 
         Button singleBtn = new Button("btnSingle.png");
         singleBtn.setBounds(250, 50, 145, 55);
-        singleBtn.addActionListener(e -> selectSingle());
+        singleBtn.addActionListener(e -> {selectSingle();
+            if (singleConfigurationPanel.getAgentType()!=AgentType.NEURAL_NET){
+                removeSliderNN();
+                checkNNtoFalse();
+                changeBoardImage2(slider.getValue());}
+            else{
+                removeSlider();}});
 
         Button demoBtn = new Button("btnDemo.png");
         demoBtn.setBounds(400, 50, 145, 55);
-        demoBtn.addActionListener(e -> selectDemo());
+        demoBtn.addActionListener(e ->{ selectDemo();
+            if (demoConfigurationPanel.getAgentType1()!=AgentType.NEURAL_NET&&demoConfigurationPanel.getAgentType2()!=AgentType.NEURAL_NET){
+                removeSliderNN();
+                checkNNtoFalse();
+                changeBoardImage2(slider.getValue());}
+            else{
+                removeSlider();}});
 
         buttonPanel.add(multiBtn);
         buttonPanel.add(singleBtn);
         buttonPanel.add(demoBtn);
         add(buttonPanel);
 
-        ////////slider panel
         sliderPanel = new JPanel() ;
         sliderPanel.setBackground(Colour.background());
-        //sliderPanel.setLayout(new GridLayout(1,3));
+
         sliderEmptyPanel1 = new JPanel();
         sliderEmptyPanel1.setBackground(Colour.background());
         sliderEmptyPanel2 = new JPanel();
         sliderEmptyPanel2.setBackground(Colour.background());
 
-        //sliderPanel.add(sliderEmptyPanel1);
         sliderPanel.add(slider);
-       // sliderPanel.add(sliderEmptyPanel2);
 
-
-        ////////sliderPanelNN
         sliderPanelNN = new JPanel() ;
         sliderPanelNN.setBackground(Colour.background());
         sliderPanelNN.setLayout(new GridLayout(1,3));
@@ -145,26 +155,12 @@ public class SettingsPanel extends JPanel
         repaint();
 
     }
-    public void addSlider(){
-        sliderPanel.add(sliderEmptyPanel1);
-        sliderPanel.add(slider);
-        sliderPanel.add(sliderEmptyPanel2);
-    }
 
     public void removeSliderNN(){
        sliderPanelNN.setVisible(false);
        sliderPanel.setVisible(true);
        repaint();
     }
-
-    public void addSliderNN(){
-        sliderPanel.add(sliderEmptyPanel1);
-        sliderPanel.add(slider_NN);
-        slider_NN.setVisible(true);
-        sliderPanel.add(sliderEmptyPanel2);
-        repaint();
-    }
-
 
     private JPanel buildImagePanel()
     {
@@ -198,7 +194,7 @@ public class SettingsPanel extends JPanel
         return position;
     }
 
-    private void changeBoardImage2(int size)
+    public void changeBoardImage2(int size)
     {
         size = size - labelImagesOffset;
         for(int i = 0; i < labelImage.length; i++)
@@ -210,7 +206,10 @@ public class SettingsPanel extends JPanel
     }
 
     public int getBoardSize() {
-        return boardSize;
+        if (checkNN==false)
+            return boardSize;
+        else
+            return 5;
     }
 
     public Mode getMode()
@@ -306,6 +305,13 @@ public class SettingsPanel extends JPanel
 
     public MultiConfigurationPanel getMultiConfigurationPanel() {
         return multiConfigurationPanel;
+    }
+
+    public void checkNNtoFalse(){
+        checkNN=false ;
+}
+    public void checkNNtoTrue(){
+        checkNN=true;
     }
 
     private static class CustomSliderUI extends BasicSliderUI {

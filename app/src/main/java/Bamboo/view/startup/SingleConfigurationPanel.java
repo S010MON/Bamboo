@@ -22,9 +22,12 @@ public class SingleConfigurationPanel extends JPanel
     private JComboBox AIcombobox;
     private String[] AIstring ;
     private AgentType AT ;
+    private SliderListener sliderListener;
+    private SettingsPanel settingsPanel;
 
-    public SingleConfigurationPanel(SliderListener sliderListener)
+    public SingleConfigurationPanel( SettingsPanel settingsPanel)
     {
+        this.settingsPanel=settingsPanel;
         setLayout(new GridLayout(4, 1));
         setVisible(true);
 
@@ -81,6 +84,8 @@ public class SingleConfigurationPanel extends JPanel
         AIstring = AgentType.getNames(AgentType.class);
         AIcombobox = new JComboBox(AgentType.values());
         AIcombobox.setBounds(20,8,200,30);
+        ComboListener comboListener = new ComboListener(this,AIcombobox);
+        AIcombobox.addActionListener(comboListener);
         textFieldPanel2.add(AIcombobox);
         panel2.add(textFieldPanel2);
 
@@ -137,6 +142,10 @@ public class SingleConfigurationPanel extends JPanel
         {
             return color;
         }
+    }
+
+    public SettingsPanel getSettingsPanel() {
+        return settingsPanel;
     }
 }
 
