@@ -25,16 +25,18 @@ public class TestingAPITest {
 
     @Disabled
     @Test void newAPI() throws IOException{
-        Tester tester = new Tester();
-        tester.setAgent1(AgentType.MINIMAX_SORTED);
-        tester.setAgent2(AgentType.MINIMAX_AB);
-        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,1,2,1);
-        tester.addVariable(TesterAgent.AGENT_2,Variable.SEARCH_DEPTH,1,2,1);
-        tester.addVariable(Variable.GRID_SIZE,1,5,1);
-        tester.addMetric(Metrics.ELAPSED_TIME);
-        tester.setReplications(2);
-        tester.setFileName("testerTest.csv");
-        tester.run();
+        Tester tester = new Tester(AgentType.MINIMAX_SORTED,5);
+        tester.setAgent2(AgentType.RANDOM);
+        tester.setMoveLogging(true);
+        tester.setRedStartingPercentage(0.5f);
+        tester.setLoggedColor(Color.RED);
+        tester.setLogFileName("MinimaxvRandom.csv");
+        tester.setReplications(1);
+        tester.setProgressPrinting(true);
+        for(int i = 0; i < 100; i++){
+            tester.run();
+            System.out.println(i);
+        }
     }
 
     @Test void gameWithOutGUITest() throws IOException {

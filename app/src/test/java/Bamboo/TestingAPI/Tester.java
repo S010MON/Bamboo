@@ -27,6 +27,7 @@ public class Tester {
     private boolean TRACK_TIME = false;
     private float elapsed = 0f;
     private int total;
+    private boolean hasRun = false;
     private ArrayList<String> colnames = new ArrayList<>();
 
     public Tester(AgentType agent, int size) throws IOException {
@@ -51,7 +52,8 @@ public class Tester {
     public void resetStartingColor(){startingColor = Color.WHITE;}
 
     public float[][] run(){
-        colnames.add("WinRate");
+        if(!hasRun)colnames.add("WinRate");
+        hasRun = true;
         if(TRACK_TIME)colnames.add("ms");
         int count = 0;
         float[][] plan = makePlan();

@@ -14,6 +14,7 @@ public class GameWithoutGUI {
     private Color logColor;
     private Grid grid;
     private ArrayList<Vector> remainingTiles = new ArrayList<>();
+    private String logData = "";
     Agent a1, a2, currentPlayer;
 
     public GameWithoutGUI(Settings settings){
@@ -49,14 +50,16 @@ public class GameWithoutGUI {
 
     public Agent turnLogic(){
         while(!grid.isFinished(currentPlayer.getColor())){
-            makeTurn();
+            takeTurn();
         }
+        Logger.logCSV(logFileName, logData);
+        logData = "";
         return otherPlayer();
     }
 
-    private void makeTurn(){
+    private void takeTurn(){
         Vector move = currentPlayer.getNextMove(this);
-        logMove(move);
+        addMoveToLog(move);
         remainingTiles.remove(move);
         this.grid.setTile(move,currentPlayer.getColor());
         //System.out.println("Agent " + currentPlayer.getName() + " placed color " + currentPlayer.getColor() + " at " + move.toString());
@@ -90,13 +93,14 @@ public class GameWithoutGUI {
 
     public void setLogColor(Color color){this.logColor = color;}
 
-    private void logMove(Vector move){
-        int[] igrid = DataManager.flatten(this.grid,currentPlayer.getColor());
-        int[] imove = DataManager.oneHotEncode(this.size,move);
-        String data = DataManager.concatToCSV(igrid,imove);
+    private void addMoveToLog(Vector move){
         if(LOG_MOVES){
-            if(logColor == null || logColor == currentPlayer.getColor())
-                Logger.logCSV(logFileName,data);
+            if(logColor == null || logColor == currentPlayer.getColor()) {
+                int[] igrid = DataManager.flatten(this.grid, currentPlayer.getColor());
+                int[] imove = DataManager.oneHotEncode(this.size, move);
+                String data = DataManager.concatToCSV(igrid, imove);
+                logData += data + "\n";
+            }
         }
     }
 }
