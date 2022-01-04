@@ -25,13 +25,14 @@ public class TestingAPITest {
 
     @Disabled
     @Test void newAPI() throws IOException{
-        Tester tester = new Tester();
-        tester.setAgent1(AgentType.MINIMAX_SORTED);
+        Tester tester = new Tester(AgentType.MCTS,1);
         tester.setAgent2(AgentType.MINIMAX_AB);
-        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,1,2,1);
-        tester.addVariable(TesterAgent.AGENT_2,Variable.SEARCH_DEPTH,1,2,1);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.C,1,2,1);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.ITERATIONS,1,200,60);
         tester.addVariable(Variable.GRID_SIZE,1,5,1);
         tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.setMoveLogging(true);
+        tester.setLogFileName("loggingAfterRefactor.csv");
         tester.setReplications(2);
         tester.setFileName("testerTest.csv");
         tester.run();

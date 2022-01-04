@@ -27,6 +27,7 @@ public class Tester {
     private boolean TRACK_TIME = false;
     private float elapsed = 0f;
     private int total;
+    private boolean hasRun = false;
     private ArrayList<String> colnames = new ArrayList<>();
 
     public Tester(AgentType agent, int size) throws IOException {
@@ -51,9 +52,8 @@ public class Tester {
     public void resetStartingColor(){startingColor = Color.WHITE;}
 
     public float[][] run(){
-        colnames.add("WinRate");
-        if(TRACK_TIME)colnames.add("ms");
-        int count = 0;
+        if(!hasRun)colnames.add("WinRate");
+        if(TRACK_TIME && !hasRun)colnames.add("ms");
         float[][] plan = makePlan();
         int cols = plan[0].length + 1;
         float[] results = new float[plan.length];
@@ -70,7 +70,6 @@ public class Tester {
             results[i] = getWinPercentage();
             table[i][plan[0].length] = results[i];
             if(TRACK_TIME)table[i][cols-1] = elapsed;
-            count++;
             writeRow(table[i]);
         }
         if(writeResult)writeToCSV(table);
@@ -173,10 +172,6 @@ public class Tester {
 
     public void setAgent1(AgentType a) throws IOException{this.agent1 = AgentFactory.makeAgent(a,Color.RED);}
     public void setAgent2(AgentType a) throws IOException{this.agent2 = AgentFactory.makeAgent(a,Color.BLUE);}
-    public void setOpponent(AgentType opponent) throws IOException {
-        this.player2 = opponent;
-        this.agent2 = AgentFactory.makeAgent(player2,Color.BLUE);
-    }
 
     public void addVariable(Variable v, float value){
         Mutable ref = VariableFactory.getValueFromVariable(v,this.getAgent1(),this);

@@ -41,10 +41,7 @@ public class MCTS implements Agent
     @Override
     public Vector getNextMove(Game game)
     {
-        int iter;
         if(game instanceof GameWithoutGUI)
-            iter = ((GameWithoutGUI) game).MCTSiterations;
-        else
             iter = iterations.get();
 
         root = new NodeMCTS(game, null, game.getCurrentPlayer().getColor(), null);
