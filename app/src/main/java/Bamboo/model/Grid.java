@@ -20,6 +20,8 @@ public interface Grid
 
     List<Vector> getAllVectors();
 
+    Vector getPreviousMove();
+
     boolean isLegalMove(Vector vector, Color color);
 
     ArrayList<ArrayList<Vector>> getAllGroupsOfColour(Color color);

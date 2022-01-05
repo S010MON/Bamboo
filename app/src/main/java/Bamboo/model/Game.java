@@ -1,18 +1,23 @@
 package Bamboo.model;
 
 import Bamboo.controller.Agent;
+import Bamboo.controller.Vector;
 
 import java.util.List;
 
 public interface Game
 {
-    public Grid getGrid();
+    Grid getGrid();
 
-    public Agent getCurrentPlayer();
+    Agent getCurrentPlayer();
 
-    public List<Tile> getAllTiles();
+    Agent getCurrentOpponent();
 
-    public Game copy();
+    List<Tile> getAllTiles();
 
-    public boolean isFinished();
+    Game copy();
+
+    boolean isFinished();
+
+    Vector getPreviousMove();
 }

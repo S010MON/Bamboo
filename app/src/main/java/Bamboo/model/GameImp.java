@@ -45,6 +45,14 @@ public class GameImp implements Game
     }
 
     @Override
+    public Agent getCurrentOpponent()
+    {
+        if(player1 == currentPlayer)
+            return player2;
+        return player1;
+    }
+
+    @Override
     public List<Tile> getAllTiles()
     {
         return grid.getAllTiles();
@@ -56,14 +64,7 @@ public class GameImp implements Game
         return grid.isFinished(player1.getColor()) || grid.isFinished(player2.getColor());
     }
 
-    protected void toggleTurn()
-    {
-        if(currentPlayer == player1)
-            currentPlayer = player2;
-        else
-            currentPlayer = player1;
-    }
-
+    @Override
     public Game copy()
     {
         Settings copySettings = new Settings(player1, player2, settings.boardSize);
@@ -72,4 +73,17 @@ public class GameImp implements Game
         return new GameImp(copySettings);
     }
 
+    @Override
+    public Vector getPreviousMove()
+    {
+        return grid.getPreviousMove();
+    }
+
+    protected void toggleTurn()
+    {
+        if(currentPlayer == player1)
+            currentPlayer = player2;
+        else
+            currentPlayer = player1;
+    }
 }

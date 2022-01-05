@@ -11,11 +11,13 @@ public class GridGraphImp implements Grid
     protected HashMap<Vector, Boolean> remainingTiles;
     protected ArrayList<Vector> neighbours;
     protected int radius;
+    private Stack<Vector> history;
 
     public GridGraphImp(int radius)
     {
         this.radius = radius;
         neighbours = buildNeighbourList();
+        history = new Stack<>();
 
         tiles = new HashMap<>();
         remainingTiles = new HashMap<>();
@@ -59,9 +61,18 @@ public class GridGraphImp implements Grid
                 neighbour.removeNeighbour(tiles.get(v));
             }
         }
+        history.push(v);
         tiles.get(v).setColour(c);
         if(c != Color.white)
             remainingTiles.remove(v);
+    }
+
+    @Override
+    public Vector getPreviousMove()
+    {
+        if(history.empty())
+            return null;
+        return history.peek();
     }
 
     public void unSetTile(Vector v)

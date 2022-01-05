@@ -5,6 +5,7 @@ import Bamboo.controller.Vector;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class GridArrayImp implements Grid
 {
@@ -14,6 +15,7 @@ public class GridArrayImp implements Grid
     private List<Vector> vectors;
     private int width;
     private int offset;
+    private Stack<Vector> history;
 
     public GridArrayImp(int radius)
     {
@@ -23,6 +25,7 @@ public class GridArrayImp implements Grid
         tileList = new ArrayList<>();
         emptyList = new ArrayList<>();
         tiles = buildGrid();
+        history = new Stack<>();
     }
 
     @Override
@@ -37,9 +40,18 @@ public class GridArrayImp implements Grid
     @Override
     public void setTile(Vector v, Color c)
     {
+        history.push(v);
         v = addOffset(v);
         tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
         emptyList.remove(tiles[v.getX()][v.getY()][v.getZ()]);
+    }
+
+    @Override
+    public Vector getPreviousMove()
+    {
+        if(history.empty())
+            return null;
+        return history.peek();
     }
 
     private void unSetTile(Vector v)
