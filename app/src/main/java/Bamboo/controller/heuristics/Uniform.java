@@ -1,7 +1,6 @@
 package Bamboo.controller.heuristics;
 
 import Bamboo.controller.Vector;
-import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import Bamboo.model.Tile;
 
