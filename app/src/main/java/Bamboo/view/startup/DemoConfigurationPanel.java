@@ -22,7 +22,6 @@ public class DemoConfigurationPanel extends JPanel
     private JComboBox AIcombobox1;
     private JComboBox AIcombobox2 ;
     private String[] AIstring ;
-    private SliderListener sliderListener;
     private SettingsPanel settingsPanel ;
 
 
@@ -91,8 +90,6 @@ public class DemoConfigurationPanel extends JPanel
         AIcombobox2.setBounds(20,8,200,30);
         ComboListener comboListener2 = new ComboListener(this,AIcombobox2);
         AIcombobox2.addActionListener(comboListener2);
-        //AIcombobox2.addActionListener(); // TODO add the action listener to the slider 1) Check what the AI is
-        // 2) if it is NNet then modify the slider to block
         textFieldPanel2.add(AIcombobox2);
         panel2.add(textFieldPanel2);
 
@@ -151,10 +148,6 @@ public class DemoConfigurationPanel extends JPanel
         {
             return color;
         }
-    }
-
-    public SliderListener getSliderListener() {
-        return sliderListener;
     }
 
     public SettingsPanel getSettingsPanel() {

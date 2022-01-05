@@ -22,7 +22,6 @@ public class SingleConfigurationPanel extends JPanel
     private JComboBox AIcombobox;
     private String[] AIstring ;
     private AgentType AT ;
-    private SliderListener sliderListener;
     private SettingsPanel settingsPanel;
 
     public SingleConfigurationPanel( SettingsPanel settingsPanel)

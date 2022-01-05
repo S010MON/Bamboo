@@ -27,9 +27,8 @@ public class ComboListener implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        // TODO look at the change in name, if NNet is selected, then block the SLiderListener
         if(comb.getSelectedItem()==AgentType.NEURAL_NET) {
-           // demoConfigurationPanel.getSliderListener().block();
+
             if(demoConfigurationPanel!=null){
             demoConfigurationPanel.getSettingsPanel().removeSlider();
             demoConfigurationPanel.getSettingsPanel().repaint();
