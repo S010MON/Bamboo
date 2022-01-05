@@ -1,6 +1,7 @@
 package Bamboo.TestingAPI;
 
 import Bamboo.controller.*;
+import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.model.GameWithoutGUI;
 
 import java.awt.Color;
@@ -216,6 +217,10 @@ public class Tester {
         Iterator variable = new Iterator<>(ref,min,max,step);
         colnames.add(agent.toString() + "_" + v.toString());
         pushVariable(variable);
+    }
+
+    public void addVariable(TesterAgent agent, Variable v, Heuristics[] values){
+
     }
 
     public void addMetric(Metrics m){
