@@ -22,6 +22,7 @@ public class hybridAgent implements Agent {
 
     public hybridAgent(Color c) throws IOException {
         color = c;
+        switchThreshold.set(20);
         mm = new MiniMaxSortedAB(c);
         nn = new NeuralNetwork(c);
     }
@@ -47,7 +48,7 @@ public class hybridAgent implements Agent {
             uncolored_vectors = new ArrayList<>(game.getGrid().getAllVectors());
         else
             updateUncoloredVectors(game.getGrid());
-        if(uncolored_vectors.size() > (float)(Number)switchThreshold.get())
+        if(uncolored_vectors.size() > (float)(Number) switchThreshold.get())
             return nn.getNextMove(game);
         else
             return mm.getNextMove(game);
@@ -60,7 +61,7 @@ public class hybridAgent implements Agent {
 
     @Override
     public Mutable<Integer> getDepth() {
-        return null;
+        return mm.getDepth();
     }
 
     @Override

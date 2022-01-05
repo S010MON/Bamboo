@@ -202,9 +202,9 @@ public class NeuralNetwork implements Agent
         trainer.setOptimizer(OptimizerType.MOMENTUM);
         trainer.setShuffle(true);
         trainer.setTestSet(testDataSet);
-        trainer.setMaxEpochs(500);
+        trainer.setMaxEpochs(200);
         trainer.setEarlyStopping(true);
-        trainer.setEarlyStoppingPatience(10);
+        trainer.setEarlyStoppingPatience(2);
     }
 
     private void printMetrics(TabularDataSet trainData, TabularDataSet testData){
