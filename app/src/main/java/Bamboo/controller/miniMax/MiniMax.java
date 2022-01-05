@@ -85,6 +85,11 @@ public class MiniMax implements Agent
         return null;
     }
 
+    @Override
+    public Mutable<Integer> getSwitchThreshold() {
+        return null;
+    }
+
     public void makeMove(Grid grid, Vector move, Color player_color){
         grid.setTile(move,player_color);
     }

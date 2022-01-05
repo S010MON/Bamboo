@@ -75,4 +75,9 @@ public class MCTS implements Agent
     public Mutable<Float> getC() {
         return this.c;
     }
+
+    @Override
+    public Mutable<Integer> getSwitchThreshold() {
+        return null;
+    }
 }

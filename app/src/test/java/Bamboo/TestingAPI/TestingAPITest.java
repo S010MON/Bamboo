@@ -38,6 +38,15 @@ public class TestingAPITest {
         tester.run();
     }
 
+    @Disabled
+    @Test void hybridTest() throws  IOException{
+        Tester tester = new Tester(AgentType.HYBRID_NNMM,5);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SWITCH_THRESHOLD,1,80,15);
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.setReplications(2);
+        tester.run();
+    }
+
     @Test void gameWithOutGUITest() throws IOException {
         int wins = 0;
         for(int i = 0; i < 100; i++){
