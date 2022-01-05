@@ -89,7 +89,14 @@ public class MainFrame extends JFrame
                 "Bamboo", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
                 options[1]);
         if (response == JOptionPane.YES_OPTION) {
-            save();
+            Object[] options2 = {"Yes","No"};
+
+            int response2 = JOptionPane.showOptionDialog(this, "Do you want to save the current game? ",
+                    "Bamboo", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options2,
+                    options2[1]);
+            if (response2 == JOptionPane.YES_OPTION) {
+                save();
+            }
             showMenu();
         }
     }
