@@ -13,6 +13,8 @@ public interface Game
 
     Agent getCurrentOpponent();
 
+    void placeNextAt(Vector v);
+
     List<Tile> getAllTiles();
 
     Game copy();

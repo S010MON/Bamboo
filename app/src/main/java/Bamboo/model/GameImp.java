@@ -1,9 +1,8 @@
 package Bamboo.model;
 
-import Bamboo.controller.Agent;
-import Bamboo.controller.Settings;
-import Bamboo.controller.Vector;
+import Bamboo.controller.*;
 
+import java.awt.*;
 import java.util.List;
 
 public class GameImp implements Game
@@ -29,6 +28,16 @@ public class GameImp implements Game
             {
                 grid.setTile(v, settings.tiles.get(v));
             }
+        }
+    }
+
+    @Override
+    public void placeNextAt(Vector v)
+    {
+        if(grid.isLegalMove(v, currentPlayer.getColor()))
+        {
+            grid.setTile(v, currentPlayer.getColor());
+            toggleTurn();
         }
     }
 
