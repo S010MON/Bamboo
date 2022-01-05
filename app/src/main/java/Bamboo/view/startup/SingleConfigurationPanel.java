@@ -6,6 +6,8 @@ import Bamboo.view.resources.Colour;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class SingleConfigurationPanel extends JPanel
 {
@@ -21,6 +23,8 @@ public class SingleConfigurationPanel extends JPanel
     private JTextField player1textField;
     private JComboBox AIcombobox;
     private String[] AIstring ;
+    private final Color ACTIVE_COLOUR = Color.BLACK;
+    private final Color INACTIVE_COLOUR = Color.GRAY;
 
     public SingleConfigurationPanel()
     {
@@ -58,7 +62,32 @@ public class SingleConfigurationPanel extends JPanel
         textFieldPanel = new JPanel();
         textFieldPanel.setLayout(null);
         textFieldPanel.setBackground(Colour.background());
-        player1textField = new JTextField();
+        player1textField = new JTextField("PlAYER");
+        player1textField.setForeground(INACTIVE_COLOUR);
+        player1textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                player1textField.setForeground(ACTIVE_COLOUR);
+                player1textField.repaint();
+                if(player1textField.getText().equalsIgnoreCase("PLAYER")){
+                 player1textField.setText(null);
+                 player1textField.repaint();
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(player1textField.getText().length()!=0){
+                    setForeground(INACTIVE_COLOUR);
+                    player1textField.repaint();
+                }
+                else{
+                    player1textField.setText("PLAYER");
+                    player1textField.setForeground(INACTIVE_COLOUR);
+                    player1textField.repaint();
+                }
+            }
+        });
         player1textField.setBounds(20,8,200,30);
         textFieldPanel.add(player1textField);
         panel1.add(textFieldPanel);

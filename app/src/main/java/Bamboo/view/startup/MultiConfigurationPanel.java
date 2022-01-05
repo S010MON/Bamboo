@@ -5,6 +5,8 @@ import Bamboo.view.resources.Colour;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class MultiConfigurationPanel extends JPanel
 {
@@ -19,6 +21,8 @@ public class MultiConfigurationPanel extends JPanel
     private JLabel player2label;
     private JTextField player1textField;
     private JTextField player2textField;
+    private final Color ACTIVE_COLOUR = Color.BLACK;
+    private final Color INACTIVE_COLOUR = Color.GRAY;
 
     public MultiConfigurationPanel()
     {
@@ -57,8 +61,33 @@ public class MultiConfigurationPanel extends JPanel
         textFieldPanel.setLayout(null);
         textFieldPanel.setBackground(Colour.background());
 
-        player1textField = new JTextField();
+        player1textField = new JTextField("PLAYER 1");
         player1textField.setBounds(20,8,200,30);
+        player1textField.setForeground(INACTIVE_COLOUR);
+        player1textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                player1textField.setForeground(ACTIVE_COLOUR);
+                player1textField.repaint();
+                if(player1textField.getText().equalsIgnoreCase("PLAYER 1")){
+                    player1textField.setText(null);
+                    player1textField.repaint();
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(player1textField.getText().length()!=0){
+                    setForeground(INACTIVE_COLOUR);
+                    player1textField.repaint();
+                }
+                else{
+                    player1textField.setText("PLAYER 1");
+                    player1textField.setForeground(INACTIVE_COLOUR);
+                    player1textField.repaint();
+                }
+            }
+        });
         textFieldPanel.add(player1textField);
         panel1.add(textFieldPanel);
 
@@ -76,8 +105,34 @@ public class MultiConfigurationPanel extends JPanel
         textFieldPanel2 = new JPanel();
         textFieldPanel2.setLayout(null);
         textFieldPanel2.setBackground(Colour.background());
-        player2textField = new JTextField();
+        player2textField = new JTextField("PLAYER 2");
         player2textField.setBounds(20,8,200,30);
+        player2textField.setForeground(INACTIVE_COLOUR);
+        player2textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                player2textField.setForeground(ACTIVE_COLOUR);
+                player2textField.repaint();
+                if(player2textField.getText().equalsIgnoreCase("PLAYER 2")){
+                    player2textField.setText(null);
+                    player2textField.repaint();
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(player2textField.getText().length()!=0){
+                setForeground(INACTIVE_COLOUR);
+                player2textField.repaint();
+                }
+                else{
+                    player2textField.setText("PLAYER 2");
+                    player2textField.setForeground(INACTIVE_COLOUR);
+                    player2textField.repaint();
+
+                }
+            }
+        });
         textFieldPanel2.add(player2textField);
         panel2.add(textFieldPanel2);
 
