@@ -59,6 +59,7 @@ public class GridArrayImp implements Grid
         v = addOffset(v);
         tiles[v.getX()][v.getY()][v.getZ()].setColour(Color.WHITE);
         emptyList.add(tiles[v.getX()][v.getY()][v.getZ()]);
+        history.pop();
     }
 
     @Override

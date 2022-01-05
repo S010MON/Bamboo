@@ -84,6 +84,7 @@ public class GridGraphImp implements Grid
         }
         tiles.get(v).setColour(Color.WHITE);
         remainingTiles.put(v, true);
+        history.pop();
     }
 
     @Override
