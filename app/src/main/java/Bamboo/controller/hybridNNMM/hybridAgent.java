@@ -70,7 +70,6 @@ public class hybridAgent implements Agent {
 
     @Override
     public Mutable<Integer> getDepth() {
-        testing = true;
         return mm.getDepth();
     }
 
@@ -86,6 +85,7 @@ public class hybridAgent implements Agent {
 
     @Override
     public Mutable<Integer> getSwitchThreshold() {
+        testing = true;
         return switchThreshold;
     }
 
