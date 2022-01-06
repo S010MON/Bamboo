@@ -1,5 +1,6 @@
 package Bamboo.controller;
 
+import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.model.Game;
 
 import java.awt.Color;
@@ -55,6 +56,11 @@ public class Human implements Agent
 
     @Override
     public Mutable<Float> getC() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Heuristic> getHeuristic() {
         return null;
     }
 }

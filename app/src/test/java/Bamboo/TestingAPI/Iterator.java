@@ -1,6 +1,7 @@
 package Bamboo.TestingAPI;
 
 import Bamboo.controller.Mutable;
+import Bamboo.controller.heuristics.Heuristic;
 
 import java.util.Objects;
 
@@ -11,7 +12,9 @@ public class Iterator<T> {
     private int iterations;
     private Mutable<T> reference;
     private boolean empty = false;
+    private boolean numeric = true;
     private float[] values;
+    private Heuristic[] non_numeric_values;
 
     public Iterator(float min, float max, float step){
         this.min = min;
@@ -48,6 +51,17 @@ public class Iterator<T> {
         }
     }
 
+    public Iterator(Mutable<T> reference, Heuristics[]vals){
+        if(reference == null)this.empty = true;
+        this.reference = reference;
+        this.non_numeric_values = new Heuristic[vals.length];
+        for(int i = 0; i < vals.length; i++){
+            non_numeric_values[i] = HeuristicsFactory.getHeuristic(vals[i]);
+        }
+        this.iterations = vals.length;
+        this.numeric = false;
+    }
+
     public Iterator(Mutable<T> reference, float min, float max, float step){
         if(reference == null)this.empty = true;
         this.min = min;
@@ -64,7 +78,10 @@ public class Iterator<T> {
     public int getArrayBounds(){
         return this.iterations;
     }
-    public float[] getValues(){return values;}
+    public float[] getValues(){
+        return values;
+    }
+    public Heuristic[] getNon_numeric_values(){return this.non_numeric_values;}
     public boolean isEmpty(){return empty;}
     public Mutable<T> getReference(){return this.reference;}
     public void setReference(Mutable<T> ref){
@@ -72,6 +89,13 @@ public class Iterator<T> {
     }
     public void set(T val){
         this.reference.set(val);
+    }
+    public boolean isNumeric(){return this.numeric;}
+    public String getStringValue(int pos){
+        if(numeric)
+            return Float.toString(values[pos]);
+        else
+            return non_numeric_values[pos].getType();
     }
 
     private void buildArray(){

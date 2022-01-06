@@ -4,6 +4,7 @@ import Bamboo.controller.Agent;
 import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;
+import Bamboo.controller.heuristics.Uniform;
 import Bamboo.model.Game;
 import Bamboo.model.GameWithoutGUI;
 
@@ -17,7 +18,7 @@ public class MCTS implements Agent
     private int iter = 10000;
     private boolean testing = false;
     public Mutable<Float> c = new Mutable<>(0.5f);
-    public Mutable<Heuristic> heuristic;
+    public Mutable<Heuristic> heuristic = new Mutable<>(new Uniform());
 
     public MCTS(Color colour)
     {

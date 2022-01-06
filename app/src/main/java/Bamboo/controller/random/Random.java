@@ -14,7 +14,7 @@ public class Random implements Agent
 {
     private String name = "Ronald";
     private Color colour;
-    private Heuristic heuristic = new Uniform();
+    public Mutable<Heuristic> heuristic = new Mutable<>(new Uniform());
 
     public Random(Color colour)
     {
@@ -44,7 +44,7 @@ public class Random implements Agent
     {
         // Add a delay to the random algorithm
         try {Thread.sleep(10); } catch (Exception exception){}
-        return heuristic.getNextMove(game);
+        return heuristic.get().getNextMove(game);
     }
 
     @Override

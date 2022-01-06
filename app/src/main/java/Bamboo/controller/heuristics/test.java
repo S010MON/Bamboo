@@ -6,11 +6,11 @@ import Bamboo.model.Tile;
 
 import java.util.*;
 
-public class OuterWeighted implements Heuristic
-{
+public class test implements Heuristic{
+
     @Override
     public Vector getNextMove(Game game) {
-        Queue<Vector> queue = new PriorityQueue<>();
+        Queue<Vector> queue = new PriorityQueue<>(new legalMovesLeft());
         ArrayList<Tile> tiles = (ArrayList<Tile>) game.getAllTiles();
         Collections.shuffle(tiles);
         for(Tile t: tiles)
@@ -31,6 +31,14 @@ public class OuterWeighted implements Heuristic
 
     @Override
     public String getType() {
-        return "OuterWeighted";
+        return null;
+    }
+
+    public static class legalMovesLeft implements Comparator<Vector>{
+        @Override
+        public int compare(Vector x, Vector y){
+            //x better than y
+            return 1;
+        }
     }
 }

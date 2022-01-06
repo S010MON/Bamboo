@@ -25,16 +25,24 @@ public class TestingAPITest {
 
     @Disabled
     @Test void newAPI() throws IOException{
-        Tester tester = new Tester(AgentType.MCTS,1);
-        tester.setAgent2(AgentType.MINIMAX_AB);
-        tester.addVariable(TesterAgent.AGENT_1,Variable.C,1,2,1);
-        tester.addVariable(TesterAgent.AGENT_2,Variable.ITERATIONS,1,200,60);
-        tester.addVariable(Variable.GRID_SIZE,1,5,1);
+        Tester tester = new Tester(AgentType.MINIMAX_SORTED,2);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,1,3,1);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.OUTER_WEIGHTED,Heuristics.UNIFORM});
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.setMoveLogging(true);
         tester.setLogFileName("loggingAfterRefactor.csv");
         tester.setReplications(2);
         tester.setFileName("testerTest.csv");
+        tester.run();
+    }
+
+    @Disabled
+    @Test void testHeuristics() throws IOException{
+        Tester tester = new Tester(AgentType.RANDOM, 3);
+        tester.setAgent2(AgentType.RANDOM);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED});
+        tester.setReplications(50);
+        tester.addMetric(Metrics.ELAPSED_TIME);
         tester.run();
     }
 

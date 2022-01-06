@@ -29,6 +29,7 @@ public class Tester {
     private float elapsed = 0f;
     private int total;
     private boolean hasRun = false;
+    private Plan plan;
     private ArrayList<String> colnames = new ArrayList<>();
 
     public Tester(AgentType agent, int size) throws IOException {
@@ -55,21 +56,28 @@ public class Tester {
     public float[][] run(){
         if(!hasRun)colnames.add("WinRate");
         if(TRACK_TIME && !hasRun)colnames.add("ms");
-        float[][] plan = makePlan();
-        int cols = plan[0].length + 1;
-        float[] results = new float[plan.length];
+        makePlan();
+        int cols = plan.getCols() + 1;
+        System.out.println("Cols: " + cols + ", plan: " + plan);
+        float[] results = new float[plan.getRows()*this.replications];
         if(TRACK_TIME)cols += 1;
-        float[][] table = new float[plan.length][cols];
+        float[][] table = new float[plan.getRows()][cols];
         writeHeader();
-        for(int i = 0; i < plan.length; i++){
-            for(int var = 0; var < plan[0].length; var++){
+        for(int i = 0; i < plan.getRows(); i++){
+            int[] indices = plan.getRowIndices(i);
+            for(int var = 0; var < plan.getCols(); var++){
                 if(!this.variables.get(var).isEmpty()){
-                    this.variables.get(var).getReference().set(plan[i][var]);
+                    Iterator currentVar = variables.get(var);
+                    //TODO: Get numeric if numeric, other values otherwise
+                    if(currentVar.isNumeric())
+                        currentVar.getReference().set(currentVar.getValues()[indices[var]]);
+                    else
+                        currentVar.getReference().set(currentVar.getNon_numeric_values()[indices[var]]);
                 }
-                table[i][var] = plan[i][var];
+                table[i][var] = indices[var];
             }
             results[i] = getWinPercentage();
-            table[i][plan[0].length] = results[i];
+            table[i][plan.getCols()] = results[i];
             if(TRACK_TIME)table[i][cols-1] = elapsed;
             writeRow(table[i]);
         }
@@ -118,8 +126,11 @@ public class Tester {
 
     private void writeRow(float[] row){
         String dstr = "";
-        for(float i : row){
-            dstr += i + ",";
+        for(int i = 0; i < row.length; i++){
+            if(i < plan.getCols())
+                dstr += variables.get(i).getStringValue(Math.round(row[i])) + ",";
+            else
+                dstr += row[i] + ",";
         }
         Logger.logCSV(fileName,dstr);
     }
@@ -129,9 +140,13 @@ public class Tester {
             String names = headerString();
             Logger.logCSV(fileName,names);
             for(int i = 0; i < data.length; i++){
+                int[] indices = plan.getRowIndices(i);
                 String row = "";
                 for(int j = 0; j < data[0].length; j++){
-                    row += data[i][j] + ",";
+                    if(j < plan.getCols())
+                        row += variables.get(j).getStringValue(indices[j]) + ",";
+                    else
+                        row += data[i][j] + ",";
                 }
                 Logger.logCSV(fileName,row);
             }
@@ -155,8 +170,13 @@ public class Tester {
         }
         System.out.println();
         for(int i = 0; i < result.length; i++){
+            int[] indices = plan.getRowIndices(i);
             for(int j = 0; j < result[0].length; j++){
-                System.out.print(result[i][j] + ", ");
+                //System.out.println(j + " < " + plan.getCols());
+                if(j < plan.getCols())
+                    System.out.print(variables.get(j).getStringValue(indices[j]) + ",");
+                else
+                    System.out.print(result[i][j] + ",");
             }
             System.out.println();
         }
@@ -220,7 +240,11 @@ public class Tester {
     }
 
     public void addVariable(TesterAgent agent, Variable v, Heuristics[] values){
-
+        Agent a = TesterAgentFactory.getAgentReference(this,agent);
+        Mutable ref = VariableFactory.getValueFromVariable(v,a,this);
+        Iterator variable = new Iterator<>(ref,values);
+        colnames.add(agent.toString() + "_" + v.toString());
+        pushVariable(variable);
     }
 
     public void addMetric(Metrics m){
@@ -240,35 +264,9 @@ public class Tester {
         this.variables.add(i);
     }
 
-    public float[][] makePlan(){
-        int rows = 1;
-        for(Iterator i : this.variables){
-            rows *= i.getArrayBounds();
-        }
-        int cols = this.variables.size();
-        int[] repetitions = new int[cols];
-        for(int i = 0; i < cols; i++){
-            repetitions[i] = 1;
-            for(int j = 0; j < i; j++){
-                repetitions[i] *= this.variables.get(j).getValues().length;
-            }
-        }
-        float[][] plan = new float[rows][cols];
-        for(int j = 0; j < cols; j++){
-            int index = 0;
-            int rep = repetitions[j];
-            while(index < rows){
-                for(int i = 0; i < this.variables.get(j).getValues().length; i++){
-                    for(int ii = 0; ii < rep; ii++){
-                        plan[index][j] = this.variables.get(j).getValues()[i];
-                        index++;
-                    }
-                }
-            }
-        }
-        System.out.println("Plan of length " + rows + " with " + cols + " variables made.");
-        this.total = rows*this.replications;
-        return plan;
+    private void makePlan(){
+        plan = new Plan(variables);
+        this.total = plan.getRows() * this.replications;
     }
 
     private int[] fromFloat(float[] ary){
