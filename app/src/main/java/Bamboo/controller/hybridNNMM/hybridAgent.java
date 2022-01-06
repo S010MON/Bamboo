@@ -19,6 +19,7 @@ public class hybridAgent implements Agent {
     private MiniMaxSortedAB mm;
     private Color color;
     private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
+    private boolean testing = false;
 
     public hybridAgent(Color c) throws IOException {
         color = c;
@@ -48,10 +49,18 @@ public class hybridAgent implements Agent {
             uncolored_vectors = new ArrayList<>(game.getGrid().getAllVectors());
         else
             updateUncoloredVectors(game.getGrid());
-        if(uncolored_vectors.size() > (float)(Number) switchThreshold.get())
-            return nn.getNextMove(game);
-        else
-            return mm.getNextMove(game);
+        if(testing){
+            if(uncolored_vectors.size() > (float)(Number) switchThreshold.get())
+                return nn.getNextMove(game);
+            else
+                return mm.getNextMove(game);
+        }
+        else{
+            if(uncolored_vectors.size() > switchThreshold.get())
+                return nn.getNextMove(game);
+            else
+                return mm.getNextMove(game);
+        }
     }
 
     @Override
@@ -61,6 +70,7 @@ public class hybridAgent implements Agent {
 
     @Override
     public Mutable<Integer> getDepth() {
+        testing = true;
         return mm.getDepth();
     }
 
