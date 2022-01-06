@@ -4,6 +4,7 @@ import Bamboo.controller.Agent;
 import Bamboo.controller.AgentType;
 import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
+import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.controller.miniMax.MiniMaxSortedAB;
 import Bamboo.controller.nNet.NeuralNetwork;
 import Bamboo.model.Game;
@@ -80,6 +81,11 @@ public class hybridAgent implements Agent {
 
     @Override
     public Mutable<Float> getC() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Heuristic> getHeuristic() {
         return null;
     }
 

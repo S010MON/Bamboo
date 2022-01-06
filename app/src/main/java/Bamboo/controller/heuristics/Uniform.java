@@ -30,4 +30,9 @@ public class Uniform implements Heuristic
         }
         return null;
     }
+
+    @Override
+    public String getType() {
+        return "Uniform";
+    }
 }

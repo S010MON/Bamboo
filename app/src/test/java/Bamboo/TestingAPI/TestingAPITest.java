@@ -25,11 +25,9 @@ public class TestingAPITest {
 
     @Disabled
     @Test void newAPI() throws IOException{
-        Tester tester = new Tester(AgentType.MCTS,1);
-        tester.setAgent2(AgentType.MINIMAX_AB);
-        tester.addVariable(TesterAgent.AGENT_1,Variable.C,1,2,1);
-        tester.addVariable(TesterAgent.AGENT_2,Variable.ITERATIONS,1,200,60);
-        tester.addVariable(Variable.GRID_SIZE,1,5,1);
+        Tester tester = new Tester(AgentType.MINIMAX_SORTED,2);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,1,3,1);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.OUTER_WEIGHTED,Heuristics.UNIFORM});
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.setMoveLogging(true);
         tester.setLogFileName("loggingAfterRefactor.csv");
@@ -39,13 +37,16 @@ public class TestingAPITest {
     }
 
     @Disabled
-    @Test void hybridTest() throws  IOException{
-        Tester tester = new Tester(AgentType.HYBRID_NNMM,5);
-        tester.addVariable(TesterAgent.AGENT_1,Variable.SWITCH_THRESHOLD,new float[]{1,50,90});
+    @Test void testHeuristics() throws IOException{
+        Tester tester = new Tester(AgentType.RANDOM, 3);
+        tester.setAgent2(AgentType.MINIMAX_SORTED);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED});
+        tester.addVariable(TesterAgent.AGENT_2,Variable.SEARCH_DEPTH,1,4,1);
+        tester.setReplications(10);
         tester.addMetric(Metrics.ELAPSED_TIME);
-        tester.setReplications(4);
         tester.run();
     }
+
 
     @Disabled
     @Test void neuralNetTest() throws IOException{

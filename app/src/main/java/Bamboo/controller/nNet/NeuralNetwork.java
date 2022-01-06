@@ -1,6 +1,7 @@
 package Bamboo.controller.nNet;
 
 import Bamboo.controller.*;
+import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import deepnetts.data.DataSets;
@@ -105,6 +106,9 @@ public class NeuralNetwork implements Agent
     public Mutable<Float> getC() {
         return null;
     }
+
+    @Override
+    public Mutable<Heuristic> getHeuristic() {return null;}
 
     @Override
     public Mutable<Integer> getSwitchThreshold() {

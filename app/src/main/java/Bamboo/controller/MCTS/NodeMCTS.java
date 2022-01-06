@@ -25,7 +25,7 @@ public class NodeMCTS
     private ArrayList<NodeMCTS> children;
     private Stack<Vector> unexplored;
 
-    private Heuristic heuristic = new OuterWeighted();
+    public Heuristic heuristic = new OuterWeighted();
 
     public NodeMCTS(Game game, Vector move, Color colour, NodeMCTS parent)
     {
