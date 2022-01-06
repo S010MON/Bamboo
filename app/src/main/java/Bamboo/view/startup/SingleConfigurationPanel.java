@@ -6,6 +6,7 @@ import Bamboo.view.resources.Colour;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class SingleConfigurationPanel extends JPanel
 {
@@ -13,6 +14,7 @@ public class SingleConfigurationPanel extends JPanel
     private JPanel textFieldPanel;
     private JPanel textLabelPanel2;
     private JPanel textFieldPanel2;
+    private Button button;
     private SingleButtonPanel buttonPanel1;
     private SingleButtonPanel buttonPanel2;
     private JButton toggleButton;
@@ -21,9 +23,13 @@ public class SingleConfigurationPanel extends JPanel
     private JTextField player1textField;
     private JComboBox AIcombobox;
     private String[] AIstring ;
+    private AgentType AT ;
+    private SettingsPanel settingsPanel;
 
-    public SingleConfigurationPanel()
+    public SingleConfigurationPanel( SettingsPanel settingsPanel, StartupPanel startupPanel)
+
     {
+        this.settingsPanel=settingsPanel;
         setLayout(new GridLayout(4, 1));
         setVisible(true);
 
@@ -80,28 +86,42 @@ public class SingleConfigurationPanel extends JPanel
         AIstring = AgentType.getNames(AgentType.class);
         AIcombobox = new JComboBox(AgentType.values());
         AIcombobox.setBounds(20,8,200,30);
+        ComboListener comboListener = new ComboListener(this,AIcombobox);
+        AIcombobox.addActionListener(comboListener);
         textFieldPanel2.add(AIcombobox);
         panel2.add(textFieldPanel2);
 
         buttonPanel2 = new SingleButtonPanel(Color.blue);
         panel2.add(buttonPanel2);
 
-        toggleButton = new Button("btnToggle.png");
-        toggleButton.setBounds(50,50,145,55);
-        toggleButton.addActionListener(e -> {buttonPanel1.changeColor();buttonPanel2.changeColor();});
-        panel3.add(toggleButton);
+        Button startBtn = new Button("btnStart.png");
+        startBtn.addActionListener(e -> {
+            try {
+                startupPanel.startGame();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        panel3.add(startBtn);
+
+
     }
 
     public String getNamePlayer1(){ return player1textField.getText();}
 
     public AgentType getAgentType()
     {
-        return  (AgentType) AIcombobox.getSelectedItem();
+        return (AgentType) AIcombobox.getSelectedItem();
+
     }
 
     public Color getPlayer1Color(){return buttonPanel1.getPlayerColor();}
 
     public  Color getAIcolor(){return buttonPanel2.getPlayerColor() ; }
+
+    public void swapColor(){
+        buttonPanel1.changeColor();buttonPanel2.changeColor();
+    }
 
     class SingleButtonPanel extends JPanel
     {
@@ -135,6 +155,10 @@ public class SingleConfigurationPanel extends JPanel
         {
             return color;
         }
+    }
+
+    public SettingsPanel getSettingsPanel() {
+        return settingsPanel;
     }
 }
 

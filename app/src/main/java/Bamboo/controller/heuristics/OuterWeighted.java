@@ -30,4 +30,9 @@ public class OuterWeighted implements Heuristic
         }
         return null;
     }
+
+    @Override
+    public String getType() {
+        return "OuterWeighted";
+    }
 }

@@ -3,6 +3,8 @@ package Bamboo.controller.MCTS;
 import Bamboo.controller.Agent;
 import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
+import Bamboo.controller.heuristics.Heuristic;
+import Bamboo.controller.heuristics.Uniform;
 import Bamboo.model.Game;
 
 import java.awt.Color;
@@ -15,6 +17,7 @@ public class MCTS implements Agent
     private int iter = 10000;
     private boolean testing = false;
     public Mutable<Float> c = new Mutable<>(2.5f);
+    public Mutable<Heuristic> heuristic = new Mutable<>(new Uniform());
 
     public MCTS(Color colour)
     {
@@ -76,5 +79,15 @@ public class MCTS implements Agent
     @Override
     public Mutable<Float> getC() {
         return this.c;
+    }
+
+    @Override
+    public Mutable<Heuristic> getHeuristic() {
+        return heuristic;
+    }
+        
+    @Override
+    public Mutable<Integer> getSwitchThreshold() {
+        return null;
     }
 }

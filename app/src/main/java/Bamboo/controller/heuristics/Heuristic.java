@@ -8,4 +8,5 @@ import java.awt.*;
 public interface Heuristic
 {
     public Vector getNextMove(Grid grid, Color currentPlayer);
+    public String getType();
 }

@@ -6,5 +6,7 @@ public enum Variable {
     C,
     ITERATIONS,
     HIDDEN_LAYER_SIZE,
-    NUM_HIDDEN_LAYERS;
+    NUM_HIDDEN_LAYERS,
+    HEURISTIC,
+    SWITCH_THRESHOLD;
 }

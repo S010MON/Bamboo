@@ -14,7 +14,7 @@ public class Random implements Agent
 {
     private String name = "Ronald";
     private Color colour;
-    private Heuristic heuristic = new Uniform();
+    public Mutable<Heuristic> heuristic = new Mutable<>(new Uniform());
 
     public Random(Color colour)
     {
@@ -65,6 +65,14 @@ public class Random implements Agent
 
     @Override
     public Mutable<Float> getC() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Heuristic> getHeuristic() {return heuristic;}
+
+    @Override
+    public Mutable<Integer> getSwitchThreshold() {
         return null;
     }
 }
