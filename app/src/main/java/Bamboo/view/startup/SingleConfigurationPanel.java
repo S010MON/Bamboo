@@ -16,17 +16,13 @@ public class SingleConfigurationPanel extends JPanel
     private JPanel textFieldPanel;
     private JPanel textLabelPanel2;
     private JPanel textFieldPanel2;
-    private Button button;
     private SingleButtonPanel buttonPanel1;
     private SingleButtonPanel buttonPanel2;
-    private JButton toggleButton;
     private JLabel player1label;
     private JLabel AIlabel;
     private JTextField player1textField;
     private JComboBox AIcombobox;
     private String[] AIstring ;
-    private final Color ACTIVE_COLOUR = Color.BLACK;
-    private final Color INACTIVE_COLOUR = Color.GRAY;
     private AgentType AT ;
     private SettingsPanel settingsPanel;
 
@@ -37,27 +33,27 @@ public class SingleConfigurationPanel extends JPanel
         setVisible(true);
 
         JPanel panel1 = new JPanel();
-        panel1.setBackground(Colour.background());
+        panel1.setBackground(Colour.BACKGROUND());
         panel1.setLayout(new GridLayout(1,3));
         add(panel1);
 
         JPanel panel2 = new JPanel();
-        panel2.setBackground(Colour.background());
+        panel2.setBackground(Colour.BACKGROUND());
         panel2.setLayout(new GridLayout(1, 3));
         add(panel2);
 
         JPanel panel3 = new JPanel();
-        panel3.setBackground(Colour.background());
+        panel3.setBackground(Colour.BACKGROUND());
         panel3.setLayout(new GridLayout(1,3));
         add(panel3);
 
         JPanel panel4 = new JPanel();
-        panel4.setBackground(Colour.background());
+        panel4.setBackground(Colour.BACKGROUND());
         panel4.setLayout(new GridLayout(1,3));
         add(panel4);
 
         textLabelPanel = new JPanel();
-        textLabelPanel.setBackground(Colour.background());
+        textLabelPanel.setBackground(Colour.BACKGROUND());
         textLabelPanel.setLayout(new BorderLayout());
         player1label = new JLabel("PLAYER NAME : ");
         player1label.setFont(new Font("SansSerif", Font.PLAIN,20));
@@ -66,13 +62,13 @@ public class SingleConfigurationPanel extends JPanel
 
         textFieldPanel = new JPanel();
         textFieldPanel.setLayout(null);
-        textFieldPanel.setBackground(Colour.background());
-        player1textField = new JTextField("PlAYER");
-        player1textField.setForeground(INACTIVE_COLOUR);
+        textFieldPanel.setBackground(Colour.BACKGROUND());
+        player1textField = new JTextField("PLAYER");
+        player1textField.setForeground(Colour.INACTIVE_TEXT());
         player1textField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                player1textField.setForeground(ACTIVE_COLOUR);
+                player1textField.setForeground(Colour.ACTIVE_TEXT());
                 player1textField.repaint();
                 if(player1textField.getText().equalsIgnoreCase("PLAYER")){
                  player1textField.setText(null);
@@ -83,12 +79,12 @@ public class SingleConfigurationPanel extends JPanel
             @Override
             public void focusLost(FocusEvent e) {
                 if(player1textField.getText().length()!=0){
-                    setForeground(INACTIVE_COLOUR);
+                    setForeground(Colour.INACTIVE_TEXT());
                     player1textField.repaint();
                 }
                 else{
                     player1textField.setText("PLAYER");
-                    player1textField.setForeground(INACTIVE_COLOUR);
+                    player1textField.setForeground(Colour.INACTIVE_TEXT());
                     player1textField.repaint();
                 }
             }
@@ -101,7 +97,7 @@ public class SingleConfigurationPanel extends JPanel
         panel1.add(buttonPanel1);
 
         textLabelPanel2 = new JPanel();
-        textLabelPanel2.setBackground(Colour.background());
+        textLabelPanel2.setBackground(Colour.BACKGROUND());
         textLabelPanel2.setLayout(new BorderLayout());
         AIlabel = new JLabel("SELECT AI : ");
         AIlabel.setFont(new Font("SansSerif", Font.PLAIN,20));
@@ -110,7 +106,7 @@ public class SingleConfigurationPanel extends JPanel
 
         textFieldPanel2 = new JPanel();
         textFieldPanel2.setLayout(null);
-        textFieldPanel2.setBackground(Colour.background());
+        textFieldPanel2.setBackground(Colour.BACKGROUND());
         AIstring = AgentType.getNames(AgentType.class);
         AIcombobox = new JComboBox(AgentType.values());
         AIcombobox.setBounds(20,8,200,30);
@@ -159,7 +155,7 @@ public class SingleConfigurationPanel extends JPanel
         {
             this.color = color;
             setLayout(null);
-            setBackground(Colour.background());
+            setBackground(Colour.BACKGROUND());
             setVisible(true);
         }
 
