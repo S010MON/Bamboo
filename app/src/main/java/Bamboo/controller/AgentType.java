@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 public enum AgentType
 {
-    MINIMAX,
     MINIMAX_AB,
     MINIMAX_SORTED,
     MCTS,
