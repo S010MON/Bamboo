@@ -5,6 +5,7 @@ import Bamboo.view.resources.Button;
 import Bamboo.view.resources.Colour;
 
 import javax.swing.*;
+import javax.swing.plaf.SliderUI;
 import java.awt.*;
 import java.io.IOException;
 
@@ -23,11 +24,16 @@ public class DemoConfigurationPanel extends JPanel
     private JComboBox AIcombobox1;
     private JComboBox AIcombobox2 ;
     private String[] AIstring ;
+    private SettingsPanel settingsPanel ;
 
-    public DemoConfigurationPanel(StartupPanel startupPanel)
+    public DemoConfigurationPanel(SettingsPanel settingsPanel, StartupPanel startupPanel)
+
     {
+        this.settingsPanel=settingsPanel;
+
         setLayout(new GridLayout(4, 1));
         setVisible(true);
+
 
         JPanel panel1 = new JPanel();
         panel1.setBackground(Colour.background());
@@ -63,6 +69,8 @@ public class DemoConfigurationPanel extends JPanel
         AIstring = AgentType.getNames(AgentType.class);
         AIcombobox1 = new JComboBox(AgentType.values());
         AIcombobox1.setBounds(20,8,200,30);
+        ComboListener comboListener1=new ComboListener(this,AIcombobox1);
+        AIcombobox1.addActionListener(comboListener1);
         textFieldPanel.add(AIcombobox1);
         panel1.add(textFieldPanel);
 
@@ -82,6 +90,8 @@ public class DemoConfigurationPanel extends JPanel
         textFieldPanel2.setBackground(Colour.background());
         AIcombobox2 = new JComboBox(AgentType.values());
         AIcombobox2.setBounds(20,8,200,30);
+        ComboListener comboListener2 = new ComboListener(this,AIcombobox2);
+        AIcombobox2.addActionListener(comboListener2);
         textFieldPanel2.add(AIcombobox2);
         panel2.add(textFieldPanel2);
 
@@ -150,5 +160,9 @@ public class DemoConfigurationPanel extends JPanel
         {
             return color;
         }
+    }
+
+    public SettingsPanel getSettingsPanel() {
+        return settingsPanel;
     }
 }

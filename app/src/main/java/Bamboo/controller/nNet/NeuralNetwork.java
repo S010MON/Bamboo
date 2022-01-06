@@ -1,6 +1,7 @@
 package Bamboo.controller.nNet;
 
 import Bamboo.controller.*;
+import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import deepnetts.data.DataSets;
@@ -80,8 +81,8 @@ public class NeuralNetwork implements Agent
             floatInputs[i] = (float)input[i];
         float[] output = neuralNet.predict(floatInputs);
         Vector move = getMoveFromPrediction(output,game.getGrid());
-        if(grid.isLegalMove(move,color))
-            System.out.println("NNet chooses move " + move + " at probability " + maximum(output));
+        //if(grid.isLegalMove(move,color))
+            //System.out.println("NNet chooses move " + move + " at probability " + maximum(output));
         return move;
     }
 
@@ -103,6 +104,14 @@ public class NeuralNetwork implements Agent
 
     @Override
     public Mutable<Float> getC() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Heuristic> getHeuristic() {return null;}
+
+    @Override
+    public Mutable<Integer> getSwitchThreshold() {
         return null;
     }
 
@@ -197,9 +206,9 @@ public class NeuralNetwork implements Agent
         trainer.setOptimizer(OptimizerType.MOMENTUM);
         trainer.setShuffle(true);
         trainer.setTestSet(testDataSet);
-        trainer.setMaxEpochs(500);
+        trainer.setMaxEpochs(200);
         trainer.setEarlyStopping(true);
-        trainer.setEarlyStoppingPatience(10);
+        trainer.setEarlyStoppingPatience(2);
     }
 
     private void printMetrics(TabularDataSet trainData, TabularDataSet testData){

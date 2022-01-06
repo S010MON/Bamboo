@@ -3,6 +3,7 @@ package Bamboo.controller.miniMax;
 import Bamboo.controller.Agent;
 import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
+import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.model.*;
 
 import java.awt.*;
@@ -82,6 +83,13 @@ public class MiniMax implements Agent
 
     @Override
     public Mutable<Float> getC() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Heuristic> getHeuristic() {return null;}
+    
+    public Mutable<Integer> getSwitchThreshold() {
         return null;
     }
 

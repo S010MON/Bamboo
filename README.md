@@ -3,7 +3,7 @@
 ![workflow](https://github.com/S010MON/Bamboo/actions/workflows/mac.yml/badge.svg)
 
 # Bamboo
-An implementation of the game originally desgined by Mark Steere in March 21
+An implementation of the game originally desgined by Mark Steere in March 21 
 
 ## Contents
 - ![Gameplay](https://github.com/S010MON/Bamboo#gameplay)
