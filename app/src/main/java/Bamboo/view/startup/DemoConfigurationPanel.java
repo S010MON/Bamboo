@@ -26,7 +26,7 @@ public class DemoConfigurationPanel extends JPanel
     private String[] AIstring ;
     private SettingsPanel settingsPanel ;
 
-    public DemoConfigurationPanel(SettingsPanel settingsPanel)
+    public DemoConfigurationPanel(SettingsPanel settingsPanel, StartupPanel startupPanel)
 
     {
         this.settingsPanel=settingsPanel;
