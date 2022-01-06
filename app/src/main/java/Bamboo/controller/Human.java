@@ -57,4 +57,9 @@ public class Human implements Agent
     public Mutable<Float> getC() {
         return null;
     }
+
+    @Override
+    public Mutable<Integer> getSwitchThreshold() {
+        return null;
+    }
 }

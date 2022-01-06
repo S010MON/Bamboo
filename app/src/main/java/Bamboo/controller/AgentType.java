@@ -9,7 +9,8 @@ public enum AgentType
     MINIMAX_SORTED,
     MCTS,
     RANDOM,
-    NEURAL_NET;
+    NEURAL_NET,
+    HYBRID_NNMM;
 
     public static String[] getNames(Class<? extends Enum<?>> e) {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);

@@ -38,6 +38,30 @@ public class TestingAPITest {
         tester.run();
     }
 
+    @Disabled
+    @Test void hybridTest() throws  IOException{
+        Tester tester = new Tester(AgentType.HYBRID_NNMM,5);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SWITCH_THRESHOLD,new float[]{1,50,90});
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.setReplications(4);
+        tester.run();
+    }
+
+    @Disabled
+    @Test void neuralNetTest() throws IOException{
+        Tester tester = new Tester(AgentType.NEURAL_NET,5);
+        tester.setReplications(50);
+        tester.run();
+    }
+
+    @Disabled
+    @Test void randomTimeBaseline() throws IOException{
+        Tester tester = new Tester(AgentType.RANDOM,5);
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.setReplications(50);
+        tester.run();
+    }
+
     @Test void gameWithOutGUITest() throws IOException {
         int wins = 0;
         for(int i = 0; i < 100; i++){

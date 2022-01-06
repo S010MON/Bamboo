@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.IOException;
 
 public class MultiConfigurationPanel extends JPanel
 {
@@ -24,7 +25,7 @@ public class MultiConfigurationPanel extends JPanel
     private final Color ACTIVE_COLOUR = Color.BLACK;
     private final Color INACTIVE_COLOUR = Color.GRAY;
 
-    public MultiConfigurationPanel()
+    public MultiConfigurationPanel(StartupPanel startupPanel)
     {
         setLayout(new GridLayout(4, 1));
         setVisible(true);
@@ -139,10 +140,15 @@ public class MultiConfigurationPanel extends JPanel
         buttonPanel2 = new ColourButtonPanel(Color.blue);
         panel2.add(buttonPanel2);
 
-        toggleButton = new Button("btnToggle.png");
-        toggleButton.setBounds(50,50,145,55);
-        toggleButton.addActionListener(e -> {buttonPanel1.changeColor();buttonPanel2.changeColor();});
-        panel3.add(toggleButton);
+        Button startBtn = new Button("btnStart.png");
+        startBtn.addActionListener(e -> {
+            try {
+                startupPanel.startGame();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        panel3.add(startBtn);
     }
 
     public String getNamePlayer1(){ return player1textField.getText();}
@@ -152,6 +158,10 @@ public class MultiConfigurationPanel extends JPanel
     public Color getPlayer1Color(){return buttonPanel1.getPlayerColor();}
 
     public Color getPlayer2Color(){return buttonPanel2.getPlayerColor();}
+
+    public void swapColor(){
+        buttonPanel1.changeColor();buttonPanel2.changeColor();
+    }
 
     class ColourButtonPanel extends JPanel
     {

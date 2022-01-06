@@ -12,6 +12,7 @@ public class VariableFactory {
             case ITERATIONS: yield a.getIterations();
             case HIDDEN_LAYER_SIZE: yield null;
             case NUM_HIDDEN_LAYERS: yield null;
+            case SWITCH_THRESHOLD: yield a.getSwitchThreshold();
         };
     }
 }
