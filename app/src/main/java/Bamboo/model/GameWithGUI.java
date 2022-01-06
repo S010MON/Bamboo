@@ -40,7 +40,7 @@ public class GameWithGUI extends GameImp implements Game
             }
 
             grid.setTile(v, currentPlayer.getColor());
-
+            history.add(v);
             toggleTurn();
         }
         if(grid.isFinished(getCurrentPlayer().getColor())) {

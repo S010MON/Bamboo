@@ -67,14 +67,6 @@ public class GridGraphImp implements Grid
             remainingTiles.remove(v);
     }
 
-    @Override
-    public Vector getPreviousMove()
-    {
-        if(history.empty())
-            return null;
-        return history.peek();
-    }
-
     public void unSetTile(Vector v)
     {
         for(Tile neighbour: getAllNeighbours(v))

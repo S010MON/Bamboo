@@ -4,7 +4,6 @@ import Bamboo.controller.Agent;
 import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
 import Bamboo.model.Game;
-import Bamboo.model.GameWithoutGUI;
 
 import java.awt.Color;
 
@@ -12,10 +11,10 @@ public class MCTS implements Agent
 {
     private Color colour;
     private NodeMCTS root;
-    public Mutable<Integer> iterations = new Mutable<>(10000);
+    public Mutable<Integer> iterations = new Mutable<>(100);
     private int iter = 10000;
     private boolean testing = false;
-    public Mutable<Float> c = new Mutable<>(0.5f);
+    public Mutable<Float> c = new Mutable<>(2.5f);
 
     public MCTS(Color colour)
     {
@@ -41,17 +40,20 @@ public class MCTS implements Agent
     @Override
     public Vector getNextMove(Game game)
     {
-        if(game instanceof GameWithoutGUI)
-            iter = iterations.get();
 
-        root = new NodeMCTS(game, null, game.getCurrentPlayer().getColor(), null);
-        for(int i = 0; i < iter; i++)
+        if(root == null)
+            root = new NodeMCTS(game.getGrid(), null, game.getCurrentPlayer().getColor());
+        // Make the move that has just been played (to prune tree)
+        else
+            root = root.selectNode(game.getPreviousMove());
+
+
+        for(int i = 0; i < iterations.get(); i++)
         {
-            NodeMCTS next = root.select();
-            root.expand(next);
-            next.backProp(next.playout());
+            root.selectAndExpand();
         }
         NodeMCTS bestMove = root.selectBest();
+        root = root.selectBest();
         return bestMove.getMove();
     }
 

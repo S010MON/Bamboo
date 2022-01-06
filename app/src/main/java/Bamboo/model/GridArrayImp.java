@@ -15,7 +15,6 @@ public class GridArrayImp implements Grid
     private List<Vector> vectors;
     private int width;
     private int offset;
-    private Stack<Vector> history;
 
     public GridArrayImp(int radius)
     {
@@ -25,7 +24,6 @@ public class GridArrayImp implements Grid
         tileList = new ArrayList<>();
         emptyList = new ArrayList<>();
         tiles = buildGrid();
-        history = new Stack<>();
     }
 
     @Override
@@ -40,18 +38,9 @@ public class GridArrayImp implements Grid
     @Override
     public void setTile(Vector v, Color c)
     {
-        history.push(v);
         v = addOffset(v);
         tiles[v.getX()][v.getY()][v.getZ()].setColour(c);
         emptyList.remove(tiles[v.getX()][v.getY()][v.getZ()]);
-    }
-
-    @Override
-    public Vector getPreviousMove()
-    {
-        if(history.empty())
-            return null;
-        return history.peek();
     }
 
     private void unSetTile(Vector v)
@@ -59,7 +48,6 @@ public class GridArrayImp implements Grid
         v = addOffset(v);
         tiles[v.getX()][v.getY()][v.getZ()].setColour(Color.WHITE);
         emptyList.add(tiles[v.getX()][v.getY()][v.getZ()]);
-        history.pop();
     }
 
     @Override
@@ -119,10 +107,9 @@ public class GridArrayImp implements Grid
     {
         if(emptyList.size() == 0)
             return true;
-        for(int i = 0; i < emptyList.size(); i++)
+        for (Tile tile : emptyList)
         {
-            Tile tile = emptyList.get(i);
-            if(isLegalMove(tile.getVector(), currentColour))
+            if (isLegalMove(tile.getVector(), currentColour))
                 return false;
         }
         return true;

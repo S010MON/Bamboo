@@ -2,8 +2,8 @@ package Bamboo.model;
 
 import Bamboo.controller.*;
 
-import java.awt.*;
 import java.util.List;
+import java.util.Stack;
 
 public class GameImp implements Game
 {
@@ -12,6 +12,7 @@ public class GameImp implements Game
     protected Agent player2;
     protected Agent currentPlayer;
     protected Settings settings;
+    protected Stack<Vector> history;
 
     public GameImp(Settings settings)
     {
@@ -20,6 +21,7 @@ public class GameImp implements Game
         this.player2 = settings.player2;
         this.currentPlayer = settings.getCurrentPlayer();
         this.settings = settings;
+        this.history = new Stack<>();
 
         // This loads a new game from the tiles in the settings
         if(settings.tiles != null)
@@ -37,6 +39,7 @@ public class GameImp implements Game
         if(grid.isLegalMove(v, currentPlayer.getColor()))
         {
             grid.setTile(v, currentPlayer.getColor());
+            history.add(v);
             toggleTurn();
         }
     }
@@ -85,7 +88,9 @@ public class GameImp implements Game
     @Override
     public Vector getPreviousMove()
     {
-        return grid.getPreviousMove();
+        if(history.empty())
+            return null;
+        return history.peek();
     }
 
     protected void toggleTurn()

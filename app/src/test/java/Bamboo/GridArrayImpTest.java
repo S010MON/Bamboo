@@ -288,31 +288,4 @@ class GridArrayImpTest
         assertEquals(3, act.get(0).size());
         assertEquals(3, act.get(1).size());
     }
-
-    @Test void testHistoryNone()
-    {
-        int radius = 3;
-        GridArrayImp grid = new GridArrayImp(radius);
-        assertNull(grid.getPreviousMove());
-    }
-
-    @Test void testHistoryOne()
-    {
-        int radius = 3;
-        GridArrayImp grid = new GridArrayImp(radius);
-        grid.setTile(new Vector(0,0,0), Color.BLUE);
-        assertEquals(new Vector(0,0,0), grid.getPreviousMove());
-        assertEquals(new Vector(0,0,0), grid.getPreviousMove());
-    }
-
-    @Test void testHistoryThree()
-    {
-        int radius = 3;
-        GridArrayImp grid = new GridArrayImp(radius);
-        grid.setTile(new Vector(0,0,0), Color.BLUE);
-        grid.setTile(new Vector(1,0,-1), Color.RED);
-        grid.setTile(new Vector(0,2,-2), Color.BLUE);
-        assertEquals(new Vector(0,2,-2), grid.getPreviousMove());
-        assertEquals(new Vector(0,2,-2), grid.getPreviousMove());
-    }
 }

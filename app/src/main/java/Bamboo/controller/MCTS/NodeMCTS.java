@@ -19,25 +19,23 @@ public class NodeMCTS
     private int plays;
     private int wins;
     private int visits;
-    private Game game;
+    private Grid grid;
     private Vector move;
-    private NodeMCTS parent;
     private ArrayList<NodeMCTS> children;
     private Stack<Vector> unexplored;
 
     private Heuristic heuristic = new OuterWeighted();
 
-    public NodeMCTS(Game game, Vector move, Color colour, NodeMCTS parent)
+    public NodeMCTS(Grid grid, Vector move, Color colour)
     {
-        this.parent = parent;
         this.move = move;
-        this.game = game.copy();
+        this.grid = grid.copy();
         this.colour = colour;
 
         plays = 0;
         wins = 0;
         visits = 1;
-        unexplored = collectRemainingMoves(game.getGrid());
+        unexplored = collectRemainingMoves(grid);
         children =  new ArrayList<>();
     }
 
@@ -59,20 +57,36 @@ public class NodeMCTS
         return best;
     }
 
+    public NodeMCTS selectNode(Vector v)
+    {
+        for(NodeMCTS n: children)
+        {
+            if(n.getMove().equals(v))
+                return n;
+        }
+
+        return new NodeMCTS(grid, v, toggleColour(colour));
+    }
+
     /**
      * Select the next node and expand it
      */
-    public NodeMCTS select()
+    public int selectAndExpand()
     {
+        visits++;
         /* children not fully explored? -> select randomly */
         if(!unexplored.isEmpty())
         {
             Vector v = selectNextLegalMove();
             if(v != null)
             {
-                Game gameCopy = game.copy();
-                gameCopy.getGrid().setTile(v, colour);
-                return new NodeMCTS(gameCopy, v, toggleColour(colour), this);
+                Grid gridCopy = grid.copy();
+                gridCopy.setTile(v, colour);
+                NodeMCTS n = new NodeMCTS(gridCopy, v, toggleColour(colour));
+                children.add(n);
+                int result = n.playout();
+                wins += result;
+                return result;
             }
         }
 
@@ -87,12 +101,9 @@ public class NodeMCTS
                 bestUCB = n.getUCBscore(visits);
             }
         }
-        return best;
-    }
-
-    public void expand(NodeMCTS node)
-    {
-        children.add(node);
+        int result = best.selectAndExpand();
+        wins += result;
+        return result;
     }
 
     /**
@@ -102,13 +113,15 @@ public class NodeMCTS
      */
     public int playout()
     {
+        plays++;
+
         Color startingColour = colour;
         Color currentColor = colour;
 
-        while (!game.isFinished())
+        while (!grid.isFinished(currentColor))
         {
-            Vector v = heuristic.getNextMove(game);
-            game.getGrid().setTile(v, currentColor);
+            Vector v = heuristic.getNextMove(grid, currentColor);
+            grid.setTile(v, currentColor);
             currentColor = toggleColour(currentColor);
         }
 
@@ -118,34 +131,6 @@ public class NodeMCTS
             return 1;
     }
 
-    /**
-     * Feeds back all results to the root node
-     * @param result - {0, 1} the result of the playout
-     */
-    public void backProp(int result)
-    {
-        if(parent != null)
-        {
-            parent.addResult(result);
-            parent.incrementPlays();
-            parent.incrementVisits();
-        }
-    }
-
-    public void addResult(int result)
-    {
-        wins += result;
-    }
-
-    public void incrementVisits()
-    {
-        visits++;
-    }
-
-    public void incrementPlays()
-    {
-        plays++;
-    }
 
     /**
      * Calculate the Upper Confidence Bound for the current node
@@ -162,10 +147,6 @@ public class NodeMCTS
         return move;
     }
 
-    public boolean isLeaf()
-    {
-        return !children.isEmpty();
-    }
 
     /**
      * @return a shuffled stack of all the remaining
@@ -189,7 +170,7 @@ public class NodeMCTS
         while(!unexplored.isEmpty())
         {
             selected = unexplored.pop();
-            if(game.getGrid().isLegalMove(selected, colour))
+            if(grid.isLegalMove(selected, colour))
                 return selected;
         }
         return selected;
