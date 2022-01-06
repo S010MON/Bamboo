@@ -26,7 +26,7 @@ public class SingleConfigurationPanel extends JPanel
     private AgentType AT ;
     private SettingsPanel settingsPanel;
 
-    public SingleConfigurationPanel( SettingsPanel settingsPanel)
+    public SingleConfigurationPanel( SettingsPanel settingsPanel, StartupPanel startupPanel)
 
     {
         this.settingsPanel=settingsPanel;

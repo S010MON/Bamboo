@@ -71,9 +71,9 @@ public class SettingsPanel extends JPanel
         slider_NN.setBackground(Colour.background());
         slider_NN.setLabelTable(buildHashtableOfPositions());
 
-        multiConfigurationPanel = new MultiConfigurationPanel();
-        singleConfigurationPanel = new SingleConfigurationPanel(this);
-        demoConfigurationPanel = new DemoConfigurationPanel(this);
+        multiConfigurationPanel = new MultiConfigurationPanel(p);
+        singleConfigurationPanel = new SingleConfigurationPanel(this,p);
+        demoConfigurationPanel = new DemoConfigurationPanel(this,p);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Colour.background());
@@ -313,8 +313,9 @@ public class SettingsPanel extends JPanel
     public void checkNNtoFalse(){
         checkNN=false ;
 }
-    public void checkNNtoTrue(){
-        checkNN=true;
+    public void checkNNtoTrue() {
+        checkNN = true;
+    }
 
     public void swapToggleColor() {
         singleConfigurationPanel.swapColor();
