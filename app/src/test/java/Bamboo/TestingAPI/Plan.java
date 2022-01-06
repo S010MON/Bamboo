@@ -20,7 +20,7 @@ public class Plan {
         for(int i = 0; i < varCount; i++){
             repetitions[i] = 1;
             for(int j = 0; j < i; j++){
-                repetitions[i] *= variables.get(j).getValues().length;
+                repetitions[i] *= variables.get(j).getArrayBounds();
             }
         }
         plan = new int[rows][varCount];
