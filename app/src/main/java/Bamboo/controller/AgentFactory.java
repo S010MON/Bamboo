@@ -1,6 +1,7 @@
 package Bamboo.controller;
 
 import Bamboo.controller.MCTS.MCTS;
+import Bamboo.controller.hybridNNMM.hybridAgent;
 import Bamboo.controller.miniMax.*;
 import Bamboo.controller.nNet.NeuralNetwork;
 import Bamboo.controller.random.Random;
@@ -18,6 +19,7 @@ public class AgentFactory
             case MINIMAX_AB -> new MiniMaxAB(color);
             case MCTS -> new MCTS(color);
             case NEURAL_NET -> new NeuralNetwork(color);
+            case HYBRID_NNMM -> new hybridAgent(color);
         };
     }
 }

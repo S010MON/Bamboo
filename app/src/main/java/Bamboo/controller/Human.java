@@ -60,7 +60,10 @@ public class Human implements Agent
     }
 
     @Override
-    public Mutable<Heuristic> getHeuristic() {
+    public Mutable<Heuristic> getHeuristic() {return null;}
+
+    @Override
+    public Mutable<Integer> getSwitchThreshold() {
         return null;
     }
 }

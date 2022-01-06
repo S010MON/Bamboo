@@ -10,10 +10,10 @@ public class VariableFactory {
             case SEARCH_DEPTH: yield a.getDepth();
             case C: yield a.getC();
             case ITERATIONS: yield a.getIterations();
-            case HIDDEN_LAYER_SIZE:
-            case NUM_HIDDEN_LAYERS:
-                yield null;
             case HEURISTIC: yield a.getHeuristic();
+            case HIDDEN_LAYER_SIZE: yield null;
+            case NUM_HIDDEN_LAYERS: yield null;
+            case SWITCH_THRESHOLD: yield a.getSwitchThreshold();
         };
     }
 }

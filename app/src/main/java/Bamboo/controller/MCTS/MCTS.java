@@ -84,4 +84,9 @@ public class MCTS implements Agent
     public Mutable<Heuristic> getHeuristic() {
         return heuristic;
     }
+        
+    @Override
+    public Mutable<Integer> getSwitchThreshold() {
+        return null;
+    }
 }

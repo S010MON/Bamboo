@@ -87,7 +87,9 @@ public class MiniMax implements Agent
     }
 
     @Override
-    public Mutable<Heuristic> getHeuristic() {
+    public Mutable<Heuristic> getHeuristic() {return null;}
+    
+    public Mutable<Integer> getSwitchThreshold() {
         return null;
     }
 

@@ -43,6 +43,19 @@ public class TestingAPITest {
         tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED});
         tester.setReplications(50);
         tester.addMetric(Metrics.ELAPSED_TIME);
+
+    @Disabled
+    @Test void neuralNetTest() throws IOException{
+        Tester tester = new Tester(AgentType.NEURAL_NET,5);
+        tester.setReplications(50);
+        tester.run();
+    }
+
+    @Disabled
+    @Test void randomTimeBaseline() throws IOException{
+        Tester tester = new Tester(AgentType.RANDOM,5);
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.setReplications(50);
         tester.run();
     }
 

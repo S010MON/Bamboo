@@ -14,7 +14,7 @@ public class ButtonPanel extends JPanel
     private JButton helpBtn;
     private JButton settingsBtn;
 
-    public ButtonPanel(StartupPanel startupPanel)
+    public ButtonPanel(StartupPanel startupPanel, SettingsPanel settingsPanel)
     {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setBackground(new Color(158, 208, 239));
@@ -35,16 +35,12 @@ public class ButtonPanel extends JPanel
         loadBtn.addActionListener(e -> startupPanel.getMainFrame().load());
         add(loadBtn);
 
-        /* Start Button */
-        Button startBtn = new Button("btnStart.png");
-        startBtn.addActionListener(e -> {
-            try {
-                startupPanel.startGame();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-        add(startBtn);
+        Button toggleButton = new Button("btnColor.png");
+        toggleButton.addActionListener(e -> settingsPanel.swapToggleColor());
+        add(toggleButton);
+        //toggleButton.setBounds(50,50,145,55);
+
+
 
         /* Quit Button */
         Button quitBtn = new Button("btnQuit.png");

@@ -17,4 +17,5 @@ public interface Agent
     Mutable<Integer> getIterations();
     Mutable<Float> getC();
     Mutable<Heuristic> getHeuristic();
+    Mutable<Integer> getSwitchThreshold();
 }
