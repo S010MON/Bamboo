@@ -69,8 +69,8 @@ public class DemoConfigurationPanel extends JPanel
         AIstring = AgentType.getNames(AgentType.class);
         AIcombobox1 = new JComboBox(AgentType.values());
         AIcombobox1.setBounds(20,8,200,30);
-        ComboListener comboListener1=new ComboListener(this,AIcombobox1);
-        AIcombobox1.addActionListener(comboListener1);
+       // ComboListener comboListener1=new ComboListener(this,AIcombobox1);
+       // AIcombobox1.addActionListener(comboListener1);
         textFieldPanel.add(AIcombobox1);
         panel1.add(textFieldPanel);
 
@@ -90,8 +90,9 @@ public class DemoConfigurationPanel extends JPanel
         textFieldPanel2.setBackground(Colour.background());
         AIcombobox2 = new JComboBox(AgentType.values());
         AIcombobox2.setBounds(20,8,200,30);
-        ComboListener comboListener2 = new ComboListener(this,AIcombobox2);
+        Combolistener2 comboListener2 = new Combolistener2(this,AIcombobox1,AIcombobox2);
         AIcombobox2.addActionListener(comboListener2);
+        AIcombobox1.addActionListener(comboListener2);
         textFieldPanel2.add(AIcombobox2);
         panel2.add(textFieldPanel2);
 

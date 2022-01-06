@@ -67,7 +67,7 @@ public class StartupPanel extends JPanel
         singleConfigurationPanel = settingsPanel.getSingleConfigurationPanel();
 
         if(settingsPanel.getMode().equals(Mode.SINGLE)){
-            if(singleConfigurationPanel.getAgentType()==AgentType.NEURAL_NET){
+            if(singleConfigurationPanel.getAgentType()==AgentType.NEURAL_NET||singleConfigurationPanel.getAgentType()==AgentType.HYBRID_NNMM){
                 return new Settings(
                         new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
                         AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
@@ -82,8 +82,10 @@ public class StartupPanel extends JPanel
         }
 
        if(settingsPanel.getMode().equals(Mode.DEMO)){
-           if(settingsPanel.getDemoConfigurationPanel().getAgentType1()==(AgentType.NEURAL_NET)||
-               settingsPanel.getDemoConfigurationPanel().getAgentType2()==(AgentType.NEURAL_NET)){
+           if(settingsPanel.getDemoConfigurationPanel().getAgentType1()==(AgentType.NEURAL_NET)
+                   ||settingsPanel.getDemoConfigurationPanel().getAgentType2()==AgentType.NEURAL_NET
+                   ||settingsPanel.getDemoConfigurationPanel().getAgentType1()==AgentType.HYBRID_NNMM
+                   ||settingsPanel.getDemoConfigurationPanel().getAgentType2()==AgentType.HYBRID_NNMM){
 
                return new Settings(
                        AgentFactory.makeAgent(settingsPanel.getAgentType1(), settingsPanel.getPlayer1Colour()),
