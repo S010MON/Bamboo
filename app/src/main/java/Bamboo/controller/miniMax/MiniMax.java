@@ -1,26 +1,32 @@
 package Bamboo.controller.miniMax;
 
 import Bamboo.controller.Agent;
+import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MiniMax implements Agent {
+public class MiniMax implements Agent
+{
+    protected String name;
+    protected Color color;
+    protected ArrayList<Vector> uncolored_vectors = new ArrayList<>();
+    protected int totalEvaluations = 0;
+    public Mutable<Integer> depth = new Mutable<>(1);
+    public boolean testing = false;
 
-    private Color color;
-    private ArrayList<Vector> uncolored_vectors = new ArrayList<>();
-    int totalEvaluations = 0;
-
-    public MiniMax(Color color){
+    public MiniMax(Color color)
+    {
         this.color = color;
+        this.name = "MiniMax";
     }
 
     @Override
     public String getName()
     {
-        return "MiniMax";
+        return name;
     }
 
     @Override
@@ -43,22 +49,16 @@ public class MiniMax implements Agent {
         else
             updateUncoloredVectors(game.getGrid());
 
-        int depth = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
+        int d;
+        if(!testing){
+            depth.set((int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55));
+            d = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
+        }
+        else{
+            d = Math.round((float)(Number)(depth.get()));
+        }
         NodeMM start = new NodeMM(game.getGrid());
-        return minimaxMove(start, depth, this.color);
-    }
-
-    @Override
-    public Vector getNextMove(GameWithoutGUI game)
-    {
-        if(uncolored_vectors.size() == 0)
-            uncolored_vectors = new ArrayList<>(game.getGrid().getAllVectors());
-        else
-            updateUncoloredVectors(game.getGrid());
-
-        int depth = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
-        NodeMM start = new NodeMM(game.getGrid());
-        return minimaxMove(start, depth, this.color);
+        return minimaxMove(start, d, this.color);
     }
 
     @Override
@@ -67,12 +67,29 @@ public class MiniMax implements Agent {
         return color;
     }
 
-    Grid makeMove(Grid grid, Vector move, Color player_color){
-        grid.setTile(move,player_color);
-        return grid;
+
+    @Override
+    public Mutable<Integer> getDepth() {
+        testing = true;
+        uncolored_vectors = new ArrayList<>();
+        return this.depth;
     }
 
-    void updateUncoloredVectors(Grid grid){
+    @Override
+    public Mutable<Integer> getIterations() {
+        return null;
+    }
+
+    @Override
+    public Mutable<Float> getC() {
+        return null;
+    }
+
+    public void makeMove(Grid grid, Vector move, Color player_color){
+        grid.setTile(move,player_color);
+    }
+
+    public void updateUncoloredVectors(Grid grid){
         uncolored_vectors.removeIf(vec -> grid.getTile(vec).getColour() != Color.WHITE);
     }
 
@@ -81,11 +98,7 @@ public class MiniMax implements Agent {
     }
 
     public Vector minimaxMove(NodeMM node, int depth, Color agent_color){
-        boolean maximizingPlayer;
-        if(agent_color == Color.RED)
-            maximizingPlayer = true;
-        else
-            maximizingPlayer = false;
+        boolean maximizingPlayer = (agent_color == Color.RED);
         int evaluation = minimax(node, depth, maximizingPlayer);//This must stay in for now
         ArrayList<NodeMM> options = node.getChildren();
         for (NodeMM option : options) {
@@ -116,8 +129,8 @@ public class MiniMax implements Agent {
         int eval;
         if(maximizingPlayer){
             int maxEval = -1000000;
-            for(NodeMM child : node.getChildren()){
-
+            for(NodeMM child : node.getChildren())
+            {
                 eval = minimax(child,depth - 1,false);
                 maxEval = Math.max(eval,maxEval);
             }
@@ -126,7 +139,8 @@ public class MiniMax implements Agent {
         }
         else{
             int minEval = 1000000;
-            for(NodeMM child : node.getChildren()){
+            for(NodeMM child : node.getChildren())
+            {
                 eval =  minimax(child,depth - 1,true);
                 minEval = Math.min(eval,minEval);
             }

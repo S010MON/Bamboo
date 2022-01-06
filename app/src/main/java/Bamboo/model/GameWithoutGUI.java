@@ -1,66 +1,80 @@
 package Bamboo.model;
 
-import Bamboo.controller.Agent;
-import Bamboo.controller.Settings;
-import Bamboo.controller.Vector;
+import Bamboo.controller.*;
 
+import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
-public class GameWithoutGUI {
-    public static int MCTSiterations = 1000;
+public class GameWithoutGUI extends GameImp implements Game
+{
+    private ArrayList<Tile> remainingTiles;
+    private boolean LOG_MOVES = false;
+    private String loggingFile = "log.csv";
+    private Color loggingColor;
+    private String loggingData = "";
 
-    private Grid grid;
-    private ArrayList<Tile> remainingTiles = new ArrayList<>();
-    Agent a1, a2, currentPlayer;
-
-    public GameWithoutGUI(Settings settings){
-        a1 = settings.player1;
-        a2 = settings.player2;
-        currentPlayer = a1;
-        grid = new GridGraphImp(settings.boardSize);
+    public GameWithoutGUI(Settings settings)
+    {
+        super(settings);
         remainingTiles = new ArrayList<>(grid.getAllTiles());
     }
 
-    private void toggleTurn()
-    {
-        if(currentPlayer == a1)
-            currentPlayer = a2;
+    public GameWithoutGUI(Settings settings, Color startingPlayer){
+        super(settings);
+        if(player1.getColor() == startingPlayer)
+            currentPlayer = player1;
         else
-            currentPlayer = a1;
+            currentPlayer = player2;
+        remainingTiles = new ArrayList<>(grid.getAllTiles());
     }
 
     public Agent turnLogic(){
-        while(!remainingTiles.isEmpty() && !grid.isFinished(currentPlayer.getColor())){
-            makeTurn();
+        while(!grid.isFinished(currentPlayer.getColor())){
+            takeTurn();
         }
+        Logger.logCSV(loggingFile, loggingData);
+        loggingData = "";
         return otherPlayer();
     }
 
-    private void makeTurn(){
+    private void takeTurn(){
         Vector move = currentPlayer.getNextMove(this);
-        remainingTiles.remove(grid.getTile(move));
+        addMoveToLogString(move);
+        remainingTiles.remove(move);
         this.grid.setTile(move,currentPlayer.getColor());
         //System.out.println("Agent " + currentPlayer.getName() + " placed color " + currentPlayer.getColor() + " at " + move.toString());
         toggleTurn();
     }
 
-    public Grid getGrid() {
-        return this.grid;
-    }
-
-    public Agent getCurrentPlayer() {
-        return currentPlayer;
+    private void addMoveToLogString(Vector move) {
+        if(LOG_MOVES){
+            if(loggingColor == null || loggingColor == Color.WHITE || loggingColor == currentPlayer.getColor()) {
+                int[] igrid = DataManager.flatten(this.grid, currentPlayer.getColor());
+                int[] imove = DataManager.oneHotEncode(grid.getSize(), move);
+                String data = DataManager.concatToCSV(igrid, imove);
+                loggingData += data;
+            }
+            if(!grid.isFinished(Color.RED) && !grid.isFinished(Color.BLUE))
+                loggingData += "\n";
+        }
     }
 
     private Agent otherPlayer(){
-        if(currentPlayer == a1)
-            return a2;
+        if(currentPlayer == player1)
+            return player2;
         else
-            return a1;
+            return player1;
     }
 
-    public List<Tile> getAllTiles() {
-        return grid.getAllTiles();
+    public void setLogFileName(String loggingFile) {
+        this.loggingFile = loggingFile;
+    }
+
+    public void setLogColor(Color loggedColor) {
+        this.loggingColor = loggedColor;
+    }
+
+    public void setLOG_MOVES(boolean argument) {
+        this.LOG_MOVES = argument;
     }
 }

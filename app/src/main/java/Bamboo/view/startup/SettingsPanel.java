@@ -33,11 +33,12 @@ public class SettingsPanel extends JPanel
     private JPanel panel2slider;
     private boolean checkNN=false;
 
-    public SettingsPanel()
+    public SettingsPanel(StartupPanel p)
     {
         setBackground(Colour.background());
         setLayout(new GridLayout(4, 6));
         setVisible(true);
+
 
         slider_NN = new JSlider(JSlider.HORIZONTAL, 5, 5, boardSize) {
             @Override
@@ -46,6 +47,8 @@ public class SettingsPanel extends JPanel
             }
         };
         slider_NN.setInverted(true);
+
+
         slider = new JSlider(JSlider.HORIZONTAL, 2, 5, boardSize) {
             @Override
             public void updateUI() {
@@ -312,6 +315,12 @@ public class SettingsPanel extends JPanel
 }
     public void checkNNtoTrue(){
         checkNN=true;
+
+    public void swapToggleColor() {
+        singleConfigurationPanel.swapColor();
+        multiConfigurationPanel.swapColor();
+        demoConfigurationPanel.swapColor();
+
     }
 
     private static class CustomSliderUI extends BasicSliderUI {

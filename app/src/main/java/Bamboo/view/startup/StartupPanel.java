@@ -26,10 +26,11 @@ public class StartupPanel extends JPanel
         setBackground(Color.BLACK);
         setLayout(new BorderLayout());
 
-        ButtonPanel buttonPanel = new ButtonPanel(this);
+        settingsPanel = new SettingsPanel(this);
+
+        ButtonPanel buttonPanel = new ButtonPanel(this,settingsPanel);
         add(buttonPanel, BorderLayout.WEST);
 
-        settingsPanel = new SettingsPanel();
         helpPanel = new HelpPanel();
         displaySettingsPanel();
 

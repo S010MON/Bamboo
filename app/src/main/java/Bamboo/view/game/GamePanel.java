@@ -1,6 +1,6 @@
 package Bamboo.view.game;
 
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 import Bamboo.view.MainFrame;
 
 import javax.swing.JPanel;
@@ -8,11 +8,11 @@ import java.awt.*;
 
 public class GamePanel extends JPanel
 {
-    private Game game;
+    private GameWithGUI game;
     private SidePanel sidePanel;
     private Bamboo.view.game.Canvas canvas;
 
-    public GamePanel(Dimension screenSize, Game game, MainFrame mainFrame)
+    public GamePanel(Dimension screenSize, GameWithGUI game, MainFrame mainFrame)
     {
         this.game = game;
         setSize(screenSize);

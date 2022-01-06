@@ -11,6 +11,8 @@ public interface Agent
     String getType();
     boolean isHuman();
     Vector getNextMove(Game game);
-    Vector getNextMove(GameWithoutGUI game) ;
     Color getColor();
+    Mutable<Integer> getDepth();
+    Mutable<Integer> getIterations();
+    Mutable<Float> getC();
 }

@@ -2,7 +2,7 @@ package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
 import Bamboo.controller.VectorConverter;
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 import Bamboo.model.Tile;
 import Bamboo.view.resources.Colour;
 import Bamboo.view.resources.ResourceLoader;
@@ -27,12 +27,12 @@ public class Canvas extends JPanel
     private Timer timer;
     private int demoDelay = 50;
 
-    private Game game;
+    private GameWithGUI game;
     private Color background = Colour.background();
     private RollOverListener rollOverListener;
     private HashMap<Color, BufferedImage> images = new HashMap<>();
 
-    public Canvas(Dimension screenSize, Game game)
+    public Canvas(Dimension screenSize, GameWithGUI game)
     {
         this.hint = false;
         this.game = game;

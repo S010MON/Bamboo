@@ -2,7 +2,7 @@ package Bamboo.view.game;
 
 import Bamboo.controller.AxialVector;
 import Bamboo.controller.VectorConverter;
-import Bamboo.model.Game;
+import Bamboo.model.GameWithGUI;
 import Bamboo.model.Tile;
 
 import java.awt.event.MouseEvent;
@@ -10,10 +10,10 @@ import java.awt.event.MouseListener;
 
 public class TileClickListener implements MouseListener
 {
-    private Game game;
+    private GameWithGUI game;
     private Canvas canvas;
 
-    public TileClickListener(Game game, Canvas canvas)
+    public TileClickListener(GameWithGUI game, Canvas canvas)
     {
         this.game = game;
         this.canvas = canvas;

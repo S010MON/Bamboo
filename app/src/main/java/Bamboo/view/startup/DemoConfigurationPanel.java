@@ -7,6 +7,7 @@ import Bamboo.view.resources.Colour;
 import javax.swing.*;
 import javax.swing.plaf.SliderUI;
 import java.awt.*;
+import java.io.IOException;
 
 public class DemoConfigurationPanel extends JPanel
 {
@@ -14,6 +15,7 @@ public class DemoConfigurationPanel extends JPanel
     private JPanel textFieldPanel;
     private JPanel textLabelPanel2;
     private JPanel textFieldPanel2;
+    private Button button;
     private SingleButtonPanel buttonPanel1;
     private SingleButtonPanel buttonPanel2;
     private JButton toggleButton;
@@ -24,8 +26,8 @@ public class DemoConfigurationPanel extends JPanel
     private String[] AIstring ;
     private SettingsPanel settingsPanel ;
 
-
     public DemoConfigurationPanel(SettingsPanel settingsPanel)
+
     {
         this.settingsPanel=settingsPanel;
 
@@ -96,10 +98,16 @@ public class DemoConfigurationPanel extends JPanel
         buttonPanel2 = new SingleButtonPanel(Color.blue);
         panel2.add(buttonPanel2);
 
-        toggleButton = new Button("btnToggle.png");
-        toggleButton.setBounds(50,50,145,55);
-        toggleButton.addActionListener(e -> {buttonPanel1.changeColor();buttonPanel2.changeColor();});
-        panel3.add(toggleButton);
+        Button startBtn = new Button("btnStart.png");
+        startBtn.addActionListener(e -> {
+            try {
+                startupPanel.startGame();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        panel3.add(startBtn);
+
     }
 
     public AgentType getAgentType1()
@@ -115,6 +123,10 @@ public class DemoConfigurationPanel extends JPanel
     public Color getAI1color(){return buttonPanel1.getPlayerColor();}
 
     public  Color getAI2color(){return buttonPanel2.getPlayerColor() ; }
+
+    public void swapColor(){
+        buttonPanel1.changeColor();buttonPanel2.changeColor();
+    }
 
     class SingleButtonPanel extends JPanel
     {
