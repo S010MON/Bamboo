@@ -14,7 +14,6 @@ public class AgentFactory
     public static Agent makeAgent(AgentType type, Color color) throws IOException {
         return switch (type) {
             case RANDOM -> new Random(color);
-            case MINIMAX -> new MiniMax(color);
             case MINIMAX_SORTED -> new MiniMaxSortedAB(color);
             case MINIMAX_AB -> new MiniMaxAB(color);
             case MCTS -> new MCTS(color);
