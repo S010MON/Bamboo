@@ -42,7 +42,8 @@ public class TestingAPITest {
         tester.setAgent2(AgentType.RANDOM);
         tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED});
         tester.setReplications(50);
-        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.addMetric(Metrics.ELAPSED_TIME);}
+
 
     @Disabled
     @Test void neuralNetTest() throws IOException{
