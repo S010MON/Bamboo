@@ -15,4 +15,5 @@ public interface Agent
     Mutable<Integer> getDepth();
     Mutable<Integer> getIterations();
     Mutable<Float> getC();
+    Mutable<Integer> getSwitchThreshold();
 }
