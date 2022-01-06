@@ -4,11 +4,14 @@ import Bamboo.model.*;
 
 import java.awt.*;
 import java.util.*;
-public class MaximiseNumOfGroups implements Heuristic{
+
+public class MaximiseNumOfGroups implements Heuristic
+{
     private Game game;
 
     @Override
-    public Vector getNextMove(Game game) {
+    public Vector getNextMove(Game game)
+    {
         this.game = game;
         Comparator<Vector> comparator = new GroupsComparator();
         Queue<Vector> queue = new PriorityQueue<>(game.getGrid().getAllVectors().size(),comparator);
@@ -26,6 +29,12 @@ public class MaximiseNumOfGroups implements Heuristic{
         }
         return null;
     }
+
+    @Override
+    public String getType() {
+        return "MaximiseNumOfGroups";
+    }
+
     class GroupsComparator implements Comparator<Vector> {
         public int compare(Vector x, Vector y) {
             Grid grid = game.getGrid();
@@ -36,13 +45,7 @@ public class MaximiseNumOfGroups implements Heuristic{
             gridY.getTile(y).setColour(currentColor);
             int xGroups = gridX.getAllGroupsOfColour(currentColor).size();
             int yGroups = gridY.getAllGroupsOfColour(currentColor).size();
-            if (xGroups< yGroups) {
-                return 1;
-            }
-            if (xGroups > yGroups) {
-                return -1;
-            }
-            return 0;
+            return Integer.compare(yGroups, xGroups);
         }
     }
 }
