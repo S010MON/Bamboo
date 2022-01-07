@@ -35,7 +35,7 @@ public class SettingsPanel extends JPanel
 
     public SettingsPanel(StartupPanel p)
     {
-        setBackground(Colour.background());
+        setBackground(Colour.BACKGROUND());
         setLayout(new GridLayout(4, 6));
         setVisible(true);
 
@@ -63,12 +63,12 @@ public class SettingsPanel extends JPanel
         });
 
         slider.setPaintLabels(true);
-        slider.setBackground(Colour.background());
+        slider.setBackground(Colour.BACKGROUND());
         slider.setLabelTable(buildHashtableOfPositions());
 
 
         slider_NN.setPaintLabels(true);
-        slider_NN.setBackground(Colour.background());
+        slider_NN.setBackground(Colour.BACKGROUND());
         slider_NN.setLabelTable(buildHashtableOfPositions());
 
         multiConfigurationPanel = new MultiConfigurationPanel(p);
@@ -76,7 +76,7 @@ public class SettingsPanel extends JPanel
         demoConfigurationPanel = new DemoConfigurationPanel(this,p);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(Colour.background());
+        buttonPanel.setBackground(Colour.BACKGROUND());
         buttonPanel.setLayout(null);
 
         Button multiBtn = new Button("btnMulti.png");
@@ -112,22 +112,22 @@ public class SettingsPanel extends JPanel
         add(buttonPanel);
 
         sliderPanel = new JPanel() ;
-        sliderPanel.setBackground(Colour.background());
+        sliderPanel.setBackground(Colour.BACKGROUND());
 
         sliderEmptyPanel1 = new JPanel();
-        sliderEmptyPanel1.setBackground(Colour.background());
+        sliderEmptyPanel1.setBackground(Colour.BACKGROUND());
         sliderEmptyPanel2 = new JPanel();
-        sliderEmptyPanel2.setBackground(Colour.background());
+        sliderEmptyPanel2.setBackground(Colour.BACKGROUND());
 
         sliderPanel.add(slider);
 
         sliderPanelNN = new JPanel() ;
-        sliderPanelNN.setBackground(Colour.background());
+        sliderPanelNN.setBackground(Colour.BACKGROUND());
         sliderPanelNN.setLayout(new GridLayout(1,3));
         sliderEmptyPanel1NN = new JPanel();
-        sliderEmptyPanel1NN.setBackground(Colour.background());
+        sliderEmptyPanel1NN.setBackground(Colour.BACKGROUND());
         sliderEmptyPanel2NN = new JPanel();
-        sliderEmptyPanel2NN.setBackground(Colour.background());
+        sliderEmptyPanel2NN.setBackground(Colour.BACKGROUND());
 
         sliderPanelNN.add(sliderEmptyPanel1NN);
         sliderPanelNN.add(slider_NN);
@@ -137,7 +137,7 @@ public class SettingsPanel extends JPanel
 
         panel2slider = new JPanel();
         panel2slider.setLayout(new FlowLayout(1));
-        panel2slider.setBackground(Colour.background());
+        panel2slider.setBackground(Colour.BACKGROUND());
         panel2slider.add(sliderPanel);
         panel2slider.add(sliderPanelNN);
 
@@ -148,7 +148,7 @@ public class SettingsPanel extends JPanel
         currentPanel = new JPanel();
         currentPanel.setLayout(new BorderLayout());
         currentPanel.setVisible(true);
-        currentPanel.setBackground(Colour.background());
+        currentPanel.setBackground(Colour.BACKGROUND());
         add(currentPanel);
         selectMulti();
     }
@@ -168,7 +168,7 @@ public class SettingsPanel extends JPanel
     private JPanel buildImagePanel()
     {
         JPanel panel = new JPanel();
-        panel.setBackground(Colour.background());
+        panel.setBackground(Colour.BACKGROUND());
 
         labelImage[0] = new JLabel(new ImageIcon(new ResourceLoader().getImage("2.png")));
         labelImage[0].setVisible(false);

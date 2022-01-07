@@ -28,7 +28,7 @@ public class Canvas extends JPanel
     private int demoDelay = 50;
 
     private GameWithGUI game;
-    private Color background = Colour.background();
+    private Color background = Colour.BACKGROUND();
     private RollOverListener rollOverListener;
     private HashMap<Color, BufferedImage> images = new HashMap<>();
 

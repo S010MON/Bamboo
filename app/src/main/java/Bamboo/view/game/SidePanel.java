@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class SidePanel extends JPanel
 {
-    private Color background = Colour.background() ;
+    private Color background = Colour.BACKGROUND() ;
     private GameWithGUI game;
     private MainFrame mainFrame;
     private InfoPanel infoPanel;
@@ -30,11 +30,11 @@ public class SidePanel extends JPanel
         infoPanel = new InfoPanel(game);
         add(infoPanel, BorderLayout.NORTH);
         JPanel panelHint = new JPanel() ;
-        panelHint.setBackground(Colour.background());
+        panelHint.setBackground(Colour.BACKGROUND());
         panelHint.setLayout(new BorderLayout());
         add(panelHint,BorderLayout.SOUTH) ;
         JPanel panel = new JPanel();
-        panel.setBackground(Colour.background());
+        panel.setBackground(Colour.BACKGROUND());
         panel.setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
 

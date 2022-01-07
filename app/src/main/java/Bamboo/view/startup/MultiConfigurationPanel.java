@@ -5,6 +5,8 @@ import Bamboo.view.resources.Colour;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.IOException;
 
 public class MultiConfigurationPanel extends JPanel
@@ -27,27 +29,27 @@ public class MultiConfigurationPanel extends JPanel
         setVisible(true);
 
         JPanel panel1 = new JPanel();
-        panel1.setBackground(Colour.background());
+        panel1.setBackground(Colour.BACKGROUND());
         panel1.setLayout(new GridLayout(1,3));
         add(panel1);
 
         JPanel panel2 = new JPanel();
-        panel2.setBackground(Colour.background());
+        panel2.setBackground(Colour.BACKGROUND());
         panel2.setLayout(new GridLayout(1, 3));
         add(panel2);
 
         JPanel panel3 = new JPanel();
-        panel3.setBackground(Colour.background());
+        panel3.setBackground(Colour.BACKGROUND());
         panel3.setLayout(new GridLayout(1,3));
         add(panel3);
 
         JPanel panel4 = new JPanel();
-        panel4.setBackground(Colour.background());
+        panel4.setBackground(Colour.BACKGROUND());
         panel4.setLayout(new GridLayout(1,3));
         add(panel4);
 
         textLabelPanel = new JPanel();
-        textLabelPanel.setBackground(Colour.background());
+        textLabelPanel.setBackground(Colour.BACKGROUND());
         textLabelPanel.setLayout(new BorderLayout());
         player1label = new JLabel("PLAYER 1: ");
         player1label.setFont(new Font("SansSerif", Font.PLAIN,20));
@@ -56,10 +58,35 @@ public class MultiConfigurationPanel extends JPanel
 
         textFieldPanel = new JPanel();
         textFieldPanel.setLayout(null);
-        textFieldPanel.setBackground(Colour.background());
+        textFieldPanel.setBackground(Colour.BACKGROUND());
 
-        player1textField = new JTextField();
+        player1textField = new JTextField("PLAYER 1");
         player1textField.setBounds(20,8,200,30);
+        player1textField.setForeground(Colour.INACTIVE_TEXT());
+        player1textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                player1textField.setForeground(Colour.ACTIVE_TEXT());
+                player1textField.repaint();
+                if(player1textField.getText().equalsIgnoreCase("PLAYER 1")){
+                    player1textField.setText(null);
+                    player1textField.repaint();
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(player1textField.getText().length()!=0){
+                    setForeground(Colour.INACTIVE_TEXT());
+                    player1textField.repaint();
+                }
+                else{
+                    player1textField.setText("PLAYER 1");
+                    player1textField.setForeground(Colour.INACTIVE_TEXT());
+                    player1textField.repaint();
+                }
+            }
+        });
         textFieldPanel.add(player1textField);
         panel1.add(textFieldPanel);
 
@@ -67,7 +94,7 @@ public class MultiConfigurationPanel extends JPanel
         panel1.add(buttonPanel1);
 
         textLabelPanel2 = new JPanel();
-        textLabelPanel2.setBackground(Colour.background());
+        textLabelPanel2.setBackground(Colour.BACKGROUND());
         textLabelPanel2.setLayout(new BorderLayout());
         player2label = new JLabel("PLAYER 2: ");
         player2label.setFont(new Font("SansSerif", Font.PLAIN,20));
@@ -76,9 +103,35 @@ public class MultiConfigurationPanel extends JPanel
 
         textFieldPanel2 = new JPanel();
         textFieldPanel2.setLayout(null);
-        textFieldPanel2.setBackground(Colour.background());
-        player2textField = new JTextField();
+        textFieldPanel2.setBackground(Colour.BACKGROUND());
+        player2textField = new JTextField("PLAYER 2");
         player2textField.setBounds(20,8,200,30);
+        player2textField.setForeground(Colour.INACTIVE_TEXT());
+        player2textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                player2textField.setForeground(Colour.ACTIVE_TEXT());
+                player2textField.repaint();
+                if(player2textField.getText().equalsIgnoreCase("PLAYER 2")){
+                    player2textField.setText(null);
+                    player2textField.repaint();
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(player2textField.getText().length()!=0){
+                setForeground(Colour.INACTIVE_TEXT());
+                player2textField.repaint();
+                }
+                else{
+                    player2textField.setText("PLAYER 2");
+                    player2textField.setForeground(Colour.INACTIVE_TEXT());
+                    player2textField.repaint();
+
+                }
+            }
+        });
         textFieldPanel2.add(player2textField);
         panel2.add(textFieldPanel2);
 
@@ -116,7 +169,7 @@ public class MultiConfigurationPanel extends JPanel
         {
             this.color = color;
             setLayout(null);
-            setBackground(Colour.background());
+            setBackground(Colour.BACKGROUND());
         }
 
         public void paint(Graphics g)

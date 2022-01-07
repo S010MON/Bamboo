@@ -39,10 +39,9 @@ public class TestingAPITest {
     @Disabled
     @Test void testHeuristics() throws IOException{
         Tester tester = new Tester(AgentType.RANDOM, 3);
-        tester.setAgent2(AgentType.MINIMAX_SORTED);
-        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED});
-        tester.addVariable(TesterAgent.AGENT_2,Variable.SEARCH_DEPTH,1,4,1);
-        tester.setReplications(10);
+        tester.setAgent2(AgentType.RANDOM);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED,Heuristics.SPARSITY});
+        tester.setReplications(50);
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.run();
     }

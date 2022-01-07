@@ -1,5 +1,11 @@
 package Bamboo.controller;
 
+import Bamboo.controller.MCTS.MCTS;
+import Bamboo.controller.miniMax.MiniMax;
+import Bamboo.controller.miniMax.MiniMaxAB;
+import Bamboo.controller.miniMax.MiniMaxSortedAB;
+import Bamboo.controller.nNet.NeuralNetwork;
+import Bamboo.controller.random.Random;
 import Bamboo.model.GameWithGUI;
 import Bamboo.model.Tile;
 
@@ -204,8 +210,18 @@ public class FileManager
     {
         if(agent.equalsIgnoreCase("HUMAN"))
             return new Human(name, color);
+        else if(agent.equalsIgnoreCase("MCTS"))
+            return new MCTS(color);
+        else if(agent.equalsIgnoreCase("MINIMAX"))
+            return new MiniMax(color);
+        else if(agent.equalsIgnoreCase("MINIMAX_AB"))
+            return new MiniMaxAB(color);
+        else if(agent.equalsIgnoreCase("MINIMAX_SORTED"))
+            return new MiniMaxSortedAB(color);
+        else if(agent.equalsIgnoreCase("RANDOM"))
+            return new Random(color);
         else
-            return null; // TODO Extend here for AI
+            return null;
     }
 
     private static String currentDateTimeAsString()
