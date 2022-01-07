@@ -32,7 +32,7 @@ public class Vector implements Comparable<Vector>
         int dx = Math.abs(this.x - other.getX());
         int dy = Math.abs(this.y - other.getY());
         int dz = Math.abs(this.z - other.getZ());
-        return Math.max(dz, Math.max(dx, dy));
+        return Math.max(dz, Math.max(dx,dy));
     }
 
     public int distFromZero()

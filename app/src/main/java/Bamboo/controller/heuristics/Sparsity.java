@@ -5,7 +5,6 @@ import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import Bamboo.model.Tile;
 
-import java.awt.*;
 import java.util.*;
 
 public class Sparsity implements Heuristic{
@@ -41,27 +40,19 @@ public class Sparsity implements Heuristic{
         @Override
         public int compare(Vector x, Vector y) {
             Grid grid = game.getGrid();
-            float xSparsity = 0;
-            float ySparsity = 0;
             Grid xgrid = grid.copy();
             xgrid.setTile(x,game.getCurrentPlayer().getColor());
             Grid ygrid = grid.copy();
             ygrid.setTile(y,game.getCurrentPlayer().getColor());
-            for(ArrayList<Vector> group : xgrid.getAllGroupsOfColour(game.getCurrentPlayer().getColor())){
-                int minDist = 1000;
-                for(Vector v : group){
-                    if(v.distance(x) < minDist) minDist = v.distance(x);
+            int minxdist = 10000;
+            int minydist = 10000;
+            for(Tile t : grid.getAllTiles()){
+                if(t.getColour() == game.getCurrentPlayer().getColor()){
+                    if(t.getVector().distance(x) < minxdist) minxdist = t.getVector().distance(x);
+                    if(t.getVector().distance(y) < minydist) minydist = t.getVector().distance(y);
                 }
-                xSparsity += minDist/ (float)group.size();
             }
-            for(ArrayList<Vector> group : ygrid.getAllGroupsOfColour(game.getCurrentPlayer().getColor())){
-                int minDist = 1000;
-                for(Vector v : group){
-                    if(v.distance(x) < minDist) minDist = v.distance(x);
-                }
-                ySparsity += minDist/ (float)group.size();
-            }
-            return Float.compare(-xSparsity,-ySparsity);
+            return Integer.compare(-minxdist,-minydist);
         }
     }
 }
