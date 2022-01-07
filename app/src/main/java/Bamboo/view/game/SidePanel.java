@@ -20,7 +20,6 @@ public class SidePanel extends JPanel
     private Canvas canvas ;
     private Button snaphotToggle;
 
-
     public SidePanel(GameWithGUI game, MainFrame mainFrame, Canvas canvas) {
         this.canvas = canvas ;
         this.game = game;
@@ -37,7 +36,6 @@ public class SidePanel extends JPanel
         panel.setBackground(background);
         panel.setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
-
         Button quitButton = new Button("btnQuit.png");
         Button hintButton = new Button("btnHint.png") ;
         hintButton.addActionListener(e -> {
@@ -49,7 +47,6 @@ public class SidePanel extends JPanel
         snaphotToggle = new Button(toggleButtonLabel(game.loggingEnabled()));
         snaphotToggle.addActionListener(e -> toggle());
         panel.add(toggleLabel, BorderLayout.SOUTH);
-
         panelHint.add(snaphotToggle, BorderLayout.NORTH);
         panelHint.add(hintButton, BorderLayout.CENTER) ;
         panelHint.add(quitButton, BorderLayout.SOUTH);
