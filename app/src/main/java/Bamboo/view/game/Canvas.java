@@ -9,10 +9,7 @@ import Bamboo.view.resources.ResourceLoader;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
@@ -26,20 +23,21 @@ public class Canvas extends JPanel
     private boolean hint;
     private Timer timer;
     private int demoDelay = 50;
-
     private GameWithGUI game;
+    private Image image;
     private Color background = Colour.BACKGROUND();
     private RollOverListener rollOverListener;
     private HashMap<Color, BufferedImage> images = new HashMap<>();
 
     public Canvas(Dimension screenSize, GameWithGUI game)
     {
+        image = new ResourceLoader().getImage("woodBackground.png");
+        image = new ResourceLoader().getImage("woodBackground.png");
         this.hint = false;
         this.game = game;
         centreX = (screenSize.width/2) - circle_radius - offsetX;
         centreY = (screenSize.height/2) - circle_radius - offsetY;
         setSize(screenSize.width, screenSize.height);
-
         addMouseListener(new TileClickListener(game, this));
         rollOverListener = new RollOverListener(game, this);
         addMouseMotionListener(rollOverListener);
@@ -57,8 +55,8 @@ public class Canvas extends JPanel
     public void paint(Graphics g)
     {
         super.paint(g);
+        g.drawImage(image, 0, 0, null);
         paintGrid( (Graphics2D) g);
-        setBackground(background);
     }
 
     private void paintGrid(Graphics2D g2d)
