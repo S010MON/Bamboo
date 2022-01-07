@@ -323,9 +323,4 @@ public class GridGraphImpTest
         act = grid.getRemainingMoves();
         assertEquals(0, act.size());
     }
-
-    @Test void testCopy()
-    {
-        fail();
-    }
 }
