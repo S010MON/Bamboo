@@ -1,22 +1,24 @@
 package Bamboo.controller.heuristics;
 
 import Bamboo.controller.Vector;
-import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import Bamboo.model.Tile;
 
+import java.awt.Color;
 import java.util.*;
 
 public class Sparsity implements Heuristic{
-    private Game game;
+    private Grid grid;
+    private Color colour;
 
     @Override
-    public Vector getNextMove(Game game)
+    public Vector getNextMove(Grid grid, Color colour)
     {
-        this.game = game;
+        this.grid = grid;
+        this.colour = colour;
         Comparator<Vector> comparator = new sparsityComparator();
-        Queue<Vector> queue = new PriorityQueue<>(game.getGrid().getAllVectors().size(),comparator);
-        ArrayList<Tile> tiles = (ArrayList<Tile>) game.getAllTiles();
+        Queue<Vector> queue = new PriorityQueue<>(grid.getAllVectors().size(),comparator);
+        ArrayList<Tile> tiles = (ArrayList<Tile>) grid.getAllTiles();
         Collections.shuffle(tiles);
         for (Tile t : tiles) {
             if (!t.isCouloured())
@@ -25,7 +27,7 @@ public class Sparsity implements Heuristic{
         Vector v;
         while (!queue.isEmpty()) {
             v = queue.remove();
-            if (game.getGrid().isLegalMove(v, game.getCurrentPlayer().getColor()))
+            if (grid.isLegalMove(v, colour))
                 return v;
         }
         return null;
@@ -39,15 +41,14 @@ public class Sparsity implements Heuristic{
     class sparsityComparator implements Comparator<Vector> {
         @Override
         public int compare(Vector x, Vector y) {
-            Grid grid = game.getGrid();
             Grid xgrid = grid.copy();
-            xgrid.setTile(x,game.getCurrentPlayer().getColor());
+            xgrid.setTile(x,colour);
             Grid ygrid = grid.copy();
-            ygrid.setTile(y,game.getCurrentPlayer().getColor());
+            ygrid.setTile(y,colour);
             int minxdist = 10000;
             int minydist = 10000;
             for(Tile t : grid.getAllTiles()){
-                if(t.getColour() == game.getCurrentPlayer().getColor()){
+                if(t.getColour() == colour){
                     if(t.getVector().distance(x) < minxdist) minxdist = t.getVector().distance(x);
                     if(t.getVector().distance(y) < minydist) minydist = t.getVector().distance(y);
                 }

@@ -2,20 +2,22 @@ package Bamboo.controller.heuristics;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.*;
 
 public class MaximiseNumOfGroups implements Heuristic
 {
-    private Game game;
+    private Grid grid;
+    private Color colour;
 
     @Override
-    public Vector getNextMove(Game game)
+    public Vector getNextMove(Grid grid, Color colour)
     {
-        this.game = game;
+        this.grid = grid;
+        this.colour = colour;
         Comparator<Vector> comparator = new GroupsComparator();
-        Queue<Vector> queue = new PriorityQueue<>(game.getGrid().getAllVectors().size(),comparator);
-        ArrayList<Tile> tiles = (ArrayList<Tile>) game.getAllTiles();
+        Queue<Vector> queue = new PriorityQueue<>(grid.getAllVectors().size(),comparator);
+        ArrayList<Tile> tiles = (ArrayList<Tile>) grid.getAllTiles();
         Collections.shuffle(tiles);
         for (Tile t : tiles) {
             if (!t.isCouloured())
@@ -24,7 +26,7 @@ public class MaximiseNumOfGroups implements Heuristic
         Vector v;
         while (!queue.isEmpty()) {
             v = queue.remove();
-            if (game.getGrid().isLegalMove(v, game.getCurrentPlayer().getColor()))
+            if (grid.isLegalMove(v, colour))
                 return v;
         }
         return null;
@@ -37,8 +39,7 @@ public class MaximiseNumOfGroups implements Heuristic
 
     class GroupsComparator implements Comparator<Vector> {
         public int compare(Vector x, Vector y) {
-            Grid grid = game.getGrid();
-            Color currentColor = game.getCurrentPlayer().getColor();
+            Color currentColor = colour;
             Grid gridX = grid.copy();
             Grid gridY = grid.copy();
             gridX.getTile(x).setColour(currentColor);
