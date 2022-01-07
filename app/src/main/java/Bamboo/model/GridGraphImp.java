@@ -130,10 +130,17 @@ public class GridGraphImp implements Grid
     }
 
     @Override
-    public List<Vector> getAllRemainingMoves() {
+    public List<Vector> getRemainingMovesList() {
         List<Vector> list = new ArrayList<Vector>();
         list.addAll(remainingTiles.keySet());
         return list;
+    }
+
+    @Override
+    public Stack<Vector> getRemainingMovesStack() {
+        Stack<Vector> stack = new Stack<Vector>();
+        stack.addAll(remainingTiles.keySet());
+        return stack;
     }
 
     @Override
@@ -230,23 +237,6 @@ public class GridGraphImp implements Grid
     public int getSize()
     {
         return radius;
-    }
-
-    /**
-     * @return a shuffled stack of all the remaining
-     * available moves in the current grid
-     */
-    @Override
-    public Stack<Vector> getRemainingMoves()
-    {
-        Stack<Vector> stack = new Stack<>();
-        for(Tile t: getAllTiles())
-        {
-            if(t.getColour() == Color.WHITE)
-                stack.add(t.getVector());
-        }
-        Collections.shuffle(stack);
-        return stack;
     }
 
     private int evaluateGameForColor(Color color){

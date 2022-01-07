@@ -17,7 +17,9 @@ public interface Grid
 
     List<Tile> getAllTiles();
 
-    List<Vector> getAllRemainingMoves();
+    Stack<Vector> getRemainingMovesStack();
+
+    List<Vector> getRemainingMovesList();
 
     List<Vector> getAllVectors();
 
@@ -36,10 +38,4 @@ public interface Grid
     Grid copy();
 
     int getSize();
-
-    /**
-     * @return a shuffled stack of all the remaining
-     * available moves in the current grid
-     */
-    Stack<Vector> getRemainingMoves();
 }

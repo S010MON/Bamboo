@@ -292,35 +292,35 @@ public class GridGraphImpTest
         int radius = 1;
         GridGraphImp grid = new GridGraphImp(radius);
 
-        Stack<Vector> act = grid.getRemainingMoves();
+        Stack<Vector> act = grid.getRemainingMovesStack();
         assertEquals(7, act.size());
 
         grid.setTile(new Vector(0,0,0), Color.BLUE);
-        act = grid.getRemainingMoves();
+        act = grid.getRemainingMovesStack();
         assertEquals(6, act.size());
 
         grid.setTile(new Vector(1,0,-1), Color.RED);
-        act = grid.getRemainingMoves();
+        act = grid.getRemainingMovesStack();
         assertEquals(5, act.size());
 
         grid.setTile(new Vector(-1,0,1), Color.BLUE);
-        act = grid.getRemainingMoves();
+        act = grid.getRemainingMovesStack();
         assertEquals(4, act.size());
 
         grid.setTile(new Vector(0,-1,1), Color.RED);
-        act = grid.getRemainingMoves();
+        act = grid.getRemainingMovesStack();
         assertEquals(3, act.size());
 
         grid.setTile(new Vector(-1,1,0), Color.BLUE);
-        act = grid.getRemainingMoves();
+        act = grid.getRemainingMovesStack();
         assertEquals(2, act.size());
 
         grid.setTile(new Vector(0,1,-1), Color.RED);
-        act = grid.getRemainingMoves();
+        act = grid.getRemainingMovesStack();
         assertEquals(1, act.size());
 
         grid.setTile(new Vector(1,-1,0), Color.BLUE);
-        act = grid.getRemainingMoves();
+        act = grid.getRemainingMovesStack();
         assertEquals(0, act.size());
     }
 }

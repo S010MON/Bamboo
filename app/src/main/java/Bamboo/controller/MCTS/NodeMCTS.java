@@ -32,7 +32,7 @@ public class NodeMCTS
         plays = 0;
         wins = 0;
         visits = 1;
-        unexplored = grid.getRemainingMoves();
+        unexplored = grid.getRemainingMovesStack();
         children =  new ArrayList<>();
     }
 

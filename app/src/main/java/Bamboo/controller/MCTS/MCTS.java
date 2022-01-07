@@ -12,8 +12,8 @@ import java.awt.Color;
 public class MCTS implements Agent
 {
     private Color colour;
-    private NodeMCTS root;
-    public Mutable<Integer> iterations = new Mutable<>(100);
+    private Node root;
+    public Mutable<Integer> iterations = new Mutable<>(200);
     public Mutable<Float> c = new Mutable<>(1f);
     public Mutable<Heuristic> heuristic = new Mutable<>(new Uniform());
 
@@ -41,21 +41,25 @@ public class MCTS implements Agent
     @Override
     public Vector getNextMove(Game game)
     {
+        Node lastMove = null;
+        if(root != null)
+            lastMove = root.selectChild(game.getPreviousMove());
 
-        if(root == null)
-            root = new NodeMCTS(game.getGrid(), null, game.getCurrentPlayer().getColor());
-        // Make the move that has just been played (to prune tree)
+        if(lastMove != null)
+            root = lastMove;
         else
-            root = root.selectNode(game.getPreviousMove());
-
+            root = new Node(game.getGrid(), game.getCurrentPlayer().getColor(), null, null);
 
         for(int i = 0; i < iterations.get(); i++)
         {
-            root.selectAndExpand();
+            Node n = root.select();
+            n.playout();
+            n.backprop();
         }
-        NodeMCTS bestMove = root.selectBest();
-        root = root.selectBest();
-        return bestMove.getMove();
+
+        root = root.bestSelect();
+        root.pruneAbove();
+        return root.move();
     }
 
     @Override
@@ -70,7 +74,6 @@ public class MCTS implements Agent
 
     @Override
     public Mutable<Integer> getIterations() {
-        testing = true;
         return this.iterations;
     }
 
