@@ -9,6 +9,7 @@ public class HeuristicsFactory {
             case OUTER_WEIGHTED: yield new OuterWeighted();
             case SPARSITY: yield new Sparsity();
             case NUM_GROUPS: yield new MaximiseNumOfGroups();
+            case SPARSITY_OUTER_WEIGHTED: yield new SparsityAndOuterWeighted();
         };
     }
 }
