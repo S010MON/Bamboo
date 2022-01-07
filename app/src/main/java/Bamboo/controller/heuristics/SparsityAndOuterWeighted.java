@@ -12,7 +12,7 @@ public class SparsityAndOuterWeighted implements Heuristic {
     @Override
     public Vector getNextMove(Game game) {
         this.game = game;
-        Comparator<Vector> comparator = new Sparsity.sparsityComparator();
+        Comparator<Vector> comparator = new sparsityOWComparator();
         Queue<Vector> queue = new PriorityQueue<>(game.getGrid().getAllVectors().size(),comparator);
         ArrayList<Tile> tiles = (ArrayList<Tile>) game.getAllTiles();
         Collections.shuffle(tiles);
@@ -31,13 +31,10 @@ public class SparsityAndOuterWeighted implements Heuristic {
 
     @Override
     public String getType() {
-        return "Sparsity";
+        return "Sparsity+OuterWeighted";
     }
 
-    static class sparsityComparator implements Comparator<Vector> {
-
-        private Game game;
-
+    class sparsityOWComparator implements Comparator<Vector> {
         @Override
         public int compare(Vector x, Vector y) {
             Grid grid = game.getGrid();
@@ -47,7 +44,6 @@ public class SparsityAndOuterWeighted implements Heuristic {
             ygrid.setTile(y,game.getCurrentPlayer().getColor());
             int distX = 10000;
             int distY = 10000;
-
             for(Tile t : grid.getAllTiles()){
                 if(t.getColour() == game.getCurrentPlayer().getColor()){
                     if(t.getVector().distance(x) < distX){

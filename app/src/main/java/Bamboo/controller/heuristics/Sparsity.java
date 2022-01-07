@@ -36,9 +36,7 @@ public class Sparsity implements Heuristic{
         return "Sparsity";
     }
 
-    static class sparsityComparator implements Comparator<Vector> {
-        private Game game;
-
+    class sparsityComparator implements Comparator<Vector> {
         @Override
         public int compare(Vector x, Vector y) {
             Grid grid = game.getGrid();
