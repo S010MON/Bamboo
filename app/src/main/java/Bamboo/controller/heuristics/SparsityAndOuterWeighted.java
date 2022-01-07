@@ -47,26 +47,21 @@ public class SparsityAndOuterWeighted implements Heuristic {
             ygrid.setTile(y,game.getCurrentPlayer().getColor());
             int distX = 10000;
             int distY = 10000;
-            Vector selectedVectorX = null;
-            Vector selectedVectorY = null;
 
             for(Tile t : grid.getAllTiles()){
                 if(t.getColour() == game.getCurrentPlayer().getColor()){
                     if(t.getVector().distance(x) < distX){
                         distX = t.getVector().distance(x);
-                        selectedVectorX = t.getVector();
                     }
                     if(t.getVector().distance(y) < distY){
                         distY = t.getVector().distance(y);
-                        selectedVectorY = t.getVector();
                     }
                 }
             }
-            Vector centerVector = new Vector(0,0,0);
-            int finalDistanceX = distX + selectedVectorX.distance(centerVector);
-            int finalDistanceY = distY + selectedVectorY.distance(centerVector);
+            int finalDistanceX = distX + x.distFromZero();
+            int finalDistanceY = distY + y.distFromZero();
 
-            return Integer.compare(finalDistanceX, -finalDistanceY);
+            return Integer.compare(-finalDistanceX, -finalDistanceY);
         }
     }
 }
