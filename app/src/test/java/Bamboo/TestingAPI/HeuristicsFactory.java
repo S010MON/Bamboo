@@ -1,9 +1,6 @@
 package Bamboo.TestingAPI;
 
-import Bamboo.controller.heuristics.Heuristic;
-import Bamboo.controller.heuristics.OuterWeighted;
-import Bamboo.controller.heuristics.Sparsity;
-import Bamboo.controller.heuristics.Uniform;
+import Bamboo.controller.heuristics.*;
 
 public class HeuristicsFactory {
      public static Heuristic getHeuristic(Heuristics h){
@@ -11,6 +8,7 @@ public class HeuristicsFactory {
             case UNIFORM: yield new Uniform();
             case OUTER_WEIGHTED: yield new OuterWeighted();
             case SPARSITY: yield new Sparsity();
+            case NUM_GROUPS: yield new MaximiseNumOfGroups();
         };
     }
 }

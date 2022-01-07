@@ -15,7 +15,7 @@ public class Random implements Agent
 {
     private String name = "Ronald";
     private Color colour;
-    public Mutable<Heuristic> heuristic = new Mutable<>(new Sparsity());
+    public Mutable<Heuristic> heuristic = new Mutable<>(new Uniform());
 
     public Random(Color colour)
     {
