@@ -32,7 +32,7 @@ public class GameWithoutGUI extends GameImp implements Game
         while(!grid.isFinished(currentPlayer.getColor())){
             takeTurn();
         }
-        Logger.logCSV(loggingFile, loggingData);
+        if(LOG_MOVES)Logger.logCSV(loggingFile, loggingData);
         loggingData = "";
         return otherPlayer();
     }

@@ -41,7 +41,7 @@ public class TestingAPITest {
         Tester tester = new Tester(AgentType.RANDOM, 3);
         tester.setAgent2(AgentType.RANDOM);
         tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED,Heuristics.SPARSITY});
-        tester.setReplications(50);
+        tester.setReplications(5);
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.run();
     }
@@ -49,9 +49,9 @@ public class TestingAPITest {
     @Disabled
     @Test void newMCTSTest() throws IOException{
         Tester tester = new Tester(AgentType.MCTS,3);
-        tester.addVariable(TesterAgent.AGENT_1,Variable.ITERATIONS,1,200,100);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.ITERATIONS,1,1000,100);
         tester.addVariable(TesterAgent.AGENT_1,Variable.C,0.1f,1f,0.5f);
-        tester.setReplications(2);
+        tester.setReplications(1);
         tester.run();
     }
 
