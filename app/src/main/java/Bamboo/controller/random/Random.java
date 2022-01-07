@@ -3,10 +3,7 @@ package Bamboo.controller.random;
 import Bamboo.controller.Agent;
 import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
-import Bamboo.controller.heuristics.Heuristic;
-import Bamboo.controller.heuristics.OuterWeighted;
-import Bamboo.controller.heuristics.Sparsity;
-import Bamboo.controller.heuristics.Uniform;
+import Bamboo.controller.heuristics.*;
 import Bamboo.model.Game;
 
 import java.awt.*;
