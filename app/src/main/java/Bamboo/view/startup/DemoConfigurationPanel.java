@@ -69,8 +69,6 @@ public class DemoConfigurationPanel extends JPanel
         AIstring = AgentType.getNames(AgentType.class);
         AIcombobox1 = new JComboBox(AgentType.values());
         AIcombobox1.setBounds(20,8,200,30);
-       // ComboListener comboListener1=new ComboListener(this,AIcombobox1);
-       // AIcombobox1.addActionListener(comboListener1);
         textFieldPanel.add(AIcombobox1);
         panel1.add(textFieldPanel);
 

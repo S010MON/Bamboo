@@ -18,10 +18,7 @@ public class Combolistener2 implements ActionListener {
 }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(comb.getSelectedItem()==AgentType.NEURAL_NET
-                ||comb.getSelectedItem()==AgentType.HYBRID_NNMM
-                ||comb2.getSelectedItem()==AgentType.NEURAL_NET
-                ||comb2.getSelectedItem()==AgentType.HYBRID_NNMM) {
+        if(checkNN(comb,comb2)) {
             demoConfigurationPanel.getSettingsPanel().removeSlider();
             demoConfigurationPanel.getSettingsPanel().changeBoardImage2(5);
             demoConfigurationPanel.getSettingsPanel().repaint();}
@@ -29,6 +26,16 @@ public class Combolistener2 implements ActionListener {
             demoConfigurationPanel.getSettingsPanel().removeSliderNN();
             demoConfigurationPanel.getSettingsPanel().changeBoardImage2(demoConfigurationPanel.getSettingsPanel().getBoardSize());}
             demoConfigurationPanel.getSettingsPanel().repaint();
+    }
+
+    public boolean checkNN(JComboBox comb, JComboBox comb2){
+        if(comb.getSelectedItem()==AgentType.NEURAL_NET
+                ||comb.getSelectedItem()==AgentType.HYBRID_NNMM
+                ||comb2.getSelectedItem()==AgentType.NEURAL_NET
+                ||comb2.getSelectedItem()==AgentType.HYBRID_NNMM)
+            return true;
+        else
+            return false;
     }
 }
 

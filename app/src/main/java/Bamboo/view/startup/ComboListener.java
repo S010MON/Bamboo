@@ -23,7 +23,7 @@ public class ComboListener implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(comb.getSelectedItem()==AgentType.NEURAL_NET||comb.getSelectedItem()==AgentType.HYBRID_NNMM) {
+        if(checkNN(comb)) {
 
             singleConfigurationPanel.getSettingsPanel().removeSlider();
             singleConfigurationPanel.getSettingsPanel().repaint();
@@ -34,5 +34,11 @@ public class ComboListener implements ActionListener
             singleConfigurationPanel.getSettingsPanel().changeBoardImage2(singleConfigurationPanel.getSettingsPanel().getBoardSize());}
             singleConfigurationPanel.getSettingsPanel().repaint();
         }
+    public boolean checkNN(JComboBox comb){
+        if(comb.getSelectedItem()==AgentType.NEURAL_NET||comb.getSelectedItem()==AgentType.HYBRID_NNMM)
+            return true ;
+        else
+            return false ;
+    }
 }
 

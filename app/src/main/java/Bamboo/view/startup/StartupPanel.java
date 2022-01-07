@@ -41,26 +41,6 @@ public class StartupPanel extends JPanel
         view.runGame(getSettings());
     }
 
-  /*  public Settings getSettings() throws IOException {
-
-
-            return switch (settingsPanel.getMode()) {
-
-                case SINGLE -> new Settings(
-                        new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
-                        AgentFactory.makeAgent(settingsPanel.getAgentType(), settingsPanel.getPlayer2Colour()),
-                        settingsPanel.getBoardSize());
-                case MULTI -> new Settings(
-                        new Human(settingsPanel.getPlayer1Name(), settingsPanel.getPlayer1Colour()),
-                        new Human(settingsPanel.getPlayer2Name(), settingsPanel.getPlayer2Colour()),
-                        settingsPanel.getBoardSize());
-                case DEMO -> new Settings(
-                        AgentFactory.makeAgent(settingsPanel.getAgentType1(), settingsPanel.getPlayer1Colour()),
-                        AgentFactory.makeAgent(settingsPanel.getAgentType2(), settingsPanel.getPlayer2Colour()),
-                        settingsPanel.getBoardSize());
-            };
-    }*/
-
     public Settings getSettings() throws IOException {
 
         demoConfigurationPanel = settingsPanel.getDemoConfigurationPanel();

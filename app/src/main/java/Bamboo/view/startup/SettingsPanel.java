@@ -88,7 +88,7 @@ public class SettingsPanel extends JPanel
         Button singleBtn = new Button("btnSingle.png");
         singleBtn.setBounds(250, 50, 145, 55);
         singleBtn.addActionListener(e -> {selectSingle();
-            if ((singleConfigurationPanel.getAgentType()!=AgentType.NEURAL_NET)&&singleConfigurationPanel.getAgentType()!=AgentType.HYBRID_NNMM){
+            if (checkNNSingle()){
                 removeSliderNN();
                 changeBoardImage2(slider.getValue());}
             else{
@@ -98,10 +98,7 @@ public class SettingsPanel extends JPanel
         Button demoBtn = new Button("btnDemo.png");
         demoBtn.setBounds(400, 50, 145, 55);
         demoBtn.addActionListener(e ->{ selectDemo();
-            if (demoConfigurationPanel.getAgentType1()!=AgentType.NEURAL_NET
-                    &&demoConfigurationPanel.getAgentType2()!=AgentType.NEURAL_NET
-                    &&demoConfigurationPanel.getAgentType1()!=AgentType.HYBRID_NNMM
-                    &&demoConfigurationPanel.getAgentType2()!=AgentType.HYBRID_NNMM){
+            if (checkNNDemo()){
                 removeSliderNN();
                 changeBoardImage2(slider.getValue());}
             else{
@@ -153,6 +150,23 @@ public class SettingsPanel extends JPanel
         currentPanel.setBackground(Colour.background());
         add(currentPanel);
         selectMulti();
+    }
+
+    public boolean checkNNDemo(){
+        if (demoConfigurationPanel.getAgentType1()!=AgentType.NEURAL_NET
+                &&demoConfigurationPanel.getAgentType2()!=AgentType.NEURAL_NET
+                &&demoConfigurationPanel.getAgentType1()!=AgentType.HYBRID_NNMM
+                &&demoConfigurationPanel.getAgentType2()!=AgentType.HYBRID_NNMM)
+            return true ;
+        else
+            return false ;
+    }
+
+    public boolean checkNNSingle(){
+        if ((singleConfigurationPanel.getAgentType()!=AgentType.NEURAL_NET)&&singleConfigurationPanel.getAgentType()!=AgentType.HYBRID_NNMM)
+            return true ;
+        else
+            return false ;
     }
     public void removeSlider(){
         sliderPanel.setVisible(false);
