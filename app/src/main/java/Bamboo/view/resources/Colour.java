@@ -9,6 +9,11 @@ public abstract class Colour
         return new Color(158, 208, 239);
     }
 
+    public static Color BACKGROUND2()
+    {
+        return new Color(249, 253, 240);
+    }
+
     public static Color CIRCLE_OUTLINE()
     {
         return new Color(56, 154, 51);

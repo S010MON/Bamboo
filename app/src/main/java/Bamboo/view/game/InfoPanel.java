@@ -27,7 +27,7 @@ public class InfoPanel extends JPanel
         this.game = game;
         BoxLayout layout = new BoxLayout(this,BoxLayout.Y_AXIS);
         setLayout(layout);
-        setBackground(Colour.BACKGROUND());
+        setBackground(Colour.BACKGROUND2());
 
         groupsLabel = new  Label("labelGroups.png");
         groupsLabel.setAlignmentX(0.5f);

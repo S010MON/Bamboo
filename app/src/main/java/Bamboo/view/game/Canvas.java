@@ -32,7 +32,6 @@ public class Canvas extends JPanel
     public Canvas(Dimension screenSize, GameWithGUI game)
     {
         image = new ResourceLoader().getImage("woodBackground.png");
-        image = new ResourceLoader().getImage("woodBackground.png");
         this.hint = false;
         this.game = game;
         centreX = (screenSize.width/2) - circle_radius - offsetX;
