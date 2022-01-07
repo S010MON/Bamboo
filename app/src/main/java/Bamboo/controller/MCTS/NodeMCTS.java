@@ -3,13 +3,10 @@ package Bamboo.controller.MCTS;
 import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.controller.heuristics.OuterWeighted;
-import Bamboo.model.Game;
 import Bamboo.model.Grid;
-import Bamboo.model.Tile;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Stack;
 
 public class NodeMCTS
@@ -35,7 +32,7 @@ public class NodeMCTS
         plays = 0;
         wins = 0;
         visits = 1;
-        unexplored = collectRemainingMoves(grid);
+        unexplored = grid.getRemainingMoves();
         children =  new ArrayList<>();
     }
 
@@ -145,23 +142,6 @@ public class NodeMCTS
     public Vector getMove()
     {
         return move;
-    }
-
-
-    /**
-     * @return a shuffled stack of all the remaining
-     * available moves in the current grid
-     */
-    private Stack<Vector> collectRemainingMoves(Grid grid)
-    {
-        Stack<Vector> stack = new Stack<>();
-        for(Tile t: grid.getAllTiles())
-        {
-            if(!t.isCouloured())
-                stack.add(t.getVector());
-        }
-        Collections.shuffle(stack);
-        return stack;
     }
 
     private Vector selectNextLegalMove()

@@ -219,11 +219,11 @@ public class GridGraphImp implements Grid
 
     @Override
     public Grid copy(){
-        Grid temp = new GridGraphImp(this.radius);
+        Grid copy = new GridGraphImp(this.radius);
         for(Tile tile : this.getAllTiles()){
-            temp.setTile(tile.getVector(), tile.getColour());
+            copy.setTile(tile.getVector(), tile.getColour());
         }
-        return temp;
+        return copy;
     }
 
     @Override
@@ -232,7 +232,24 @@ public class GridGraphImp implements Grid
         return radius;
     }
 
-    int evaluateGameForColor(Color color){
+    /**
+     * @return a shuffled stack of all the remaining
+     * available moves in the current grid
+     */
+    @Override
+    public Stack<Vector> getRemainingMoves()
+    {
+        Stack<Vector> stack = new Stack<>();
+        for(Tile t: getAllTiles())
+        {
+            if(t.getColour() == Color.WHITE)
+                stack.add(t.getVector());
+        }
+        Collections.shuffle(stack);
+        return stack;
+    }
+
+    private int evaluateGameForColor(Color color){
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
         int legalMoves = 0;
         for(Vector move : this.getAllVectors()){

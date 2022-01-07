@@ -1,7 +1,6 @@
 package Bamboo;
 
 import Bamboo.model.Grid;
-import Bamboo.model.GridArrayImp;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 
@@ -13,24 +12,7 @@ import java.awt.*;
 
 class DeepCopyTest
  {
-    @Test void testArrayGrid()
-    {
-        Grid grid = new GridArrayImp(3);
-
-        for(Tile tile: grid.getAllTiles())
-        {
-            tile.setColour(Color.BLUE);
-        }
-
-        Grid copiedGrid = grid.copy();
-
-        for(Vector v: grid.getAllVectors())
-        {
-            assertEquals(grid.getTile(v).getColour(), copiedGrid.getTile(v).getColour());
-        }
-    }
-
-    @Test void testGraphGrid()
+        @Test void testGraphGrid()
     {
         Grid grid = new GridGraphImp(3);
 
@@ -45,11 +27,6 @@ class DeepCopyTest
         {
             assertEquals(grid.getTile(v).getColour(), copiedGrid.getTile(v).getColour());
         }
-    }
-
-    @Test void testDeepCopy_array()
-    {
-         testDeepCopy(new GridArrayImp(3));
     }
 
      @Test void testDeepCopy_graph()

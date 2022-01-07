@@ -5,6 +5,7 @@ import Bamboo.controller.Vector;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public interface Grid
 {
@@ -35,4 +36,10 @@ public interface Grid
     Grid copy();
 
     int getSize();
+
+    /**
+     * @return a shuffled stack of all the remaining
+     * available moves in the current grid
+     */
+    Stack<Vector> getRemainingMoves();
 }

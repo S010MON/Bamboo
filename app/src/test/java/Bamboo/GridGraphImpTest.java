@@ -6,6 +6,7 @@ import Bamboo.model.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -284,5 +285,47 @@ public class GridGraphImpTest
         assertEquals(2, act.size());
         assertEquals(3, act.get(0).size());
         assertEquals(3, act.get(1).size());
+    }
+
+    @Test void testGetRemainingMoves()
+    {
+        int radius = 1;
+        GridGraphImp grid = new GridGraphImp(radius);
+
+        Stack<Vector> act = grid.getRemainingMoves();
+        assertEquals(7, act.size());
+
+        grid.setTile(new Vector(0,0,0), Color.BLUE);
+        act = grid.getRemainingMoves();
+        assertEquals(6, act.size());
+
+        grid.setTile(new Vector(1,0,-1), Color.RED);
+        act = grid.getRemainingMoves();
+        assertEquals(5, act.size());
+
+        grid.setTile(new Vector(-1,0,1), Color.BLUE);
+        act = grid.getRemainingMoves();
+        assertEquals(4, act.size());
+
+        grid.setTile(new Vector(0,-1,1), Color.RED);
+        act = grid.getRemainingMoves();
+        assertEquals(3, act.size());
+
+        grid.setTile(new Vector(-1,1,0), Color.BLUE);
+        act = grid.getRemainingMoves();
+        assertEquals(2, act.size());
+
+        grid.setTile(new Vector(0,1,-1), Color.RED);
+        act = grid.getRemainingMoves();
+        assertEquals(1, act.size());
+
+        grid.setTile(new Vector(1,-1,0), Color.BLUE);
+        act = grid.getRemainingMoves();
+        assertEquals(0, act.size());
+    }
+
+    @Test void testCopy()
+    {
+        fail();
     }
 }
