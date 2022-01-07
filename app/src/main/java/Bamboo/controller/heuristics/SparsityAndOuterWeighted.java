@@ -7,14 +7,12 @@ import Bamboo.model.Tile;
 
 import java.util.*;
 
-public class Sparsity implements Heuristic{
+public class SparsityAndOuterWeighted implements Heuristic {
     private Game game;
-
     @Override
-    public Vector getNextMove(Game game)
-    {
+    public Vector getNextMove(Game game) {
         this.game = game;
-        Comparator<Vector> comparator = new sparsityComparator();
+        Comparator<Vector> comparator = new Sparsity.sparsityComparator();
         Queue<Vector> queue = new PriorityQueue<>(game.getGrid().getAllVectors().size(),comparator);
         ArrayList<Tile> tiles = (ArrayList<Tile>) game.getAllTiles();
         Collections.shuffle(tiles);
@@ -37,6 +35,7 @@ public class Sparsity implements Heuristic{
     }
 
     static class sparsityComparator implements Comparator<Vector> {
+
         private Game game;
 
         @Override
@@ -46,15 +45,28 @@ public class Sparsity implements Heuristic{
             xgrid.setTile(x,game.getCurrentPlayer().getColor());
             Grid ygrid = grid.copy();
             ygrid.setTile(y,game.getCurrentPlayer().getColor());
-            int minxdist = 10000;
-            int minydist = 10000;
+            int distX = 10000;
+            int distY = 10000;
+            Vector selectedVectorX = null;
+            Vector selectedVectorY = null;
+
             for(Tile t : grid.getAllTiles()){
                 if(t.getColour() == game.getCurrentPlayer().getColor()){
-                    if(t.getVector().distance(x) < minxdist) minxdist = t.getVector().distance(x);
-                    if(t.getVector().distance(y) < minydist) minydist = t.getVector().distance(y);
+                    if(t.getVector().distance(x) < distX){
+                        distX = t.getVector().distance(x);
+                        selectedVectorX = t.getVector();
+                    }
+                    if(t.getVector().distance(y) < distY){
+                        distY = t.getVector().distance(y);
+                        selectedVectorY = t.getVector();
+                    }
                 }
             }
-            return Integer.compare(-minxdist,-minydist);
+            Vector centerVector = new Vector(0,0,0);
+            int finalDistanceX = distX + selectedVectorX.distance(centerVector);
+            int finalDistanceY = distY + selectedVectorY.distance(centerVector);
+
+            return Integer.compare(finalDistanceX, -finalDistanceY);
         }
     }
 }
