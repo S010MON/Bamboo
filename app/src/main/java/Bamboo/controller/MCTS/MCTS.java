@@ -53,8 +53,11 @@ public class MCTS implements Agent
         for(int i = 0; i < iterations.get(); i++)
         {
             Node n = root.select();
-            n.playout();
-            n.backprop();
+            if(n != null)
+            {
+                n.playout();
+                n.backprop();
+            }
         }
 
         root = root.bestSelect();
