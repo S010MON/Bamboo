@@ -46,6 +46,14 @@ public class TestingAPITest {
         tester.run();
     }
 
+    @Disabled
+    @Test void newMCTSTest() throws IOException{
+        Tester tester = new Tester(AgentType.MCTS,3);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.ITERATIONS,1,200,100);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.C,0.1f,1f,0.5f);
+        tester.setReplications(2);
+        tester.run();
+    }
 
     @Disabled
     @Test void neuralNetTest() throws IOException{
