@@ -5,6 +5,7 @@ import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.controller.heuristics.OuterWeighted;
+import Bamboo.controller.heuristics.Sparsity;
 import Bamboo.controller.heuristics.Uniform;
 import Bamboo.model.Game;
 
@@ -14,7 +15,7 @@ public class Random implements Agent
 {
     private String name = "Ronald";
     private Color colour;
-    public Mutable<Heuristic> heuristic = new Mutable<>(new Uniform());
+    public Mutable<Heuristic> heuristic = new Mutable<>(new Sparsity());
 
     public Random(Color colour)
     {
