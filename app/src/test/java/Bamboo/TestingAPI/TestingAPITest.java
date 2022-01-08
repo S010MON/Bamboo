@@ -12,7 +12,9 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class TestingAPITest {
+
     Mutable<Integer> mutable = new Mutable<>(0);
+
     @Test void testMutable(){
         MiniMaxSortedAB agent = new MiniMaxSortedAB(Color.RED);
         agent.getDepth().set(3);

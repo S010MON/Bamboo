@@ -6,7 +6,7 @@ import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.*;
 import Bamboo.model.Game;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class Random implements Agent
 {
