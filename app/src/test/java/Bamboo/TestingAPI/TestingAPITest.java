@@ -70,14 +70,26 @@ public class TestingAPITest {
         tester.run();
     }
 
-    @Test void gameWithOutGUITest() throws IOException {
+    @Test void gameWithOutGUITestMM() throws IOException {
         int wins = 0;
         for(int i = 0; i < 100; i++){
             GameWithoutGUI game = new GameWithoutGUI(new Settings(AgentFactory.makeAgent(AgentType.MINIMAX_SORTED,Color.RED),AgentFactory.makeAgent(AgentType.RANDOM,Color.BLUE),2),Color.RED);
             Agent winner = game.turnLogic();
             if(Objects.equals(winner.getName(), "MM Sorted"))
                 wins ++;
-            System.out.println(game.turnLogic().getName());
+            System.out.println(i + " " + game.turnLogic().getName());
+        }
+        System.out.println(wins);
+    }
+
+    @Test void gameWithOutGUITestMCTS() throws IOException {
+        int wins = 0;
+        for(int i = 0; i < 100; i++){
+            GameWithoutGUI game = new GameWithoutGUI(new Settings(AgentFactory.makeAgent(AgentType.MCTS,Color.RED),AgentFactory.makeAgent(AgentType.RANDOM,Color.BLUE),2),Color.RED);
+            Agent winner = game.turnLogic();
+            if(Objects.equals(winner.getName(), "MCTS"))
+                wins ++;
+            System.out.println(i + " " + game.turnLogic().getName());
         }
         System.out.println(wins);
     }
