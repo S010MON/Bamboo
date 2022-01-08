@@ -72,27 +72,20 @@ public class TestingAPITest {
         tester.run();
     }
 
+    @Disabled
     @Test void gameWithOutGUITestMM() throws IOException {
-        int wins = 0;
-        for(int i = 0; i < 100; i++){
-            GameWithoutGUI game = new GameWithoutGUI(new Settings(AgentFactory.makeAgent(AgentType.MINIMAX_SORTED,Color.RED),AgentFactory.makeAgent(AgentType.RANDOM,Color.BLUE),2),Color.RED);
-            Agent winner = game.turnLogic();
-            if(Objects.equals(winner.getName(), "MM Sorted"))
-                wins ++;
-            System.out.println(i + " " + game.turnLogic().getName());
-        }
-        System.out.println(wins);
+        Tester tester = new Tester(AgentType.MINIMAX_SORTED,2);
+        tester.setReplications(50);
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
+
     }
 
+    //Enabled for now, to check whether MCTS works correctly within the testing API
     @Test void gameWithOutGUITestMCTS() throws IOException {
-        int wins = 0;
-        for(int i = 0; i < 100; i++){
-            GameWithoutGUI game = new GameWithoutGUI(new Settings(AgentFactory.makeAgent(AgentType.MCTS,Color.RED),AgentFactory.makeAgent(AgentType.RANDOM,Color.BLUE),2),Color.RED);
-            Agent winner = game.turnLogic();
-            if(Objects.equals(winner.getName(), "MCTS"))
-                wins ++;
-            System.out.println(i + " " + game.turnLogic().getName());
-        }
-        System.out.println(wins);
+        Tester tester = new Tester(AgentType.MCTS,2);
+        tester.setReplications(50);
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
     }
 }
