@@ -60,4 +60,40 @@ public class GameTest
             assertEquals(tiles1.get(i).getVector(), tiles2.get(i).getVector());
         }
     }
+
+    @Test void testHistoryNone()
+    {
+        Agent agent1 = new Random(Color.BLUE);
+        Agent agent2 = new Random(Color.RED);
+        Settings settings = new Settings(agent1, agent2, 5);
+        Game game = new GameWithoutGUI(settings);
+        assertNull(game.getPreviousMove());
+    }
+
+    @Test void testHistoryOne()
+    {
+        Agent agent1 = new Random(Color.BLUE);
+        Agent agent2 = new Random(Color.RED);
+        Settings settings = new Settings(agent1, agent2, 5);
+        Game game = new GameWithoutGUI(settings);
+
+        game.placeNextAt(new Vector(0,0,0));
+        assertEquals(new Vector(0,0,0), game.getPreviousMove());
+        assertEquals(new Vector(0,0,0), game.getPreviousMove());
+    }
+
+    @Test void testHistoryThree()
+    {
+        Agent agent1 = new Random(Color.BLUE);
+        Agent agent2 = new Random(Color.RED);
+        Settings settings = new Settings(agent1, agent2, 5);
+        Game game = new GameWithoutGUI(settings);
+
+        game.placeNextAt(new Vector(0,0,0));
+        game.placeNextAt(new Vector(1,0,-1));
+        game.placeNextAt(new Vector(0,2,-2));
+
+        assertEquals(new Vector(0,2,-2), game.getPreviousMove());
+        assertEquals(new Vector(0,2,-2), game.getPreviousMove());
+    }
 }

@@ -5,6 +5,7 @@ import Bamboo.controller.Vector;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public interface Grid
 {
@@ -16,7 +17,9 @@ public interface Grid
 
     List<Tile> getAllTiles();
 
-    List<Vector> getAllRemainingMoves();
+    Stack<Vector> getRemainingMovesStack();
+
+    List<Vector> getRemainingMovesList();
 
     List<Vector> getAllVectors();
 
