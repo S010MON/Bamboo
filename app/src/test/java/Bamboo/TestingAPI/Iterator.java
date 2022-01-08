@@ -68,7 +68,7 @@ public class Iterator<T> {
         this.max = max;
         this.step = step;
         this.reference = reference;
-        this.iterations = (int)Math.ceil((max-min)/step) + 1;
+        this.iterations = (int)Math.floor((max-min)/step) + 1;
         buildArray();
     }
 

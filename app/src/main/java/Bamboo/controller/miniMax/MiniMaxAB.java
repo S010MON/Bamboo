@@ -4,7 +4,7 @@ import Bamboo.controller.Agent;
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class MiniMaxAB extends MiniMax implements Agent

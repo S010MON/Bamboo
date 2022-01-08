@@ -32,7 +32,7 @@ public class GameWithoutGUI extends GameImp implements Game
         while(!grid.isFinished(currentPlayer.getColor())){
             takeTurn();
         }
-        Logger.logCSV(loggingFile, loggingData);
+        if(LOG_MOVES)Logger.logCSV(loggingFile, loggingData);
         loggingData = "";
         return otherPlayer();
     }
@@ -42,7 +42,6 @@ public class GameWithoutGUI extends GameImp implements Game
         addMoveToLogString(move);
         remainingTiles.remove(move);
         this.grid.setTile(move,currentPlayer.getColor());
-        //System.out.println("Agent " + currentPlayer.getName() + " placed color " + currentPlayer.getColor() + " at " + move.toString());
         toggleTurn();
     }
 

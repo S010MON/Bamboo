@@ -4,7 +4,7 @@ import Bamboo.controller.Vector;
 import Bamboo.model.Grid;
 import Bamboo.model.Tile;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Collections;
 import java.util.Stack;
 
