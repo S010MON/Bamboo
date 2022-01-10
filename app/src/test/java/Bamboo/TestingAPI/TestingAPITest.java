@@ -51,6 +51,7 @@ public class TestingAPITest {
         tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED,Heuristics.SPARSITY,Heuristics.NUM_GROUPS,Heuristics.SPARSITY_OUTER_WEIGHTED});
         tester.addVariable(TesterAgent.AGENT_2,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED,Heuristics.SPARSITY,Heuristics.NUM_GROUPS,Heuristics.SPARSITY_OUTER_WEIGHTED});
         tester.setReplications(100);
+        tester.addMetric(Metrics.ELAPSED_TIME);
         tester.setFileName("RandomHeuristics.csv");
         tester.run();
     }
