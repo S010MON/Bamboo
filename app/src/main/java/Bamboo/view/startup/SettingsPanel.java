@@ -31,7 +31,7 @@ public class SettingsPanel extends JPanel
     private JPanel sliderEmptyPanel1NN;
     private JPanel sliderEmptyPanel2NN;
     private JPanel panel2slider;
-    private boolean checkNN=false;
+
 
     public SettingsPanel(StartupPanel p)
     {
@@ -83,28 +83,27 @@ public class SettingsPanel extends JPanel
         multiBtn.setBounds(100, 50, 145, 55);
         multiBtn.addActionListener(e -> {selectMulti();
                 removeSliderNN();
-                checkNNtoFalse();
                 changeBoardImage2(slider.getValue());});
 
         Button singleBtn = new Button("btnSingle.png");
         singleBtn.setBounds(250, 50, 145, 55);
         singleBtn.addActionListener(e -> {selectSingle();
-            if (singleConfigurationPanel.getAgentType()!=AgentType.NEURAL_NET){
+            if (checkNNSingle()){
                 removeSliderNN();
-                checkNNtoFalse();
                 changeBoardImage2(slider.getValue());}
             else{
-                removeSlider();}});
+                removeSlider();
+            changeBoardImage2(5);}});
 
         Button demoBtn = new Button("btnDemo.png");
         demoBtn.setBounds(400, 50, 145, 55);
         demoBtn.addActionListener(e ->{ selectDemo();
-            if (demoConfigurationPanel.getAgentType1()!=AgentType.NEURAL_NET&&demoConfigurationPanel.getAgentType2()!=AgentType.NEURAL_NET){
+            if (checkNNDemo()){
                 removeSliderNN();
-                checkNNtoFalse();
                 changeBoardImage2(slider.getValue());}
             else{
-                removeSlider();}});
+                removeSlider();
+            changeBoardImage2(5);}});
 
         buttonPanel.add(multiBtn);
         buttonPanel.add(singleBtn);
@@ -151,6 +150,23 @@ public class SettingsPanel extends JPanel
         currentPanel.setBackground(Colour.BACKGROUND());
         add(currentPanel);
         selectMulti();
+    }
+
+    public boolean checkNNDemo(){
+        if (demoConfigurationPanel.getAgentType1()!=AgentType.NEURAL_NET
+                &&demoConfigurationPanel.getAgentType2()!=AgentType.NEURAL_NET
+                &&demoConfigurationPanel.getAgentType1()!=AgentType.HYBRID_NNMM
+                &&demoConfigurationPanel.getAgentType2()!=AgentType.HYBRID_NNMM)
+            return true ;
+        else
+            return false ;
+    }
+
+    public boolean checkNNSingle(){
+        if ((singleConfigurationPanel.getAgentType()!=AgentType.NEURAL_NET)&&singleConfigurationPanel.getAgentType()!=AgentType.HYBRID_NNMM)
+            return true ;
+        else
+            return false ;
     }
     public void removeSlider(){
         sliderPanel.setVisible(false);
@@ -209,10 +225,7 @@ public class SettingsPanel extends JPanel
     }
 
     public int getBoardSize() {
-        if (checkNN==false)
             return boardSize;
-        else
-            return 5;
     }
 
     public Mode getMode()
@@ -308,13 +321,6 @@ public class SettingsPanel extends JPanel
 
     public MultiConfigurationPanel getMultiConfigurationPanel() {
         return multiConfigurationPanel;
-    }
-
-    public void checkNNtoFalse(){
-        checkNN=false ;
-}
-    public void checkNNtoTrue() {
-        checkNN = true;
     }
 
     public void swapToggleColor() {
