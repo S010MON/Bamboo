@@ -1,10 +1,12 @@
 package Bamboo.controller.heuristics;
 
 import Bamboo.controller.Vector;
-import Bamboo.model.Game;
+import Bamboo.model.Grid;
+
+import java.awt.Color;
 
 public interface Heuristic
 {
-    public Vector getNextMove(Game game);
-    public String getType();
+    Vector getNextMove(Grid grid, Color currentPlayer);
+    String getType();
 }

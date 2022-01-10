@@ -12,7 +12,9 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class TestingAPITest {
+
     Mutable<Integer> mutable = new Mutable<>(0);
+
     @Test void testMutable(){
         MiniMaxSortedAB agent = new MiniMaxSortedAB(Color.RED);
         agent.getDepth().set(3);
@@ -39,14 +41,21 @@ public class TestingAPITest {
     @Disabled
     @Test void testHeuristics() throws IOException{
         Tester tester = new Tester(AgentType.RANDOM, 3);
-        tester.setAgent2(AgentType.MINIMAX_SORTED);
-        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED});
-        tester.addVariable(TesterAgent.AGENT_2,Variable.SEARCH_DEPTH,1,4,1);
-        tester.setReplications(10);
+        tester.setAgent2(AgentType.RANDOM);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED,Heuristics.SPARSITY});
+        tester.setReplications(5);
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.run();
     }
 
+    @Disabled
+    @Test void newMCTSTest() throws IOException{
+        Tester tester = new Tester(AgentType.MCTS,3);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.ITERATIONS,1,1000,100);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.C,0.1f,1f,0.5f);
+        tester.setReplications(1);
+        tester.run();
+    }
 
     @Disabled
     @Test void neuralNetTest() throws IOException{
@@ -63,15 +72,20 @@ public class TestingAPITest {
         tester.run();
     }
 
-    @Test void gameWithOutGUITest() throws IOException {
-        int wins = 0;
-        for(int i = 0; i < 100; i++){
-            GameWithoutGUI game = new GameWithoutGUI(new Settings(AgentFactory.makeAgent(AgentType.MINIMAX_SORTED,Color.RED),AgentFactory.makeAgent(AgentType.RANDOM,Color.BLUE),2),Color.RED);
-            Agent winner = game.turnLogic();
-            if(Objects.equals(winner.getName(), "MM Sorted"))
-                wins ++;
-            System.out.println(game.turnLogic().getName());
-        }
-        System.out.println(wins);
+    @Disabled
+    @Test void gameWithOutGUITestMM() throws IOException {
+        Tester tester = new Tester(AgentType.MINIMAX_SORTED,2);
+        tester.setReplications(50);
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
+
+    }
+
+    //Enabled for now, to check whether MCTS works correctly within the testing API
+    @Test void gameWithOutGUITestMCTS() throws IOException {
+        Tester tester = new Tester(AgentType.MCTS,2);
+        tester.setReplications(50);
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
     }
 }

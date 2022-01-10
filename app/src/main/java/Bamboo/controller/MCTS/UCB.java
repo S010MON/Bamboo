@@ -1,7 +1,5 @@
 package Bamboo.controller.MCTS;
 
-import Bamboo.controller.Mutable;
-
 public class UCB
 {
 

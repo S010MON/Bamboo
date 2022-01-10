@@ -13,7 +13,7 @@ public class LegalMovesTest
 {
     @Test void test_is_legal_array_empty()
     {
-        Grid grid = new GridArrayImp(2);
+        Grid grid = new GridGraphImp(2);
         for(Tile tile: grid.getAllTiles())
         {
             assertTrue(grid.isLegalMove(tile.getVector(), Color.RED));
@@ -29,16 +29,6 @@ public class LegalMovesTest
         }
     }
 
-    @Test void test_is_legal_array_full()
-    {
-        Grid grid = new GridArrayImp(2);
-        for(Tile tile: grid.getAllTiles())
-        {
-            grid.setTile(tile.getVector(), Color.BLUE);
-            assertFalse(grid.isLegalMove(tile.getVector(), Color.RED));
-        }
-    }
-
     @Test void test_is_legal_graph_full()
     {
         Grid grid = new GridGraphImp(2);
@@ -49,13 +39,6 @@ public class LegalMovesTest
         }
     }
 
-    @Test void test_is_legal_array_adjacent_same_colour()
-    {
-        Grid grid = new GridArrayImp(2);
-        grid.setTile(new Vector(0,0,0), Color.BLUE);
-        assertFalse(grid.isLegalMove(new Vector(1,-1,0), Color.BLUE));
-    }
-
     @Test void test_is_legal_graph_adjacent_same_colour()
     {
         Grid grid = new GridGraphImp(2);
@@ -63,27 +46,11 @@ public class LegalMovesTest
         assertFalse(grid.isLegalMove(new Vector(1,-1,0), Color.BLUE));
     }
 
-    @Test void test_is_legal_array_adjacent_different_colour()
-    {
-        Grid grid = new GridArrayImp(2);
-        grid.setTile(new Vector(0,0,0), Color.BLUE);
-        assertTrue(grid.isLegalMove(new Vector(1,-1,0), Color.RED));
-    }
-
     @Test void test_is_legal_graph_adjacent_different_colour()
     {
         Grid grid = new GridGraphImp(2);
         grid.setTile(new Vector(0,0,0), Color.BLUE);
         assertTrue(grid.isLegalMove(new Vector(1,-1,0), Color.RED));
-    }
-
-    @Test void test_is_legal_array_group_too_big()
-    {
-        Grid grid = new GridArrayImp(2);
-        grid.setTile(new Vector(0,0,0), Color.BLUE);
-        grid.setTile(new Vector(1,-1,0), Color.BLUE);
-        grid.setTile(new Vector(1,0,-1), Color.BLUE);
-        assertFalse(grid.isLegalMove(new Vector(0,-1,1), Color.BLUE));
     }
 
     @Test void test_is_legal_graph_group_too_big()

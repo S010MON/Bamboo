@@ -11,11 +11,13 @@ public class GridGraphImp implements Grid
     protected HashMap<Vector, Boolean> remainingTiles;
     protected ArrayList<Vector> neighbours;
     protected int radius;
+    private Stack<Vector> history;
 
     public GridGraphImp(int radius)
     {
         this.radius = radius;
         neighbours = buildNeighbourList();
+        history = new Stack<>();
 
         tiles = new HashMap<>();
         remainingTiles = new HashMap<>();
@@ -59,6 +61,7 @@ public class GridGraphImp implements Grid
                 neighbour.removeNeighbour(tiles.get(v));
             }
         }
+        history.push(v);
         tiles.get(v).setColour(c);
         if(c != Color.white)
             remainingTiles.remove(v);
@@ -73,6 +76,7 @@ public class GridGraphImp implements Grid
         }
         tiles.get(v).setColour(Color.WHITE);
         remainingTiles.put(v, true);
+        history.pop();
     }
 
     @Override
@@ -126,10 +130,17 @@ public class GridGraphImp implements Grid
     }
 
     @Override
-    public List<Vector> getAllRemainingMoves() {
+    public List<Vector> getRemainingMovesList() {
         List<Vector> list = new ArrayList<Vector>();
         list.addAll(remainingTiles.keySet());
         return list;
+    }
+
+    @Override
+    public Stack<Vector> getRemainingMovesStack() {
+        Stack<Vector> stack = new Stack<Vector>();
+        stack.addAll(remainingTiles.keySet());
+        return stack;
     }
 
     @Override
@@ -215,11 +226,11 @@ public class GridGraphImp implements Grid
 
     @Override
     public Grid copy(){
-        Grid temp = new GridGraphImp(this.radius);
+        Grid copy = new GridGraphImp(this.radius);
         for(Tile tile : this.getAllTiles()){
-            temp.setTile(tile.getVector(), tile.getColour());
+            copy.setTile(tile.getVector(), tile.getColour());
         }
-        return temp;
+        return copy;
     }
 
     @Override
@@ -228,7 +239,7 @@ public class GridGraphImp implements Grid
         return radius;
     }
 
-    int evaluateGameForColor(Color color){
+    private int evaluateGameForColor(Color color){
         ArrayList<ArrayList<Vector>> groups = getAllGroupsOfColour(color);
         int legalMoves = 0;
         for(Vector move : this.getAllVectors()){
