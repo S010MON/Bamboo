@@ -10,6 +10,7 @@ public class HeuristicsFactory {
             case SPARSITY: yield new Sparsity();
             case NUM_GROUPS: yield new MaximiseNumOfGroups();
             case SPARSITY_OUTER_WEIGHTED: yield new SparsityAndOuterWeighted();
+            case OPPONENT_MOVES: yield new MinOpponentMoves();
         };
     }
 }

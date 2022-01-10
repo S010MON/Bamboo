@@ -4,6 +4,7 @@ import Bamboo.model.*;
 
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class MaximiseNumOfGroups implements Heuristic
 {
@@ -12,22 +13,35 @@ public class MaximiseNumOfGroups implements Heuristic
     @Override
     public Vector getNextMove(Game game)
     {
-        this.game = game;
-        Comparator<Vector> comparator = new GroupsComparator();
-        Queue<Vector> queue = new PriorityQueue<>(game.getGrid().getAllVectors().size(),comparator);
-        ArrayList<Tile> tiles = (ArrayList<Tile>) game.getAllTiles();
-        Collections.shuffle(tiles);
-        for (Tile t : tiles) {
-            if (!t.isCouloured())
-                queue.add(t.getVector());
+
+        ArrayList<Vector> moves = (ArrayList<Vector>) game.getGrid().getAllRemainingMoves();
+        Vector bestMove = null;
+        Color currentColor = game.getCurrentPlayer().getColor();
+        Color opponentColor;
+        if (currentColor == Color.RED)
+            opponentColor = Color.BLUE;
+        else
+            opponentColor = Color.RED;
+        int numRemainingMoves = 0;
+        for (int i = 0; i < moves.size(); i++){
+            Grid grid = game.getGrid().copy();
+            int nOpponent = 0;
+            if (grid.isLegalMove(moves.get(i), currentColor)){
+                grid.setTile(moves.get(i), currentColor);
+                int n = grid.getAllRemainingMoves().size();
+                ArrayList<Vector> moves2 = (ArrayList<Vector>) grid.getAllRemainingMoves();
+                for (int a = 0; a < n; a++){
+                    if (grid.isLegalMove(moves2.get(a), opponentColor)){
+                        nOpponent++;
+                    }
+                }
+            }
+            if (nOpponent < numRemainingMoves) {
+                numRemainingMoves = nOpponent;
+                bestMove = moves.get(i);
+            }
         }
-        Vector v;
-        while (!queue.isEmpty()) {
-            v = queue.remove();
-            if (game.getGrid().isLegalMove(v, game.getCurrentPlayer().getColor()))
-                return v;
-        }
-        return null;
+        return bestMove;
     }
 
     @Override
@@ -35,17 +49,16 @@ public class MaximiseNumOfGroups implements Heuristic
         return "MaximiseNumOfGroups";
     }
 
-    class GroupsComparator implements Comparator<Vector> {
-        public int compare(Vector x, Vector y) {
-            Grid grid = game.getGrid();
-            Color currentColor = game.getCurrentPlayer().getColor();
-            Grid gridX = grid.copy();
-            Grid gridY = grid.copy();
-            gridX.getTile(x).setColour(currentColor);
-            gridY.getTile(y).setColour(currentColor);
-            int xGroups = gridX.getAllGroupsOfColour(currentColor).size();
-            int yGroups = gridY.getAllGroupsOfColour(currentColor).size();
-            return Integer.compare(yGroups, xGroups);
+    class Move {
+        Vector v;
+        int remainingMoves;
+
+        public Move(Vector v, int remainingMoves){
+            this.v = v;
+            this.remainingMoves = remainingMoves;
         }
     }
+
 }
+
+
