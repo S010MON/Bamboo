@@ -11,24 +11,23 @@ import java.util.*;
 
 public class MaximiseMoves implements Heuristic
 {
-    private Game game;
+    private Grid grid;
+    private Color currentColor;
 
     @Override
-    public Vector getNextMove(Game game)
+    public Vector getNextMove(Grid grid, Color color)
     {
-        this.game = game;
+        this.grid = grid;
+        this.currentColor = color;
         Comparator<Vector> comparator = new MovesComparator();
         Queue<Vector> queue = new PriorityQueue<>(91,comparator);
-        ArrayList<Tile> tiles = (ArrayList<Tile>) game.getAllTiles();
-        Collections.shuffle(tiles);
-        for (Tile t : tiles) {
-            if (!t.isCouloured())
-                queue.add(t.getVector());
-        }
+        ArrayList<Vector> vectors = (ArrayList<Vector>) grid.getRemainingMovesList();
+        Collections.shuffle(vectors);
+        queue.addAll(vectors);
         Vector v;
         while (!queue.isEmpty()) {
             v = queue.remove();
-            if (game.getGrid().isLegalMove(v, game.getCurrentPlayer().getColor()))
+            if (grid.isLegalMove(v, color))
                 return v;
         }
         return null;
@@ -41,22 +40,20 @@ public class MaximiseMoves implements Heuristic
 
     class MovesComparator implements Comparator<Vector> {
         public int compare(Vector x, Vector y) {
-            Color currentColor = game.getCurrentPlayer().getColor();
-            Grid grid = game.getGrid();
             Grid gridX = grid.copy();
             Grid gridY = grid.copy();
-            gridX.getTile(x).setColour(currentColor);
-            gridY.getTile(y).setColour(currentColor);
+            gridX.setTile(x,currentColor);
+            gridY.setTile(y,currentColor);
             int xMoves=0;
             int yMoves=0;
-            for(Tile tile: gridX.getAllTiles()) {
-                boolean xLegal = gridX.isLegalMove(tile.getVector(), currentColor);
+            for(Vector v : gridX.getRemainingMovesList()) {
+                boolean xLegal = gridX.isLegalMove(v, currentColor);
                 if (xLegal){
                     xMoves++;
                 }
             }
-            for(Tile tile: gridY.getAllTiles()){
-                boolean yLegal = gridY.isLegalMove(tile.getVector(), currentColor);
+            for(Vector v : gridY.getRemainingMovesList()){
+                boolean yLegal = gridY.isLegalMove(v, currentColor);
                 if(yLegal){
                     yMoves++;
                 }
