@@ -45,7 +45,7 @@ public class TestingAPITest {
         tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,1,5,1);
         tester.addVariable(TesterAgent.AGENT_2,Variable.HEURISTIC,new Heuristics[]{Heuristics.OUTER_WEIGHTED});
         tester.addMetric(Metrics.ELAPSED_TIME);
-        tester.setReplications(100);
+        tester.setReplications(50);
         tester.run();
         tester = new Tester(AgentType.RANDOM,5);
         tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED,Heuristics.SPARSITY,Heuristics.NUM_GROUPS,Heuristics.SPARSITY_OUTER_WEIGHTED});

@@ -27,7 +27,6 @@ public class MiniMaxSortedAB extends MiniMax implements Agent
         depth_ = Math.round((float)(Number)depth.get());
         if(!testing) depth_ = (int)Math.round(7.1*Math.exp(-0.07*uncolored_vectors.size()) + 1.55);
         NodeMM start = new NodeMM(game.getGrid());
-        System.out.println("Depth: " + depth_);
         return minimaxMove(start, depth_, this.color);
     }
 
