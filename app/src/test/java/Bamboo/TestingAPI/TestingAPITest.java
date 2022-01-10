@@ -38,13 +38,20 @@ public class TestingAPITest {
         tester.run();
     }
 
-    @Test void minimaxDataCollection() throws IOException{
+    @Disabled
+    @Test void LeonAnalyses() throws IOException{
         Tester tester = new Tester(AgentType.MINIMAX_SORTED,5);
         tester.addVariable(Variable.GRID_SIZE,1,5,1);
         tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,1,5,1);
         tester.addVariable(TesterAgent.AGENT_2,Variable.HEURISTIC,new Heuristics[]{Heuristics.OUTER_WEIGHTED});
         tester.addMetric(Metrics.ELAPSED_TIME);
-        tester.setReplications(2);
+        tester.setReplications(100);
+        tester.run();
+        tester = new Tester(AgentType.RANDOM,5);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED,Heuristics.SPARSITY,Heuristics.NUM_GROUPS,Heuristics.SPARSITY_OUTER_WEIGHTED});
+        tester.addVariable(TesterAgent.AGENT_2,Variable.HEURISTIC,new Heuristics[]{Heuristics.UNIFORM,Heuristics.OUTER_WEIGHTED,Heuristics.SPARSITY,Heuristics.NUM_GROUPS,Heuristics.SPARSITY_OUTER_WEIGHTED});
+        tester.setReplications(100);
+        tester.setFileName("RandomHeuristics.csv");
         tester.run();
     }
 
@@ -94,6 +101,7 @@ public class TestingAPITest {
     }
 
     //Enabled for now, to check whether MCTS works correctly within the testing API
+    @Disabled
     @Test void gameWithOutGUITestMCTS() throws IOException {
         Tester tester = new Tester(AgentType.MCTS,2);
         tester.setReplications(50);
@@ -101,6 +109,7 @@ public class TestingAPITest {
         tester.run();
     }
 
+    @Disabled
     @Test void logging() throws IOException{
         Tester tester = new Tester(AgentType.RANDOM, 5);
         tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.OUTER_WEIGHTED});
