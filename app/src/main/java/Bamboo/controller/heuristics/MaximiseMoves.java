@@ -47,6 +47,8 @@ public class MaximiseMoves implements Heuristic
             Grid gridY = grid.copy();
             gridX.getTile(x).setColour(currentColor);
             gridY.getTile(y).setColour(currentColor);
+            boolean xLegal = gridX.isLegalMove(x,currentColor);
+            boolean yLegal = gridY.isLegalMove(y,currentColor);
             int xMoves = gridX.getAllRemainingMoves().size();
             int yMoves = gridY.getAllRemainingMoves().size();
             return Integer.compare(yMoves, xMoves);
