@@ -49,18 +49,16 @@ public class MaximiseMoves implements Heuristic
             gridY.getTile(y).setColour(currentColor);
             int xMoves=0;
             int yMoves=0;
-            int xRemainingMoves = gridX.getAllRemainingMoves().size();
-            int yRemainingMoves = gridY.getAllRemainingMoves().size();
-            for(int i=0; i<xRemainingMoves;i++) {
-                boolean xLegal = gridX.isLegalMove(x, currentColor);
+            for(Tile tile: gridX.getAllTiles()) {
+                boolean xLegal = gridX.isLegalMove(tile.getVector(), currentColor);
                 if (xLegal){
-                    xMoves = xMoves+1;
+                    xMoves++;
                 }
             }
-            for(int i=0; i< yRemainingMoves;i++){
-                boolean yLegal = gridY.isLegalMove(y, currentColor);
+            for(Tile tile: gridY.getAllTiles()){
+                boolean yLegal = gridY.isLegalMove(tile.getVector(), currentColor);
                 if(yLegal){
-                    yMoves = yMoves+1;
+                    yMoves++;
                 }
             }
             return Integer.compare(yMoves, xMoves);
