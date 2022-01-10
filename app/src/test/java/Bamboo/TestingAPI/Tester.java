@@ -224,6 +224,7 @@ public class Tester {
         Iterator variable = new Iterator<>(ref,min,max,step);
         colnames.add(v.toString());
         variableTargets.add(TesterAgent.AGENT_1);
+        variableLabels.add(v);
         pushVariable(variable);
     }
 

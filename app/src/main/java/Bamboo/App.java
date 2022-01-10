@@ -8,7 +8,7 @@ import java.io.IOException;
 public class App
 {
     public static void main(String[] args) throws IOException {
-        //NetworkTraining.train();
+        NetworkTraining.train();
         MainFrame frame = new MainFrame();
         frame.setVisible(true);
     }
