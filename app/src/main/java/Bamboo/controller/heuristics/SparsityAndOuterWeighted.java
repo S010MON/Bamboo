@@ -1,20 +1,28 @@
 package Bamboo.controller.heuristics;
 
 import Bamboo.controller.Vector;
-import Bamboo.model.Game;
 import Bamboo.model.Grid;
 import Bamboo.model.Tile;
 
-import java.util.*;
+import java.awt.Color;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.Collections;
 
-public class SparsityAndOuterWeighted implements Heuristic {
-    private Game game;
+public class SparsityAndOuterWeighted implements Heuristic
+{
+    private Grid grid;
+    private Color colour;
+
     @Override
-    public Vector getNextMove(Game game) {
-        this.game = game;
+    public Vector getNextMove(Grid grid, Color colour) {
+        this.grid = grid;
+        this.colour = colour;
         Comparator<Vector> comparator = new sparsityOWComparator();
-        Queue<Vector> queue = new PriorityQueue<>(game.getGrid().getAllVectors().size(),comparator);
-        ArrayList<Tile> tiles = (ArrayList<Tile>) game.getAllTiles();
+        Queue<Vector> queue = new PriorityQueue<>(grid.getAllVectors().size(),comparator);
+        ArrayList<Tile> tiles = (ArrayList<Tile>) grid.getAllTiles();
         Collections.shuffle(tiles);
         for (Tile t : tiles) {
             if (!t.isCouloured())
@@ -23,7 +31,7 @@ public class SparsityAndOuterWeighted implements Heuristic {
         Vector v;
         while (!queue.isEmpty()) {
             v = queue.remove();
-            if (game.getGrid().isLegalMove(v, game.getCurrentPlayer().getColor()))
+            if (grid.isLegalMove(v, colour))
                 return v;
         }
         return null;
@@ -37,15 +45,14 @@ public class SparsityAndOuterWeighted implements Heuristic {
     class sparsityOWComparator implements Comparator<Vector> {
         @Override
         public int compare(Vector x, Vector y) {
-            Grid grid = game.getGrid();
             Grid xgrid = grid.copy();
-            xgrid.setTile(x,game.getCurrentPlayer().getColor());
+            xgrid.setTile(x,colour);
             Grid ygrid = grid.copy();
-            ygrid.setTile(y,game.getCurrentPlayer().getColor());
+            ygrid.setTile(y,colour);
             int distX = 10000;
             int distY = 10000;
             for(Tile t : grid.getAllTiles()){
-                if(t.getColour() == game.getCurrentPlayer().getColor()){
+                if(t.getColour() == colour){
                     if(t.getVector().distance(x) < distX){
                         distX = t.getVector().distance(x);
                     }

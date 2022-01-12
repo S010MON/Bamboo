@@ -18,6 +18,7 @@ public class GameWithGUI extends GameImp implements Game
         this.view = view;
     }
 
+    @Override
     public void placeNextAt(Vector v)
     {
         if(grid.isLegalMove(v, currentPlayer.getColor()))
@@ -39,13 +40,12 @@ public class GameWithGUI extends GameImp implements Game
             }
 
             grid.setTile(v, currentPlayer.getColor());
-
+            history.add(v);
             toggleTurn();
         }
         if(grid.isFinished(getCurrentPlayer().getColor())) {
             showGameOverDialog();
         }
-
     }
 
     public int getNumberOfGroupsForPlayer(Agent player)

@@ -6,7 +6,7 @@ import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.model.*;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class MiniMax implements Agent

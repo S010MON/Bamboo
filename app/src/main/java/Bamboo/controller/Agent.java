@@ -2,7 +2,6 @@ package Bamboo.controller;
 
 import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.model.Game;
-import Bamboo.model.GameWithoutGUI;
 
 import java.awt.Color;
 

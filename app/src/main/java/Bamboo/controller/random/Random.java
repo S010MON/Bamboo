@@ -6,7 +6,7 @@ import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.*;
 import Bamboo.model.Game;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class Random implements Agent
 {
@@ -42,7 +42,7 @@ public class Random implements Agent
     {
         // Add a delay to the random algorithm
         try {Thread.sleep(10); } catch (Exception exception){}
-        return heuristic.get().getNextMove(game);
+        return heuristic.get().getNextMove(game.getGrid(), game.getCurrentPlayer().getColor());
     }
 
     @Override

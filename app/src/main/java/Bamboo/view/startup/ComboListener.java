@@ -14,10 +14,6 @@ public class ComboListener implements ActionListener
     private DemoConfigurationPanel demoConfigurationPanel;
     private SingleConfigurationPanel singleConfigurationPanel;
     private JComboBox comb;
-    public ComboListener(DemoConfigurationPanel demoConfigurationPanel, JComboBox comb){
-        this.demoConfigurationPanel= demoConfigurationPanel;
-        this.comb=comb;
-    }
 
     public ComboListener(SingleConfigurationPanel singleConfigurationPanel, JComboBox comb){
         this.singleConfigurationPanel=singleConfigurationPanel;
@@ -27,33 +23,22 @@ public class ComboListener implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(comb.getSelectedItem()==AgentType.NEURAL_NET) {
+        if(checkNN(comb)) {
 
-            if(demoConfigurationPanel!=null){
-            demoConfigurationPanel.getSettingsPanel().removeSlider();
-            demoConfigurationPanel.getSettingsPanel().repaint();
-            demoConfigurationPanel.getSettingsPanel().checkNNtoTrue();
-            demoConfigurationPanel.getSettingsPanel().changeBoardImage2(5);}
-
-            if(singleConfigurationPanel!=null){
             singleConfigurationPanel.getSettingsPanel().removeSlider();
             singleConfigurationPanel.getSettingsPanel().repaint();
-            singleConfigurationPanel.getSettingsPanel().checkNNtoTrue();
-            singleConfigurationPanel.getSettingsPanel().changeBoardImage2(5);}
-
+            singleConfigurationPanel.getSettingsPanel().changeBoardImage2(5);
         }
         else {
-            if(demoConfigurationPanel!=null){
-            demoConfigurationPanel.getSettingsPanel().removeSliderNN();
-            demoConfigurationPanel.getSettingsPanel().repaint();
-            demoConfigurationPanel.getSettingsPanel().checkNNtoFalse();
-            demoConfigurationPanel.getSettingsPanel().changeBoardImage2(demoConfigurationPanel.getSettingsPanel().getBoardSize());}
-
-            if(singleConfigurationPanel!=null){
             singleConfigurationPanel.getSettingsPanel().removeSliderNN();
-            singleConfigurationPanel.getSettingsPanel().repaint();
-            singleConfigurationPanel.getSettingsPanel().checkNNtoFalse();
             singleConfigurationPanel.getSettingsPanel().changeBoardImage2(singleConfigurationPanel.getSettingsPanel().getBoardSize());}
+            singleConfigurationPanel.getSettingsPanel().repaint();
         }
+    public boolean checkNN(JComboBox comb){
+        if(comb.getSelectedItem()==AgentType.NEURAL_NET||comb.getSelectedItem()==AgentType.HYBRID_NNMM)
+            return true ;
+        else
+            return false ;
     }
 }
+

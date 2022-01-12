@@ -6,18 +6,16 @@ import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.controller.heuristics.Uniform;
 import Bamboo.model.Game;
-import Bamboo.model.GameWithoutGUI;
 
 import java.awt.Color;
 
 public class MCTS implements Agent
 {
     private Color colour;
-    private NodeMCTS root;
-    public Mutable<Integer> iterations = new Mutable<>(10000);
-    private int iter = 10000;
+    private Node root;
     private boolean testing = false;
-    public Mutable<Float> c = new Mutable<>(0.5f);
+    public Mutable<Integer> iterations = new Mutable<>(200);
+    public Mutable<Float> c = new Mutable<>(1f);
     public Mutable<Heuristic> heuristic = new Mutable<>(new Uniform());
 
     public MCTS(Color colour)
@@ -44,19 +42,32 @@ public class MCTS implements Agent
     @Override
     public Vector getNextMove(Game game)
     {
-        if(game instanceof GameWithoutGUI)
-            iter = iterations.get();
+        Node lastMove = null;
+        if(root != null)
+            lastMove = root.selectChild(game.getPreviousMove());
 
-        root = new NodeMCTS(game, null, game.getCurrentPlayer().getColor(), null);
+        if(lastMove != null)
+            root = lastMove;
+        else
+            root = new Node(game.getGrid(), game.getCurrentPlayer().getColor(), null, null);
+        UCB.C = c.get();
+        int mutableValue = 0;
+        if(testing)
+            mutableValue = Math.round((float)(Number)iterations.get());
+        int iter = testing ? mutableValue : iterations.get();
         for(int i = 0; i < iter; i++)
         {
-            NodeMCTS next = root.select();
-            next.heuristic = heuristic.get();
-            root.expand(next);
-            next.backProp(next.playout());
+            Node n = root.select();
+            if(n != null)
+            {
+                n.playout();
+                n.backprop();
+            }
         }
-        NodeMCTS bestMove = root.selectBest();
-        return bestMove.getMove();
+
+        root = root.bestSelect();
+        root.pruneAbove();
+        return root.move();
     }
 
     @Override
@@ -77,6 +88,7 @@ public class MCTS implements Agent
 
     @Override
     public Mutable<Float> getC() {
+        testing = true;
         return this.c;
     }
 

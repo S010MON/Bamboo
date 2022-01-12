@@ -6,7 +6,7 @@ import Bamboo.controller.miniMax.*;
 import Bamboo.controller.nNet.NeuralNetwork;
 import Bamboo.controller.random.Random;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.IOException;
 
 public class AgentFactory

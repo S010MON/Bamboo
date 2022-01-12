@@ -1,7 +1,6 @@
 package Bamboo.controller.hybridNNMM;
 
 import Bamboo.controller.Agent;
-import Bamboo.controller.AgentType;
 import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;

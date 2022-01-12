@@ -3,8 +3,10 @@ package Bamboo.TestingAPI;
 import Bamboo.controller.*;
 import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.model.GameWithoutGUI;
+import org.checkerframework.checker.units.qual.A;
 
 import java.awt.Color;
+import java.awt.desktop.SystemSleepEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,6 +21,8 @@ public class Tester {
     private int replications;
     private String fileName = "experiment.csv";
     private ArrayList<Iterator> variables = new ArrayList<>();
+    private ArrayList<TesterAgent> variableTargets = new ArrayList<>();
+    private ArrayList<Variable> variableLabels = new ArrayList<>();
     private float redPercentage = 0.5f;
     private int gamesPlayed = 0;
     private int localGameCounter = 0;
@@ -30,6 +34,7 @@ public class Tester {
     private int total;
     private boolean hasRun = false;
     private Plan plan;
+    private float[][] table;
     private ArrayList<String> colnames = new ArrayList<>();
 
     public Tester(AgentType agent, int size) throws IOException {
@@ -53,7 +58,7 @@ public class Tester {
     public void setStartingColor(Color color){startingColor = color;}
     public void resetStartingColor(){startingColor = Color.WHITE;}
 
-    public float[][] run(){
+    public float[][] run() throws IOException {
         if(!hasRun)colnames.add("WinRate");
         if(TRACK_TIME && !hasRun)colnames.add("ms");
         makePlan();
@@ -61,22 +66,10 @@ public class Tester {
         System.out.println("Cols: " + cols + ", plan: " + plan);
         float[] results = new float[plan.getRows()*this.replications];
         if(TRACK_TIME)cols += 1;
-        float[][] table = new float[plan.getRows()][cols];
+        table = new float[plan.getRows()][cols];
         writeHeader();
         for(int i = 0; i < plan.getRows(); i++){
-            int[] indices = plan.getRowIndices(i);
-            for(int var = 0; var < plan.getCols(); var++){
-                if(!this.variables.get(var).isEmpty()){
-                    Iterator currentVar = variables.get(var);
-                    //TODO: Get numeric if numeric, other values otherwise
-                    if(currentVar.isNumeric())
-                        currentVar.getReference().set(currentVar.getValues()[indices[var]]);
-                    else
-                        currentVar.getReference().set(currentVar.getNon_numeric_values()[indices[var]]);
-                }
-                table[i][var] = indices[var];
-            }
-            results[i] = getWinPercentage();
+            results[i] = getWinPercentage(i);
             table[i][plan.getCols()] = results[i];
             if(TRACK_TIME)table[i][cols-1] = elapsed;
             writeRow(table[i]);
@@ -87,8 +80,22 @@ public class Tester {
     }
 
     //Gets winner from one game
-    private Agent getWinner(){
+    private Agent getWinner(int planRow) throws IOException {
         this.gamesPlayed ++;
+        agent1 = AgentFactory.makeAgent(player1,Color.RED);
+        agent2 = AgentFactory.makeAgent(player2,Color.BLUE);
+        refreshReferences();
+        int[] indices = plan.getRowIndices(planRow);
+        for(int var = 0; var < plan.getCols(); var++){
+            if(!this.variables.get(var).isEmpty()){
+                Iterator currentVar = variables.get(var);
+                if(currentVar.isNumeric())
+                    currentVar.getReference().set(currentVar.getValues()[indices[var]]);
+                else
+                    currentVar.getReference().set(currentVar.getNon_numeric_values()[indices[var]]);
+            }
+            table[planRow][var] = indices[var];
+        }
         Settings settings = new Settings(agent1, agent2, ((Number)boardSize.get()).intValue());
         GameWithoutGUI game;
         if(startingColor == Color.WHITE)
@@ -105,11 +112,11 @@ public class Tester {
         return winner;
     }
 
-    private float getWinPercentage(){
+    private float getWinPercentage(int planRow) throws IOException {
         int sum = 0;
         long before = System.nanoTime();
         for(int i = 0; i < replications; i++){
-            if(getWinner() == agent1)
+            if(getWinner(planRow) == agent1)
                 sum++;
         }
         long after = System.nanoTime();
@@ -198,6 +205,8 @@ public class Tester {
         Mutable ref = VariableFactory.getValueFromVariable(v,this.getAgent1(),this);
         Iterator variable = new Iterator<>(ref,value);
         colnames.add(v.toString());
+        variableTargets.add(TesterAgent.AGENT_1);
+        variableLabels.add(v);
         pushVariable(variable);
     }
 
@@ -205,6 +214,8 @@ public class Tester {
         Mutable ref = VariableFactory.getValueFromVariable(v,this.getAgent1(),this);
         Iterator variable = new Iterator<>(ref,value);
         colnames.add(v.toString());
+        variableTargets.add(TesterAgent.AGENT_1);
+        variableLabels.add(v);
         pushVariable(variable);
     }
 
@@ -212,6 +223,7 @@ public class Tester {
         Mutable ref = VariableFactory.getValueFromVariable(v,this.getAgent1(),this);
         Iterator variable = new Iterator<>(ref,min,max,step);
         colnames.add(v.toString());
+        variableTargets.add(TesterAgent.AGENT_1);
         pushVariable(variable);
     }
 
@@ -220,6 +232,8 @@ public class Tester {
         Mutable ref = VariableFactory.getValueFromVariable(v,a,this);
         Iterator variable = new Iterator<>(ref,value);
         colnames.add(agent.toString() + "_" + v.toString());
+        variableTargets.add(agent);
+        variableLabels.add(v);
         pushVariable(variable);
     }
 
@@ -228,6 +242,8 @@ public class Tester {
         Mutable ref = VariableFactory.getValueFromVariable(v,a,this);
         Iterator variable = new Iterator<>(ref,value);
         colnames.add(agent.toString() + "_" + v.toString());
+        variableTargets.add(agent);
+        variableLabels.add(v);
         pushVariable(variable);
     }
 
@@ -236,6 +252,8 @@ public class Tester {
         Mutable ref = VariableFactory.getValueFromVariable(v,a,this);
         Iterator variable = new Iterator<>(ref,min,max,step);
         colnames.add(agent.toString() + "_" + v.toString());
+        variableTargets.add(agent);
+        variableLabels.add(v);
         pushVariable(variable);
     }
 
@@ -244,7 +262,18 @@ public class Tester {
         Mutable ref = VariableFactory.getValueFromVariable(v,a,this);
         Iterator variable = new Iterator<>(ref,values);
         colnames.add(agent.toString() + "_" + v.toString());
+        variableTargets.add(agent);
+        variableLabels.add(v);
         pushVariable(variable);
+    }
+
+    private void refreshReferences(){
+        for(int i = 0; i < variables.size(); i++){
+            //System.out.println("Refreshing: " + variableTargets.get(i) + ", Variable " + variableLabels.get(i) + ", correct agent: " + (TesterAgentFactory.getAgentReference(this,variableTargets.get(i)) == agent1));
+            //System.out.println("iterations ref: true::" + agent1.getIterations() + ", got::" +  VariableFactory.getValueFromVariable(variableLabels.get(i),TesterAgentFactory.getAgentReference(this,variableTargets.get(i)),this) + ", equal::" + (VariableFactory.getValueFromVariable(variableLabels.get(i),TesterAgentFactory.getAgentReference(this,variableTargets.get(i)),this)==agent1.getIterations()));
+            variables.get(i).setReference(VariableFactory.getValueFromVariable(variableLabels.get(i),TesterAgentFactory.getAgentReference(this,variableTargets.get(i)),this));
+            //System.out.println("Iterations ref: " + (variables.get(i).getReference()==agent1.getIterations()));
+        }
     }
 
     public void addMetric(Metrics m){
