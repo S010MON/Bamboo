@@ -101,4 +101,14 @@ public class MCTS implements Agent
     public Mutable<Integer> getSwitchThreshold() {
         return null;
     }
+
+    public int getTreeWidth()
+    {
+        return 0;
+    }
+
+    public int getTreeHeight()
+    {
+        return root.getHeight();
+    }
 }

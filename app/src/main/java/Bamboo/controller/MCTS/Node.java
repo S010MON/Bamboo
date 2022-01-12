@@ -139,6 +139,18 @@ public class Node
         return move;
     }
 
+    public int getHeight()
+    {
+        int max = 0;
+        for(Node child: children)
+        {
+            int h = child.getHeight();
+            if(h > max)
+                max = h;
+        }
+        return max;
+    }
+
     private void update(int plays, int wins, int visits)
     {
         this.plays += plays;
