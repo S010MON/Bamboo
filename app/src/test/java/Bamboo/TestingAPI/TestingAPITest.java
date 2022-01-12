@@ -61,7 +61,7 @@ public class TestingAPITest {
         Tester tester = new Tester(AgentType.HYBRID_NNMM,5);
         tester.addVariable(TesterAgent.AGENT_1,Variable.SWITCH_THRESHOLD,0,91,10);
         tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,2);
-        tester.setReplications(100);
+        tester.setReplications(50);
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.run();
     }

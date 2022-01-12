@@ -101,9 +101,18 @@ public class Iterator<T> {
     private void buildArray(){
         this.values = new float[iterations];
         int id = 0;
-        for(float i = this.min; i <= max; i += step){
-            this.values[id] = i;
-            id++;
+        if(step > 0){
+            for(float i = this.min; i <= max; i += step){
+                this.values[id] = i;
+                id++;
+            }
         }
+        else{
+            for(float i = this.max; i >= min; i += step){
+                this.values[id] = i;
+                id++;
+            }
+        }
+
     }
 }
