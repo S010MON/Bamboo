@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class NodeSearchTest {
+public class MiniMaxNodeSearchTest {
     @Test void testTreeDepthTwo(){
         NodeMM start = new NodeMM(new GridGraphImp(2));
         MiniMax agent = new MiniMax(Color.RED);
