@@ -4,25 +4,22 @@ import Bamboo.controller.Vector;
 import Bamboo.model.*;
 
 import java.awt.Color;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Comparator;
+import java.util.*;
 
 
 public class MinOpponentMoves implements Heuristic
 {
-    private Game game;
-
     @Override
-    public Vector getNextMove(Game game)
+    public Vector getNextMove(Grid grid, Color playerColour)
     {
-        Color playerColour = game.getCurrentPlayer().getColor();
         Color opponentColour = flip(playerColour);
         Queue<Move> moves = new PriorityQueue<>(new MinMovesComparator());
 
-        for(Vector v: game.getGrid().getAllRemainingMoves())
+        ArrayList<Vector> remainingMovesList = (ArrayList<Vector>) grid.getRemainingMovesList();
+        Collections.shuffle(remainingMovesList);
+        for(Vector v: remainingMovesList)
         {
-            Grid g = game.getGrid().copy();
+            Grid g = grid.copy();
             g.setTile(v, playerColour);
             int remainingMoves = countLegalMoves(g, opponentColour);
             moves.add(new Move(v, remainingMoves));
@@ -31,7 +28,7 @@ public class MinOpponentMoves implements Heuristic
         while (!moves.isEmpty())
         {
             Move m = moves.poll();
-            if(game.getGrid().isLegalMove(m.v, playerColour))
+            if(grid.isLegalMove(m.v, playerColour))
                 return m.v;
         }
         return null;
