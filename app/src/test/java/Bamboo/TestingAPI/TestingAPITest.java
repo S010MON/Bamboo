@@ -42,7 +42,7 @@ public class TestingAPITest {
     @Test void LeonAnalyses() throws IOException{
         Tester tester = new Tester(AgentType.MINIMAX_SORTED,5);
         tester.addVariable(Variable.GRID_SIZE,1,5,1);
-        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,1,5,1);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,4,5,1);
         tester.addVariable(TesterAgent.AGENT_2,Variable.HEURISTIC,new Heuristics[]{Heuristics.OUTER_WEIGHTED});
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.setReplications(50);
@@ -53,6 +53,16 @@ public class TestingAPITest {
         tester.setReplications(100);
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.setFileName("RandomHeuristics.csv");
+        tester.run();
+    }
+
+    @Disabled
+    @Test void hybridTest() throws IOException{
+        Tester tester = new Tester(AgentType.HYBRID_NNMM,5);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SWITCH_THRESHOLD,0,91,10);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,2);
+        tester.setReplications(100);
+        tester.addMetric(Metrics.ELAPSED_TIME);
         tester.run();
     }
 
