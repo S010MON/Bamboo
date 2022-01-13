@@ -4,6 +4,7 @@ import Bamboo.controller.Agent;
 import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;
+import Bamboo.controller.heuristics.OuterWeighted;
 import Bamboo.controller.heuristics.Uniform;
 import Bamboo.model.Game;
 
@@ -14,8 +15,8 @@ public class MCTS implements Agent
     private Color colour;
     private Node root;
     private boolean testing = false;
-    public Mutable<Integer> iterations = new Mutable<>(200);
-    public Mutable<Float> c = new Mutable<>(1f);
+    public Mutable<Integer> iterations = new Mutable<>(2000);
+    public Mutable<Float> c = new Mutable<>(0.6f);
     public Mutable<Heuristic> heuristic = new Mutable<>(new Uniform());
 
     public MCTS(Color colour)
@@ -58,6 +59,7 @@ public class MCTS implements Agent
         for(int i = 0; i < iter; i++)
         {
             Node n = root.select();
+            n.setHeuristic(heuristic.get());
             if(n != null)
             {
                 n.playout();
