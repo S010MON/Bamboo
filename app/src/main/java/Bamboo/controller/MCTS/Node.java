@@ -71,7 +71,7 @@ public class Node
 
         while (!grid.isFinished(currentColor))
         {
-            Vector v = new Uniform().getNextMove(grid, currentColor);
+            Vector v = heuristic.getNextMove(grid, currentColor);
             grid.setTile(v, currentColor);
             currentColor = toggleColour(currentColor);
         }

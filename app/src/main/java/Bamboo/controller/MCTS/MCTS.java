@@ -15,8 +15,8 @@ public class MCTS implements Agent
     private Color colour;
     private Node root;
     private boolean testing = false;
-    public Mutable<Integer> iterations = new Mutable<>(2000);
-    public Mutable<Float> c = new Mutable<>(0.6f);
+    public Mutable<Integer> iterations = new Mutable<>(1000);
+    public Mutable<Float> c = new Mutable<>(1.414f);
     public Mutable<Heuristic> heuristic = new Mutable<>(new Uniform());
 
     public MCTS(Color colour)
