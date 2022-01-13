@@ -70,9 +70,10 @@ public class TestingAPITest {
     @Disabled
     @Test void newMCTSTest() throws IOException{
         Tester tester = new Tester(AgentType.MCTS,3);
-        tester.addVariable(TesterAgent.AGENT_1,Variable.ITERATIONS,new float[]{100,500,1000});
-        tester.addVariable(TesterAgent.AGENT_1,Variable.C,0f,1f,0.1f);
-        tester.setReplications(200);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.ITERATIONS,new float[]{1000,500,250,1});
+        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.OUTER_WEIGHTED,Heuristics.UNIFORM});
+        tester.addVariable(TesterAgent.AGENT_1,Variable.C,0.1f,1f,0.1f);
+        tester.setReplications(50);
         tester.setFileName("MCTSIter_C.csv");
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.run();
