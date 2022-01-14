@@ -8,6 +8,7 @@ public enum AgentType
     MINIMAX_SORTED,
     MCTS,
     RANDOM,
+    RANDOM_WITH_HEURISTIC,
     NEURAL_NET,
     HYBRID_NNMM;
 

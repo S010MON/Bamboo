@@ -2,13 +2,11 @@ package Bamboo.controller.MCTS;
 
 import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;
-import Bamboo.controller.heuristics.OuterWeighted;
 import Bamboo.controller.heuristics.Uniform;
 import Bamboo.model.Grid;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Stack;
 
 public class Node

@@ -30,7 +30,7 @@ public class hybridAgent implements Agent {
 
     @Override
     public String getName() {
-        return "NM";
+        return "Gerald";
     }
 
     @Override

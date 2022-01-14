@@ -4,7 +4,6 @@ import Bamboo.controller.Agent;
 import Bamboo.controller.Mutable;
 import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;
-import Bamboo.controller.heuristics.OuterWeighted;
 import Bamboo.controller.heuristics.Uniform;
 import Bamboo.model.Game;
 
@@ -26,7 +25,7 @@ public class MCTS implements Agent
 
     @Override
     public String getName() {
-        return "MCTS";
+        return "Carlo";
     }
 
     @Override

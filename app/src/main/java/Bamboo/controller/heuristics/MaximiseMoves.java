@@ -1,13 +1,14 @@
 package Bamboo.controller.heuristics;
 
 import Bamboo.controller.Vector;
-import Bamboo.model.Game;
 import Bamboo.model.Grid;
-import Bamboo.model.Tile;
 
-
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MaximiseMoves implements Heuristic
 {

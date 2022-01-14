@@ -21,7 +21,7 @@ public class MiniMax implements Agent
     public MiniMax(Color color)
     {
         this.color = color;
-        this.name = "MiniMax";
+        this.name = "Max";
     }
 
     @Override
