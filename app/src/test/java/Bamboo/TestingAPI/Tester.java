@@ -125,7 +125,7 @@ public class Tester {
         return sum/(float)replications;
     }
 
-    private float nanoToMilli(float nano){return nano * 0.001f;}
+    private float nanoToMilli(float nano){return nano * 0.000001f;}
 
     private void writeHeader(){
         Logger.logCSV(fileName,headerString());

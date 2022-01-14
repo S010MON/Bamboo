@@ -57,6 +57,17 @@ public class TestingAPITest {
     }
 
     @Disabled
+    @Test void dataCollection() throws IOException{
+        Tester tester = new Tester(AgentType.MINIMAX_SORTED,5);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,3);
+        tester.setLoggedColor(Color.RED);
+        tester.setMoveLogging(true);
+        tester.setLogFileName("FinalDataCollection.csv");
+        tester.setReplications(100);
+        tester.run();
+    }
+
+    @Disabled
     @Test void testHeuristics() throws IOException{
         Tester tester = new Tester(AgentType.RANDOM, 5);
         tester.setAgent2(AgentType.RANDOM);
