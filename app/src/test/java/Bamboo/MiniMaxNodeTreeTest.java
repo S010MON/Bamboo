@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class NodeTreeTest {
+public class MiniMaxNodeTreeTest {
     @Test void testNodePosition(){
         NodeMM start = new NodeMM(new GridGraphImp(4));
         start.addChild(new GridGraphImp(3));

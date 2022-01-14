@@ -3,10 +3,12 @@ package Bamboo.controller.MCTS;
 import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.controller.heuristics.OuterWeighted;
+import Bamboo.controller.heuristics.Uniform;
 import Bamboo.model.Grid;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
 public class Node
@@ -28,7 +30,7 @@ public class Node
         this.colour = colour;
         this.move = move;
         this.parent = parent;
-        heuristic = new OuterWeighted();
+        heuristic = new Uniform();
         unexplored = grid.getRemainingMovesStack();
         children = new ArrayList<>();
     }
@@ -63,6 +65,7 @@ public class Node
     {
         plays++;
 
+        Grid temp = grid.copy();
         Color startingColour = colour;
         Color currentColor = colour;
 
@@ -75,6 +78,9 @@ public class Node
 
         if(currentColor != startingColour)
             wins++;
+
+        grid = temp;
+        temp.setTile(move,colour);
     }
 
     public void backprop()
@@ -91,8 +97,9 @@ public class Node
         Node best = null;
         for(Node child: children)
         {
-            if(best == null)
+            if(best == null){
                 best = child;
+            }
 
             if(child.wins > best.wins)
                 best = child;
@@ -104,12 +111,13 @@ public class Node
     {
         Node best = null;
         double bestUCB = 0;
+        //Collections.shuffle(children);
         for(Node child: children)
         {
             if(best == null)
                 best = child;
 
-            double childUCB = UCB.calculate(wins, plays, child.visits, visits);
+            double childUCB = UCB.calculate(child.wins, child.plays, visits, child.visits);
             if(childUCB > bestUCB)
             {
                 best = child;
@@ -137,6 +145,22 @@ public class Node
     public Vector move()
     {
         return move;
+    }
+
+    public int getHeight()
+    {
+        int max = 0;
+        for(Node child: children)
+        {
+            int h = child.getHeight();
+            if(h > max)
+                max = h;
+        }
+        return max;
+    }
+
+    public void setHeuristic(Heuristic h){
+        heuristic = h;
     }
 
     private void update(int plays, int wins, int visits)

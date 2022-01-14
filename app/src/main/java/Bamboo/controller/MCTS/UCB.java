@@ -10,7 +10,7 @@ public class UCB
         if(plays == 0)
             x_bar = 1;
         else
-            x_bar = wins/plays;
+            x_bar = wins/(double)plays;
         return x_bar + (C * Math.sqrt(Math.log(n_p) / n_c));
     }
 }
