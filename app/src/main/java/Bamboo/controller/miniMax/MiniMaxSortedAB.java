@@ -12,7 +12,7 @@ public class MiniMaxSortedAB extends MiniMax implements Agent
     public MiniMaxSortedAB(Color color)
     {
         super(color);
-        this.name = "MiniMaxSorted";
+        this.name = "MMSorted";
     }
 
     @Override
