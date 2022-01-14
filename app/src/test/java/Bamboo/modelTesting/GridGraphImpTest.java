@@ -1,4 +1,4 @@
-package Bamboo;
+package Bamboo.modelTesting;
 
 import Bamboo.controller.Vector;
 import Bamboo.model.*;

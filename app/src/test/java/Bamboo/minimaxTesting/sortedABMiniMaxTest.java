@@ -1,4 +1,4 @@
-package Bamboo;
+package Bamboo.minimaxTesting;
 
 import Bamboo.controller.miniMax.NodeMM;
 import Bamboo.controller.miniMax.MiniMaxAB;
@@ -9,7 +9,6 @@ import Bamboo.model.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import org.apache.logging.log4j.core.util.NanoClock;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

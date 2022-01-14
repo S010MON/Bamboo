@@ -1,4 +1,4 @@
-package Bamboo;
+package Bamboo.nnetTesting;
 
 import Bamboo.controller.nNet.NetworkArchitecture;
 import Bamboo.controller.nNet.NetworkManager;

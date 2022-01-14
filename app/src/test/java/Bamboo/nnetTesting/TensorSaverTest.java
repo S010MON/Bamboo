@@ -1,4 +1,4 @@
-package Bamboo;
+package Bamboo.nnetTesting;
 
 import Bamboo.controller.nNet.TensorLoader;
 import Bamboo.controller.nNet.TensorSaver;

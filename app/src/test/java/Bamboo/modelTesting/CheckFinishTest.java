@@ -1,9 +1,9 @@
-package Bamboo;
+package Bamboo.modelTesting;
 
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 
-import java.awt.*;
+import java.awt.Color;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

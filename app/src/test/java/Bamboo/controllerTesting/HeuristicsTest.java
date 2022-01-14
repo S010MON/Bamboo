@@ -1,14 +1,14 @@
-package Bamboo;
+package Bamboo.controllerTesting;
 
 import Bamboo.controller.Vector;
 import Bamboo.controller.heuristics.Heuristic;
 import Bamboo.controller.heuristics.MaximiseMoves;
 import Bamboo.model.*;
+
 import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-import java.awt.*;
+import java.awt.Color;
 
 public class HeuristicsTest {
     @Test

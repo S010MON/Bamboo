@@ -1,17 +1,15 @@
 package Bamboo.TestingAPI;
 
-import Bamboo.controller.*;
-
 import java.awt.Color;
 import java.io.IOException;
-import java.util.Objects;
 
 import Bamboo.controller.miniMax.MiniMaxSortedAB;
-import Bamboo.model.GameWithoutGUI;
+import Bamboo.controller.*;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-public class TestingAPITest {
+public class TestingAPIMain {
 
     Mutable<Integer> mutable = new Mutable<>(0);
 
