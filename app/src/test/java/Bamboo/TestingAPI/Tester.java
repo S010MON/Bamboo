@@ -198,8 +198,14 @@ public class Tester {
     public Agent getAgent1() {return agent1;}
     public Agent getAgent2() {return agent2;}
 
-    public void setAgent1(AgentType a) throws IOException{this.agent1 = AgentFactory.makeAgent(a,Color.RED);}
-    public void setAgent2(AgentType a) throws IOException{this.agent2 = AgentFactory.makeAgent(a,Color.BLUE);}
+    public void setAgent1(AgentType a) throws IOException{
+        this.agent1 = AgentFactory.makeAgent(a,Color.RED);
+        this.player1 = a;
+    }
+    public void setAgent2(AgentType a) throws IOException{
+        this.agent2 = AgentFactory.makeAgent(a,Color.BLUE);
+        this.player2 = a;
+    }
 
     public void addVariable(Variable v, float value){
         Mutable ref = VariableFactory.getValueFromVariable(v,this.getAgent1(),this);
