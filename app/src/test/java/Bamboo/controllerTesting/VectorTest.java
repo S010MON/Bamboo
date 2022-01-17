@@ -1,4 +1,4 @@
-package Bamboo;
+package Bamboo.controllerTesting;
 
 import Bamboo.controller.Vector;
 import org.junit.jupiter.api.Test;

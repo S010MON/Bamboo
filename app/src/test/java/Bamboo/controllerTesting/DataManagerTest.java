@@ -1,4 +1,4 @@
-package Bamboo;
+package Bamboo.controllerTesting;
 
 import Bamboo.controller.DataManager;
 import Bamboo.controller.Vector;
@@ -6,7 +6,7 @@ import Bamboo.model.Grid;
 import Bamboo.model.GridGraphImp;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

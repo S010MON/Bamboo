@@ -1,4 +1,4 @@
-package Bamboo;
+package Bamboo.minimaxTesting;
 
 import Bamboo.controller.miniMax.MiniMax;
 import Bamboo.controller.miniMax.NodeMM;

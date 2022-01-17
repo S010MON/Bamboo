@@ -1,4 +1,4 @@
-package Bamboo;
+package Bamboo.modelTesting;
 
 import Bamboo.model.Grid;
 import Bamboo.controller.Vector;
@@ -6,9 +6,8 @@ import Bamboo.model.*;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import java.awt.*;
+import java.awt.Color;
 
 class DeepCopyTest
  {

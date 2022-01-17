@@ -12,7 +12,7 @@ public class MiniMaxAB extends MiniMax implements Agent
     public MiniMaxAB(Color color)
     {
         super(color);
-        this.name = "MiniMaxAB";
+        this.name = "Max";
     }
 
     @Override

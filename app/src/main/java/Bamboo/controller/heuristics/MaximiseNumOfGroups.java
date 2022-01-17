@@ -1,4 +1,5 @@
 package Bamboo.controller.heuristics;
+
 import Bamboo.controller.Vector;
 import Bamboo.model.*;
 

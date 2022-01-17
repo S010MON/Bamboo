@@ -1,4 +1,4 @@
-package Bamboo;
+package Bamboo.controllerTesting;
 
 import Bamboo.controller.Agent;
 import Bamboo.controller.Settings;

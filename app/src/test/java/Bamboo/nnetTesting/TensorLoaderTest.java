@@ -1,4 +1,4 @@
-package Bamboo;
+package Bamboo.nnetTesting;
 
 import Bamboo.controller.nNet.TensorLoader;
 import deepnetts.util.Tensor;

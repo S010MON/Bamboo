@@ -1,10 +1,10 @@
-package Bamboo;
+package Bamboo.controllerTesting;
 
 import Bamboo.controller.FileManager;
 import Bamboo.controller.Settings;
 import Bamboo.controller.Vector;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.File;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;

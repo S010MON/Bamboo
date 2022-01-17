@@ -4,8 +4,11 @@ import Bamboo.controller.Vector;
 import Bamboo.model.*;
 
 import java.awt.Color;
-import java.util.*;
-
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MinimiseOpponentMoves implements Heuristic
 {

@@ -1,11 +1,11 @@
-package Bamboo;
+package Bamboo.modelTesting;
 
 import Bamboo.controller.Agent;
 import Bamboo.controller.Settings;
 import Bamboo.controller.Vector;
 import Bamboo.controller.random.Random;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
 import Bamboo.model.Game;
