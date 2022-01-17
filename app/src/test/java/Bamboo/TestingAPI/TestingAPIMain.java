@@ -8,6 +8,7 @@ import Bamboo.controller.*;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperties;
 
 public class TestingAPIMain {
 
@@ -51,6 +52,17 @@ public class TestingAPIMain {
         tester.setReplications(100);
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.setFileName("RandomHeuristics.csv");
+        tester.run();
+    }
+
+    @Disabled
+    @Test void dataCollection() throws IOException{
+        Tester tester = new Tester(AgentType.MINIMAX_SORTED,5);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,3);
+        tester.setLoggedColor(Color.RED);
+        tester.setMoveLogging(true);
+        tester.setLogFileName("FinalDataCollection.csv");
+        tester.setReplications(100);
         tester.run();
     }
 
@@ -99,6 +111,115 @@ public class TestingAPIMain {
         tester.addMetric(Metrics.ELAPSED_TIME);
         tester.run();
 
+    }
+
+    @Disabled
+    @Test void hybridTest() throws IOException{
+        Tester tester = new Tester(AgentType.HYBRID_NNMM,5);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,2);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SWITCH_THRESHOLD,0,91,10);
+        tester.setReplications(100);
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.setFileName("newHybrid.csv");
+        tester.run();
+    }
+
+    @Disabled
+    @Test void WinrateMatrix() throws IOException{
+        //Random vs Minimax
+        Tester tester = new Tester(AgentType.RANDOM,5);
+        tester.setReplications(100);
+        tester.setAgent2(AgentType.MINIMAX_SORTED);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.SEARCH_DEPTH,2);
+        tester.setFileName("WinRateMatrix.csv");
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
+        //Random vs MCTS
+        tester = new Tester(AgentType.RANDOM,5);
+        tester.setReplications(100);
+        tester.setAgent2(AgentType.MCTS);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.ITERATIONS,1000);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.C,0.4f);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.HEURISTIC,new Heuristics[]{Heuristics.OUTER_WEIGHTED});
+        tester.setFileName("WinRateMatrix.csv");
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
+        //Random vs NN
+        tester = new Tester(AgentType.RANDOM,5);
+        tester.setReplications(100);
+        tester.setAgent2(AgentType.NEURAL_NET);
+        tester.setFileName("WinRateMatrix.csv");
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
+        //Random vs Hybrid
+        tester = new Tester(AgentType.RANDOM,5);
+        tester.setReplications(100);
+        tester.setAgent2(AgentType.HYBRID_NNMM);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.SEARCH_DEPTH,2);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.SWITCH_THRESHOLD,30);
+        tester.setFileName("WinRateMatrix.csv");
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
+        //Minimax vs MCTS
+        tester = new Tester(AgentType.MINIMAX_SORTED,5);
+        tester.setReplications(100);
+        tester.setAgent2(AgentType.MCTS);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,2);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.ITERATIONS,1000);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.C,0.4f);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.HEURISTIC,new Heuristics[]{Heuristics.OUTER_WEIGHTED});
+        tester.setFileName("WinRateMatrix.csv");
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
+        //Minimax vs NN
+        tester = new Tester(AgentType.MINIMAX_SORTED,5);
+        tester.setReplications(100);
+        tester.setAgent2(AgentType.NEURAL_NET);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,2);
+        tester.setFileName("WinRateMatrix.csv");
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
+        //Minimax vs Hybrid
+        tester = new Tester(AgentType.MINIMAX_SORTED,5);
+        tester.setReplications(100);
+        tester.setAgent2(AgentType.HYBRID_NNMM);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.SEARCH_DEPTH,2);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.SEARCH_DEPTH,2);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.SWITCH_THRESHOLD,30);
+        tester.setFileName("WinRateMatrix.csv");
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
+        //MCTS vs NN
+        tester = new Tester(AgentType.MCTS,5);
+        tester.setReplications(100);
+        tester.setAgent2(AgentType.NEURAL_NET);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.ITERATIONS,1000);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.C,0.4f);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.OUTER_WEIGHTED});
+        tester.setFileName("WinRateMatrix.csv");
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
+        //MCTS vs Hybrid
+        tester = new Tester(AgentType.MCTS,5);
+        tester.setReplications(100);
+        tester.setAgent2(AgentType.HYBRID_NNMM);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.ITERATIONS,1000);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.C,0.4f);
+        tester.addVariable(TesterAgent.AGENT_1,Variable.HEURISTIC,new Heuristics[]{Heuristics.OUTER_WEIGHTED});
+        tester.addVariable(TesterAgent.AGENT_2,Variable.SEARCH_DEPTH,2);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.SWITCH_THRESHOLD,30);
+        tester.setFileName("WinRateMatrix.csv");
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
+        //NN vs Hybrid
+        tester = new Tester(AgentType.NEURAL_NET,5);
+        tester.setReplications(100);
+        tester.setAgent2(AgentType.HYBRID_NNMM);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.SEARCH_DEPTH,2);
+        tester.addVariable(TesterAgent.AGENT_2,Variable.SWITCH_THRESHOLD,30);
+        tester.setFileName("WinRateMatrix.csv");
+        tester.addMetric(Metrics.ELAPSED_TIME);
+        tester.run();
     }
 
     //Enabled for now, to check whether MCTS works correctly within the testing API
