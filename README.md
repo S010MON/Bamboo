@@ -3,7 +3,7 @@
 ![workflow](https://github.com/S010MON/Bamboo/actions/workflows/mac.yml/badge.svg)
 
 # Bamboo
-An implementation of the game originally desgined by Mark Steere in March 21 
+An implementation of the game originally desgined by Mark Steere in March 21, a copy of the research paper on applying machine learning to the problem of playing the game can be found ![here](https://github.com/S010MON/Bamboo/blob/main/Adversarial_Search_and_Machine_Learning_applied_to_Bamboo.pdf)
 
 ## Contents
 - ![Gameplay](https://github.com/S010MON/Bamboo#gameplay)
